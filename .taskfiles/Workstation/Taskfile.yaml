@@ -55,7 +55,6 @@ tasks:
           - cloudflare/cloudflared?as=cloudflared&type=script
           - FiloSottile/age?as=age&type=script
           - fluxcd/flux2?as=flux&type=script
-          - getsops/sops?as=sops&type=script
           - helmfile/helmfile?as=helmfile&type=script
           - jqlang/jq?as=jq&type=script
           - kubernetes-sigs/kustomize?as=kustomize&type=script
@@ -67,5 +66,10 @@ tasks:
         platforms: ["linux/amd64"]
       - cmd: curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/arm64/kubectl"
         platforms: ["linux/arm64"]
+      - cmd: curl -L -o sops "https://github.com/getsops/sops/releases/download/v3.8.1/sops-v3.8.1.linux.arm64"
+        platforms: ["linux/arm64"]
+      - cmd: curl -L -o sops "https://github.com/getsops/sops/releases/download/v3.8.1/sops-v3.8.1.linux.amd64"
+        platforms: ["linux/amd64"]
+      - cmd: chmod +x sops
       - cmd: chmod +x kubectl
       - cmd: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | USE_SUDO="false" HELM_INSTALL_DIR="." bash
