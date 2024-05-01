@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m
-  url: "ssh://git@github.com:frantathefranta/home-ops.git"
+  url: "ssh://git@github.com/frantathefranta/home-ops.git"
   secretRef:
     name: github-deploy-key
   ref:
