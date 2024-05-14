@@ -15,13 +15,21 @@ tasks:
   bootstrap:
     desc: Bootstrap the Talos cluster
     dir: "{{.TALOS_DIR}}"
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
+    prompt: Bootstrap Talos on the '{{.cluster}}' cluster ... continue?
     cmds:
       - task: bootstrap-gensecret
       - task: bootstrap-genconfig
       - task: bootstrap-apply
+        vars: &vars
+          cluster: "{{.cluster}}"
       - task: bootstrap-install
       - task: fetch-kubeconfig
+        vars: *vars
       - task: bootstrap-apps
+        vars: *vars
       - talosctl health --server=false
 
   bootstrap-gensecret:
@@ -48,7 +56,9 @@ tasks:
   bootstrap-apply:
     desc: Apply the Talos configs to the nodes
     dir: "{{.TALOS_DIR}}"
-    cmd: talhelper gencommand apply --extra-flags=--insecure | bash
+    requires:
+      vars: ["cluster"]
+    cmd: talhelper gencommand apply --extra-flags="--insecure --cluster {{.cluster}}" | bash
     preconditions:
       - { msg: "Missing talhelper config file", sh: "test -f {{.TALHELPER_CONFIG_FILE}}" }
 
@@ -65,10 +75,12 @@ tasks:
   bootstrap-apps:
     desc: Bootstrap core apps needed for Talos
     dir: "{{.TALOS_DIR}}"
+    requires:
+      vars: ["cluster"]
     cmds:
-      - until kubectl --kubeconfig {{.KUBECONFIG_FILE}} wait --for=condition=Ready=False nodes --all --timeout=600s; do sleep 10; done
-      - helmfile --kubeconfig {{.KUBECONFIG_FILE}} --file ./apps/helmfile.yaml apply --skip-diff-on-install --suppress-diff
-      - until kubectl --kubeconfig {{.KUBECONFIG_FILE}} wait --for=condition=Ready nodes --all --timeout=600s; do sleep 10; done
+      - until kubectl --kubeconfig {{.KUBECONFIG_FILE}} --cluster {{.cluster}} wait --for=condition=Ready=False nodes --all --timeout=600s; do sleep 10; done
+      - helmfile --kubeconfig {{.KUBECONFIG_FILE}} --cluster {{.cluster}} --file ./apps/helmfile.yaml apply --skip-diff-on-install --suppress-diff
+      - until kubectl --kubeconfig {{.KUBECONFIG_FILE}} --cluster {{.cluster}} wait --for=condition=Ready nodes --all --timeout=600s; do sleep 10; done
     preconditions:
       - { msg: "Missing kubeconfig", sh: "test -f {{.KUBECONFIG_FILE}}" }
 
