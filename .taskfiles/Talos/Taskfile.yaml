@@ -4,6 +4,7 @@ version: "3"
 
 vars:
   TALOS_DIR: "{{.KUBERNETES_DIR}}/bootstrap/talos"
+  TALOSCONFIG: "{{.TALOS_DIR}}/clusterconfig/talosconfig"
   TALHELPER_SECRET_FILE: "{{.TALOS_DIR}}/talsecret.sops.yaml"
   TALHELPER_CONFIG_FILE: "{{.TALOS_DIR}}/talconfig.yaml"
   # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
@@ -106,7 +107,7 @@ tasks:
     requires:
       vars: ["cluster"]
     preconditions:
-      - test -f "{{.TALOSCONFIG}}"
+      - test -f {{.TALOSCONFIG}}
       - talosctl --context {{.cluster}} config info >/dev/null 2>&1
       - talosctl --context {{.cluster}} --nodes {{.node}} get machineconfig >/dev/null 2>&1
 
