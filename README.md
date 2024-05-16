@@ -1,8 +1,10 @@
-# TODOs
-- [ ] Add cluster-specific config (talos-mini, talos-max)
-- [ ] Deploy longhorn
-- [ ] Deploy volsync
-- [ ] Add external-secrets
+* [x] DONE Add cluster-specific config (talos-mini, talos-max)
+* [ ] TODO Deploy longhorn
+* [x] DONE Deploy volsync
+* [x] DONE Add external-secrets
+* [ ] TODO Deploy Postgres
+* [ ] TODO Fix GitHub actions
+
 # ⛵ Cluster Template
 
 Welcome to my opinionated and extensible template for deploying a single Kubernetes cluster. The goal of this project is to make it easier for people interested in using Kubernetes to deploy a cluster at home on bare-metal or VMs.
