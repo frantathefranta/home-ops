@@ -13,5 +13,5 @@ spec:
       matchFeatures:
         - feature: pci.device
           matchExpressions:
-            vendor: { op: In, value: ["1ac1"] }
             class: { op: In, value: ["0880"] }
+            vendor: { op: In, value: ["1ac1"] }
