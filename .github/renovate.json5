@@ -95,6 +95,12 @@
       "versioning": "regex:^v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)(?<compatibility>\\+k.s)\\.?(?<build>\\d+)$",
       "matchPackagePatterns": ["k3s"]
     },
+    {
+      "description": ["Custom versioning for frigate"],
+      "matchDatasources": ["docker"],
+      "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)(-(?<compatibility>beta)(?<build>\\d+))?$",
+    },
+      "matchPackagePatterns": ["frigate"]
     // commit message topics
     {
       "matchDatasources": ["helm"],
@@ -228,6 +234,16 @@
     {
       "matchManagers": ["github-actions"],
       "addLabels": ["renovate/github-action"]
+    }
+    // Per-cluster PRs
+    {
+      "description": ["Separate PRs for talos-mini cluster"],
+      "matchFileNames": [
+        "**/kubernetes/talos-mini/**",
+        "**/ansible/talos-mini/**",
+        "**/terraform/talos-mini/**"
+      ],
+      "additionalBranchPrefix": "talos-mini-"
     }
   ],
   // custom managers
