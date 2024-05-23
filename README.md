@@ -3,7 +3,7 @@
 * [x] DONE Deploy volsync
 * [x] DONE Add external-secrets
 * [ ] TODO Deploy Postgres
-* [ ] TODO Fix GitHub actions
+* [X] TODO Fix GitHub actions
 
 # ⛵ Cluster Template
 
