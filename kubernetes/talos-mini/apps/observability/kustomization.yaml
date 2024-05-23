@@ -8,3 +8,4 @@ resources:
   # Flux-Kustomizations
   # - ./alertmanager-silencer/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
+  - ./smarctl-exporter/ks.yaml
