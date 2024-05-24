@@ -1,8 +1,9 @@
 * [x] DONE Add cluster-specific config (talos-mini, talos-max)
+* [ ] TODO Deploy longhorn
 * [x] DONE Deploy volsync
 * [x] DONE Add external-secrets
 * [ ] TODO Deploy Postgres
-* [X] DONE Fix GitHub actions
+* [X] TODO Fix GitHub actions
 
 # ⛵ Cluster Template
 

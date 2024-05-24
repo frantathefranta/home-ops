@@ -5,8 +5,6 @@ resources:
   - ./backube.yaml
   - ./bjw-s.yaml
   - ./cilium.yaml
-  - ./crunchydata.yaml
-  - ./crunchy-userinit.yaml
   - ./descheduler.yaml
   - ./external-dns.yaml
   - ./external-secrets.yaml
