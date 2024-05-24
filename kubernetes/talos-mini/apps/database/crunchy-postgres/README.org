@@ -1,0 +1,16 @@
+#+title: Postgres Setup
+* User Management
+The users defined in ~postgrescluster.yaml~ key ~spec.users~ are the ones that get created. Passwords will be auto-generated if declared like this:
+#+begin_src yaml :noeval
+  users:
+    # Superuser
+    - name: "postgres"
+      databases: ["postgres"]
+      options: "SUPERUSER"
+      password:
+        type: AlphaNumeric
+#+end_src
+
+They'll be in a format ~<clusterName>-pguser-<userName>~
+** References
+- [[https://access.crunchydata.com/documentation/postgres-operator/latest/architecture/user-management][CrunchyData Documentation]]

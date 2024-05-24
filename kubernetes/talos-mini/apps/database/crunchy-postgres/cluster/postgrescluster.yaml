@@ -20,7 +20,7 @@ spec:
           app.kubernetes.io/name: crunchy-postgres
       replicas: &replicas 3
       dataVolumeClaimSpec:
-        storageClassName: local-hostpath
+        storageClassName: openebs-hostpath
         accessModes: ["ReadWriteOnce"]
         resources:
           requests:
@@ -122,17 +122,17 @@ spec:
       repos:
         - name: repo1
           s3: &minio
-            bucket: postgresql
+            bucket: postgresql-mini
             endpoint: s3.${SECRET_DOMAIN}
-            region: ca-west-1
+            region: us-east-1
           schedules:
             full: "0 1 * * 0"           # Sunday at 1am
             differential: "0 1 * * 1-6" # Mon-Sat at 1am
             incremental: "0 3-23 * * *" # Every hour except 1-2am
         - name: repo2
           s3: &r2
-            bucket: crunchy-pgo
-            endpoint: ${CLUSTER_SECRET_CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com # TODO Need to add this Cloudflare cluster variable
+            bucket: crunchy-pgo-mini
+            endpoint: ${CLUSTER_SECRET_CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com
             region: us-east-1 #https://developers.cloudflare.com/r2/api/s3/api/#bucket-region
           schedules:
             full: "0 2 * * 0"           # Sunday at 2am
