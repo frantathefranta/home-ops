@@ -28,6 +28,7 @@ env:
 
 includes:
   ansible: .taskfiles/Ansible/Taskfile.yaml
+  external-secrest: .taskfiles/ExternalSecrets/Taskfile.yaml
   kubernetes:
     aliases: ["k8s"]
     taskfile: .taskfiles/Kubernetes/Taskfile.yaml
@@ -43,7 +44,6 @@ includes:
     optional: true
 
 tasks:
-
   default: task -l
 
   init:
@@ -71,9 +71,18 @@ tasks:
     cmd: "{{.VIRTUAL_ENV}}/bin/makejinja"
     preconditions:
       - { msg: "Missing virtual environment", sh: "test -d {{.VIRTUAL_ENV}}" }
-      - { msg: "Missing Makejinja config file", sh: "test -f {{.MAKEJINJA_CONFIG_FILE}}" }
-      - { msg: "Missing Makejinja plugin file", sh: "test -f {{.BOOTSTRAP_DIR}}/scripts/plugin.py" }
-      - { msg: "Missing bootstrap config file", sh: "test -f {{.MINI_BOOTSTRAP_CONFIG_FILE}}" }
+      - {
+          msg: "Missing Makejinja config file",
+          sh: "test -f {{.MAKEJINJA_CONFIG_FILE}}",
+        }
+      - {
+          msg: "Missing Makejinja plugin file",
+          sh: "test -f {{.BOOTSTRAP_DIR}}/scripts/plugin.py",
+        }
+      - {
+          msg: "Missing bootstrap config file",
+          sh: "test -f {{.MINI_BOOTSTRAP_CONFIG_FILE}}",
+        }
 
   .validate:
     internal: true
