@@ -9,4 +9,3 @@ resources:
   # - ./alertmanager-silencer/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
   - ./smartctl-exporter/ks.yaml
-  - ./prometheus-operator-crds/ks.yaml
