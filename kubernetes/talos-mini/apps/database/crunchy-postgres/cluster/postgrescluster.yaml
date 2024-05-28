@@ -6,6 +6,10 @@ metadata:
   name: &name postgres
 spec:
   postgresVersion: 16
+  metadata:
+    labels:
+      crunchy-userinit.ramblurr.github.com/enabled: "true"
+      crunchy-userinit.ramblurr.github.com/superuser: "postgres"
   patroni: # turn on sync writes to at least 1 other replica
     dynamicConfiguration:
       synchronous_mode: true
@@ -137,14 +141,14 @@ spec:
           schedules:
             full: "0 2 * * 0"           # Sunday at 2am
             differential: "0 2 * * 1-6" # Mon-Sat at 2am
-  # dataSource:
-  #   pgbackrest:
-  #     stanza: db
-  #     configuration: *backupConfig
-  #     global: *backupFlag
-  #     repo:
-  #       name: repo1
-  #       s3: *minio
+  dataSource:
+    pgbackrest:
+      stanza: db
+      configuration: *backupConfig
+      global: *backupFlag
+      repo:
+        name: repo1
+        s3: *minio
   proxy:
     pgBouncer:
       service:
