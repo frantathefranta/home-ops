@@ -42,7 +42,8 @@ spec:
     sources: ["crd", "ingress"]
     txtPrefix: k8s.
     txtOwnerId: talos-mini
-    domainFilters: ["${SECRET_DOMAIN}"]
+    domainFilters:
+      - ${SECRET_DOMAIN_ROOT}
     serviceMonitor:
       enabled: true
     podAnnotations:
