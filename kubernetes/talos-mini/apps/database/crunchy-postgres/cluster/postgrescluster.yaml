@@ -46,10 +46,10 @@ spec:
       password:
         type: AlphaNumeric
     # Applications
-    # - name: "atuin"
-    #   databases: ["atuin"]
-    #   password:
-    #     type: AlphaNumeric
+    - name: "atuin"
+      databases: ["atuin"]
+      password:
+        type: AlphaNumeric
     # - name: "authentik"
     #   databases: ["authentik"]
     #   password:
