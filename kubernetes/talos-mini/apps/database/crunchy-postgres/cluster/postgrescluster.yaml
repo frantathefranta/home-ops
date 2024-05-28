@@ -15,6 +15,8 @@ spec:
       synchronous_mode: true
       postgresql:
         synchronous_commit: "on"
+        pg_hba:
+          - hostssl all all all md5
         parameters:
           max_connections: 500
   instances:
