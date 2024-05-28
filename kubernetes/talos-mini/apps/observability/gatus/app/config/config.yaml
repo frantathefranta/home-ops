@@ -24,37 +24,37 @@ connectivity:
   checker:
     target: 1.1.1.1:53
     interval: 1m
-endpoints:
-  - name: Talos Node 1 (talos-blue-01)
-    group: ICMP
-    url: icmp://10.33.25.1
-    conditions: ["[CONNECTED] == true"]
-    alerts: [{ type: pushover }]
-  - name: Talos Node 2 (talos-blue-02)
-    group: ICMP
-    url: icmp://10.33.25.2
-    conditions: ["[CONNECTED] == true"]
-    alerts: [{ type: pushover }]
-  - name: Talos Node 3 (talos-blue-03)
-    group: ICMP
-    url: icmp://10.33.25.3
-    conditions: ["[CONNECTED] == true"]
-    alerts: [{ type: pushover }]
-  - name: Proxmox Node 1 (plutonium)
-    group: ICMP
-    url: icmp://10.32.10.41
-    conditions: ["[CONNECTED] == true"]
-    alerts: [{ type: pushover }]
-  - name: Proxmox Node 2 (neptunium)
-    group: ICMP
-    url: icmp://10.32.10.30
-    conditions: ["[CONNECTED] == true"]
-    alerts: [{ type: pushover }]
-  - name: Proxmox Quorum Node
-    group: ICMP
-    url: icmp://10.32.10.101
-    conditions: ["[CONNECTED] == true"]
-    alerts: [{ type: pushover }]
+# endpoints:
+#   - name: Talos Node 1 (talos-blue-01)
+#     group: ICMP
+#     url: icmp://10.33.25.1
+#     conditions: ["[CONNECTED] == true"]
+#     alerts: [{ type: pushover }]
+#   - name: Talos Node 2 (talos-blue-02)
+#     group: ICMP
+#     url: icmp://10.33.25.2
+#     conditions: ["[CONNECTED] == true"]
+#     alerts: [{ type: pushover }]
+#   - name: Talos Node 3 (talos-blue-03)
+#     group: ICMP
+#     url: icmp://10.33.25.3
+#     conditions: ["[CONNECTED] == true"]
+#     alerts: [{ type: pushover }]
+#   - name: Proxmox Node 1 (plutonium)
+#     group: ICMP
+#     url: icmp://10.32.10.41
+#     conditions: ["[CONNECTED] == true"]
+#     alerts: [{ type: pushover }]
+#   - name: Proxmox Node 2 (neptunium)
+#     group: ICMP
+#     url: icmp://10.32.10.30
+#     conditions: ["[CONNECTED] == true"]
+#     alerts: [{ type: pushover }]
+#   - name: Proxmox Quorum Node
+#     group: ICMP
+#     url: icmp://10.32.10.101
+#     conditions: ["[CONNECTED] == true"]
+#     alerts: [{ type: pushover }]
 # remote:
 #   instances:
 #     - endpoint-prefix: ""
