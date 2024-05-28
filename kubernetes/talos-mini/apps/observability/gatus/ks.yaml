@@ -26,4 +26,4 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      GATUS_SUBDOMAIN: status
+      GATUS_SUBDOMAIN: status-mini
