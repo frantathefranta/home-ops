@@ -15,7 +15,14 @@ spec:
         name: external-dns
         namespace: flux-system
       interval: 30m
-
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
   values:
     fullnameOverride: *name
 
