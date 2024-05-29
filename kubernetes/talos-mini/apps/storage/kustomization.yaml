@@ -8,3 +8,4 @@ resources:
   # Flux-Kustomizations
   - ./snapshot-controller/ks.yaml
   - ./volsync/ks.yaml
+  - ./longhorn/ks.yaml

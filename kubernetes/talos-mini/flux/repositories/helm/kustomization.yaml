@@ -13,6 +13,7 @@ resources:
   - ./ingress-nginx.yaml
   - ./intel.yaml
   - ./k8s-gateway.yaml
+  - ./longhorn.yaml
   - ./jetstack.yaml
   - ./metrics-server.yaml
   - ./node-feature-discovery.yaml
