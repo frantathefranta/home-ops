@@ -40,9 +40,7 @@ spec:
     lvm-localpv:
       enabled: false
     mayastor:
-      enabled: true
-      loki-stack:
-        enabled: false
+      enabled: false
     engines:
       local:
         lvm:
@@ -51,4 +49,4 @@ spec:
           enabled: false
       replicated:
         mayastor:
-          enabled: true
+          enabled: false
