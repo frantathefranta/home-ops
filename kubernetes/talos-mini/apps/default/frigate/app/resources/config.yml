@@ -1,0 +1,101 @@
+mqtt:
+  host: "{MQTT_HOST}"
+  port: 1883
+  topic_prefix: frigate
+  client_id: frigate
+  user: "{FRIGATE_MQTT_USER}"
+  password: "{FRIGATE_MQTT_PASSWORD}"
+
+go2rtc:
+  streams:
+    yard:
+      - ffmpeg:http://10.0.50.201/flv?port=1935&app=bcs&stream=channel0_main.bcs&user=frigate&password={FRIGATE_PASSWORD}#video=copy#audio=copy
+    yard_sub:
+      - ffmpeg:http://10.0.50.201/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user=frigate&password={FRIGATE_PASSWORD}#video=copy#audio=copy
+    sunroom:
+      - ffmpeg:http://10.0.50.202/flv?port=1935&app=bcs&stream=channel0_main.bcs&user=frigate&password={FRIGATE_PASSWORD}#video=copy#audio=copy
+    sunroom_sub:
+      - ffmpeg:http://10.0.50.202/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user=frigate&password={FRIGATE_PASSWORD}#video=copy#audio=copy
+
+cameras:
+  yard:
+    objects:
+      track:
+        - person
+        - cat
+        - dog
+      filters:
+        person:
+          threshold: 0.8
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/yard?video=copy
+          input_args: preset-rtsp-restream
+          roles:
+            - record
+        - path: rtsp://127.0.0.1:8554/yard_sub?video=copy
+          input_args: preset-rtsp-restream
+          roles:
+            - detect
+    detect:
+      width: 640
+      height: 480
+      fps: 15
+    motion:
+      mask:
+        - 640,28,640,111,421,27
+    zones:
+      yard_zone:
+        coordinates: 640,433,640,126,387,34,307,21,262,0,189,0,91,32,0,75,0,480
+  sunroom:
+    objects:
+      track:
+        - person
+      filters:
+        person:
+          threshold: 0.75
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/sunroom?video=copy
+          input_args: preset-rtsp-restream
+          roles:
+            - record
+        - path: rtsp://127.0.0.1:8554/sunroom_sub?video=copy
+          input_args: preset-rtsp-restream
+          roles:
+            - detect
+    detect:
+      width: 640
+      height: 480
+      fps: 15
+    zones:
+      sunroom_zone:
+        coordinates: 0,480,550,429,317,202,98,229,77,0,0,0,0,239
+    motion:
+      mask:
+        - 640,88,640,372,341,140,345,23
+        - 0,0,318,210,343,0,79,0
+snapshots:
+  enabled: True
+  timestamp: True
+  retain:
+    default: 10
+record:
+  enabled: True
+  retain:
+    days: 10
+  events:
+    retain:
+      default: 30
+      mode: active_objects
+detectors:
+  coral1:
+    type: edgetpu
+    device: pci
+database:
+  path: /data/frigate.db
+ffmpeg:
+  global_args: -hide_banner -loglevel warning
+  hwaccel_args: preset-vaapi
+  output_args:
+    record: preset-record-generic
