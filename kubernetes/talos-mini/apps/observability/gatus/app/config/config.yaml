@@ -8,9 +8,9 @@ storage:
 metrics: true
 debug: false
 ui:
-  title: Health Status
-  header: Health Status
-  logo: https://raw.githubusercontent.com/frantathefranta/hugoblog/blob/master/static/favicon-32x32.png
+  title: Talos-Mini Status
+  header: Talos-Mini Status
+  logo: https://raw.githubusercontent.com/frantathefranta/hugoblog/master/static/android-chrome-512x512.png
 alerting:
   pushover:
     application-token: ${GATUS_PUSHOVER_TOKEN}
