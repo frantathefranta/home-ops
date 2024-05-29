@@ -71,6 +71,21 @@ nodes:
             gateway: "10.33.0.1"
         vip:
           ip: "10.33.0.25"
+  - hostname: "talos-nuc-01"
+    ipAddress: "10.33.25.11"
+    installDisk: "/dev/sda"
+    talosImageURL: factory.talos.dev/installer/e02848a08a3ec6b13b0d5e3ba37eec9a6b78487978f5d71ad70dc8a91cfd1690 # Includes gasket driver for Coral
+    controlPlane: false
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "c0:3f:d5:6d:80:c6"
+        dhcp: false
+        addresses:
+          - "10.33.25.11/16"
+        mtu: 1500
+        routes:
+          - network: 0.0.0.0/0
+            gateway: "10.33.0.1"
 
 patches:
   # Configure containerd
@@ -147,8 +162,6 @@ patches:
             source: /var/openebs/local
             options: ["bind", "rshared", "rw"]
 
-
-
 controlPlane:
   patches:
     # Cluster configuration
@@ -186,5 +199,3 @@ controlPlane:
             enabled: true
             allowedRoles: ["os:admin"]
             allowedKubernetesNamespaces: ["system-upgrade"]
-
-
