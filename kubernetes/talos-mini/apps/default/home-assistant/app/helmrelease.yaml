@@ -66,11 +66,11 @@ spec:
     ingress:
       app:
         enabled: true
-        className: "internal"
-        # annotations:
-        #   external-dns.alpha.kubernetes.io/target: ingress-ext.bjw-s.dev
+        className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
         hosts:
-          - host: hass-tmp.${SECRET_DOMAIN}
+          - host: hass-new.${SECRET_DOMAIN}
             paths:
               - path: /
                 service:
