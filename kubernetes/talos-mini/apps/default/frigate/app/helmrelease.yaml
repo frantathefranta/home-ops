@@ -125,4 +125,4 @@ spec:
         server: ${NAS_IP}
         path: /hdds/frigate
         globalMounts:
-          - path: /media
+          - path: /media/frigate
