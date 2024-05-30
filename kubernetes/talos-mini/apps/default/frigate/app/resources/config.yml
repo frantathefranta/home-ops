@@ -1,5 +1,5 @@
 mqtt:
-  host: "{MQTT_HOST}"
+  host: 10.0.50.30
   port: 1883
   topic_prefix: frigate
   client_id: frigate
