@@ -3,7 +3,7 @@ mqtt:
   port: 1883
   topic_prefix: frigate
   client_id: frigate
-  user: "{FRIGATE_MQTT_USER}"
+  user: "{FRIGATE_MQTT_USERNAME}"
   password: "{FRIGATE_MQTT_PASSWORD}"
 
 go2rtc:
