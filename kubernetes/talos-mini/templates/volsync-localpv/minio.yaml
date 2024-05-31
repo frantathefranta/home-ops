@@ -32,7 +32,7 @@ spec:
     manual: restore-once
   restic:
     repository: "${APP}-volsync"
-    copyMethod: "${VOLSYNC_COPYMETHOD:-Clone}"
+    copyMethod: "${VOLSYNC_COPYMETHOD:-Direct}"
     storageClassName: "${VOLSYNC_STORAGECLASS:-openebs-hostpath}"
     accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
     moverSecurityContext:
@@ -50,7 +50,7 @@ spec:
   trigger:
     schedule: "0 * * * *"
   restic:
-    copyMethod: "${VOLSYNC_COPYMETHOD:-Clone}"
+    copyMethod: "${VOLSYNC_COPYMETHOD:-Direct}"
     pruneIntervalDays: 10
     repository: "${APP}-volsync"
     storageClassName: "${VOLSYNC_STORAGECLASS:-openebs-hostpath}"

@@ -34,7 +34,7 @@ spec:
   trigger:
     schedule: "0 0 * * *"
   restic:
-    copyMethod: "${VOLSYNC_COPYMETHOD:-Clone}"
+    copyMethod: "${VOLSYNC_COPYMETHOD:-Direct}"
     pruneIntervalDays: 7
     repository: "${APP}-volsync-r2"
     storageClassName: "${VOLSYNC_STORAGECLASS:-openebs-hostpath}"
