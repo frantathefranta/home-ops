@@ -38,7 +38,7 @@ spec:
       storageReservedPercentageForDefaultDisk: 10
       defaultLonghornStaticStorageClass: longhorn
       nodeDownPodDeletionPolicy: delete-both-statefulset-and-deployment-pod
-      concurrentAutomaticEngineUpgradePerNodeLimit: 3
+      concurrentAutomaticEngineUpgradePerNodeLimit: 1
       orphanAutoDeletion: true
     longhornUI:
       replicas: *replicas
