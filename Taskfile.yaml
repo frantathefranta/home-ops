@@ -28,7 +28,7 @@ env:
 
 includes:
   ansible: .taskfiles/Ansible/Taskfile.yaml
-  external-secrest: .taskfiles/ExternalSecrets/Taskfile.yaml
+  external-secrets: .taskfiles/ExternalSecrets/Taskfile.yaml
   kubernetes:
     aliases: ["k8s"]
     taskfile: .taskfiles/Kubernetes/Taskfile.yaml
@@ -39,6 +39,7 @@ includes:
   talos: .taskfiles/Talos/Taskfile.yaml
   sops: .taskfiles/Sops/Taskfile.yaml
   workstation: .taskfiles/Workstation/Taskfile.yaml
+  volsync: .taskfiles/VolSync/Taskfile.yaml
   user:
     taskfile: .taskfiles/User
     optional: true
