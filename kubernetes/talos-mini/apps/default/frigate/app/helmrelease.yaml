@@ -87,6 +87,7 @@ spec:
         externalTrafficPolicy: Cluster
         annotations:
           io.cilium/lb-ipam-ips: ${SVC_FRIGATE_ADDR}
+          external-dns.alpha.kubernetes.io/hostname: frigate-lb.${SECRET_DOMAIN}
         ports:
           http:
             port: *port
