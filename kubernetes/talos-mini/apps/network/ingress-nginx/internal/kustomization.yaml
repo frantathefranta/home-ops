@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ./services/proxmox.yaml
+  - ./services/home-assistant.yaml
