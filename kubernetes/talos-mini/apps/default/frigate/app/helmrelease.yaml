@@ -62,10 +62,11 @@ spec:
               privileged: true
             resources:
               requests:
-                cpu: 100m
-              # limits:
-              #   gpu.intel.com/i915: "1"
-              #   memory: 4Gi
+                cpu: 800m
+                memory: 1Gi
+              limits:
+                gpu.intel.com/i915: "1"
+                memory: 1Gi
     defaultPodOptions:
       # affinity:
       #   podAntiAffinity:
@@ -82,6 +83,9 @@ spec:
     service:
       app:
         controller: frigate
+        type: LoadBalancer
+        externalTrafficPolicy: Local
+        loadBalancerIP: ${SVC_FRIGATE_ADDR}
         ports:
           http:
             port: *port
