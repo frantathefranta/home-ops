@@ -23,7 +23,7 @@ metadata:
 spec:
   ingressClassName: internal
   rules:
-  - host: hass-local.${SECRET_DOMAIN}
+  - host: hass.${SECRET_DOMAIN}
     http:
       paths:
       - path: /
@@ -35,4 +35,4 @@ spec:
               number: 8123
   tls:
     - hosts:
-      - "hass-local.${SECRET_DOMAIN}"
+      - "hass.${SECRET_DOMAIN}"
