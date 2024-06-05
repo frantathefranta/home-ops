@@ -12,7 +12,6 @@
   "dependencyDashboardTitle": "Renovate Dashboard 🤖",
   "suppressNotifications": ["prEditedNotification", "prIgnoreNotification"],
   "rebaseWhen": "conflicted",
-  "schedule": ["on saturday"],
   "flux": {
     "fileMatch": [
       "(^|/)ansible/.+\\.ya?ml(?:\\.j2)?$",
@@ -79,10 +78,33 @@
       "separateMinorPatch": true
     },
     {
+      "description": ["Intel Device Plugins Group"],
+      "groupName": "Intel-Device-Plugins",
+      "matchPackagePatterns": ["intel-device-plugins"],
+      "matchDatasources": ["helm"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": true
+    },
+    {
       "description": ["System Upgrade Controller Group"],
       "groupName": "System Upgrade Controller",
       "matchPackagePatterns": ["system-upgrade-controller"],
       "matchDatasources": ["docker", "github-releases"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": true
+    },
+    {
+      "description": ["Talos Group"],
+      "groupName": "Talos",
+      "matchPackagePatterns": [
+        "siderolabs/talosctl",
+        "siderolabs/installer"
+      ],
+      "matchDatasources": ["docker"],
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
       },
