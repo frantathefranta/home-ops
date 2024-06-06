@@ -12,6 +12,7 @@
   "dependencyDashboardTitle": "Renovate Dashboard 🤖",
   "suppressNotifications": ["prEditedNotification", "prIgnoreNotification"],
   "rebaseWhen": "conflicted",
+  "assignees": ["frantathefranta"],
   "flux": {
     "fileMatch": [
       "(^|/)ansible/.+\\.ya?ml(?:\\.j2)?$",
