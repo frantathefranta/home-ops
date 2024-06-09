@@ -87,6 +87,21 @@ nodes:
           - network: 0.0.0.0/0
             gateway: "10.33.0.1"
 
+  - hostname: "talos-g3-01"
+    ipAddress: "10.33.25.12"
+    installDisk: "/dev/sda"
+    talosImageURL: factory.talos.dev/installer/e02848a08a3ec6b13b0d5e3ba37eec9a6b78487978f5d71ad70dc8a91cfd1690 # Includes gasket driver for Coral
+    controlPlane: false
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "10:62:e5:18:1a:2e"
+        dhcp: false
+        addresses:
+          - "10.33.25.12/16"
+        mtu: 1500
+        routes:
+          - network: 0.0.0.0/0
+            gateway: "10.33.0.1"
 patches:
   # Configure containerd
   - |-
