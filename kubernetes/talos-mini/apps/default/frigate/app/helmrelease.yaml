@@ -63,10 +63,10 @@ spec:
             resources:
               requests:
                 cpu: 800m
-                memory: 1Gi
+                memory: 2Gi
               limits:
                 # gpu.intel.com/i915: "1"
-                memory: 1Gi
+                memory: 2Gi
     defaultPodOptions:
       # affinity:
       #   podAntiAffinity:
