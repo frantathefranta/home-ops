@@ -12,7 +12,7 @@ vars:
   TALOS_VERSION: v1.7.4
   TALOS_SCHEMATIC_ID: 395a2c25f28a445eed24a30a3e5f078bfd733fd6677a06df942c16f45a445dd1
   # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-  KUBERNETES_VERSION: v1.30.1
+  KUBERNETES_VERSION: v1.30.2
 
 env:
   TALOSCONFIG: "{{.TALOS_DIR}}/clusterconfig/talosconfig"
