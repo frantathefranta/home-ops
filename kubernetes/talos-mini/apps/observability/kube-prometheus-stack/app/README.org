@@ -1,0 +1,23 @@
+#+title: Notes on kube-prometheus-stack
+** Alert manager
+*** Dead Man Snitch/Switch
+Some people use uptimerobot.com, but I'm too cheap so I host [[https://github.com/louislam/uptime-kuma][uptime-kuma]] in the cloud. To get a similar functionality, I utilize [[https://github.com/natrontech/alertmanager-uptime-kuma-push][natrontech/alertmanager-uptime-kuma-push]].
+****  uptime-kuma monitor settings
+1. *Monitor type*: Push
+2. *Heartbeat interval*: 60 seconds
+3. *Retries*: 0
+4. *Heartbeat retry interval*: 60 seconds
+5. *Resend notification*: 0
+**** alert-manager routes
+The defaults that the middleware suggests looks like this:
+#+begin_src yaml :noeval
+route:
+    routes:
+        - receiver: Dead Mans Snitch Uptime Kuma
+          matchers:
+            - alertname =~ "InfoInhibitor|Watchdog"
+          group_wait: 0s
+          group_interval: 50s
+          repeat_interval: 1m
+#+end_src
+This *did not* work for me, the alert manager only send the ~POST~ request every 2.5 minutes. I had to change the ~group_interval~ to 15s and the ~repeat_interval~ to 30s. It now pushes the ~POST~ request every 30 seconds and works as intended.
