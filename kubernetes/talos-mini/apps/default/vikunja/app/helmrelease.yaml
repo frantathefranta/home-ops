@@ -68,9 +68,9 @@ spec:
       app:
         enabled: true
         className: internal
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}.
-          hajimari.io/icon: mdi:format-list-checks
+        # annotations:
+        #   external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
+        #   hajimari.io/icon: mdi:format-list-checks
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
