@@ -69,9 +69,9 @@ spec:
     ingress:
       app:
         enabled: true
-        className: internal
-        # annotations:
-        #   external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
+        className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
         #   hajimari.io/icon: mdi:format-list-checks
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
