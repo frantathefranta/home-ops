@@ -43,3 +43,9 @@ spec:
 #+end_src
 ** References
 - [[https://access.crunchydata.com/documentation/postgres-operator/latest/architecture/user-management][CrunchyData Documentation]]
+** Troubleshooting
+If you are getting this error in a pod that you set up a user for in crunchy PG:
+#+begin_src sh :noeval
+ERROR:  permission denied for schema public
+#+end_src
+that means your user-init controller did not set up correctly for the new user. Restarting the pod with the user-init controller should fix this.

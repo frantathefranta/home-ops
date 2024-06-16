@@ -50,6 +50,10 @@ spec:
       databases: ["atuin"]
       password:
         type: AlphaNumeric
+    - name: "vikunja"
+      databases: ["vikunja"]
+      password:
+        type: AlphaNumeric
     # - name: "authentik"
     #   databases: ["authentik"]
     #   password:
@@ -132,7 +136,7 @@ spec:
             endpoint: s3.franta.us
             region: us-east-1
           schedules:
-            full: "0 1 * * 0"           # Sunday at 1am
+            full: "0 1 * * 0" # Sunday at 1am
             differential: "0 1 * * 1-6" # Mon-Sat at 1am
             incremental: "0 3-23 * * *" # Every hour except 1-2am
         - name: repo2
@@ -141,7 +145,7 @@ spec:
             endpoint: ${CLUSTER_SECRET_CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com
             region: us-east-1 #https://developers.cloudflare.com/r2/api/s3/api/#bucket-region
           schedules:
-            full: "0 2 * * 0"           # Sunday at 2am
+            full: "0 2 * * 0" # Sunday at 2am
             differential: "0 2 * * 1-6" # Mon-Sat at 2am
   dataSource:
     pgbackrest:
