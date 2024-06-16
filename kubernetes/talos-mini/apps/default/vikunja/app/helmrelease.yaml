@@ -34,8 +34,8 @@ spec:
         containers:
           app:
             image:
-              repository: vikunja/api
-              tag: 0.22.1@sha256:c9415431e6235229302bb8f9ee6660b74c24859d1e8adbc4a3e25bd418604b57
+              repository: vikunja/vikunja
+              tag: 0.23.0
             # envFrom: *envFrom
             env:
               VIKUNJA_SERVICE_ENABLEREGISTRATION: false
@@ -52,20 +52,20 @@ spec:
                 memory: 10Mi
               limits:
                 memory: 100Mi
-          frontend:
-            image:
-              repository: vikunja/frontend
-              tag: 0.22.1@sha256:f0223d441997fe29c377d0b476dc4bb2fc091b44b9c24d76b1b88c213df520c5
-          proxy:
-            image:
-              repository: caddy
-              tag: 2.8.4-alpine@sha256:a48e22edad925dc216fd27aa4f04ec49ebdad9b64c9e5a3f1826d0595ef2993c
+          # frontend:
+          #   image:
+          #     repository: vikunja/frontend
+          #     tag: 0.22.1@sha256:f0223d441997fe29c377d0b476dc4bb2fc091b44b9c24d76b1b88c213df520c5
+          # proxy:
+          #   image:
+          #     repository: caddy
+          #     tag: 2.8.4-alpine@sha256:a48e22edad925dc216fd27aa4f04ec49ebdad9b64c9e5a3f1826d0595ef2993c
     service:
       app:
         controller: *app
         ports:
           http:
-            port: 8080
+            port: 3456
     ingress:
       app:
         enabled: true
