@@ -52,14 +52,6 @@ spec:
                 memory: 10Mi
               limits:
                 memory: 100Mi
-          # frontend:
-          #   image:
-          #     repository: vikunja/frontend
-          #     tag: 0.22.1@sha256:f0223d441997fe29c377d0b476dc4bb2fc091b44b9c24d76b1b88c213df520c5
-          # proxy:
-          #   image:
-          #     repository: caddy
-          #     tag: 2.8.4-alpine@sha256:a48e22edad925dc216fd27aa4f04ec49ebdad9b64c9e5a3f1826d0595ef2993c
     service:
       app:
         controller: *app
@@ -89,15 +81,9 @@ spec:
         existingClaim: *app
         globalMounts:
           - path: /app/vikunja/files
-      caddy-config:
-        type: configMap
-        name: vikunja-configmap
-        globalMounts:
-          - path: /etc/caddy/Caddyfile
-            subPath: Caddyfile
-      vikunja-config:
-        type: configMap
-        name: vikunja-configmap
-        globalMounts:
-          - path: /etc/vikunja/config.yml
-            subPath: Vikunja.yaml
+      # vikunja-config:
+      #   type: configMap
+      #   name: vikunja-configmap
+      #   globalMounts:
+      #     - path: /etc/vikunja/config.yml
+      #       subPath: Vikunja.yaml
