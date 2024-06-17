@@ -17,6 +17,8 @@ spec:
     name: home-kubernetes
   dependsOn:
     - name: external-secrets-stores
+    - name: crunchy-postgres-operator-cluster
+    - name: crunchy-postgres-stores
     - name: longhorn
     - name: volsync
   wait: false
