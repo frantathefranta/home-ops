@@ -81,6 +81,13 @@ spec:
         existingClaim: *app
         globalMounts:
           - path: /app/vikunja/files
+      vikunja-config:
+        type: secret
+        name: vikunja-secret
+        globalMounts:
+          - path: /app/vikunja/config.yaml
+            subPath: config.yaml
+            readOnly: true
       # vikunja-config:
       #   type: configMap
       #   name: vikunja-configmap
