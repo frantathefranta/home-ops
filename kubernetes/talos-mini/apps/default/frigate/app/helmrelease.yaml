@@ -131,6 +131,6 @@ spec:
       media:
         type: nfs
         server: ${NAS_IP}
-        path: /hdds/frigate
+        path: /emc1/frigate
         globalMounts:
           - path: /media/frigate
