@@ -17,7 +17,7 @@ spec:
         synchronous_commit: "on"
         pg_hba:
           - hostssl all all all md5
-          - hostnossl all all 10.69.0.0/16 md5
+          - hostnossl all all 10.69.0.0/16 md5 # Necessary because of authelia (there might be a workaround though)
         parameters:
           max_connections: 500
   instances:
