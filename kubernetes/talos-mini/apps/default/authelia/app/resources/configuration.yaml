@@ -36,12 +36,12 @@ session:
     database_index: 2
     host: dragonfly.database.svc.cluster.local
 
-# notifier:
-#   disable_startup_check: true
-#   smtp:
-#     address: smtp-relay.default.svc.cluster.local:25 # TODO: Enable this when SMTP-relay is online
-#     sender: Authelia <authelia@(enter_domain)>
-#     disable_require_tls: true
+notifier:
+  disable_startup_check: true
+  smtp:
+    address: smtp-relay.default.svc.cluster.local:25 # TODO: Enable this when SMTP-relay is online
+    sender: Authelia <authelia@franta.us>
+    disable_require_tls: true
 
 totp:
   disable: false
