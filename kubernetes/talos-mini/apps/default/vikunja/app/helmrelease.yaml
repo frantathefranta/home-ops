@@ -40,9 +40,11 @@ spec:
             env:
               VIKUNJA_SERVICE_ENABLEREGISTRATION: false
               VIKUNJA_SERVICE_TIMEZONE: "${TIMEZONE}"
-            #   VIKUNJA_MAILER_HOST: smtp-relay.default.svc.cluster.local.
-            #   VIKUNJA_MAILER_PORT: "2525"
-            #   VIKUNJA_MAILER_FROMEMAIL: Vikunja <vikunja@${SECRET_DOMAIN}>
+              VIKUNJA_AUTH_OPENID: true
+              VIKUNJA_AUTH_LOCAL: false
+              VIKUNJA_MAILER_HOST: smtp-relay.default.svc.cluster.local.
+              VIKUNJA_MAILER_PORT: "25"
+              VIKUNJA_MAILER_FROMEMAIL: Vikunja <vikunja@${SECRET_DOMAIN}>
             envFrom:
             - secretRef:
                 name: vikunja-secret
