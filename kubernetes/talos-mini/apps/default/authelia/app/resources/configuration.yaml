@@ -39,7 +39,7 @@ session:
 notifier:
   disable_startup_check: true
   smtp:
-    address: smtp-relay.default.svc.cluster.local:25 # TODO: Enable this when SMTP-relay is online
+    address: smtp-relay.default.svc.cluster.local:25
     sender: Authelia <authelia@franta.us>
     disable_require_tls: true
 
