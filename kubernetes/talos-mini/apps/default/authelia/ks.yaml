@@ -27,4 +27,4 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      GATUS_SUBDOMAIN: auth
+      GATUS_SUBDOMAIN: auth-mini
