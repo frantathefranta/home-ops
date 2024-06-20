@@ -47,7 +47,10 @@ spec:
               VIKUNJA_MAILER_PORT: 25
               VIKUNJA_MAILER_FROMEMAIL: "vikunja@franta.us"
               VIKUNJA_MAILER_SKIPTLSVERIFY: true
-              VIKUNJA_LOG_MAIL: "stdout"
+              VIKUNJA_REDIS_ENABLED: true
+              VIKUNJA_REDIS_HOST: "dragonfly.database.svc.cluster.local:6379"
+              VIKUNJA_REDIS_DB: 0
+              VIKUNJA_KEYVALUE_TYPE: "redis"
             envFrom:
             - secretRef:
                 name: vikunja-secret
