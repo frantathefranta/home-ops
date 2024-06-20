@@ -21,6 +21,9 @@ spec:
     - name: crunchy-postgres-stores
     - name: longhorn
     - name: volsync
+    - name: authelia
+    - name: dragonfly-cluster
+    - name: smtp-relay
   wait: false
   interval: 30m
   retryInterval: 1m

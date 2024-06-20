@@ -15,6 +15,7 @@ spec:
     - name: crunchy-postgres-stores
     - name: dragonfly-cluster
     - name: external-secrets-stores
+    - name: smtp-relay
   path: ./kubernetes/talos-mini/apps/default/authelia/app
   prune: true
   sourceRef:
