@@ -40,9 +40,12 @@ spec:
             env:
               VIKUNJA_SERVICE_ENABLEREGISTRATION: false
               VIKUNJA_SERVICE_TIMEZONE: "${TIMEZONE}"
+              VIKUNJA_SERVICE_PUBLICURL: "vikunja.${SECRET_DOMAIN}"
+              VIKUNJA_SERVICE_ENABLEPUBLICTEAMS: true
+              VIKUNJA_MAILER_ENABLED: true
               VIKUNJA_MAILER_HOST: smtp-relay.default.svc.cluster.local
               VIKUNJA_MAILER_PORT: 25
-              VIKUNJA_MAILER_FROMEMAIL: Vikunja <vikunja@${SECRET_DOMAIN}>
+              VIKUNJA_MAILER_FROMEMAIL: "vikunja@franta.us"
               VIKUNJA_MAILER_SKIPTLSVERIFY: true
               VIKUNJA_LOG_MAIL: "stdout"
             envFrom:
@@ -66,7 +69,6 @@ spec:
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
-        #   hajimari.io/icon: mdi:format-list-checks
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
@@ -90,9 +92,3 @@ spec:
           - path: /app/vikunja/config.yaml
             subPath: config.yaml
             readOnly: true
-      # vikunja-config:
-      #   type: configMap
-      #   name: vikunja-configmap
-      #   globalMounts:
-      #     - path: /etc/vikunja/config.yml
-      #       subPath: Vikunja.yaml
