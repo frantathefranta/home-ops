@@ -35,17 +35,16 @@ spec:
           app:
             image:
               repository: vikunja/vikunja
-              tag: 0.23.0
-            # envFrom: *envFrom
+              tag: 0.23.0@sha256:c824f99b0b09b7f03a1d77ad6691fbce38edf8d737e73e3242d8b87dd96d21e0
             env:
               VIKUNJA_SERVICE_ENABLEREGISTRATION: false
               VIKUNJA_SERVICE_TIMEZONE: "${TIMEZONE}"
-              VIKUNJA_SERVICE_PUBLICURL: "vikunja.${SECRET_DOMAIN}"
+              VIKUNJA_SERVICE_PUBLICURL: &host "vikunja.${SECRET_DOMAIN}"
               VIKUNJA_SERVICE_ENABLEPUBLICTEAMS: true
               VIKUNJA_MAILER_ENABLED: true
               VIKUNJA_MAILER_HOST: smtp-relay.default.svc.cluster.local
               VIKUNJA_MAILER_PORT: 25
-              VIKUNJA_MAILER_FROMEMAIL: "vikunja@franta.us"
+              VIKUNJA_MAILER_FROMEMAIL: "vikunja@${SECRET_DOMAIN}"
               VIKUNJA_MAILER_SKIPTLSVERIFY: true
               VIKUNJA_REDIS_ENABLED: true
               VIKUNJA_REDIS_HOST: "dragonfly.database.svc.cluster.local:6379"
@@ -73,7 +72,7 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: *host
             paths:
               - path: /
                 service:
