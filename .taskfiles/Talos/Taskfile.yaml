@@ -10,7 +10,7 @@ vars:
   TALHELPER_CONFIG_FILE: "{{.TALOS_DIR}}/talconfig.yaml"
   # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
   TALOS_VERSION: v1.7.5
-  TALOS_SCHEMATIC_ID: 395a2c25f28a445eed24a30a3e5f078bfd733fd6677a06df942c16f45a445dd1
+  TALOS_SCHEMATIC_ID: d818c1a93e760bef16d3e768ba6f3537eec1e0d8d4424979df0fa0b4146fd9f7
   # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
   KUBERNETES_VERSION: v1.30.2
 
