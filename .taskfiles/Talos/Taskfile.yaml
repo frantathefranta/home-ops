@@ -119,7 +119,7 @@ tasks:
 
   upgrade-talos:
     desc: Upgrade talos on a node
-    cmd: talosctl --nodes {{.node}} upgrade --image {{.image}} --preserve=true --reboot-mode=default
+    cmd: talosctl --nodes {{.node}} upgrade --image {{.image}} --preserve=true --reboot-mode=powercycle
     requires:
       vars: ["node", "image"]
     preconditions:
