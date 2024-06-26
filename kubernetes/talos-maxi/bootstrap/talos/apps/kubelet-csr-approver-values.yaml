@@ -1,0 +1,3 @@
+---
+providerRegex: ^(talos-actinium|talos-thorium|talos-protactinium)$
+bypassDnsResolution: true
