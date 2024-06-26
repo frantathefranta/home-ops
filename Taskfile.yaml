@@ -4,9 +4,9 @@ version: "3"
 
 vars:
   # Directories
-  ANSIBLE_DIR: "{{.ROOT_DIR}}/ansible"
-  BOOTSTRAP_DIR: "{{.ROOT_DIR}}/bootstrap"
-  KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes/talos-mini"
+  # ANSIBLE_DIR: "{{.ROOT_DIR}}/ansible"
+  # BOOTSTRAP_DIR: "{{.ROOT_DIR}}/bootstrap"
+  KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
   PRIVATE_DIR: "{{.ROOT_DIR}}/.private"
   SCRIPTS_DIR: "{{.ROOT_DIR}}/scripts"
   # Files
@@ -21,7 +21,7 @@ vars:
 
 env:
   # KUBECONFIG: "{{.KUBECONFIG_FILE}}"
-  KUBECONFIG: "{{.KUBERNETES_DIR}}/kubeconfig" # :{{.KUBERNETES_DIR}}/kubernetes/kubeconfig"
+  KUBECONFIG: "{{.KUBERNETES_DIR}}/kubernetes/talos-mini/kubeconfig:{{.KUBERNETES_DIR}}/kubernetes/talos-maxi/kubeconfig" # :{{.KUBERNETES_DIR}}/kubernetes/kubeconfig"
   PYTHONDONTWRITEBYTECODE: "1"
   SOPS_AGE_KEY_FILE: "{{.AGE_FILE}}"
   VIRTUAL_ENV: "{{.ROOT_DIR}}/.venv"
