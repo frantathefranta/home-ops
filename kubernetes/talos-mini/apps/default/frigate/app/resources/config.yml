@@ -1,5 +1,5 @@
 mqtt:
-  host: emqx-listeners.database.svc.cluster.local
+  host: emqx-listeners.franta.us
   topic_prefix: frigate
   user: "{FRIGATE_MQTT_USERNAME}"
   password: "{FRIGATE_MQTT_PASSWORD}"
