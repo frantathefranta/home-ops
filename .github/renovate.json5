@@ -266,7 +266,16 @@
         "**/ansible/talos-mini/**",
         "**/terraform/talos-mini/**"
       ],
-      "additionalBranchPrefix": "talos-mini-"
+      "additionalBranchPrefix": "mini-"
+    }
+    {
+      "description": ["Separate PRs for talos-maxi cluster"],
+      "matchFileNames": [
+        "**/kubernetes/talos-maxi/**",
+        "**/ansible/talos-maxi/**",
+        "**/terraform/talos-maxi/**"
+      ],
+      "additionalBranchPrefix": "maxi-"
     }
   ],
   // custom managers
