@@ -7,4 +7,4 @@ metadata:
 data:
   TIMEZONE: "America/Detroit"
   CLUSTER_CIDR: "10.69.0.0/16"
-  NODE_CIDR: "10.40.0.0/16"
+  NODE_CIDR: "10.33.0.0/16"
