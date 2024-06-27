@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   # - ./webhooks/ks.yaml
-  # - ./monitoring # TODO Enabled this when Prometheus is online
+  - ./monitoring
