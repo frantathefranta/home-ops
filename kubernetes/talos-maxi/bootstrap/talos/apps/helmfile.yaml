@@ -12,15 +12,24 @@ helmDefaults:
   recreatePods: true
   force: true
 
-releases:
+releases: # TODO Change fields based on https://github.com/onedr0p/home-ops/blob/e7555f6cc0c0844abd52a52f895fc4d6a3aa804a/kubernetes/main/bootstrap/helmfile.yaml
+  - name: prometheus-operator-crds
+    namespace: observability
+    chart: oci://ghcr.io/prometheus-community/charts/prometheus-operator-crds
+    version: 11.0.0
   - name: cilium
     namespace: kube-system
     chart: cilium/cilium
     version: 1.15.6
     values: ["./cilium-values.yaml"]
+    needs:
+      - observability/prometheus-operator-crds
   - name: kubelet-csr-approver
     namespace: kube-system
     chart: postfinance/kubelet-csr-approver
     version: 1.2.2
     values: ["./kubelet-csr-approver-values.yaml"]
-    needs: ["cilium"]
+    needs:
+      - observability/prometheus-operator-crds
+      - kube-system/cilium
+      {{/* - kube-system/coredns */}}
