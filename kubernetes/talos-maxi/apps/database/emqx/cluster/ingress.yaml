@@ -8,7 +8,7 @@ metadata:
 spec:
   ingressClassName: internal
   rules:
-    - host: emqx-maxi.${SECRET_DOMAIN}
+    - host: emqx.${SECRET_DOMAIN}
       http:
         paths:
           - path: /
