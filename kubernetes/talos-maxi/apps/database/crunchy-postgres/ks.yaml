@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/talos-mini/apps/database/crunchy-postgres/app
+  path: ./kubernetes/talos-maxi/apps/database/crunchy-postgres/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -34,7 +34,7 @@ spec:
   dependsOn:
     - name: crunchy-postgres-operator
     - name: external-secrets-stores
-  path: ./kubernetes/talos-mini/apps/database/crunchy-postgres/cluster
+  path: ./kubernetes/talos-maxi/apps/database/crunchy-postgres/cluster
   prune: true
   sourceRef:
     kind: GitRepository
@@ -57,7 +57,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: crunchy-postgres-operator-cluster
-  path: ./kubernetes/talos-mini/apps/database/crunchy-postgres/userinit-controller
+  path: ./kubernetes/talos-maxi/apps/database/crunchy-postgres/userinit-controller
   prune: true
   sourceRef:
     kind: GitRepository
@@ -80,7 +80,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: external-secrets
-  path: ./kubernetes/talos-mini/apps/database/crunchy-postgres/clustersecretstore
+  path: ./kubernetes/talos-maxi/apps/database/crunchy-postgres/clustersecretstore
   prune: true
   sourceRef:
     kind: GitRepository

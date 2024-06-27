@@ -12,7 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: external-secrets-stores
-  path: ./kubernetes/talos-mini/apps/database/emqx/app
+  path: ./kubernetes/talos-maxi/apps/database/emqx/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -35,7 +35,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: emqx
-  path: ./kubernetes/talos-mini/apps/database/emqx/cluster
+  path: ./kubernetes/talos-maxi/apps/database/emqx/cluster
   prune: true
   sourceRef:
     kind: GitRepository
@@ -59,7 +59,7 @@ spec:
   dependsOn:
     - name: emqx-cluster
     - name: external-secrets-stores
-  path: ./kubernetes/talos-mini/apps/database/emqx/exporter
+  path: ./kubernetes/talos-maxi/apps/database/emqx/exporter
   prune: true
   sourceRef:
     kind: GitRepository

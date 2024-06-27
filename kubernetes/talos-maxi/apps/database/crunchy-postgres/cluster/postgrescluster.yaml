@@ -129,7 +129,7 @@ spec:
       repos:
         - name: repo1
           s3: &minio
-            bucket: postgresql
+            bucket: postgresql-maxi
             endpoint: s3.franta.us
             region: us-east-1
           schedules:
