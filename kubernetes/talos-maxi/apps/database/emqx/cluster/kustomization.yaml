@@ -1,0 +1,15 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./cluster.yaml
+  - ./ingress.yaml
+  - ./podmonitor.yaml
+  # - ./gatus.yaml # TODO Uncomment when gatus is deployed
+configMapGenerator:
+  - name: emqx-init-mqtt-configmap
+    files:
+      - init-mqtt.py=./resources/init-mqtt.py
+generatorOptions:
+  disableNameSuffixHash: true
