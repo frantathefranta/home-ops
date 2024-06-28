@@ -8,4 +8,4 @@ resources:
   # Flux-Kustomizations
   - ./crunchy-postgres/ks.yaml
   # - ./emqx/ks.yaml
-  - ./dragonfly/ks.yaml
+  # - ./dragonfly/ks.yaml
