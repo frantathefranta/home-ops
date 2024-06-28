@@ -19,8 +19,8 @@ spec:
     - name: external-secrets-stores
     - name: crunchy-postgres-operator-cluster
     - name: crunchy-postgres-stores
-    - name: longhorn
-    - name: volsync
+    # - name: longhorn
+    # - name: volsync
     - name: authelia
     - name: dragonfly-cluster
     - name: smtp-relay
@@ -28,7 +28,7 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m
-  postBuild:
-    substitute:
-      APP: *app
-      VOLSYNC_CAPACITY: 2Gi
+  # postBuild:
+  #   substitute:
+  #     APP: *app
+  #     VOLSYNC_CAPACITY: 2Gi

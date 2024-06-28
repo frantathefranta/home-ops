@@ -83,8 +83,7 @@ spec:
               - *host
     persistence:
       config:
-        enabled: true
-        existingClaim: *app
+        type: emptyDir
         globalMounts:
           - path: /app/vikunja/files
       vikunja-config:
