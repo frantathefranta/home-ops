@@ -5,4 +5,4 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-  - ../../../../templates/gatus/guarded # TODO Uncomment this when gatus is deployed
+  - ../../../../templates/gatus/guarded

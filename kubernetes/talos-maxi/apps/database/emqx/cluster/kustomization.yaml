@@ -6,7 +6,7 @@ resources:
   - ./cluster.yaml
   - ./ingress.yaml
   - ./podmonitor.yaml
-  # - ./gatus.yaml # TODO Uncomment when gatus is deployed
+  - ./gatus.yaml
 configMapGenerator:
   - name: emqx-init-mqtt-configmap
     files:

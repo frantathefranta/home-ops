@@ -5,4 +5,4 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./postgrescluster.yaml
-  # - ./gatus.yaml # TODO Add when gatus is deployed
+  - ./gatus.yaml

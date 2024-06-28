@@ -5,5 +5,4 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-  # - ../../../../templates/gatus/external # TODO Uncomment this when gatus is deployed
-  # - ../../../../templates/volsync
+  - ../../../../templates/gatus/external

@@ -5,4 +5,4 @@ kind: Kustomization
 resources:
   - ./cluster.yaml
   - ./podmonitor.yaml
-  # - ./gatus.yaml # TODO Uncomment when gatus is deployed
+  - ./gatus.yaml
