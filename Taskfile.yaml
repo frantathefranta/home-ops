@@ -38,6 +38,7 @@ includes:
     taskfile: .taskfiles/Repository/Taskfile.yaml
   talos: .taskfiles/Talos/Taskfile.yaml
   sops: .taskfiles/Sops/Taskfile.yaml
+  postgres: .taskfiles/Postgresql
   workstation: .taskfiles/Workstation/Taskfile.yaml
   volsync: .taskfiles/VolSync/Taskfile.yaml
   user:
