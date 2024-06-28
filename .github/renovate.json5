@@ -267,7 +267,7 @@
         "**/terraform/talos-mini/**"
       ],
       "additionalBranchPrefix": "mini-"
-    }
+    },
     {
       "description": ["Separate PRs for talos-maxi cluster"],
       "matchFileNames": [
