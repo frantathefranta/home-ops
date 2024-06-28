@@ -1,0 +1,11 @@
+#+title: Taskfiles
+* Postgresql
+** Dumping and restoring database between clusters
+#+begin_src sh :noeval
+# Dumping database from one cluster
+$ task postgres:crunchy-dump cluster=talos-mini APP=authelia DUMP=/tmp/authelia.db
+
+# Restoring database on another cluster
+task postgres:crunchy-restore cluster=talos-maxi APP=authelia DUMP=/tmp/authelia.db DBUSER=authelia
+#+end_src
+Taskfile copied from [[https://github.com/joryirving/home-ops/blob/main/.taskfiles/Postgresql/Taskfile.yaml][joryirving/home-ops]]
