@@ -39,7 +39,7 @@ spec:
             env:
               VIKUNJA_SERVICE_ENABLEREGISTRATION: false
               VIKUNJA_SERVICE_TIMEZONE: "${TIMEZONE}"
-              VIKUNJA_SERVICE_PUBLICURL: &host "vikunja-old.${SECRET_DOMAIN}"
+              VIKUNJA_SERVICE_PUBLICURL: &host "vikunja.${SECRET_DOMAIN}"
               VIKUNJA_SERVICE_ENABLEPUBLICTEAMS: true
               VIKUNJA_MAILER_ENABLED: true
               VIKUNJA_MAILER_HOST: smtp-relay.default.svc.cluster.local
@@ -70,7 +70,7 @@ spec:
         enabled: true
         className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: external-maxi.${SECRET_DOMAIN}
         hosts:
           - host: *host
             paths:
