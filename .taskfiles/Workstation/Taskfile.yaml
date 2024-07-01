@@ -8,6 +8,8 @@ vars:
   GENERIC_BIN_DIR: "{{.ROOT_DIR}}/.bin"
   # renovate: datasource=github-releases depName=getsops/sops
   SOPS_VERSION: v3.9.0
+  TALOS_VERSION:
+    sh: yq .x-vars.TALOS_VERSION "{{.ROOT_DIR}}/.taskfiles/Talos/Taskfile.yaml"
 
 tasks:
 
@@ -60,7 +62,6 @@ tasks:
           - helmfile/helmfile?as=helmfile&type=script
           - jqlang/jq?as=jq&type=script
           - kubernetes-sigs/kustomize?as=kustomize&type=script
-          - siderolabs/talos?as=talosctl&type=script
           - yannh/kubeconform?as=kubeconform&type=script
           - mikefarah/yq?as=yq&type=script
         cmd: curl -fsSL "https://i.jpillora.com/{{.ITEM}}" | bash
@@ -72,6 +73,9 @@ tasks:
         platforms: ["linux/arm64"]
       - cmd: curl -L -o sops "https://github.com/getsops/sops/releases/download/{{.SOPS_VERSION}}/sops-{{.SOPS_VERSION}}.linux.amd64"
         platforms: ["linux/amd64"]
+      - cmd: curl -L -o talosctl "https://github.com/siderolabs/talos/releases/download/{{.TALOS_VERSION}}/talosctl-linux-amd64"
+        platforms: ["linux/amd64"]
       - cmd: chmod +x sops
       - cmd: chmod +x kubectl
+      - cmd: chmod +x talosctl
       - cmd: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | USE_SUDO="false" HELM_INSTALL_DIR="." bash
