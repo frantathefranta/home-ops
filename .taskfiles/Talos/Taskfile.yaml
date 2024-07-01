@@ -4,14 +4,11 @@ version: "3"
 
 x-vars: &vars
   TALOS_VERSION:
-    v1.7.5
-    # sh: yq 'select(document_index == 1).spec.postBuild.substitute.TALOS_VERSION' {{.KUBERNETES_DIR}}/{{.cluster}}/apps/kube-tools/system-upgrade-controller/ks.yaml
+    sh: yq 'select(document_index == 1).spec.postBuild.substitute.TALOS_VERSION' {{.KUBERNETES_DIR}}/{{.cluster}}/apps/kube-tools/system-upgrade-controller/ks.yaml
   TALOS_SCHEMATIC_ID:
-    a7bcadbc1b6d03c0e687be3a5d9789ef7113362a6a1a038653dfd16283a92b6b
-    # sh: yq 'select(document_index == 1).spec.postBuild.substitute.TALOS_SCHEMATIC_ID' {{.KUBERNETES_DIR}}/{{.cluster}}/apps/kube-tools/system-upgrade-controller/ks.yaml
+    sh: yq 'select(document_index == 1).spec.postBuild.substitute.TALOS_SCHEMATIC_ID' {{.KUBERNETES_DIR}}/{{.cluster}}/apps/kube-tools/system-upgrade-controller/ks.yaml
   KUBERNETES_VERSION:
-    v1.30.2
-    # sh: yq 'select(document_index == 1).spec.postBuild.substitute.KUBERNETES_VERSION' {{.KUBERNETES_DIR}}/{{.cluster}}/apps/kube-tools/system-upgrade-controller/ks.yaml
+    sh: yq 'select(document_index == 1).spec.postBuild.substitute.KUBERNETES_VERSION' {{.KUBERNETES_DIR}}/{{.cluster}}/apps/kube-tools/system-upgrade-controller/ks.yaml
   CONTROLLER:
     sh: talosctl --context {{.cluster}} config info --output json | jq --raw-output '.endpoints[]' | shuf -n 1
 
