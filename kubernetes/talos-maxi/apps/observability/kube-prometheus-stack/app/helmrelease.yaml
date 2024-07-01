@@ -43,6 +43,7 @@ spec:
         hosts: ["alertmanager-maxi.${SECRET_DOMAIN}"]
         pathType: Prefix
       alertmanagerSpec:
+        replicas: 2
         useExistingSecret: true
         configSecret: alertmanager-secret
         storage:
@@ -86,9 +87,9 @@ spec:
     kubeControllerManager:
       enabled: true
       endpoints: &cp
-        - 10.33.40.1
-        - 10.33.40.2
-        - 10.33.40.3
+        - 10.33.35.1
+        - 10.33.35.2
+        - 10.33.35.3
     kubeEtcd:
       enabled: true
       endpoints: *cp
@@ -106,6 +107,8 @@ spec:
         hosts: ["prometheus-maxi.${SECRET_DOMAIN}"]
         pathType: Prefix
       prometheusSpec:
+        replicas: 2
+        replicaExternalLabelName: __replica__
         scrapeInterval: 1m # Must match interval in Grafana Helm chart
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
