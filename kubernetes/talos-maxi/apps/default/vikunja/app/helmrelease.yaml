@@ -29,6 +29,7 @@ spec:
   values:
     controllers:
       vikunja:
+        replicas: 2
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -59,6 +60,14 @@ spec:
                 memory: 10Mi
               limits:
                 memory: 100Mi
+    defaultPodOptions:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: *app
     service:
       app:
         controller: *app
@@ -83,7 +92,10 @@ spec:
               - *host
     persistence:
       config:
-        type: emptyDir
+        type: persistentVolumeClaim
+        storageClass: openebs-hostpath
+        size: 1Gi
+        accessMode: ReadWriteOnce
         globalMounts:
           - path: /app/vikunja/files
       vikunja-config:
