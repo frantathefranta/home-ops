@@ -13,16 +13,8 @@ x-vars: &vars
     sh: talosctl --context {{.cluster}} config info --output json | jq --raw-output '.endpoints[]' | shuf -n 1
 
 vars:
-  # TALOS_DIR: "{{.KUBERNETES_DIR}}/bootstrap/talos"
-  # TALOSCONFIG: "{{.TALOS_DIR}}/clusterconfig/talosconfig"
-  # TALOS_SCRIPTS_DIR: "{{.ROOT_DIR}}/.taskfiles/Talos/scripts"
   TALHELPER_SECRET_FILE: "talsecret.sops.yaml"
   TALHELPER_CONFIG_FILE: "talconfig.yaml"
-  # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-  TALOS_VERSION: v1.7.5
-  TALOS_SCHEMATIC_ID: d818c1a93e760bef16d3e768ba6f3537eec1e0d8d4424979df0fa0b4146fd9f7
-  # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-  KUBERNETES_VERSION: v1.30.2
 
 env:
   TALOSCONFIG: "talosconfig"
@@ -183,11 +175,6 @@ tasks:
     cmd: talhelper gencommand reset --extra-flags "--reboot --system-labels-to-wipe STATE --system-labels-to-wipe EPHEMERAL --graceful=false --wait=false" | bash
     preconditions:
       - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }
-  # soft-nuke:
-  #   desc: Resets nodes back to maintenance mode so you can re-deploy again straight after
-  #   prompt: This will destroy your cluster and reset the nodes back to maintenance mode... continue?
-  #   dir: "{{.TALOS_DIR}}"
-  #   cmd: talhelper gencommand reset --extra-flags "--reboot --system-labels-to-wipe STATE --system-labels-to-wipe EPHEMERAL --graceful=false --wait=false" | bash
 
   hard-nuke:
     desc: Resets nodes back completely and reboots them
