@@ -5,17 +5,18 @@ resources:
   - ./backube.yaml
   - ./bjw-s.yaml
   - ./cilium.yaml
-  - ./crunchydata.yaml
   - ./crunchy-userinit.yaml
+  - ./crunchydata.yaml
   - ./descheduler.yaml
   - ./emqx.yaml
   - ./external-dns.yaml
   - ./external-secrets.yaml
+  - ./grafana.yaml
   - ./ingress-nginx.yaml
   - ./intel.yaml
+  - ./jetstack.yaml
   - ./k8s-gateway.yaml
   - ./longhorn.yaml
-  - ./jetstack.yaml
   - ./metrics-server.yaml
   - ./node-feature-discovery.yaml
   - ./openebs.yaml
