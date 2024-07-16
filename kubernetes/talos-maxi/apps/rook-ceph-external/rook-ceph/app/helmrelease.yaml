@@ -27,11 +27,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    csi:
-      csiAddons:
-        enabled: false
-      enablePluginSelinuxHostMount: true
-      enableCSIEncryption: false
-      cephFSKernelMountOptions: ms_mode=secure
+    crds:
+      enabled: true
     monitoring:
       enabled: true

@@ -33,7 +33,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: rook-ceph
-  path: ./kubernetes/talos-maxi/apps/rook-ceph/rook-ceph-external/cluster
+  path: ./kubernetes/talos-maxi/apps/rook-ceph-external/rook-ceph/cluster
   prune: false
   sourceRef:
     kind: GitRepository
