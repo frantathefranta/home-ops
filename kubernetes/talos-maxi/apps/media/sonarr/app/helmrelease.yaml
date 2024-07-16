@@ -23,9 +23,7 @@ spec:
       retries: 3
   dependsOn:
   - name: rook-ceph-cluster
-    namespace: rook-ceph
-  - name: volsync
-    namespace: storage
+    namespace: rook-ceph-external
   values:
     controllers:
       sonarr:
