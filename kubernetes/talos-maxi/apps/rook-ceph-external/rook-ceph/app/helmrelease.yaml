@@ -31,3 +31,5 @@ spec:
       enabled: true
     monitoring:
       enabled: true
+    toolbox:
+      enabled: true
