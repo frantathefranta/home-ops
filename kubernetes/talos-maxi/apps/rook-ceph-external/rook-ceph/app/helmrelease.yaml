@@ -33,4 +33,4 @@ spec:
       enabled: true
     toolbox:
       enabled: true
-      image: quay.io/ceph/ceph:v18
+      image: quay.io/ceph/ceph:v19
