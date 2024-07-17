@@ -28,6 +28,7 @@ spec:
     keepHistory: false
   values:
     operatorNamespace: rook-ceph-external
+    dataDirHostPath: /var/lib/rook
     cephClusterSpec:
       external:
         enable: true
