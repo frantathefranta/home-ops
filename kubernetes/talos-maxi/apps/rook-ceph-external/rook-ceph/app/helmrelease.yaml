@@ -31,6 +31,8 @@ spec:
       enabled: true
     monitoring:
       enabled: true
-    toolbox:
-      enabled: true
-      image: quay.io/ceph/ceph:v18
+    csi:
+      csiAddons:
+        enabled: false
+      enableCSIEncryption: false
+      cephFSKernelMountOptions: ms_mode=secure
