@@ -118,3 +118,10 @@ spec:
         path: /emc1/media
         globalMounts:
         - path: /media
+      jeopardy:
+        enabled: true
+        type: nfs
+        path: /emc1/jeopardy
+        server: ${NAS_IP}
+        globalMounts:
+          - path: /jeopardy
