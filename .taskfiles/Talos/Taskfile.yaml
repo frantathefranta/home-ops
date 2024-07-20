@@ -4,11 +4,11 @@ version: "3"
 
 x-vars: &vars
   TALOS_VERSION:
-    sh: yq 'select(document_index == 1).spec.postBuild.substitute.TALOS_VERSION' {{.KUBERNETES_DIR}}/{{.cluster}}/apps/kube-tools/system-upgrade-controller/ks.yaml
+    sh: yq 'select(document_index == 1).spec.postBuild.substitute.TALOS_VERSION' {{.KUBERNETES_DIR}}/{{.cluster}}/apps/system-upgrade/system-upgrade-controller/ks.yaml
   TALOS_SCHEMATIC_ID:
-    sh: yq 'select(document_index == 1).spec.postBuild.substitute.TALOS_SCHEMATIC_ID' {{.KUBERNETES_DIR}}/{{.cluster}}/apps/kube-tools/system-upgrade-controller/ks.yaml
+    sh: yq 'select(document_index == 1).spec.postBuild.substitute.TALOS_SCHEMATIC_ID' {{.KUBERNETES_DIR}}/{{.cluster}}/apps/system-upgrade/system-upgrade-controller/ks.yaml
   KUBERNETES_VERSION:
-    sh: yq 'select(document_index == 1).spec.postBuild.substitute.KUBERNETES_VERSION' {{.KUBERNETES_DIR}}/{{.cluster}}/apps/kube-tools/system-upgrade-controller/ks.yaml
+    sh: yq 'select(document_index == 1).spec.postBuild.substitute.KUBERNETES_VERSION' {{.KUBERNETES_DIR}}/{{.cluster}}/apps/system-upgrade/system-upgrade-controller/ks.yaml
   CONTROLLER:
     sh: talosctl --context {{.cluster}} config info --output json | jq --raw-output '.endpoints[]' | shuf -n 1
 
@@ -116,20 +116,26 @@ tasks:
     requires:
       vars: ["cluster", "node"]
     preconditions:
-      - test -f {{.KUBERNETES_DIR}}/bootstrap/talos/clusterconfig/talosconfig
+      - test -f {{.KUBERNETES_DIR}}/{{.cluster}}/bootstrap/talos/clusterconfig/{{.TALOSCONFIG}}
       - talosctl --context {{.cluster}} config info >/dev/null 2>&1
       - talosctl --context {{.cluster}} --nodes {{.node}} get machineconfig >/dev/null 2>&1
 
   upgrade-talos:
     desc: Upgrade talos on a node
-    cmd: talosctl --nodes {{.node}} upgrade --image {{.image}} --preserve=true --reboot-mode=powercycle
+    cmds:
+      - until kubectl --context {{.cluster}} wait --timeout=5m --for=condition=Complete jobs --all --all-namespaces; do sleep 10; done
+      - talosctl --context {{.cluster}} --nodes {{.node}} upgrade --image="factory.talos.dev/installer/{{.TALOS_SCHEMATIC_ID}}:{{.TALOS_VERSION}}" --wait=true --timeout=10m --preserve=true
+      - talosctl --context {{.cluster}} --nodes {{.node}} health --wait-timeout=10m --server=false
     requires:
-      vars: ["node", "image"]
+      vars: ["node", "cluster"]
+    vars: *vars
     preconditions:
       - {
           msg: "Node not found",
           sh: "talosctl --nodes {{.node}} get machineconfig",
         }
+      - test -f {{.KUBERNETES_DIR}}/{{.cluster}}/bootstrap/talos/clusterconfig/{{.TALOSCONFIG}}
+      - talosctl --context {{.cluster}} config info >/dev/null 2>&1
 
   upgrade-k8s:
     desc: Upgrade the clusters k8s version

@@ -25,8 +25,8 @@ fi
 if [ "${ROLLOUT}" != "true" ]; then
     echo "Suspending Flux Kustomizations in cluster '${CLUSTER}' ..."
     flux --context "${CLUSTER}" suspend kustomization --all
-    echo "Setting CNPG maintenance mode in cluster '${CLUSTER}' ..."
-    kubectl cnpg --context "${CLUSTER}" maintenance set --reusePVC --all-namespaces
+    # echo "Setting CNPG maintenance mode in cluster '${CLUSTER}' ..."
+    # kubectl cnpg --context "${CLUSTER}" maintenance set --reusePVC --all-namespaces
 fi
 
 echo "Upgrading Talos on node '${NODE}' in cluster '${CLUSTER}' to ${TO_VERSION}..."
