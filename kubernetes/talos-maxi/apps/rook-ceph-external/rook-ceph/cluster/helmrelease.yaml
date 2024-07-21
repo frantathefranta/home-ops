@@ -39,6 +39,25 @@ spec:
           mon:
             disabled: false
             interval: 45s
+    # -- Settings for the block pool snapshot class
+    # @default -- See [RBD Snapshots](../Storage-Configuration/Ceph-CSI/ceph-csi-snapshot.md#rbd-snapshots)
+    cephBlockPoolsVolumeSnapshotClass:
+      enabled: true
+      name: ceph-rbd-snapshot
+      isDefault: false
+      deletionPolicy: Delete
+      # see https://rook.io/docs/rook/v1.10/Storage-Configuration/Ceph-CSI/ceph-csi-snapshot/#rbd-snapshots for available configuration
+      parameters: # Only pool needs to be specified as snapshotter secret and clusterID are already pre-selected
+        pool: talos-maxi-pv
+    cephFileSystemVolumeSnapshotClass:
+      enabled: true
+      name: cephfs-snapshot
+      isDefault: true
+      deletionPolicy: Delete
+      # see https://rook.io/docs/rook/v1.10/Storage-Configuration/Ceph-CSI/ceph-csi-snapshot/#cephfs-snapshots for available configuration
+      parameters:
+        pool: talos-maxi-fs_data
+        fsName: talos-maxi-fs
     # # -- A list of CephBlockPool configurations to deploy
     # # @default -- See [below](#ceph-block-pools)
     cephBlockPools: {}
