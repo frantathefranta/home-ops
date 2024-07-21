@@ -33,12 +33,12 @@ spec:
   restic:
     repository: "${APP}-volsync"
     copyMethod: "${VOLSYNC_COPYMETHOD:-Snapshot}"
-    volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-longhorn-snapclass}"
-    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-longhorn-cache}"
+    volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-cephfs-snapshot}"
+    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-openebs-hostpath}"
     cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:-ReadWriteOnce}"]
-    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-4Gi}"
-    storageClassName: "${VOLSYNC_STORAGECLASS:-longhorn-snapshot}"
-    accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
+    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-8Gi}"
+    storageClassName: "${VOLSYNC_STORAGECLASS:-cephfs}"
+    accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteMany}"]
     moverSecurityContext:
       runAsUser: "${VOLSYNC_UID:-568}"
       runAsGroup: "${VOLSYNC_GID:-568}"
@@ -55,14 +55,14 @@ spec:
     schedule: "0 * * * *"
   restic:
     copyMethod: "${VOLSYNC_COPYMETHOD:-Snapshot}"
-    pruneIntervalDays: 10
+    pruneIntervalDays: 7
     repository: "${APP}-volsync"
-    volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-longhorn-snapclass}"
+    volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-cephfs-snapshot}"
     cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-4Gi}"
-    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-longhorn-cache}"
+    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-openebs-hostpath}"
     cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:-ReadWriteOnce}"]
-    storageClassName: "${VOLSYNC_STORAGECLASS:-longhorn-snapshot}"
-    accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
+    storageClassName: "${VOLSYNC_STORAGECLASS:-cephfs}"
+    accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteMany}"]
     moverSecurityContext:
       runAsUser: "${VOLSYNC_UID:-568}"
       runAsGroup: "${VOLSYNC_GID:-568}"
