@@ -93,7 +93,7 @@ spec:
       app:
         className: internal
         hosts:
-        - host: "{{ .Release.Name }}-new.${SECRET_DOMAIN}"
+        - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
           paths:
           - path: /
             service:

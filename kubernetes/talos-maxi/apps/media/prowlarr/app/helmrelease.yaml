@@ -71,7 +71,7 @@ spec:
         # annotations:
         #   external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
         hosts:
-        - host: "{{ .Release.Name }}-new.${SECRET_DOMAIN}" # TODO Rename when this is main instance
+        - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
           paths:
           - path: /
             pathType: Prefix
