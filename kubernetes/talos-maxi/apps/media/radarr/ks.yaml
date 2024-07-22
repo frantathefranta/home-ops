@@ -6,7 +6,7 @@ metadata:
   name: &app radarr
   namespace: flux-system
 spec:
-  targetNamespace: downloads
+  targetNamespace: media
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
@@ -26,3 +26,4 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      VOLSYNC_CAPACITY: 5Gi
