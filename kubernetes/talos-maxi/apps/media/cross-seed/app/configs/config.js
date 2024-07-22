@@ -39,7 +39,7 @@ module.exports = {
   linkDir: "/media/downloads/xseed",
 
   outputDir: "/config/xseed",
-  torrentDir: "/config/qBittorrent/BT_backup",
+  torrentDir: "/qbittorrent/qBittorrent/BT_backup",
 
   rssCadence: "15 minutes"
 };
