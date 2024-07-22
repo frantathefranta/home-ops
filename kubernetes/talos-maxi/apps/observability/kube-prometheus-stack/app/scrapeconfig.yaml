@@ -8,6 +8,7 @@ spec:
   staticConfigs:
     - targets:
         - platinum.iot.${SECRET_DOMAIN}:9100
+        - deb-g3-01.iot.${SECRET_DOMAIN}:9100
         - actinium.infra.${SECRET_DOMAIN}:9100
         - thorium.infra.${SECRET_DOMAIN}:9100
         - protactinium.infra.${SECRET_DOMAIN}:9100
