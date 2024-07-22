@@ -79,11 +79,11 @@ spec:
             port: *port
     ingress:
       app:
-        # annotations:
-        #   external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
-        className: internal
+        annotations:
+          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+        className: external
         hosts:
-          - host: requests-new.${SECRET_DOMAIN} # TODO Change when switching over arrs to this cluster
+          - host: requests.${SECRET_DOMAIN}
             paths:
               - path: /
                 service:
