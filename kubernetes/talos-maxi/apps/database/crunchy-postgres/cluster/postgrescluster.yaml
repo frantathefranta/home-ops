@@ -51,6 +51,10 @@ spec:
       databases: ["atuin"]
       password:
         type: AlphaNumeric
+    - name: "autobrr"
+      databases: ["autobrr"]
+      password:
+        type: AlphaNumeric
     - name: "vikunja"
       databases: ["vikunja"]
       password:
