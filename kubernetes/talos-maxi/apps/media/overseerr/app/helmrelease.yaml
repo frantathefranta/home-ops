@@ -80,7 +80,7 @@ spec:
     ingress:
       app:
         annotations:
-          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: external-maxi.${SECRET_DOMAIN}
         className: external
         hosts:
           - host: requests.${SECRET_DOMAIN}
