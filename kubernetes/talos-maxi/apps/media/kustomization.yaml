@@ -10,3 +10,4 @@ resources:
   - ./overseerr/ks.yaml
   - ./prowlarr/ks.yaml
   - ./qbittorrent/ks.yaml
+  - ./cross-seed/ks.yaml # TODO Uncomment when prowlarr has correct settings

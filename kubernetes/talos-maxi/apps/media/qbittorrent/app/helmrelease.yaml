@@ -44,7 +44,7 @@ spec:
               QBT_Network__PortForwardingEnabled: false
               QBT_Preferences__WebUI__AuthSubnetWhitelistEnabled: true
               QBT_Preferences__WebUI__AuthSubnetWhitelist: |-
-                10.69.0.0/16, 10.32.10.0/24
+                10.33.0.0/16, 10.96.0.0/16, 10.69.0.0/16
               QBT_Preferences__WebUI__LocalHostAuth: false
               QBT_Preferences__WebUI__UseUPnP: false
               QBT_BitTorrent__Session__Interface: eth0
