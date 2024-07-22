@@ -14,7 +14,7 @@ spec:
     - name: crunchy-postgres-operator-cluster
     - name: crunchy-postgres-stores
     - name: external-secrets-stores
-  path: ./kubernetes/talos-maxi/apps/downloads/prowlarr/app
+  path: ./kubernetes/talos-maxi/apps/media/prowlarr/app
   prune: true
   sourceRef:
     kind: GitRepository
