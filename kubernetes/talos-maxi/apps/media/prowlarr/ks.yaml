@@ -25,4 +25,4 @@ spec:
   timeout: 5m
   postBuild:
     substitute:
-      APP: prowlarr-new # TODO Change to *app when this is main instance
+      APP: *app
