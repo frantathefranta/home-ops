@@ -83,7 +83,7 @@ spec:
         #   external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
         className: internal
         hosts:
-          - host: requests-new.${SECRET_DOMAIN}
+          - host: requests-new.${SECRET_DOMAIN} # TODO Change when switching over arrs to this cluster
             paths:
               - path: /
                 service:
