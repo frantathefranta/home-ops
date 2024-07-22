@@ -9,13 +9,13 @@ module.exports = {
   qbittorrentUrl: "http://qbittorrent.media.svc.cluster.local:8080",
 
   torznab: [
-    `http://prowlarr.media.svc.cluster.local:9696/2/api?apikey=$${process.env.PROWLARR__API_KEY}`,   // BHD
-    `http://prowlarr.media.svc.cluster.local:9696/60/api?apikey=$${process.env.PROWLARR__API_KEY}`,  // HDB
-    `http://prowlarr.media.svc.cluster.local:9696/67/api?apikey=$${process.env.PROWLARR__API_KEY}`,  // MTV
-    `http://prowlarr.media.svc.cluster.local:9696/68/api?apikey=$${process.env.PROWLARR__API_KEY}`,  // PTP
-    `http://prowlarr.media.svc.cluster.local:9696/7/api?apikey=$${process.env.PROWLARR__API_KEY}`,   // UHD
-    `http://prowlarr.media.svc.cluster.local:9696/66/api?apikey=$${process.env.PROWLARR__API_KEY}`,  // BTN
-    `http://prowlarr.media.svc.cluster.local:9696/69/api?apikey=$${process.env.PROWLARR__API_KEY}`,  // AB
+    `http://prowlarr.media.svc.cluster.local:80/2/api?apikey=$${process.env.PROWLARR__AUTH__APIKEY}`,   // BHD
+    `http://prowlarr.media.svc.cluster.local:80/60/api?apikey=$${process.env.PROWLARR__AUTH__APIKEY}`,  // HDB
+    `http://prowlarr.media.svc.cluster.local:80/67/api?apikey=$${process.env.PROWLARR__AUTH__APIKEY}`,  // MTV
+    `http://prowlarr.media.svc.cluster.local:80/68/api?apikey=$${process.env.PROWLARR__AUTH__APIKEY}`,  // PTP
+    `http://prowlarr.media.svc.cluster.local:80/7/api?apikey=$${process.env.PROWLARR__AUTH__APIKEY}`,   // UHD
+    `http://prowlarr.media.svc.cluster.local:80/66/api?apikey=$${process.env.PROWLARR__AUTH__APIKEY}`,  // BTN
+    `http://prowlarr.media.svc.cluster.local:80/69/api?apikey=$${process.env.PROWLARR__AUTH__APIKEY}`,  // AB
   ],
 
   apiAuth: false,
