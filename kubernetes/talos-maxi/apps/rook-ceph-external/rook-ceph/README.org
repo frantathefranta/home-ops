@@ -16,4 +16,5 @@ $ python3 create-external-cluster-resources.py --rbd-data-pool-name talos-maxi-p
 ** Running the ~import-external-cluster.sh~ script
 When your ~operator~ and ~cluster~ HelmReleases are deployed, you can run this script. Make sure that you have the right ~OPERATOR_NAMESPACE~ env var set in the script, or export a new env ~CSI_DRIVER_NAME_PREFIX~ if you have a non-standard namespace (like I do). If this is set wrong, your provisioner will be named wrong and your PVCs will not start provisioning.
 * Caveats
-Your backups will not be handled by the Kubernetes cluster.
++Your backups will not be handled by the Kubernetes cluster.+
+I figured out you can use ~VolumeSnapshots~ with an external cluster, description WIP.
