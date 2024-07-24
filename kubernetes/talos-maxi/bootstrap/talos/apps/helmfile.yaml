@@ -20,7 +20,7 @@ releases: # TODO Change fields based on https://github.com/onedr0p/home-ops/blob
   - name: cilium
     namespace: kube-system
     chart: cilium/cilium
-    version: 1.15.7
+    version: 1.16.0
     values: ["./cilium-values.yaml"]
     needs:
       - observability/prometheus-operator-crds
