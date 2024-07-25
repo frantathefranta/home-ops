@@ -35,7 +35,7 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/frantathefranta/jeopardy
+              repository: ghcr.io/frantathefranta/transmission
               tag: 4.0.5
             env:
               TZ: America/Detroit
