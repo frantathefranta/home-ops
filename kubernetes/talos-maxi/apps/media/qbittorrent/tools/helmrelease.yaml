@@ -11,7 +11,7 @@ spec:
       version: 3.2.1 # auto-update to semver bugfixes only
       sourceRef:
         kind: HelmRepository
-        name: bjw
+        name: bjw-s
         namespace: flux-system
   interval: 15m
   timeout: 5m
