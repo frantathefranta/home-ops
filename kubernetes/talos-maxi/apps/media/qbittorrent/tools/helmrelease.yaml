@@ -1,0 +1,140 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: qbtools
+spec:
+  chart:
+    spec:
+      chart: app-template
+      version: 3.2.1 # auto-update to semver bugfixes only
+      sourceRef:
+        kind: HelmRepository
+        name: bjw
+        namespace: flux-system
+  interval: 15m
+  timeout: 5m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  dependsOn:
+    - name: qbittorrent
+      namespace: media
+  values:
+    controllers:
+      tagging:
+        type: cronjob
+        cronjob: &cronJobSpec
+          schedule: "@hourly"
+          timeZone: &timeZone America/Detroit
+          concurrencyPolicy: Forbid
+          successfulJobsHistory: 1
+          failedJobsHistory: 1
+        initContainers:
+          tagging: &image
+            image:
+              repository: ghcr.io/buroa/qbtools
+              tag: v0.15.3@sha256:68c211301e88ae942629cf05793f860675467aac5cdc7b7500b394f294f62eac
+            env: &env
+              TZ: *timeZone
+              POD_NAMESPACE:
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.namespace
+            args: [
+              "tagging",
+              "--added-on",
+              "--expired",
+              "--last-activity",
+              "--sites",
+              "--unregistered",
+              "--server", "qbittorrent.$(POD_NAMESPACE).svc.cluster.local",
+              "--port", "8080",
+              "--config", "/config/config.yaml"
+            ]
+            resources: &resources
+              requests:
+                cpu: 25m
+              limits:
+                memory: 256M
+        containers:
+          unregistered:
+            <<: *image
+            env: *env
+            args: [
+              "prune",
+              "--include-tag", "unregistered",
+              "--server", "qbittorrent.$(POD_NAMESPACE).svc.cluster.local",
+              "--port", "8080"
+            ]
+            resources: *resources
+          expired:
+            <<: *image
+            env: *env
+            args: [
+              "prune",
+              "--include-category", "remove",
+              "--include-tag", "expired", # defined in config.yaml
+              "--exclude-tag", "activity:24h",
+              # "--dry-run",
+              "--server", "qbittorrent.$(POD_NAMESPACE).svc.cluster.local",
+              "--port", "8080"
+            ]
+            resources: *resources
+        pod:
+          restartPolicy: OnFailure
+      orphaned:
+        type: cronjob
+        cronjob:
+          <<: *cronJobSpec
+          schedule: "@daily"
+        containers:
+          app:
+            <<: *image
+            args:
+              - orphaned
+              - --exclude-pattern="*/manual/*"
+              - --server=qbittorrent.arrs.svc.cluster.local
+              - --port=8080
+        pod:
+          restartPolicy: OnFailure
+          securityContext:
+            # <<: *podSecurityContext
+            runAsNonRoot: true
+            runAsUser: 568
+            runAsGroup: 1003
+            fsGroup: 1003
+            fsGroupChangePolicy: OnRootMismatch
+            supplementalGroups:
+              - 1003
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        seccompProfile: { type: RuntimeDefault }
+    persistence:
+      secret-file:
+        type: secret
+        name: qbtools-secret # overriden by kustomizeconfig
+        globalMounts:
+          - path: /config/config.yaml
+            subPath: config.yaml
+            readOnly: true
+      media:
+        enabled: true
+        type: nfs
+        path: /emc1/media
+        server: 10.40.1.50
+        advancedMounts:
+          orphaned:
+            app:
+              - path: /media/downloads
+                subPath: downloads/
