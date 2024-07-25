@@ -1,0 +1,104 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: transmission-jeopardy
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph-external
+    - name: volsync
+      namespace: storage
+  values:
+    controllers:
+      transmission:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/frantathefranta/jeopardy
+              tag: 4.0.5
+            env:
+              TZ: America/Detroit
+              TRANSMISSION__BLOCKLIST_URL: "https://mirror.codebucket.de/transmission/blocklist.p2p.gz"
+              TRANSMISSION__DOWNLOAD_DIR: "/jeopardy/downloads"
+              TRANSMISSION__INCOMPLETE_DIR_ENABLED: false
+              TRANSMISSION__RPC_PORT: &port 9091
+              TRANSMISSION__PEER_PORT: &peerport 51413
+              TRANSMISSION__RATIO_LIMIT_ENABLED: false
+              TRANSMISSION__UTP_ENABLED: false
+              TRANSMISSION__UMASK: 7
+              TRANSMISSION__MESSAGE_LEVEL: 3
+              TRANSMISSION__WATCH_DIR_ENABLED: true
+              TRANSMISSION__WATCH_DIR: "/jeopardy/watch"
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 100m
+              limits:
+                memory: 2Gi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [10000]
+        seccompProfile: { type: RuntimeDefault }
+    service:
+      app:
+        controller: transmission
+        type: LoadBalancer
+        annotations:
+          io.cilium/lb-ipam-ips: ${SVC_TJ_ADDR}
+        ports:
+          http:
+            port: *port
+          bittorrent:
+            enabled: true
+            port: *peerport
+            protocol: TCP
+    ingress:
+      app:
+        # annotations:
+        #   external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
+        className: internal
+        hosts:
+          - host: transmission-jeopardy-new.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+    persistence:
+      config:
+        existingClaim: transmission-jeopardy
+      media:
+        type: nfs
+        server: ${NAS_IP}
+        path: /emc1/jeopardy
+        globalMounts:
+          - path: /jeopardy

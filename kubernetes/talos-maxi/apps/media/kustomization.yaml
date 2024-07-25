@@ -11,6 +11,7 @@ resources:
   - ./overseerr/ks.yaml
   - ./prowlarr/ks.yaml
   - ./qbittorrent/ks.yaml
-  - ./cross-seed/ks.yaml # TODO Uncomment when prowlarr has correct settings
+  - ./cross-seed/ks.yaml
   - ./tautulli/ks.yaml
   - ./autobrr/ks.yaml
+  - ./transmission/ks.yaml
