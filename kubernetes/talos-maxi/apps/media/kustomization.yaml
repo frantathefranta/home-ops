@@ -16,3 +16,4 @@ resources:
   - ./autobrr/ks.yaml
   - ./transmission/ks.yaml
   - ./wizarr/ks.yaml
+  - ./bazarr/ks.yaml
