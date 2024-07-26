@@ -1,0 +1,84 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app varroa
+  namespace: arrs
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph-external
+    - name: volsync
+      namespace: storage
+  values:
+    controllers:
+      varroa:
+        containers:
+          main:
+            image:
+              repository: frantathefranta/varroa
+              tag: 299f5e046a4d30aab623c01f3eff9a1367d1da03-16
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 1003
+            fsGroup: 1003
+            fsGroupChangePolicy: OnRootMismatch
+    service:
+      main:
+        controller: main
+        type: LoadBalancer
+        annotations:
+          io.cilium/lb-ipam-ips: ${SVC_VARR_ADDR}
+        nameOverride: *app
+        ports:
+          http:
+            port: &port 20346
+    ingress:
+      main:
+        enabled: true
+        hosts:
+          - host: varroa.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: *port
+    persistence:
+      config:
+        existingClaim: *app
+        globalMounts:
+          - path: /config
+      config-yaml:
+        type: secret
+        name: varroa-secret
+        globalMounts:
+          - path: /config/config.yaml
+            subPath: config.yaml
+            readOnly: true
+      music:
+        enabled: true
+        type: nfs
+        path: /emc1/music
+        server: ${NAS_IP}
+        globalMounts:
+          - path: /music
