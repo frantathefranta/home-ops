@@ -26,7 +26,6 @@ spec:
         annotations:
           confimap.reloader.stakater.com/reload: cross-seed-configmap
           secret.reloader.stakater.com/reload: cross-seed-secret
-
         pod:
           securityContext:
             runAsUser: 568
