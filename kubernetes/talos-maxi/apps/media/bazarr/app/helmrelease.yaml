@@ -49,6 +49,19 @@ spec:
                 memory: 256M
               limits:
                 memory: 1024M
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: 6767
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
           subcleaner:
             image:
               repository: registry.k8s.io/git-sync/git-sync
@@ -85,7 +98,7 @@ spec:
         # annotations:
         #   external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
         hosts:
-        - host: "{{ .Release.Name }}-new.${SECRET_DOMAIN}"
+        - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
           paths:
           - path: /
             service:
