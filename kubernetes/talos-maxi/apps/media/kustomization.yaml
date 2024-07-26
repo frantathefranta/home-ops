@@ -15,3 +15,4 @@ resources:
   - ./tautulli/ks.yaml
   - ./autobrr/ks.yaml
   - ./transmission/ks.yaml
+  - ./wizarr/ks.yaml
