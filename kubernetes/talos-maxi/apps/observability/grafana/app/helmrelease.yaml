@@ -256,21 +256,21 @@ spec:
           url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
           datasource: Prometheus
       storage:
-        # ceph-cluster: # TODO Uncomment when Ceph is deployed
-        #   # renovate: depName="Ceph Cluster"
-        #   gnetId: 2842
-        #   revision: 17
-        #   datasource: Prometheus
-        # ceph-osd:
-        #   # renovate: depName="Ceph - OSD (Single)"
-        #   gnetId: 5336
-        #   revision: 9
-        #   datasource: Prometheus
-        # ceph-pools:
-        #   # renovate: depName="Ceph - Pools"
-        #   gnetId: 5342
-        #   revision: 9
-        #   datasource: Prometheus
+        ceph-cluster:
+          # renovate: depName="Ceph Cluster"
+          gnetId: 2842
+          revision: 17
+          datasource: Prometheus
+        ceph-osd:
+          # renovate: depName="Ceph - OSD (Single)"
+          gnetId: 5336
+          revision: 9
+          datasource: Prometheus
+        ceph-pools:
+          # renovate: depName="Ceph - Pools"
+          gnetId: 5342
+          revision: 9
+          datasource: Prometheus
         minio:
           # renovate: depName="MinIO Dashboard"
           gnetId: 13502
