@@ -4,8 +4,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: tautulli-cache
 spec:
-  accessModes: ["ReadWriteOnce"]
+  accessModes: ["ReadWriteMany"]
   resources:
     requests:
-      storage: 10Gi
-  storageClassName: ceph-rbd
+      storage: 15Gi
+  storageClassName: cephfs
