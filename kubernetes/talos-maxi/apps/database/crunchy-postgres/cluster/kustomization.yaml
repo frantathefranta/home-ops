@@ -6,3 +6,4 @@ resources:
   - ./externalsecret.yaml
   - ./postgrescluster.yaml
   - ./gatus.yaml
+  - ./podmonitor.yaml
