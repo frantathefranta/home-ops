@@ -62,7 +62,7 @@ spec:
                 pathType: Prefix
                 service:
                   identifier: main
-                  port: *port
+                  port: http
     persistence:
       config:
         existingClaim: *app
