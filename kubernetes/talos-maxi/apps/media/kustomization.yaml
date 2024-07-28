@@ -17,3 +17,4 @@ resources:
   - ./transmission/ks.yaml
   - ./wizarr/ks.yaml
   - ./bazarr/ks.yaml
+  - ./varroa/ks.yaml

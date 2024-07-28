@@ -39,8 +39,8 @@ spec:
         pod:
           securityContext:
             runAsUser: 568
-            runAsGroup: 1003
-            fsGroup: 1003
+            runAsGroup: 568
+            fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
     service:
       main:
