@@ -30,3 +30,4 @@ spec:
     install:
       clusterLabels:
         app.kubernetes.io/name: pgo
+    monitoring: true

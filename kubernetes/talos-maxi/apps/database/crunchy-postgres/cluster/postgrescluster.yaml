@@ -6,6 +6,10 @@ metadata:
   name: &name postgres
 spec:
   postgresVersion: 16
+  monitoring:
+    pgmonitor:
+      exporter:
+        image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres-exporter:ubi8-5.6.0-0
   metadata:
     labels:
       crunchy-userinit.ramblurr.github.com/enabled: "true"

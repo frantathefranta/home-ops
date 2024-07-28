@@ -6,6 +6,7 @@ metadata:
   name: &name postgres
 spec:
   postgresVersion: 16
+  monitoring: true
   metadata:
     labels:
       crunchy-userinit.ramblurr.github.com/enabled: "true"
