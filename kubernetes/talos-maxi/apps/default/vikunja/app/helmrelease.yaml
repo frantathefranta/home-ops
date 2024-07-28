@@ -55,10 +55,10 @@ spec:
                 name: vikunja-secret
             resources:
               requests:
-                cpu: 5m
-                memory: 10Mi
-              limits:
+                cpu: 50m
                 memory: 100Mi
+              limits:
+                memory: 500Mi
     service:
       app:
         controller: *app
@@ -67,7 +67,6 @@ spec:
             port: 3456
     ingress:
       app:
-        enabled: true
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: external-maxi.${SECRET_DOMAIN}
@@ -78,9 +77,6 @@ spec:
                 service:
                   identifier: app
                   port: http
-        tls:
-          - hosts:
-              - *host
     persistence:
       config:
         type: emptyDir
