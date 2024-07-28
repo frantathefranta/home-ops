@@ -2,12 +2,6 @@
 This is my repo detailing home-ops based around Kubernetes (ran on Talos Linux).
 It's based on the [[https://github.com/onedr0p/cluster-template][cluster-template]] generously created and maintained by [[https://github.com/onedr0p][onedr0p]]. Slight modifications were made by me (because I don't know better).
 
-* Hardware
-| Node       | Count | OS Disk Size | RAM | OS    | Role          |
-|------------+-------+--------------+-----+-------+---------------|
-| HP 200-101 |     3 | 120/128GB    | 8GB | Talos | Control Plane |
-| HP G3 Mini |     1 | 256GB        | 8GB | Talos | Worker        |
-
 * Cloud dependency
 | Service      | Use                                   | Cost              |
 |--------------+---------------------------------------+-------------------|

@@ -1,3 +1,0 @@
----
-providerRegex: ^(talos-blue-01|talos-blue-02|talos-blue-03|talos-nuc-01|talos-g3-01)$
-bypassDnsResolution: true
