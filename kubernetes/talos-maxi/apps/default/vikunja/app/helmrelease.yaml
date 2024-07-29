@@ -55,7 +55,7 @@ spec:
               VIKUNJA_KEYVALUE_TYPE: "redis"
             envFrom:
             - secretRef:
-                name: vikunja-secret
+                name: &secret vikunja-secret
             resources:
               requests:
                 cpu: 50m
@@ -92,6 +92,13 @@ spec:
             path: /api/v1/metrics
             interval: 1m
             scrapeTimeout: 10s
+            basicAuth:
+              username:
+                name: *secret
+                key: VIKUNJA_METRICS_USERNAME
+              password:
+                name: *secret
+                key: VIKUNJA_METRICS_PASSWORD
     service:
       app:
         controller: *app
