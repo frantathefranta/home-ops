@@ -3,7 +3,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
-  name: crunchy-postgres-exporter
+  name: crunchy-postgres-exporter # Taken from https://github.com/CrunchyData/postgres-operator/issues/1968
   namespace: database
 spec:
   namespaceSelector:
