@@ -5,7 +5,7 @@ type: kubernetes.io/rook
 metadata:
   name: rook-ceph-mon
   namespace: rook-ceph-external
-data:
+stringData:
   cluster-name: rook-ceph-external
   admin-secret: ${ROOK_EXTERNAL_ADMIN_SECRET}
   ceph-secret: ${ROOK_EXTERNAL_USER_SECRET}
