@@ -3,3 +3,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./tautulli-exporter/ks.yaml
+  - ./radarr-exporter/ks.yaml
+  - ./sonarr-exporter/ks.yaml
+  - ./prowlarr-exporter/ks.yaml
+  - ./overseerr-exporter/ks.yaml
+  - ./qbittorrent-exporter/ks.yaml
+  - ./bazarr-exporter/ks.yaml
