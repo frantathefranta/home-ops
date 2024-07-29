@@ -29,6 +29,7 @@ spec:
   values:
     controllers:
       vikunja:
+        replicas: 2
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -41,6 +42,8 @@ spec:
               VIKUNJA_SERVICE_TIMEZONE: "${TIMEZONE}"
               VIKUNJA_SERVICE_PUBLICURL: &host "vikunja.${SECRET_DOMAIN}"
               VIKUNJA_SERVICE_ENABLEPUBLICTEAMS: true
+              VIKUNJA_AUTH_LOCAL: false
+              VIKUNJA_METRICS_ENABLED: true
               VIKUNJA_MAILER_ENABLED: true
               VIKUNJA_MAILER_HOST: smtp-relay.default.svc.cluster.local
               VIKUNJA_MAILER_PORT: 25
@@ -59,12 +62,42 @@ spec:
                 memory: 100Mi
               limits:
                 memory: 500Mi
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/v1/info
+                    port: &port 3456
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+    defaultPodOptions:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: *app
+    serviceMonitor:
+      app:
+        serviceName: *app
+        endpoints:
+          - port: http
+            scheme: http
+            path: /api/v1/metrics
+            interval: 1m
+            scrapeTimeout: 10s
     service:
       app:
         controller: *app
         ports:
           http:
-            port: 3456
+            port: *port
     ingress:
       app:
         className: external
@@ -79,7 +112,7 @@ spec:
                   port: http
     persistence:
       config:
-        type: emptyDir
+        existingClaim: *app
         globalMounts:
           - path: /app/vikunja/files
       vikunja-config:
