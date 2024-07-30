@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.3.0
+      version: 3.3.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -38,7 +38,7 @@ spec:
               - --enable-unknown-queue-items
             env:
               PORT: &port 9707
-              URL: http://bazarr.media.svc.cluster.local:80
+              URL: http://bazarr.media.svc.cluster.local:6767
             envFrom:
               - secretRef:
                   name: bazarr-exporter-secret
