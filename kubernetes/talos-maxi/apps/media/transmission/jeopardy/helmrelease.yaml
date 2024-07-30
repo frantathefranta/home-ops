@@ -96,6 +96,8 @@ spec:
     persistence:
       config:
         existingClaim: transmission-jeopardy
+      tmp:
+        type: emptyDir
       media:
         type: nfs
         server: ${NAS_IP}
