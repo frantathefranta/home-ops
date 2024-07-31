@@ -173,6 +173,11 @@ spec:
         node-feature-discovery:
           url: https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/master/examples/grafana-dashboard.json
           datasource: Prometheus
+        idrac-dashboard-v2:
+          # renovate: depName="iDRAC SNMP DashBoard"
+          gnetId: 14395
+          revision: 1
+          datasource: Prometheus
         prometheus:
           # renovate: depName="Prometheus"
           gnetId: 19105
