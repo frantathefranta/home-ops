@@ -9,3 +9,4 @@ resources:
   - ./overseerr-exporter/ks.yaml
   - ./qbittorrent-exporter/ks.yaml
   - ./bazarr-exporter/ks.yaml
+  - ./snmp-exporter/ks.yaml
