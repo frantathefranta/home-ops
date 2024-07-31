@@ -5,7 +5,7 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
 configMapGenerator:
-  - name: brocade-icx-snmp-configmap
+  - name: brocade-snmp-configmap
     files:
       - snmp.yaml=./resources/snmp.yaml
 generatorOptions:
