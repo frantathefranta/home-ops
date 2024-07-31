@@ -9,7 +9,9 @@ vars:
   # renovate: datasource=github-releases depName=getsops/sops
   SOPS_VERSION: v3.9.0
   TALOS_VERSION:
-    sh: yq .x-vars.TALOS_VERSION "{{.ROOT_DIR}}/.taskfiles/Talos/Taskfile.yaml"
+    sh: yq 'select(document_index == 1).spec.postBuild.substitute.TALOS_VERSION' {{.KUBERNETES_DIR}}/talos-maxi/apps/system-upgrade/system-upgrade-controller/ks.yaml
+  # renovate: datasource=github-releases depName=derailed/k9s
+  K9S_VERSION: v0.32.4
 
 tasks:
 
@@ -71,10 +73,15 @@ tasks:
         platforms: ["linux/arm64"]
       - cmd: curl -L -o sops "https://github.com/getsops/sops/releases/download/{{.SOPS_VERSION}}/sops-{{.SOPS_VERSION}}.linux.arm64"
         platforms: ["linux/arm64"]
+      - cmd: curl -L -o k9s.tar.gz "https://github.com/derailed/k9s/releases/download/{{.K9S_VERSION}}/k9s_Linux_arm64.tar.gz"
+        platforms: ["linux/arm64"]
+      - cmd: curl -L -o k9s.tar.gz "https://github.com/derailed/k9s/releases/download/{{.K9S_VERSION}}/k9s_Linux_amd64.tar.gz"
+        platforms: ["linux/amd64"]
       - cmd: curl -L -o sops "https://github.com/getsops/sops/releases/download/{{.SOPS_VERSION}}/sops-{{.SOPS_VERSION}}.linux.amd64"
         platforms: ["linux/amd64"]
       - cmd: curl -L -o talosctl "https://github.com/siderolabs/talos/releases/download/{{.TALOS_VERSION}}/talosctl-linux-amd64"
         platforms: ["linux/amd64"]
+      - cmd: tar xvzf k9s.tar.gz && rm k9s.tar.gz; rm LICENSE; rm README*
       - cmd: chmod +x sops
       - cmd: chmod +x kubectl
       - cmd: chmod +x talosctl
