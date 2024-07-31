@@ -11,7 +11,7 @@ vars:
   TALOS_VERSION:
     sh: yq 'select(document_index == 1).spec.postBuild.substitute.TALOS_VERSION' {{.KUBERNETES_DIR}}/talos-maxi/apps/system-upgrade/system-upgrade-controller/ks.yaml
   # renovate: datasource=github-releases depName=derailed/k9s
-  K9S_VERSION: v0.32.4
+  K9S_VERSION: v0.32.5
 
 tasks:
 
