@@ -49,7 +49,7 @@ spec:
         check_for_plugin_updates: false
         reporting_enabled: false
       auth:
-        signout_redirect_url: "https://auth.${SECRET_EXTERNAL_DOMAIN}/logout"
+        signout_redirect_url: "https://auth.${SECRET_DOMAIN}/logout"
         oauth_auto_login: true
         oauth_allow_insecure_email_lookup: true
       auth.anonymous:
