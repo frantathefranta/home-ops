@@ -11,3 +11,4 @@ resources:
   - ./bazarr-exporter/ks.yaml
   - ./snmp-exporter/ks.yaml
   - ./nut-exporter/ks.yaml
+  - ./mqtt-exporter/ks.yaml
