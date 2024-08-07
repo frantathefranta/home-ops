@@ -1,0 +1,20 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: idrac-rules
+  namespace: observability
+spec:
+  groups:
+    - name: idrac.rules
+      rules:
+        - alert: MellanoxHCATempTooHigh
+          annotations:
+            summary: "Mellanox HCA in {{ $labels.instance }} is too hot"
+            description: "Too high temperature on an HCA may impact Ceph performance"
+          expr: |
+            node_infiniband_hca_temp_celsius > 95
+          for: 15m
+          labels:
+            severity: critical
