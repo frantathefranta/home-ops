@@ -101,7 +101,7 @@ spec:
             args:
               - orphaned
               - --exclude-pattern="*/manual/*"
-              - --server=qbittorrent.arrs.svc.cluster.local
+              - --server=qbittorrent.$(POD_NAMESPACE).svc.cluster.local
               - --port=8080
         pod:
           restartPolicy: OnFailure
