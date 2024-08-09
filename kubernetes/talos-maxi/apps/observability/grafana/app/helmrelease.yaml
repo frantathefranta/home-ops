@@ -115,6 +115,14 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/default
+          - name: node-monitoring
+            orgId: 1
+            folder: Node Monitoring
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/node-monitoring
           - name: storage
             orgId: 1
             folder: Storage
@@ -165,18 +173,8 @@ spec:
               path: /var/lib/grafana/dashboards/postgres
     dashboards:
       default:
-        node-exporter-full:
-          # renovate: depName="Node Exporter Full"
-          gnetId: 1860
-          revision: 37
-          datasource: Prometheus
         node-feature-discovery:
           url: https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/master/examples/grafana-dashboard.json
-          datasource: Prometheus
-        idrac-dashboard-v2:
-          # renovate: depName="iDRAC SNMP DashBoard"
-          gnetId: 14395
-          revision: 1
           datasource: Prometheus
         prometheus:
           # renovate: depName="Prometheus"
@@ -198,6 +196,17 @@ spec:
           revision: 2
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
+      node-monitoring:
+        node-exporter-full:
+          # renovate: depName="Node Exporter Full"
+          gnetId: 1860
+          revision: 37
+          datasource: Prometheus
+        idrac-dashboard-v2:
+          # renovate: depName="iDRAC SNMP DashBoard"
+          gnetId: 14395
+          revision: 1
+          datasource: Prometheus
       flux:
         flux-cluster:
           url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/cluster.json
