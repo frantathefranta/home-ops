@@ -24,8 +24,7 @@ spec:
     controllers:
       cross-seed:
         annotations:
-          confimap.reloader.stakater.com/reload: cross-seed-configmap
-          secret.reloader.stakater.com/reload: cross-seed-secret
+          reloader.stakater.com/auto: "true"
         pod:
           securityContext:
             runAsUser: 568
@@ -90,3 +89,9 @@ spec:
         existingClaim: qbittorrent
         globalMounts:
           - path: /qbittorrent
+      data:
+        type: nfs
+        server: ${NAS_IP}
+        path: /emc1/media
+        globalMounts:
+        - path: /media
