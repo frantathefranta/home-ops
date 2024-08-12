@@ -88,9 +88,6 @@ spec:
           talosservice:
             port: 6002
             protocol: UDP
-          syslog-udp:
-            port: 6514
-            protocol: UDP
     serviceAccount:
       create: true
       name: *app
