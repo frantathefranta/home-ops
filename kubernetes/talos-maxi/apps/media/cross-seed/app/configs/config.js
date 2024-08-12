@@ -41,5 +41,6 @@ module.exports = {
   outputDir: "/config/xseed",
   torrentDir: "/qbittorrent/qBittorrent/BT_backup",
 
+  searchCadence: "2 weeks",
   rssCadence: "15 minutes"
 };
