@@ -78,7 +78,7 @@ spec:
         apiVersion: 1
         deleteDatasources:
           - { name: Alertmanager, orgId: 1 }
-          # - { name: Loki, orgId: 1 } # TODO Uncomment when Loki is deployed
+          - { name: Loki, orgId: 1 }
           - { name: Prometheus, orgId: 1 }
         datasources:
           - name: Prometheus
@@ -89,13 +89,11 @@ spec:
             jsonData:
               timeInterval: 1m
             isDefault: true
-          # - name: Loki # TODO Uncomment when Loki is deployed
-          #   type: loki
-          #   uid: loki
-          #   access: proxy
-          #   url: http://loki-headless.observability.svc.cluster.local:3100
-          #   jsonData:
-          #     maxLines: 250
+          - name: Loki
+            type: loki
+            uid: loki
+            access: proxy
+            url: http://loki-gateway.observability.svc.cluster.local:80
           - name: Alertmanager
             type: alertmanager
             uid: alertmanager
