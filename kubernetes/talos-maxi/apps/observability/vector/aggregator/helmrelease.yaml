@@ -75,7 +75,7 @@ spec:
         controller: *app
         type: LoadBalancer
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: vector.${PUBLIC_DOMAIN}
+          external-dns.alpha.kubernetes.io/hostname: vector.${SECRET_DOMAIN}
           io.cilium/lb-ipam-ips: ${SVC_VECTOR_ADDR}
         ports:
           http:
@@ -87,9 +87,6 @@ spec:
             protocol: UDP
           talosservice:
             port: 6002
-            protocol: UDP
-          unifikernel:
-            port: 6003
             protocol: UDP
     serviceAccount:
       create: true

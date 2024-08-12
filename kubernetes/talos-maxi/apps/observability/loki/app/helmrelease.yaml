@@ -143,6 +143,8 @@ spec:
 
     monitoring:
       dashboards:
+        labels:
+          grafana_dashboard: true
         annotations:
           grafana_folder: Loki
       rules:
