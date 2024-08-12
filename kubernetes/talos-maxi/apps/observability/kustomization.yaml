@@ -12,4 +12,5 @@ resources:
   - ./kube-prometheus-stack/ks.yaml
   - ./loki/ks.yaml
   - ./prometheus-operator-crds/ks.yaml
+  - ./vector/ks.yaml
   - ./exporters
