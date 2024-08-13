@@ -11,4 +11,4 @@ groups:
           category: logs
         annotations:
           app: "{{ $labels.container }}"
-          summary: "{{ $labels.service_name }} has config PVC mounted read-only
+          summary: "{{ $labels.container }} has config PVC mounted read-only"
