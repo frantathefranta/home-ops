@@ -30,7 +30,7 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/athennamind/opensense-exporter
+              repository: ghcr.io/athennamind/opnsense-exporter
               tag: 0.0.5
             args:
               # - --log.level=debug

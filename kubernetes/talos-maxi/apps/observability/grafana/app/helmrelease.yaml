@@ -298,6 +298,12 @@ spec:
         nut-exporter:
           url: https://raw.githubusercontent.com/DRuggeri/nut_exporter/master/dashboard/dashboard.json
           datasource: Prometheus
+        opnsense:
+          # renovate: depName="OPNsense"
+          gnetId: 21113
+          revision: 1
+          datasource:
+            - { name: DS_PROMETHEUS-K0, value: Prometheus }
       storage:
         ceph-cluster:
           # renovate: depName="Ceph Cluster"
