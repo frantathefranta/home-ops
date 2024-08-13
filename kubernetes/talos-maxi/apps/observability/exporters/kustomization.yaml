@@ -13,3 +13,4 @@ resources:
   - ./nut-exporter/ks.yaml
   - ./mqtt-exporter/ks.yaml
   - ./frigate-exporter/ks.yaml
+  - ./opnsense-exporter/ks.yaml
