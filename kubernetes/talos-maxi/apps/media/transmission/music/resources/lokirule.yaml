@@ -1,0 +1,14 @@
+---
+groups:
+  - name: transmission
+    rules:
+      - alert: TransmissionPVCNotWritable
+        expr: |
+          sum by (app) (count_over_time({app=~"transmission.*"} |~ "(?i)Couldn't save '/config/stats.json'"[1h])) > 0
+        for: 2m
+        labels:
+          severity: critical
+          category: logs
+        annotations:
+          app: "{{ $labels.container }}"
+          summary: "{{ $labels.service_name }} has config PVC mounted read-only
