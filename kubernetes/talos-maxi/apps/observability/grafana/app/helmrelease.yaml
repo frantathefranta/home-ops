@@ -200,6 +200,11 @@ spec:
           gnetId: 1860
           revision: 37
           datasource: Prometheus
+        node-exporter-bsd:
+          # renovate: depName="Node Exporter BSD"
+          gnetId: 4260
+          revision: 12
+          datasource: Prometheus
         idrac-dashboard-v2:
           # renovate: depName="iDRAC SNMP DashBoard"
           gnetId: 14395
