@@ -44,6 +44,10 @@ spec:
       externalMgrEndpoints:
         - ip: ${CEPH1_NODE}
           externalMgrPrometheusPort: 9283
+        - ip: ${CEPH2_NODE}
+          externalMgrPrometheusPort: 9283
+        - ip: ${CEPH3_NODE}
+          externalMgrPrometheusPort: 9283
       internal: 1m
 
     # -- Settings for the block pool snapshot class
