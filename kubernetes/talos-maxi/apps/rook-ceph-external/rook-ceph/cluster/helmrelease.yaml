@@ -43,8 +43,10 @@ spec:
       createPrometheusRules: true
       externalMgrEndpoints:
         - ip: ${CEPH1_NODE}
-          externalMgrPrometheusPort: 9283
-      internal: 1m
+        - ip: ${CEPH2_NODE}
+        - ip: ${CEPH3_NODE}
+      externalMgrPrometheusPort: 9283
+      interval: 15s
 
     # -- Settings for the block pool snapshot class
     # @default -- See [RBD Snapshots](../Storage-Configuration/Ceph-CSI/ceph-csi-snapshot.md#rbd-snapshots)
