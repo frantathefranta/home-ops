@@ -29,10 +29,10 @@ sources:
       codec: json
     host_key: __host
 
-  syslog_source:
-    address: 0.0.0.0:6514
-    mode: udp
-    type: syslog
+  # syslog_source:
+  #   address: 0.0.0.0:6514
+  #   mode: udp
+  #   type: syslog
 
 transforms:
   kubernetes_transform:
@@ -116,14 +116,14 @@ sinks:
       talos_service: '{{ "talos-service" }}'
       namespace: "talos:service"
 
-  loki_syslog:
-    type: loki
-    inputs:
-      - syslog_source
-    endpoint: http://loki-gateway.observability.svc.cluster.local
-    encoding:
-      codec: json
-    out_of_order_action: rewrite_timestamp
-    labels:
-      hostname: "{{ host }}"
-      datasource: source_syslog
+  # loki_syslog:
+  #   type: loki
+  #   inputs:
+  #     - syslog_source
+  #   endpoint: http://loki-gateway.observability.svc.cluster.local
+  #   encoding:
+  #     codec: json
+  #   out_of_order_action: rewrite_timestamp
+  #   labels:
+  #     hostname: "{{ host }}"
+  #     datasource: source_syslog
