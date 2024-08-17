@@ -18,3 +18,4 @@ resources:
   - ./wizarr/ks.yaml
   - ./bazarr/ks.yaml
   - ./varroa/ks.yaml
+  - ./readarr/ks.yaml
