@@ -35,7 +35,7 @@ tasks:
       - kubectl --context {{.cluster}} -n {{.ns}} scale deployment volsync --replicas {{if eq "suspend" .state}}0{{else}}1{{end}}
     env: *env-vars
     vars:
-      ns: '{{.ns | default "volsync-system"}}'
+      ns: '{{.ns | default "storage"}}'
       state: "{{index .MATCH 0}}"
     requires:
       vars: ["cluster"]
