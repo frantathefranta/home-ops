@@ -37,8 +37,8 @@ spec:
             storage: 5Gi
       topologySpreadConstraints:
         - maxSkew: 1
-          topologyKey: "kubernetes.io/hostname"
-          whenUnsatisfiable: "DoNotSchedule"
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
           labelSelector:
             matchLabels:
               postgres-operator.crunchydata.com/cluster: *name
@@ -96,9 +96,9 @@ spec:
       manual:
         repoName: repo1
         options: ["--type=full"]
-      # metadata:
-      #   labels:
-      #     app.kubernetes.io/name: crunchy-postgres-vector-backup
+      metadata:
+        labels:
+          app.kubernetes.io/name: crunchy-postgres-vector-backup
       repos:
         - # Minio
           name: repo1
@@ -120,14 +120,14 @@ spec:
             differential: "0 2 * * 1-6" # Mon-Sat at 2am
       jobs:
         ttlSecondsAfterFinished: 60
- # dataSource:
- #   pgbackrest:
- #     stanza: db
- #     configuration: *backupConfig
- #     global: *backupFlag
- #     repo:
- #       name: repo1
- #       s3: *minio
+  dataSource:
+    pgbackrest:
+      stanza: db
+      configuration: *backupConfig
+      global: *backupFlag
+      repo:
+        name: repo1
+        s3: *minio
   service:
     type: LoadBalancer
     metadata:
