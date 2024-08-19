@@ -4,26 +4,12 @@ apiVersion: postgres-operator.crunchydata.com/v1beta1
 kind: PostgresCluster
 metadata:
   name: &name postgres
+  labels:
+    crunchy-users.henrywhitaker3.github.com/watch: "true"
+  annotations:
+    crunchy-users.henrywhitaker3.github.com/superuser: "postgres"
 spec:
   postgresVersion: 16
-  monitoring:
-    pgmonitor:
-      exporter:
-        image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres-exporter:ubi8-5.6.0-0
-  metadata:
-    labels:
-      crunchy-userinit.ramblurr.github.com/enabled: "true"
-      crunchy-userinit.ramblurr.github.com/superuser: "postgres"
-  patroni: # turn on sync writes to at least 1 other replica
-    dynamicConfiguration:
-      synchronous_mode: true
-      postgresql:
-        synchronous_commit: "on"
-        pg_hba:
-          - hostssl all all all md5
-          - hostnossl all all 10.69.0.0/16 md5 # Necessary because of authelia (there might be a workaround though)
-        parameters:
-          max_connections: 500
   instances:
     - name: postgres
       metadata:
@@ -42,7 +28,18 @@ spec:
           whenUnsatisfiable: "DoNotSchedule"
           labelSelector:
             matchLabels:
+              postgres-operator.crunchydata.com/cluster: *name
               postgres-operator.crunchydata.com/data: postgres
+  patroni: # turn on sync writes to at least 1 other replica
+    dynamicConfiguration:
+      synchronous_mode: true
+      postgresql:
+        synchronous_commit: "on"
+        pg_hba:
+          - hostssl all all all md5
+          - hostnossl all all 10.69.0.0/16 md5 # Necessary because of authelia (there might be a workaround though)
+        parameters:
+          max_connections: 500
   users:
     # Superuser
     - name: "postgres"
@@ -152,6 +149,8 @@ spec:
           schedules:
             full: "0 2 * * 0" # Sunday at 2am
             differential: "0 2 * * 1-6" # Mon-Sat at 2am
+      jobs:
+        ttlSecondsAfterFinished: 60
   dataSource:
     pgbackrest:
       stanza: db
@@ -160,6 +159,15 @@ spec:
       repo:
         name: repo1
         s3: *minio
+  monitoring:
+    pgmonitor:
+      exporter:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 64M
+          limits:
+            memory: 512M
   proxy:
     pgBouncer:
       service:
