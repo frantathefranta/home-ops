@@ -50,7 +50,10 @@ transforms:
       r1 = replace!(.__host, "10.33.35.1", "talos-actinium")
       r2 = replace(r1, "10.33.35.2", "talos-thorium")
       r3 = replace(r2, "10.33.35.3", "talos-protactinium")
-      .node = r3
+      r4 = replace(r3, "10.33.35.11", "talos-actinium-agent")
+      r5 = replace(r4, "10.33.35.12", "talos-thorium-agent")
+      r6 = replace(r5, "10.33.35.13", "talos-protactinium-agent")
+      .node = r6
 
   talos_service_transform:
     type: remap
@@ -60,8 +63,11 @@ transforms:
       r1 = replace!(.__host, "10.33.35.1", "talos-actinium")
       r2 = replace(r1, "10.33.35.2", "talos-thorium")
       r3 = replace(r2, "10.33.35.3", "talos-protactinium")
-      r4 = replace(r3, "10.33.*", "talos")
-      .node = r4
+      r4 = replace(r3, "10.33.35.11", "talos-actinium-agent")
+      r5 = replace(r4, "10.33.35.12", "talos-thorium-agent")
+      r6 = replace(r5, "10.33.35.13", "talos-protactinium-agent")
+      r7 = replace(r6, "10.33.*", "talos")
+      .node = r7
 
 sinks:
   kubernetes:
