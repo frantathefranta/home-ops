@@ -1,0 +1,69 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: immich-microservices
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.3.2
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  dependsOn:
+    - name: immich-server
+      namespace: default
+  values:
+    controllers:
+      immich-microservices:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/immich-app/immich-server
+              tag: v1.112.1@sha256:c4e817f0eadbd9a6c2699cc884d5e7070428daec813c17db77d31fcca5b78ca6
+            env:
+              TZ: ${TIMEZONE}
+              IMMICH_WORKERS_EXCLUDE: api
+            envFrom:
+              - configMapRef:
+                  name: immich-configmap
+              - secretRef:
+                  name: immich-secret
+            resources:
+              requests:
+                cpu: 10m
+                memory: 512Mi
+              limits:
+                memory: 8000Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+        pod:
+          enableServiceLinks: false
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+    persistence:
+      library:
+        type: nfs
+        server: ${NAS_IP}
+        path: /emc1/photos
+        globalMounts:
+          - path: /usr/src/app/upload
