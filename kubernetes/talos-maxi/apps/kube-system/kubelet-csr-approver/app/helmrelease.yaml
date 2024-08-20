@@ -21,7 +21,7 @@ spec:
     remediation:
       retries: 3
   values:
-    providerRegex: ^(talos-actinium|talos-thorium|talos-protactinium)$
+    providerRegex: ^(talos-actinium|talos-thorium|talos-protactinium|talos-actinium-agent|talos-thorium-agent|talos-protactinium-agent)$
     bypassDnsResolution: true
     metrics:
       enable: true

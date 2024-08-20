@@ -71,6 +71,51 @@ nodes:
             gateway: "10.33.0.1"
         vip:
           ip: "10.33.40.25"
+  - hostname: "talos-actinium-agent"
+    ipAddress: "10.33.35.11"
+    installDisk: "/dev/sda"
+    talosImageURL: factory.talos.dev/installer/a7bcadbc1b6d03c0e687be3a5d9789ef7113362a6a1a038653dfd16283a92b6b
+    controlPlane: false
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "bc:24:11:ef:cb:ec"
+        dhcp: false
+        addresses:
+          - "10.33.35.11/16"
+        mtu: 1500
+        routes:
+          - network: 0.0.0.0/0
+            gateway: "10.33.0.1"
+  - hostname: "talos-thorium-agent"
+    ipAddress: "10.33.35.12"
+    installDisk: "/dev/sda"
+    talosImageURL: factory.talos.dev/installer/a7bcadbc1b6d03c0e687be3a5d9789ef7113362a6a1a038653dfd16283a92b6b
+    controlPlane: false
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "bc:24:11:60:58:8c"
+        dhcp: false
+        addresses:
+          - "10.33.35.12/16"
+        mtu: 1500
+        routes:
+          - network: 0.0.0.0/0
+            gateway: "10.33.0.1"
+  - hostname: "talos-protactinium-agent"
+    ipAddress: "10.33.35.13"
+    installDisk: "/dev/sda"
+    talosImageURL: factory.talos.dev/installer/a7bcadbc1b6d03c0e687be3a5d9789ef7113362a6a1a038653dfd16283a92b6b
+    controlPlane: false
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "bc:24:11:ef:cb:ec"
+        dhcp: false
+        addresses:
+          - "10.33.35.13/16"
+        mtu: 1500
+        routes:
+          - network: 0.0.0.0/0
+            gateway: "10.33.0.1"
 
 patches:
   # Configure containerd
