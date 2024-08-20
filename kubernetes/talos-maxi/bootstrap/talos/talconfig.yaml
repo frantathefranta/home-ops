@@ -25,6 +25,9 @@ nodes:
     installDisk: "/dev/sda"
     talosImageURL: factory.talos.dev/installer/a7bcadbc1b6d03c0e687be3a5d9789ef7113362a6a1a038653dfd16283a92b6b
     controlPlane: true
+    nodeLabels:
+      topology.kubernetes.io/region: *cluster
+      topology.kubernetes.io/zone: actinium
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "bc:24:11:22:55:36"
@@ -42,6 +45,9 @@ nodes:
     installDisk: "/dev/sda"
     talosImageURL: factory.talos.dev/installer/a7bcadbc1b6d03c0e687be3a5d9789ef7113362a6a1a038653dfd16283a92b6b
     controlPlane: true
+    nodeLabels:
+      topology.kubernetes.io/region: *cluster
+      topology.kubernetes.io/zone: thorium
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "bc:24:11:c6:17:fe"
@@ -59,6 +65,9 @@ nodes:
     installDisk: "/dev/sda"
     talosImageURL: factory.talos.dev/installer/a7bcadbc1b6d03c0e687be3a5d9789ef7113362a6a1a038653dfd16283a92b6b
     controlPlane: true
+    nodeLabels:
+      topology.kubernetes.io/region: *cluster
+      topology.kubernetes.io/zone: protactinium
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "bc:24:11:8b:fc:be"
@@ -76,6 +85,9 @@ nodes:
     installDisk: "/dev/sda"
     talosImageURL: factory.talos.dev/installer/a7bcadbc1b6d03c0e687be3a5d9789ef7113362a6a1a038653dfd16283a92b6b
     controlPlane: false
+    nodeLabels:
+      topology.kubernetes.io/region: *cluster
+      topology.kubernetes.io/zone: actinium
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "bc:24:11:ef:cb:ec"
@@ -91,6 +103,9 @@ nodes:
     installDisk: "/dev/sda"
     talosImageURL: factory.talos.dev/installer/a7bcadbc1b6d03c0e687be3a5d9789ef7113362a6a1a038653dfd16283a92b6b
     controlPlane: false
+    nodeLabels:
+      topology.kubernetes.io/region: *cluster
+      topology.kubernetes.io/zone: thorium
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "bc:24:11:60:58:8c"
@@ -106,6 +121,9 @@ nodes:
     installDisk: "/dev/sda"
     talosImageURL: factory.talos.dev/installer/a7bcadbc1b6d03c0e687be3a5d9789ef7113362a6a1a038653dfd16283a92b6b
     controlPlane: false
+    nodeLabels:
+      topology.kubernetes.io/region: *cluster
+      topology.kubernetes.io/zone: protactinium
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "bc:24:11:ef:cb:ec"
