@@ -105,6 +105,7 @@ identity_providers:
         scopes: ["openid", "profile", "groups", "email"]
         redirect_uris: ["https://lubelog.${SECRET_DOMAIN}/Login/RemoteAuth"]
         userinfo_signed_response_alg: none
+        token_endpoint_auth_method: 'client_secret_post'
     #   - client_name: Miniflux
     #     client_id: miniflux
     #     client_secret: "$${MINIFLUX_OAUTH_CLIENT_SECRET}"
