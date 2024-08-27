@@ -2,16 +2,16 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./tautulli-exporter/ks.yaml
-  - ./radarr-exporter/ks.yaml
-  - ./sonarr-exporter/ks.yaml
-  - ./prowlarr-exporter/ks.yaml
-  - ./overseerr-exporter/ks.yaml
-  - ./qbittorrent-exporter/ks.yaml
   - ./bazarr-exporter/ks.yaml
-  - ./snmp-exporter/ks.yaml
-  - ./nut-exporter/ks.yaml
-  - ./mqtt-exporter/ks.yaml
   - ./frigate-exporter/ks.yaml
+  - ./mqtt-exporter/ks.yaml
+  - ./nut-exporter/ks.yaml
   - ./opnsense-exporter/ks.yaml
+  - ./overseerr-exporter/ks.yaml
   - ./plex-exporter/ks.yaml
+  - ./prowlarr-exporter/ks.yaml
+  - ./qbittorrent-exporter/ks.yaml
+  - ./radarr-exporter/ks.yaml
+  - ./snmp-exporter/ks.yaml
+  - ./sonarr-exporter/ks.yaml
+  - ./tautulli-exporter/ks.yaml
