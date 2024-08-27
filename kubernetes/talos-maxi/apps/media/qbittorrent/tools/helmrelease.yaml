@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.3.2 # auto-update to semver bugfixes only
+      version: 3.4.0 # auto-update to semver bugfixes only
       sourceRef:
         kind: HelmRepository
         name: bjw-s
