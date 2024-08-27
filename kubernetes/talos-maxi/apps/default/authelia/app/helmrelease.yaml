@@ -44,7 +44,7 @@ spec:
               AUTHELIA_TELEMETRY_METRICS_ENABLED: "true"
               AUTHELIA_THEME: dark
               X_AUTHELIA_CONFIG: /config/configuration.yaml
-              X_AUTHELIA_CONFIG_FILTERS: expand-env
+              X_AUTHELIA_CONFIG_FILTERS: template
             envFrom:
               - secretRef:
                   name: authelia-secret
@@ -126,6 +126,12 @@ spec:
             subPath: configuration.yaml
             readOnly: true
       secret-files:
+        enabled: true
+        type: secret
+        name: authelia-secret-files
+        globalMounts:
+          - path: /config/oidc-secret
+      secret-keys:
         enabled: true
         type: secret
         name: authelia-secret-keys
