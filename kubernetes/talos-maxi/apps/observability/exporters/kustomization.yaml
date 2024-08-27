@@ -14,3 +14,4 @@ resources:
   - ./mqtt-exporter/ks.yaml
   - ./frigate-exporter/ks.yaml
   - ./opnsense-exporter/ks.yaml
+  - ./plex-exporter/ks.yaml

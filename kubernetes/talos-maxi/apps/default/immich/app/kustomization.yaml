@@ -7,4 +7,5 @@ resources:
   - ./machine-learning
   - ./microservices
   - ./server
-  - ../../../../templates/gatus/guarded # TODO Change when immich is deployed externally
+  - ../../../../templates/gatus/external
+
