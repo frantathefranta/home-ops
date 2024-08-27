@@ -42,6 +42,7 @@ spec:
             env:
               TZ: ${TIMEZONE}
               LC_ALL: en_US.UTF-8
+              LOGGING__LOGLEVEL__DEFAULT: "Debug"
             envFrom:
               - secretRef:
                   name: "{{ .Release.Name }}-secret"

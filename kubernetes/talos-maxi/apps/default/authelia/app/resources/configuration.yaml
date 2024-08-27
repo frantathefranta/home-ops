@@ -99,6 +99,8 @@ identity_providers:
         public: false
         authorization_policy: two_factor
         pre_configured_consent_duration: 1y
+        grant_types:
+          - 'authorization_code'
         scopes: ["openid", "profile", "groups", "email"]
         redirect_uris: ["https://lubelog.${SECRET_DOMAIN}/Login/RemoteAuth"]
         userinfo_signed_response_alg: none
