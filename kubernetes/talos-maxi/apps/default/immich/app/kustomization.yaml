@@ -8,3 +8,4 @@ resources:
   - ./microservices
   - ./server
   - ../../../../templates/gatus/external
+
