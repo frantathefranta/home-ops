@@ -62,6 +62,9 @@ access_control:
 
 identity_providers:
   oidc:
+    jwks:
+      - key: |
+          {{ secret "/config/secret/jwks-0-key.pem" | mindent 10 "|" | msquote }}
     cors:
       endpoints: ["authorization", "token", "revocation", "introspection"]
       allowed_origins_from_client_redirect_uris: true
