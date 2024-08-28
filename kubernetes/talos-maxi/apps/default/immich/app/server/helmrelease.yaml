@@ -58,10 +58,10 @@ spec:
                 enabled: false
             resources:
               requests:
-                cpu: 10m
-                memory: 150Mi
+                cpu: 100m
+                memory: 250Mi
               limits:
-                memory: 500Mi
+                memory: 4Gi
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
