@@ -37,7 +37,7 @@ spec:
             storage: 5Gi
       topologySpreadConstraints:
         - maxSkew: 1
-          topologyKey: kubernetes.io/hostname
+          topologyKey: topology.kubernetes.io/zone
           whenUnsatisfiable: DoNotSchedule
           labelSelector:
             matchLabels:
@@ -158,7 +158,7 @@ spec:
           max_client_conn: "500"
       topologySpreadConstraints:
         - maxSkew: 1
-          topologyKey: kubernetes.io/hostname
+          topologyKey: topology.kubernetes.io/zone
           whenUnsatisfiable: DoNotSchedule
           labelSelector:
             matchLabels:
