@@ -17,10 +17,12 @@ x-env-vars: &env-vars
   pgid: "{{.pgid}}"
   previous: "{{.previous}}"
   puid: "{{.puid}}"
+  ts: "{{.ts}}"
 
 vars:
   VOLSYNC_SCRIPTS_DIR: "{{.ROOT_DIR}}/.taskfiles/VolSync/scripts"
   VOLSYNC_TEMPLATES_DIR: "{{.ROOT_DIR}}/.taskfiles/VolSync/templates"
+  ts: '{{now | date "150405"}}'
 
 tasks:
   state-*:
@@ -209,10 +211,10 @@ tasks:
     internal: true
     cmds:
       - envsubst < <(cat {{.VOLSYNC_TEMPLATES_DIR}}/wipe.tmpl.yaml) | kubectl --context {{.cluster}} apply -f -
-      - bash {{.VOLSYNC_SCRIPTS_DIR}}/wait-for-job.sh {{.job}} {{.ns}} {{.cluster}}
-      - kubectl --context {{.cluster}} -n {{.ns}} wait job/{{.job}} --for condition=complete --timeout=120m
-      - kubectl --context {{.cluster}} -n {{.ns}} logs job/{{.job}} --container main
-      - kubectl --context {{.cluster}} -n {{.ns}} delete job {{.job}}
+      - bash {{.VOLSYNC_SCRIPTS_DIR}}/wait-for-job.sh wipe-{{.app}}-{{.ts}} {{.ns}} {{.cluster}}
+      - kubectl --context {{.cluster}} -n {{.ns}} wait job/wipe-{{.app}}-{{.ts}} --for condition=complete --timeout=120m
+      - kubectl --context {{.cluster}} -n {{.ns}} logs job/wipe-{{.app}}-{{.ts}} --container main
+      - kubectl --context {{.cluster}} -n {{.ns}} delete job wipe-{{.app}}-{{.ts}}
     env: *env-vars
     vars:
       job: volsync-wipe-{{.app}}
@@ -222,9 +224,9 @@ tasks:
     internal: true
     cmds:
       - envsubst < <(cat {{.VOLSYNC_TEMPLATES_DIR}}/replicationdestination.tmpl.yaml) | kubectl --context {{.cluster}} apply -f -
-      - bash {{.VOLSYNC_SCRIPTS_DIR}}/wait-for-job.sh {{.job}} {{.ns}} {{.cluster}}
-      - kubectl --context {{.cluster}} -n {{.ns}} wait job/{{.job}} --for condition=complete --timeout=120m
-      - kubectl --context {{.cluster}} -n {{.ns}} delete replicationdestination {{.job}}
+      - bash {{.VOLSYNC_SCRIPTS_DIR}}/wait-for-job.sh volsync-dst-{{.app}}-{{.ts}} {{.ns}} {{.cluster}}
+      - kubectl --context {{.cluster}} -n {{.ns}} wait job/volsync-dst-{{.app}}-{{.ts}} --for condition=complete --timeout=120m
+      - kubectl --context {{.cluster}} -n {{.ns}} delete replicationdestination {{.app}}-{{.ts}}
     env: *env-vars
     vars:
       job: "{{.app}}"
@@ -233,6 +235,7 @@ tasks:
   .resume:
     internal: true
     cmds:
+      - kubectl --context {{.cluster}} -n {{.ns}} scale {{.controller}} --replicas 1
       - flux --context {{.cluster}} -n {{.ns}} resume helmrelease {{.app}}
       - flux --context {{.cluster}} -n flux-system resume kustomization {{.app}}
     env: *env-vars
