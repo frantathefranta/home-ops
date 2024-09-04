@@ -1,0 +1,69 @@
+---
+# yaml-language-server: $schema=https://lds-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app actinium-fan-control
+  namespace: flux-system
+spec:
+  targetNamespace: default
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  path: ./kubernetes/talos-maxi/apps/default/idrac-fan-control/actinium
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  dependsOn:
+    - name: external-secrets-stores
+  wait: false # no flux ks dependents
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
+---
+# yaml-language-server: $schema=https://lds-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app thorium-fan-control
+  namespace: flux-system
+spec:
+  targetNamespace: default
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  path: ./kubernetes/talos-maxi/apps/default/idrac-fan-control/thorium
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  dependsOn:
+    - name: external-secrets-stores
+  wait: false # no flux ks dependents
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
+---
+# yaml-language-server: $schema=https://lds-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app protactinium-fan-control
+  namespace: flux-system
+spec:
+  targetNamespace: default
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  path: ./kubernetes/talos-maxi/apps/default/idrac-fan-control/protactinium
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  dependsOn:
+    - name: external-secrets-stores
+  wait: false # no flux ks dependents
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
