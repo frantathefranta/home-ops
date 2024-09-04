@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app overseerr-exporter
+  name: &app jellyseerr-exporter
 spec:
   interval: 30m
   chart:
@@ -24,22 +24,22 @@ spec:
       retries: 3
   values:
     controllers:
-      overseerr-exporter:
+      jellyseerr-exporter:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
           app:
             image:
-              repository: ghcr.io/willfantom/overseerr-exporter
-              tag: 1.2.1@sha256:b5cbff0fcd04a118190849b1ed92f51669109f766171106fc0b87f7a8562273b
+              repository: ghcr.io/opspotes/jellyseerr-exporter
+              tag: 1.3.0
             args:
-              - --overseerr.address
-              - http://overseerr.media.svc.cluster.local:80
-              - --overseerr.api-key
-              - $(OVERSEERR_API_KEY)
+              - --jellyseerr.address
+              - http://jellyseerr.media.svc.cluster.local
+              - --jellyseerr.apiKey
+              - $(JELLYSEERR_API_KEY)
             envFrom:
               - secretRef:
-                  name: overseerr-exporter-secret
+                  name: jellyseerr-exporter-secret
             probes:
               liveness:
                 enabled: true

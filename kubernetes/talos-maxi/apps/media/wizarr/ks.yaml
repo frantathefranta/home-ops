@@ -11,7 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: overseerr
+    - name: jellyseerr
   path: ./kubernetes/talos-maxi/apps/media/wizarr/app
   prune: true
   sourceRef:

@@ -260,8 +260,8 @@ spec:
         #   url: https://raw.githubusercontent.com/miniflux/v2/main/contrib/grafana/dashboard.json
         #   datasource: Prometheus
       media:
-        overseerr-exporter:
-          url: https://raw.githubusercontent.com/WillFantom/overseerr-exporter/main/grafana/dashboard.json
+        jellyseerr-exporter:
+          url: https://raw.githubusercontent.com/opspotes/jellyseerr-exporter/main/grafana/dashboard.json
           datasource: Prometheus
         qbittorrent-exporter:
           url: https://raw.githubusercontent.com/esanchezm/prometheus-qbittorrent-exporter/master/grafana/dashboard.json

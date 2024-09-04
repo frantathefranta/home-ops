@@ -79,11 +79,11 @@ spec:
             port: *port
     ingress:
       app:
-        className: internal
-        # annotations:
-        #   external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
+        className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: external-maxi.${SECRET_DOMAIN}
         hosts:
-          - host: jellyseerr.${SECRET_DOMAIN}
+          - host: requests.${SECRET_DOMAIN}
             paths:
               - path: /
                 service:
@@ -95,7 +95,7 @@ spec:
         globalMounts:
           - path: /app/config
       cache:
-        existingClaim: overseerr-cache
+        existingClaim: jellyseerr-cache
         globalMounts:
           - path: /app/config/cache
       logs:
