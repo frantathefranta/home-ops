@@ -19,3 +19,4 @@ resources:
   - ./bazarr/ks.yaml
   - ./varroa/ks.yaml
   - ./readarr/ks.yaml
+  - ./jellyseerr/ks.yaml
