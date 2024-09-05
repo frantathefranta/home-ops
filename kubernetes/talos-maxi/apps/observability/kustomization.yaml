@@ -13,4 +13,5 @@ resources:
   - ./loki/ks.yaml
   - ./prometheus-operator-crds/ks.yaml
   - ./vector/ks.yaml
+  - ./kromgo/ks.yaml
   - ./exporters
