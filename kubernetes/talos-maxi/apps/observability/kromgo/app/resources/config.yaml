@@ -46,7 +46,7 @@ metrics:
     title: Memory
 
   - name: cluster_power_usage
-    query: round((network_ups_tools_ups_load) * 9), 0.1) # UPS has 900W limit
+    query: "round(network_ups_tools_ups_load * 9, 0.1)"
     suffix: "W"
     colors:
       - { color: "green", min: 0, max: 400 }
