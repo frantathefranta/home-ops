@@ -6,6 +6,7 @@ resources:
   - ./bjw-s.yaml
   - ./cilium.yaml
   - ./crunchy-userinit.yaml
+  - ./crunchy-users.yaml
   - ./crunchydata.yaml
   - ./descheduler.yaml
   - ./emqx.yaml
@@ -14,6 +15,7 @@ resources:
   - ./grafana.yaml
   - ./ingress-nginx.yaml
   - ./intel.yaml
+  - ./itzg.yaml
   - ./jetstack.yaml
   - ./k8s-gateway.yaml
   - ./longhorn.yaml
@@ -26,4 +28,3 @@ resources:
   - ./rook-ceph.yaml
   - ./spegel.yaml
   - ./stakater.yaml
-  - ./crunchy-users.yaml
