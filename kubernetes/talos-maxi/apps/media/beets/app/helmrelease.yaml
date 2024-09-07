@@ -35,7 +35,7 @@ spec:
           app:
             image:
               repository: ghcr.io/frantathefranta/beets
-              tag: 2.0.0@sha256:886ac092a34936c925a62b22767f491c68cbfa21020345c599c2ab1b5c63d323
+              tag: 2.0.0@sha256:bfdc79117a2c62d996b2b97c1c67b1877bd0cac7a5f571e5392b84d2d44d5466
             # env:
             envFrom:
             - secretRef:
