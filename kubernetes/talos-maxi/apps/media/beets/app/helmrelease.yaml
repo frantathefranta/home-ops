@@ -40,19 +40,19 @@ spec:
             envFrom:
             - secretRef:
                 name: beets-secret
-            # probes:
-            #   liveness: &probes
-            #     enabled: true
-            #     custom: true
-            #     spec:
-            #       httpGet:
-            #         path: /ping
-            #         port: *port
-            #       initialDelaySeconds: 0
-            #       periodSeconds: 10
-            #       timeoutSeconds: 1
-            #       failureThreshold: 3
-            #   readiness: *probes
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /stats
+                    port: &port 8337
+                  initialDelaySeconds: 0
+                  periodSeconds: 60
+                  timeoutSeconds: 5
+                  failureThreshold: 3
+              readiness: *probes
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -76,7 +76,7 @@ spec:
         controller: *app
         ports:
           http:
-            port: 8337
+            port: *port
     ingress:
       app:
         className: internal
