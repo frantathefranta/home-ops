@@ -91,6 +91,7 @@ spec:
       viewDistance: 12
       spigetResources:
       - 36618 #Prom Exporter
+      # Make sure you change the config of the plugin in /data/plugins/PrometheusExporter/config.yaml to listen on 0.0.0.0 instead of localhost, otherwise PodMonitor won't work
       - 18494 #DiscordSRV
       rcon:
         enabled: true

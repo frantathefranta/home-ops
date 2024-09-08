@@ -95,6 +95,7 @@ spec:
       - "https://edge.forgecdn.net/files/4835/191/create-1.20.1-0.5.1.f.jar?api-key=267C6CA3"
       # spigetResources:
       # - 36618 #Prom Exporter
+      # Make sure you change the config of the plugin in /data/plugins/PrometheusExporter/config.yaml to listen on 0.0.0.0 instead of localhost, otherwise PodMonitor won't work
       # - 18494 #DiscordSRV
       rcon:
         enabled: true
