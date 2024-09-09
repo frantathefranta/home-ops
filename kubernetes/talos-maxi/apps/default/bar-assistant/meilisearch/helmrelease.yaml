@@ -32,7 +32,7 @@ spec:
           app:
             image:
               repository: docker.io/getmeili/meilisearch
-              tag: v1.7
+              tag: v1.10
             env:
               MEILI_ENV: production
             envFrom:
