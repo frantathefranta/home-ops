@@ -264,9 +264,6 @@ spec:
           gnetId: 11454
           revision: 14
           datasource: Prometheus
-        miniflux: # TODO Uncomment when miniflux is deployed
-          url: https://raw.githubusercontent.com/miniflux/v2/main/contrib/grafana/dashboard.json
-          datasource: Prometheus
       media:
         jellyseerr-exporter:
           url: https://raw.githubusercontent.com/opspotes/jellyseerr-exporter/main/grafana/dashboard.json
@@ -283,6 +280,9 @@ spec:
               value: Prometheus
         plex-exporter:
           url: https://raw.githubusercontent.com/jsclayton/prometheus-plex-exporter/main/examples/dashboards/Media%20Server.json
+          datasource: Prometheus
+        miniflux:
+          url: https://raw.githubusercontent.com/miniflux/v2/main/contrib/grafana/dashboard.json
           datasource: Prometheus
       minecraft:
         minecraft-players:
