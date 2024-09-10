@@ -12,6 +12,8 @@ configMapGenerator:
     options:
       labels:
         grafana_dashboard: "true"
+      annotations:
+        grafana_folder: "Node Monitoring"
   - name: idrac-snmp-configmap
     files:
       - snmp.yaml=./resources/snmp.yaml
