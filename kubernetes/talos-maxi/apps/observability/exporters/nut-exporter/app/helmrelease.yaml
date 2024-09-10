@@ -32,7 +32,7 @@ spec:
           app:
             env:
               NUT_EXPORTER_USERNAME: admin
-              NUT_EXPORTER_SERVER: deb-g3-01.iot.${SECRET_DOMAIN}
+              NUT_EXPORTER_SERVER: 192.168.247.254
               NUT_EXPORTER_SERVERPORT: 3493
               NUT_EXPORTER_VARIABLES: "battery.charge,battery.charge,battery.runtime,battery.voltage,battery.voltage.nominal,input.voltage,input.voltage.nominal,ups.load,ups.status,ups.status"
             envFrom:
