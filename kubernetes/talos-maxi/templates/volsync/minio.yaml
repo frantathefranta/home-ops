@@ -6,7 +6,7 @@ metadata:
   name: "${APP}-volsync"
 spec:
   secretStoreRef:
-    name: bitwarden-secrets-manager
+    name: akeyless-secret-store
     kind: ClusterSecretStore
   target:
     name: "${APP}-volsync"
@@ -19,9 +19,9 @@ spec:
         AWS_SECRET_ACCESS_KEY: "{{ .AWS_SECRET_ACCESS_KEY }}"
   dataFrom:
   - extract:
-      key: volsync-bucket
+      key: /volsync-bucket
   - extract:
-      key: volsync-minio-template
+      key: /volsync-minio-template
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination

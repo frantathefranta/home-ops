@@ -6,7 +6,7 @@ metadata:
   name: "${APP}-volsync-r2"
 spec:
   secretStoreRef:
-    name: bitwarden-secrets-manager
+    name: akeyless-secret-store
     kind: ClusterSecretStore
   refreshInterval: 15m
   target:
@@ -20,9 +20,9 @@ spec:
         AWS_SECRET_ACCESS_KEY: "{{ .R2_SECRET_ACCESS_KEY }}"
   dataFrom:
   - extract:
-      key: cloudflare
+      key: /cloudflare
   - extract:
-      key: volsync-r2-template
+      key: /volsync-r2-template
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/volsync.backube/replicationsource_v1alpha1.json
 apiVersion: volsync.backube/v1alpha1

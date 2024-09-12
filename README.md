@@ -46,7 +46,7 @@ It&rsquo;s based on the [cluster-template](https://github.com/onedr0p/cluster-te
 </thead>
 <tbody>
 <tr>
-<td class="org-left">Bitwarden</td>
+<td class="org-left">Akeyless</td>
 <td class="org-left">External Secrets store</td>
 <td class="org-left">$0/yr (for now)</td>
 </tr>
