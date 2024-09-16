@@ -27,7 +27,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    operatorNamespace: rook-ceph-external
+    operatorNamespace: &ns rook-ceph-external
     cephClusterSpec:
       external:
         enable: true
@@ -86,3 +86,9 @@ spec:
               - ip: ${CEPH1_NODE}
               - ip: ${CEPH2_NODE}
               - ip: ${CEPH3_NODE}
+        storageClass:
+          enabled: true
+          name: ceph-bucket
+          # parameters:
+          #   objectStoreName: *store
+          #   objectStoreNamespace: *ns
