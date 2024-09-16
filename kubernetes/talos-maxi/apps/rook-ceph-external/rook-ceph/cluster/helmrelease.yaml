@@ -81,11 +81,9 @@ spec:
       - name: ceph-objectstore
         spec:
           gateway:
-            port: 7480
+            port: 80
             externalRgwEndpoints:
-              - ip: ${CEPH1_NODE}
-              - ip: ${CEPH2_NODE}
-              - ip: ${CEPH3_NODE}
+              - ip: 10.32.10.15 # HAproxy endpoint
         storageClass:
           enabled: true
           name: ceph-bucket
