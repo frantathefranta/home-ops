@@ -7,4 +7,5 @@ resources:
   - ./monitor-config.yaml
   - ./rbd-secrets.yaml
   - ./cephfs-secrets.yaml
+  - ./rgw-secret.yaml
   - ./storageclass.yaml

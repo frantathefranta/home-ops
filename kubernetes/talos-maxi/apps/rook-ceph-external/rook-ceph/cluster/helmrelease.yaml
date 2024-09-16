@@ -77,4 +77,12 @@ spec:
 
     # # -- A list of CephObjectStore configurations to deploy
     # # @default -- See [below](#ceph-object-stores)
-    cephObjectStores: {}
+    cephObjectStores:
+      - name: ceph-objectstore
+        spec:
+          gateway:
+            port: 7480
+            externalRgwEndpoints:
+              - ip: ${CEPH1_NODE}
+              - ip: ${CEPH2_NODE}
+              - ip: ${CEPH3_NODE}

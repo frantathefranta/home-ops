@@ -11,8 +11,10 @@ I set up my external cluster on [[https://pve.proxmox.com/wiki/Deploy_Hyper-Conv
 ** Running the ~create-external-cluster-resources.py~ script
 My command looks like this:
 #+begin_src sh :noeval
-$ python3 create-external-cluster-resources.py --rbd-data-pool-name talos-maxi-pv  --namespace rook-ceph-external --format bash --monitoring-endpoint 10.40.1.50  --cephfs-filesystem-name talos-maxi-fs --v2-port-enable
+$ python3 create-external-cluster-resources.py --rbd-data-pool-name talos-maxi-pv  --namespace rook-ceph-external --format bash --monitoring-endpoint 10.40.1.50  --cephfs-filesystem-name talos-maxi-fs --v2-port-enable --rgw-endpoint 10.40.1.50:7480
 #+end_src
+*** Notes
+ * ~--rgw-endpoint~ is only necessary if you want to add S3 ObjectStore functionality. [[https://pve.proxmox.com/wiki/User:Grin/Ceph_Object_Gateway][Guide on how to set that up on Proxmox]]
 ** Running the ~import-external-cluster.sh~ script
 When your ~operator~ and ~cluster~ HelmReleases are deployed, you can run this script. Make sure that you have the right ~OPERATOR_NAMESPACE~ env var set in the script, or export a new env ~CSI_DRIVER_NAME_PREFIX~ if you have a non-standard namespace (like I do). If this is set wrong, your provisioner will be named wrong and your PVCs will not start provisioning.
 * Caveats
