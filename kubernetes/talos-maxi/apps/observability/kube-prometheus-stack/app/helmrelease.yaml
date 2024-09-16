@@ -30,6 +30,8 @@ spec:
       namespace: observability
     - name: openebs
       namespace: openebs-system
+    - name: thanos
+      namespace: observability
   values:
     crds:
       enabled: false
@@ -40,7 +42,7 @@ spec:
         # annotations:
         #   external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
         ingressClassName: internal
-        hosts: ["alertmanager-maxi.${SECRET_DOMAIN}"]
+        hosts: ["alertmanager.${SECRET_DOMAIN}"]
         pathType: Prefix
       alertmanagerSpec:
         replicas: 2
@@ -104,9 +106,16 @@ spec:
         # annotations:
         #   external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
         ingressClassName: internal
-        hosts: ["prometheus-maxi.${SECRET_DOMAIN}"]
+        hosts: ["prometheus.${SECRET_DOMAIN}"]
         pathType: Prefix
+      thanosService:
+        enabled: true
+      thanosServiceMonitor:
+        enabled: true
       prometheusSpec:
+        podMetadata:
+          annotations:
+            secret.reloader.stakater.com/reload: &secret thanos-objstore-config
         replicas: 2
         replicaExternalLabelName: __replica__
         scrapeInterval: 1m # Must match interval in Grafana Helm chart
@@ -121,8 +130,15 @@ spec:
           - auto-gomemlimit
           - memory-snapshot-on-shutdown
           - new-service-discovery-manager
-        retention: 14d
-        retentionSize: 70GB
+        thanos:
+          image: quay.io/thanos/thanos:${THANOS_VERSION}
+          version: "${THANOS_VERSION#v}"
+          objectStorageConfig:
+            existingSecret:
+              name: *secret
+              key: config
+        retention: 2d
+        retentionSize: 15GB
         resources:
           requests:
             cpu: 100m
