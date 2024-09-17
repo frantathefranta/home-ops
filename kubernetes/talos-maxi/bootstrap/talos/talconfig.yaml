@@ -189,8 +189,7 @@ patches:
     machine:
       network:
         nameservers:
-          - 10.0.30.53
-
+          - 192.168.247.254
 
   # Enable Host DNS: https://www.talos.dev/v1.7/talos-guides/network/host-dns/
   - |-
