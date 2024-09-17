@@ -13,6 +13,8 @@ spec:
         kind: HelmRepository
         name: cilium
         namespace: flux-system
+  driftDetection:
+    mode: enabled
   install:
     remediation:
       retries: 3
@@ -20,27 +22,10 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
+  valuesFrom:
+    - kind: ConfigMap
+      name: cilium-helm-values
   values:
-    autoDirectNodeRoutes: true
-    bgpControlPlane:
-      enabled: true
-    bpf:
-      masquerade: false
-    cgroup:
-      automount:
-        enabled: false
-      hostRoot: /sys/fs/cgroup
-    cluster:
-      id: 1
-      name: talos-maxi
-    cni:
-      exclusive: false
-    containerRuntime:
-      integration: containerd
-    # NOTE: devices might need to be set if you have more than one active NIC on your hosts
-    # devices: eno+ eth+
-    endpointRoutes:
-      enabled: true
     hubble:
       enabled: true
       metrics:
@@ -70,27 +55,10 @@ spec:
         ingress:
           enabled: true
           className: internal
-          hosts: ["hubble-maxi.${SECRET_DOMAIN}"]
-    ipam:
-      mode: kubernetes
-    ipv4NativeRoutingCIDR: "${CLUSTER_CIDR}"
-    # ipv6NativeRoutingCIDR: "${CLUSTER_CIDR_V6}"
-    # ipv6:
-    #   enabled: true
-    k8sServiceHost: 127.0.0.1
-    k8sServicePort: 7445
-    kubeProxyReplacement: true
-    kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
-    l2announcements:
-      enabled: false
-    loadBalancer:
-      algorithm: maglev
-      mode: snat
+          hosts: ["hubble.${SECRET_DOMAIN}"]
+    # loadBalancer:
     #   l7:
     #     backend: envoy
-    envoy:
-      enabled: false
-    localRedirectPolicy: true
     operator:
       replicas: 1
       rollOutPods: true
@@ -111,23 +79,3 @@ spec:
       enabled: true
       annotations:
         grafana_folder: Cilium
-    rollOutCiliumPods: true
-    routingMode: native
-    securityContext:
-      capabilities:
-        ciliumAgent:
-          - CHOWN
-          - KILL
-          - NET_ADMIN
-          - NET_RAW
-          - IPC_LOCK
-          - SYS_ADMIN
-          - SYS_RESOURCE
-          - DAC_OVERRIDE
-          - FOWNER
-          - SETGID
-          - SETUID
-        cleanCiliumState:
-          - NET_ADMIN
-          - SYS_ADMIN
-          - SYS_RESOURCE
