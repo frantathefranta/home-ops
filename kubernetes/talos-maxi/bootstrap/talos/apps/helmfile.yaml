@@ -2,6 +2,8 @@
 repositories:
   - name: cilium
     url: https://helm.cilium.io
+  - name: coredns
+    url: https://coredns.github.io/helm
   - name: postfinance
     url: https://postfinance.github.io/kubelet-csr-approver
 
@@ -12,7 +14,7 @@ helmDefaults:
   recreatePods: true
   force: true
 
-releases: # TODO Change fields based on https://github.com/onedr0p/home-ops/blob/e7555f6cc0c0844abd52a52f895fc4d6a3aa804a/kubernetes/main/bootstrap/helmfile.yaml
+releases:
   - name: prometheus-operator-crds
     namespace: observability
     chart: oci://ghcr.io/prometheus-community/charts/prometheus-operator-crds
@@ -32,4 +34,11 @@ releases: # TODO Change fields based on https://github.com/onedr0p/home-ops/blob
     needs:
       - observability/prometheus-operator-crds
       - kube-system/cilium
-      {{/* - kube-system/coredns */}}
+  - name: coredns
+    namespace: kube-system
+    chart: coredns/coredns
+    version: 1.32.0
+    values: ["../../../apps/kube-system/coredns/app/helm-values.yaml"]
+    needs:
+      - observability/prometheus-operator-crds
+      - kube-system/cilium

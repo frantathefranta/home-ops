@@ -5,6 +5,7 @@ resources:
   - ./backube.yaml
   - ./bjw-s.yaml
   - ./cilium.yaml
+  - ./coredns.yaml
   - ./crunchy-userinit.yaml
   - ./crunchy-users.yaml
   - ./crunchydata.yaml

@@ -3,10 +3,11 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./namespace.yaml
-  - ./descheduler/ks.yaml
   - ./cilium/ks.yaml
-  - ./metrics-server/ks.yaml
-  - ./reloader/ks.yaml
+  - ./coredns/ks.yaml
+  - ./descheduler/ks.yaml
   - ./kubelet-csr-approver/ks.yaml
-  - ./spegel/ks.yaml
+  - ./metrics-server/ks.yaml
   - ./node-feature-discovery/ks.yaml
+  - ./reloader/ks.yaml
+  - ./spegel/ks.yaml
