@@ -75,8 +75,8 @@ spec:
       mode: kubernetes
     ipv4NativeRoutingCIDR: "${CLUSTER_CIDR}"
     # ipv6NativeRoutingCIDR: "${CLUSTER_CIDR_V6}"
-    ipv6:
-      enabled: true
+    # ipv6:
+    #   enabled: true
     k8sServiceHost: 127.0.0.1
     k8sServicePort: 7445
     kubeProxyReplacement: true
