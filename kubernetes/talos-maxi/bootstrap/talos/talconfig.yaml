@@ -9,9 +9,10 @@ clusterName: &cluster talos-maxi
 endpoint: https://10.33.40.25:6443
 clusterPodNets:
   - "10.69.0.0/16"
-  - "fd20:6ff9:e40f::/48"
+  - "fd20:6ff9:e40f::/56"
 clusterSvcNets:
   - "10.96.0.0/16"
+  - "fd25:6ff9:e40f::/112"
 additionalApiServerCertSans: &sans
   - "10.33.40.25"
   - 127.0.0.1 # KubePrism
@@ -181,7 +182,7 @@ patches:
         extraArgs:
           rotate-server-certificates: true
         nodeIP:
-          validSubnets: ["10.33.0.0/16"]
+          validSubnets: ["10.33.0.0/16", "fd30:6ff9:e40f:3333::/64"]
 
   # Force nameserver
   - |-
@@ -206,6 +207,7 @@ patches:
         fs.inotify.max_user_instances: "8192"
         net.core.rmem_max: "2500000"
         net.core.wmem_max: "2500000"
+        net.ipv6.conf.all.forwarding: 1
 
   # Mount openebs-hostpath in kubelet
   - |-
@@ -235,6 +237,7 @@ controlPlane:
         controllerManager:
           extraArgs:
             bind-address: 0.0.0.0
+            node-cidr-mask-size-ipv6: "64"
         proxy:
           disabled: true
         scheduler:
