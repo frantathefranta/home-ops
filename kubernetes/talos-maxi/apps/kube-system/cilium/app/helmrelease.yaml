@@ -74,15 +74,22 @@ spec:
     ipam:
       mode: kubernetes
     ipv4NativeRoutingCIDR: "${CLUSTER_CIDR}"
+    ipv6NativeRoutingCIDR: "${CLUSTER_CIDR_V6}"
+    ipv6:
+      enabled: true
     k8sServiceHost: 127.0.0.1
     k8sServicePort: 7445
     kubeProxyReplacement: true
     kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
     l2announcements:
-      enabled: true
+      enabled: false
     loadBalancer:
       algorithm: maglev
       mode: snat
+    #   l7:
+    #     backend: envoy
+    envoy:
+      enabled: false
     localRedirectPolicy: true
     operator:
       replicas: 1
