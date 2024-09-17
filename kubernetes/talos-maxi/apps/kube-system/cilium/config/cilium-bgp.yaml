@@ -6,8 +6,7 @@ metadata:
 spec:
   allowFirstLastIPs: "Yes"
   blocks:
-    - cidr: "${NODE_CIDR}"
-    - cidr: "${NODE_CIDR_V6}"
+    - cidr: "${NODE_CIDR},${NODE_CIDR_V6}"
 ---
 apiVersion: cilium.io/v2alpha1
 kind: CiliumBGPClusterConfig
