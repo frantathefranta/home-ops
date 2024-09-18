@@ -24,6 +24,8 @@ spec:
       retries: 3
   values:
     fullnameOverride: *app
+    service:
+      ipFamilyPolicy: PreferDualStack
     domainFilters:
       - "${SECRET_DOMAIN}"
     provider:
