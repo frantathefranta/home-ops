@@ -28,6 +28,8 @@ spec:
       reloader.stakater.com/auto: "true"
     deploymentStrategy:
       type: RollingUpdate
+    service:
+      ipFamilyPolicy: PreferDualStack
     admin:
       existingSecret: grafana-secret
     env:
