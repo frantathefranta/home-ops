@@ -12,8 +12,9 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: external-secrets-stores
-    - name: rook-ceph-cluster
+    # - name: rook-ceph-cluster
     - name: dragonfly-cluster
+    - name: minio
   path: ./kubernetes/talos-maxi/apps/observability/thanos/app
   prune: true
   sourceRef:
