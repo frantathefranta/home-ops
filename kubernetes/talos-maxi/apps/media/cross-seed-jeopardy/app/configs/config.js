@@ -21,11 +21,6 @@ module.exports = {
   includeNonVideos: true,
   includeSingleEpisodes: true,
 
-  // The save paths for sonarr/radarr are set to the following:
-  // dataDirs: [
-  //   "/jeopady/downloads",
-  // ],
-
   linkCategory: "cross-seed",
   linkType: "hardlink",
   linkDir: "/jeopardy/downloads/cross-seed",

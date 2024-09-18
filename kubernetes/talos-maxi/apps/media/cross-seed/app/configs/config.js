@@ -4,8 +4,8 @@
 // Incomplete Save Path: /media/downloads/torrents/incomplete
 
 module.exports = {
-  delay: 60,
-  port: process.env.PORT || 2468,
+  delay: 30,
+  apiKey: process.env.CROSS_SEED_API_KEY,
   qbittorrentUrl: "http://qbittorrent.media.svc.cluster.local:8080",
 
   torznab: [
@@ -18,10 +18,8 @@ module.exports = {
     `http://prowlarr.media.svc.cluster.local:80/69/api?apikey=$${process.env.PROWLARR__AUTH__APIKEY}`,  // AB
   ],
 
-  apiAuth: false,
   action: "inject",
   matchMode: "safe",
-  skipRecheck: true,
   duplicateCategories: true,
 
   includeNonVideos: true,
@@ -35,10 +33,11 @@ module.exports = {
     "/media/downloads/anime-sonarr",
   ],
 
+  linkCategory: "cross-seed",
   linkType: "hardlink",
   linkDir: "/media/downloads/xseed",
 
-  outputDir: "/config/xseed",
+  outputDir: "/config",
   torrentDir: "/qbittorrent/qBittorrent/BT_backup",
 
   rssCadence: "15 minutes"
