@@ -116,6 +116,8 @@ spec:
             external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
           hosts:
            - name: *host
+      extraServiceSpec:
+        ipFamilyPolicy: SingleStack
   valuesFrom:
   - kind: Secret
     name: minecraft-create-secret
