@@ -11,6 +11,7 @@ resources:
   - ./prowlarr/ks.yaml
   - ./qbittorrent/ks.yaml
   - ./cross-seed/ks.yaml
+  - ./cross-seed-jeopardy/ks.yaml
   - ./tautulli/ks.yaml
   - ./autobrr/ks.yaml
   - ./transmission/ks.yaml

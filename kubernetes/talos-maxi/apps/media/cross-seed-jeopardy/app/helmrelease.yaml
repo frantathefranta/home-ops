@@ -1,0 +1,97 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cross-seed-jeopardy
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.4.0
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  dependsOn:
+    - name: transmission-jeopardy
+      namespace: media
+    - name: prowlarr
+      namespace: media
+  values:
+    controllers:
+      cross-seed-jeopardy:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            runAsNonRoot: true
+            fsGroup: 568
+            fsGroupChangePolicy: "OnRootMismatch"
+
+        containers:
+          app:
+            image:
+              repository: ghcr.io/cross-seed/cross-seed
+              tag: 6.0.0-34@sha256:f68f7fd7fa30bf45be844d7012d3b117841dea8fdfa0169d579e44698b041ae4
+            args:
+              - daemon
+            envFrom:
+              - secretRef:
+                  name: prowlarr-secret
+              - secretRef:
+                  name: cross-seed-jeopardy-secret
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 256Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+
+    service:
+      app:
+        controller: cross-seed-jeopardy
+        ports:
+          http:
+            port: 2468
+
+    persistence:
+      config:
+        type: emptyDir
+      config-file:
+        type: configMap
+        name: cross-seed-jeopardy-configmap
+        globalMounts:
+          - path: /config/config.js
+            subPath: config.js
+            readOnly: true
+      transmission-jeopardy:
+        existingClaim: transmission-jeopardy
+        globalMounts:
+          - path: /transmission
+      data:
+        type: nfs
+        server: ${NAS_IP}
+        path: /emc1/jeopardy
+        globalMounts:
+        - path: /jeopardy
