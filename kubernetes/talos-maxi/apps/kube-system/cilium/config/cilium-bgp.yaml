@@ -26,6 +26,11 @@ spec:
           peerAddress: 10.33.0.1
           peerConfigRef:
             name: cilium-peer
+        - name: arista01-v6
+          peerASN: 65033
+          peerAddress: fd30:6ff9:e40f:3333::1
+          peerConfigRef:
+            name: cilium-peer
 ---
 apiVersion: cilium.io/v2alpha1
 kind: CiliumBGPPeerConfig
