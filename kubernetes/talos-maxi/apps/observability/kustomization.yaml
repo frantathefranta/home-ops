@@ -8,7 +8,7 @@ resources:
   # Flux-Kustomizations
   - ./gatus/ks.yaml
   - ./grafana/ks.yaml
-  - ./thanos/ks.yaml
+  # - ./thanos/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
   - ./loki/ks.yaml
   - ./prometheus-operator-crds/ks.yaml
