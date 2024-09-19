@@ -76,6 +76,8 @@ spec:
       - ingress
       - service
 
+    extraArgs:
+      - --txt-cache-interval=1h
     txtPrefix: "k8s."
     txtOwnerId: talos-maxi
 
