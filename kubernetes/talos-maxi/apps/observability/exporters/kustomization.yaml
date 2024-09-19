@@ -4,14 +4,15 @@ kind: Kustomization
 resources:
   - ./bazarr-exporter/ks.yaml
   - ./frigate-exporter/ks.yaml
+  - ./jellyseerr-exporter/ks.yaml
   - ./mqtt-exporter/ks.yaml
   - ./nut-exporter/ks.yaml
   - ./opnsense-exporter/ks.yaml
-  - ./jellyseerr-exporter/ks.yaml
   - ./plex-exporter/ks.yaml
   - ./prowlarr-exporter/ks.yaml
   - ./qbittorrent-exporter/ks.yaml
   - ./radarr-exporter/ks.yaml
   - ./snmp-exporter/ks.yaml
   - ./sonarr-exporter/ks.yaml
+  - ./speedtest-exporter/ks.yaml
   - ./tautulli-exporter/ks.yaml
