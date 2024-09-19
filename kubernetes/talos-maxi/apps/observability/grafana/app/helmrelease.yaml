@@ -333,6 +333,13 @@ spec:
           revision: 1
           datasource:
             - { name: DS_PROMETHEUS-K0, value: Prometheus }
+        speedtest-exporter:
+          # renovate: depName="Speedtest-Exporter Dashboard"
+          gnetId: 13665
+          revision: 4
+          datasource:
+            - name: DS_PROMETHEUS
+              value: Prometheus
       storage:
         ceph-cluster:
           # renovate: depName="Ceph Cluster"
