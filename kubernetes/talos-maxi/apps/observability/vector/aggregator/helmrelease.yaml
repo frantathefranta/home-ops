@@ -76,7 +76,7 @@ spec:
         type: LoadBalancer
         annotations:
           external-dns.alpha.kubernetes.io/hostname: vector.${SECRET_DOMAIN}
-          io.cilium/lb-ipam-ips: ${SVC_VECTOR_ADDR}
+          # io.cilium/lb-ipam-ips: ${SVC_VECTOR_ADDR}
         ports:
           http:
             port: *port
