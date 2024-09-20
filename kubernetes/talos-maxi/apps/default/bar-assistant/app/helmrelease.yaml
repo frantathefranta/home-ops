@@ -36,9 +36,10 @@ spec:
             env:
               BASE_URL: https://bar.${SECRET_DOMAIN}
               # MEILISEARCH_URL: https://bar.${SECRET_DOMAIN}/search
-              API_URL: https://bar.${SECRET_DOMAIN}/bar
+              APP_URL: https://bar-api.${SECRET_DOMAIN}
               LOG_CHANNEL: stderr
               MEILISEARCH_HOST: http://meilisearch:7700
+              MEILISEARCH_URL: https://bar.${SECRET_DOMAIN}/search
               REDIS_HOST: dragonfly.database.svc.cluster.local
               ALLOW_REGISTRATION: true
             envFrom:
@@ -58,37 +59,41 @@ spec:
             #       failureThreshold: 3
             #   readiness: *probes
             securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              privileged: true
+              # allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              # capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 10m
               limits:
                 memory: 128Mi
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        fsGroupChangePolicy: OnRootMismatch
-        seccompProfile: { type: RuntimeDefault }
+    # defaultPodOptions:
+    #   securityContext:
+    #     privileged: true
+        # runAsNonRoot: true
+        # runAsUser: 33
+        # runAsGroup: 33
+        # fsGroup: 33
+        # fsGroupChangePolicy: OnRootMismatch
+        # seccompProfile: { type: RuntimeDefault }
     service:
       app:
         controller: *app
         ports:
           http:
-            port: 3000
+            port: 8080
     ingress:
       app:
         className: internal
         # annotations:
+        #   nginx.ingress.kubernetes.io/rewrite-target: "/"
         #   external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
         hosts:
-        - host: "bar.${SECRET_DOMAIN}"
+        - host: "bar-api.${SECRET_DOMAIN}"
           paths:
-          - path: /bar/
+          # - path: /bar(/|$)(.*)
+          - path: /
             service:
               identifier: app
               port: http

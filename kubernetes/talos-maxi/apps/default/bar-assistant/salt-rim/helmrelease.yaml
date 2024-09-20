@@ -34,7 +34,7 @@ spec:
               repository: barassistant/salt-rim
               tag: 3.0.0
             env:
-              API_URL: https://bar.${SECRET_DOMAIN}/bar
+              API_URL: https://bar-api.${SECRET_DOMAIN}
               MEILISEARCH_URL: https://bar.${SECRET_DOMAIN}/search
               BAR_NAME: "Cara's Bar"
               DESCRIPTION: "Coolest Bar in Town"
@@ -53,20 +53,21 @@ spec:
             #       failureThreshold: 3
             #   readiness: *probes
             securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              privileged: true
+              # allowPrivilegeEscalation: false
+              # readOnlyRootFilesystem: true
+              # capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 10m
               limits:
                 memory: 128Mi
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 65534
-        runAsGroup: 65534
-        seccompProfile: { type: RuntimeDefault }
+    # defaultPodOptions:
+    #   securityContext:
+    #     runAsNonRoot: true
+    #     runAsUser: 65534
+    #     runAsGroup: 65534
+    #     seccompProfile: { type: RuntimeDefault }
     service:
       app:
         controller: *app
@@ -85,12 +86,12 @@ spec:
             service:
               identifier: app
               port: http
-    persistence:
-      tmp-nginx:
-        type: emptyDir
-        globalMounts:
-          - path: /var/www
-      tmp:
-        type: emptyDir
-        globalMounts:
-          - path: /var/cache
+    # persistence:
+    #   tmp-nginx:
+    #     type: emptyDir
+    #     globalMounts:
+    #       - path: /var/www
+    #   tmp:
+    #     type: emptyDir
+    #     globalMounts:
+    #       - path: /var/cache
