@@ -32,7 +32,7 @@ spec:
           app:
             image:
               repository: ghcr.io/miniflux/miniflux
-              tag: 2.2.0-distroless@sha256:497cd57e0dd596b5f7c7f7e6c1fc7efd1bde02d52174c1f43d38122e2b67b748
+              tag: 2.2.1@sha256:5950f5395ba02125c0d04b4287e6ab0467715112b9dcdc435ce89a52f595d473
             env:
               BASE_URL: https://miniflux.${SECRET_DOMAIN}
               CREATE_ADMIN: "1"
