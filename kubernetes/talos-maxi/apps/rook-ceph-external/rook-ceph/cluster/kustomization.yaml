@@ -9,3 +9,4 @@ resources:
   - ./cephfs-secrets.yaml
   - ./rgw-secret.yaml
   - ./storageclass.yaml
+  - ./prometheusrule.yaml
