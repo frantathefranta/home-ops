@@ -204,6 +204,9 @@ spec:
           revision: 2
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
+        dragonfly:
+          url: https://raw.githubusercontent.com/dragonflydb/dragonfly/refs/heads/main/tools/local/monitoring/grafana/provisioning/dashboards/dragonfly.json
+          datasource: Prometheus
       node-monitoring:
         node-exporter-full:
           # renovate: depName="Node Exporter Full"
@@ -407,9 +410,6 @@ spec:
         crunchy-query-statistics:
           url: https://raw.githubusercontent.com/CrunchyData/postgres-operator-examples/main/kustomize/monitoring/grafana/dashboards/query_statistics.json
           datasource: Prometheus
-        # dragonfly:
-        #   url: https://raw.githubusercontent.com/dragonflydb/dragonfly/main/tools/local/monitoring/grafana/provisioning/dashboards/dashboard.json
-        #   datasource: Prometheus
     sidecar:
       dashboards:
         enabled: true

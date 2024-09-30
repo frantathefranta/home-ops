@@ -133,8 +133,6 @@ spec:
         replicas: 2
         replicaExternalLabelName: __replica__
         scrapeInterval: 1m # Must match interval in Grafana Helm chart
-        # ruleSelectorNilUsesHelmValues: false
-        # serviceMonitorSelectorNilUsesHelmValues: false
         ruleSelector:
           matchLabels: ~ # Null means that everything is scraped
         serviceMonitorSelector:
@@ -145,9 +143,6 @@ spec:
           matchLabels: ~
         probeSelector:
           matchLabels: ~
-        # podMonitorSelectorNilUsesHelmValues: false
-        # probeSelectorNilUsesHelmValues: false
-        # scrapeConfigSelectorNilUsesHelmValues: false
         enableAdminAPI: true
         walCompression: true
         enableFeatures:
