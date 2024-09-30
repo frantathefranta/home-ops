@@ -134,7 +134,9 @@ spec:
         replicaExternalLabelName: __replica__
         scrapeInterval: 1m # Must match interval in Grafana Helm chart
         ruleSelectorNilUsesHelmValues: false
-        serviceMonitorSelectorNilUsesHelmValues: false
+        # serviceMonitorSelectorNilUsesHelmValues: false
+        serviceMonitorSelector:
+          matchLabels: ~
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
         scrapeConfigSelectorNilUsesHelmValues: false
