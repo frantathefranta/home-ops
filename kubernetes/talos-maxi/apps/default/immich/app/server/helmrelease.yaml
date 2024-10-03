@@ -25,6 +25,7 @@ spec:
   values:
     controllers:
       immich:
+        replicas: 2
         annotations:
           reloader.stakater.com/auto: "true"
         strategy: RollingUpdate
@@ -36,6 +37,7 @@ spec:
             env:
               TZ: ${TIMEZONE}
               IMMICH_WORKERS_INCLUDE: api
+              IMMICH_METRICS: true
             envFrom:
               - configMapRef:
                   name: immich-configmap
@@ -73,12 +75,30 @@ spec:
             runAsGroup: 568
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: topology.kubernetes.io/zone
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: *app
     service:
       app:
         controller: immich
         ports:
           http:
             port: 3001
+          metrics:
+            port: 8081
+    serviceMonitor:
+      app:
+        serviceName: immich
+        endpoints:
+          - port: metrics
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 10s
     ingress:
       app:
         annotations:
