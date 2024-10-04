@@ -52,7 +52,7 @@ spec:
               TRANSMISSION__UMASK: 7
               TRANSMISSION__MESSAGE_LEVEL: 3
               TRANSMISSION__WATCH_DIR_ENABLED: true
-              TRANSMISSION__WATCH_DIR: "/music/downloads/watch"
+              TRANSMISSION__WATCH_DIR: "/config/watch"
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
