@@ -53,6 +53,7 @@ spec:
               TRANSMISSION__MESSAGE_LEVEL: 3
               TRANSMISSION__WATCH_DIR_ENABLED: true
               TRANSMISSION__WATCH_DIR: "/config/watch"
+              TRANSMISSION__WATCH_FORCE_GENERIC: true
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
