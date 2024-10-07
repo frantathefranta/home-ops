@@ -341,6 +341,12 @@ spec:
           revision: 1
           datasource:
             - { name: DS_PROMETHEUS-K0, value: Prometheus }
+        proxmox:
+          # renovate: depName="Proxmox via Prometheus"
+          gnetId: 10347
+          revision: 5
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
         speedtest-exporter:
           # renovate: depName="Speedtest-Exporter Dashboard"
           gnetId: 13665
