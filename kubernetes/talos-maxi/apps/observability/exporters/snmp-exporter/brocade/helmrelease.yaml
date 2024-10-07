@@ -40,8 +40,16 @@ spec:
     serviceMonitor:
       enabled: true
       params:
-        - name: brocade-icx-0
-          module: ["brocade-icx"]
+        - name: brocade01
+          module: ["brocade"]
+          target: 10.33.0.10
+          auth: ["public_v2"]
+        - name: brocade01-if
+          module: ["if_mib"]
+          target: 10.33.0.10
+          auth: ["public_v2"]
+        - name: brocade01-ip
+          module: ["ip_mib"]
           target: 10.33.0.10
           auth: ["public_v2"]
       path: /snmp

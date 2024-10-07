@@ -44,6 +44,14 @@ spec:
           module: ["arista_sw"]
           target: 10.33.0.1
           auth: ["public_v2"]
+        - name: arista01-if
+          module: ["if_mib"]
+          target: 10.33.0.1
+          auth: ["public_v2"]
+        - name: arista01-ip
+          module: ["ip_mib"]
+          target: 10.33.0.1
+          auth: ["public_v2"]
       path: /snmp
       scrapeTimeout: 10s
       relabelings:
