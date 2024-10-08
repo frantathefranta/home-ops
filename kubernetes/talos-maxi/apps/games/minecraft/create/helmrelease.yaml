@@ -114,6 +114,7 @@ spec:
           annotations:
             external-dns.alpha.kubernetes.io/target: mc.${SECRET_DOMAIN}
             external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+            external-dns.alpha.kubernetes.io/exclude-bind: "true"
           hosts:
            - name: *host
       extraServiceSpec:

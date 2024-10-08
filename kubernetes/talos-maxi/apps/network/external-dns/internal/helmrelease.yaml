@@ -78,6 +78,7 @@ spec:
 
     extraArgs:
       - --txt-cache-interval=1h
+      - --annotation-filter=external-dns.alpha.kubernetes.io/exclude-bind notin (true)
     txtPrefix: "k8s."
     txtOwnerId: talos-maxi
 
