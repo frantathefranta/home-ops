@@ -39,22 +39,22 @@ spec:
               tag: 5.0.0@sha256:1cc1878d06fafe6a1a1294f1547203634e729e3386324b7a63c8fde68554d705
             env:
               TZ: America/Detroit
-              QBITTORRENT__PORT: &port 8080
-              QBITTORRENT__BT_PORT: &bittorrentPort 18903
-              QBT_Network__PortForwardingEnabled: false
-              QBT_Preferences__WebUI__AuthSubnetWhitelistEnabled: true
-              QBT_Preferences__WebUI__AuthSubnetWhitelist: |-
-                10.33.0.0/16, 10.96.0.0/16, 10.69.0.0/16
-              QBT_Preferences__WebUI__LocalHostAuth: false
-              QBT_Preferences__WebUI__UseUPnP: false
-              QBT_BitTorrent__Session__Interface: eth0
-              QBT_BitTorrent__Session__InterfaceAddress:
-                valueFrom:
-                  fieldRef:
-                    fieldPath: status.podIP
-              QBT_BitTorrent__Session__InterfaceName: eth0
-              QBT_BitTorrent__Session__DefaultSavePath: '/media/downloads'
-              QBT_Preferences__WebUI__Password_PBKDF2: "@ByteArray(8UwGVn0svAwEQwlCpUIcZw==:Tk/CJWmBY5BoR/qlwpVs0UJh4IvsFEVnbjydH3yqky/8H/Le+2KjOyyCghAq5XiHshqSzv1b5SsJJ5CYnpO8UA==)"
+              QBT_WEBUI_PORT: &port 8080
+              QBT_TORRENTING_PORT: &bittorrentPort 18903
+              # QBT_Network__PortForwardingEnabled: false
+              # QBT_Preferences__WebUI__AuthSubnetWhitelistEnabled: true
+              # QBT_Preferences__WebUI__AuthSubnetWhitelist: |-
+              #   10.33.0.0/16, 10.96.0.0/16, 10.69.0.0/16
+              # QBT_Preferences__WebUI__LocalHostAuth: false
+              # QBT_Preferences__WebUI__UseUPnP: false
+              # QBT_BitTorrent__Session__Interface: eth0
+              # QBT_BitTorrent__Session__InterfaceAddress:
+              #   valueFrom:
+              #     fieldRef:
+              #       fieldPath: status.podIP
+              # QBT_BitTorrent__Session__InterfaceName: eth0
+              # QBT_BitTorrent__Session__DefaultSavePath: '/media/downloads'
+              # QBT_Preferences__WebUI__Password_PBKDF2: "@ByteArray(8UwGVn0svAwEQwlCpUIcZw==:Tk/CJWmBY5BoR/qlwpVs0UJh4IvsFEVnbjydH3yqky/8H/Le+2KjOyyCghAq5XiHshqSzv1b5SsJJ5CYnpO8UA==)"
             probes:
               liveness: &probes
                 enabled: true
