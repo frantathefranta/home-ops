@@ -48,10 +48,6 @@ spec:
           module: ["if_mib"]
           target: 10.33.0.10
           auth: ["public_v2"]
-        - name: brocade01-ip
-          module: ["ip_mib"]
-          target: 10.33.0.10
-          auth: ["public_v2"]
       path: /snmp
       scrapeTimeout: 10s
       relabelings:
