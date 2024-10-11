@@ -27,26 +27,13 @@ spec:
         ]
         no_match: "deny"
       }
-      cluster {
-        proto_dist = "inet6_tcp"
-      }
-      dashboard {
-        listeners {
-          http {
-            inet6 = true
-          }
-        }
-      }
-      listeners {
-        tcp.ipv6.bind = "::1:1884"
-      }
   coreTemplate:
     metadata:
       annotations:
         reloader.stakater.com/auto: "true"
     spec:
       replicas: 3
-      envFrom:
+      envFrom: &envFrom
         - secretRef:
             name: emqx-secret
       extraVolumeMounts:
@@ -74,7 +61,3 @@ spec:
         external-dns.alpha.kubernetes.io/hostname: emqx-listeners.${SECRET_DOMAIN}
     spec:
       type: LoadBalancer
-      ipFamilyPolicy: PreferDualStack
-  dashboardServiceTemplate:
-    spec:
-      ipFamilyPolicy: PreferDualStack
