@@ -14,6 +14,7 @@ spec:
         - actinium.infra.${SECRET_DOMAIN}:9100
         - thorium.infra.${SECRET_DOMAIN}:9100
         - protactinium.infra.${SECRET_DOMAIN}:9100
+        - 10.0.50.30:9100 # Home Assistant
   metricsPath: /metrics
   relabelings:
     - action: replace
