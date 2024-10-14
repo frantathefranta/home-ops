@@ -1,0 +1,17 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: github-runner-controller
+  namespace: actions-runner-system
+spec:
+  podMetricsEndpoints:
+    - interval: 15s
+      path: /metrics
+      targetPort: 8080
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: gha-rs-controller
+  namespaceSelector:
+    matchNames:
+      - actions-runner-system
