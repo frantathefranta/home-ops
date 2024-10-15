@@ -50,7 +50,7 @@ spec:
                 spec:
                   httpGet:
                     path: /server-info/ping
-                    port: 3001
+                    port: &port 2283
                   initialDelaySeconds: 30
                   periodSeconds: 20
                   timeoutSeconds: 1
@@ -87,7 +87,7 @@ spec:
         controller: immich
         ports:
           http:
-            port: 3001
+            port: *port
           metrics:
             port: 8081
     serviceMonitor:
