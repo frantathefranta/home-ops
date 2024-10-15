@@ -104,6 +104,10 @@ spec:
       databases: ["sonarr_main", "sonarr_log"]
       password:
         type: AlphaNumeric
+    - name: recipes
+      databases: ["recipes_db"]
+      password:
+        type: AlphaNumeric
   backups:
     pgbackrest:
       # image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.53-0
