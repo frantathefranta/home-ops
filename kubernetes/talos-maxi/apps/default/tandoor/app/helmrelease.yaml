@@ -37,7 +37,7 @@ spec:
           app:
             image:
               repository: ghcr.io/tandoorrecipes/recipes
-              tag: 1.5.20
+              tag: 1.5.20@sha256:6c449f9aa4a47fdfded488c9df708096bb40bebc16e5bced881cbde7ec21c0dc
             env:
               TZ: ${TIMEZONE}
               DEBUG: 0
@@ -52,7 +52,7 @@ spec:
               TANDOOR_PORT: &tandoorPort 8000
               ENABLE_SIGNUP: 0
               EMAIL_HOST: smtp-relay.default.svc.cluster.local
-              EMAIL_PORT: 2525
+              EMAIL_PORT: 25
               SOCIAL_PROVIDERS: allauth.socialaccount.providers.openid_connect
             envFrom:
               - secretRef:
@@ -108,11 +108,9 @@ spec:
             port: 8080
     ingress:
       app:
-        className: internal
-        # annotations:
-        #   external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
-        #   traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-        #   traefik.ingress.kubernetes.io/router.middlewares: "networking-traefik-middleware-chain-no-auth@kubernetescrd"
+        className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "external-maxi.${SECRET_DOMAIN}"
         hosts:
           - host: &host "recipes.${SECRET_DOMAIN}"
             paths:
