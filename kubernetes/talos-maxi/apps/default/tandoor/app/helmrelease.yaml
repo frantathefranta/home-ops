@@ -53,6 +53,7 @@ spec:
               ENABLE_SIGNUP: 0
               EMAIL_HOST: smtp-relay.default.svc.cluster.local
               EMAIL_PORT: 2525
+              SOCIAL_PROVIDERS: allauth.socialaccount.providers.openid_connect
             envFrom:
               - secretRef:
                   name: tandoor-secret
