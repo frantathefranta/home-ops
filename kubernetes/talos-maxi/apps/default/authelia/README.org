@@ -12,8 +12,9 @@
   - The encryption key used to encrypt data in the database. [[https://www.authelia.com/configuration/storage/introduction/#encryption_key][Reference]]
 ** Generating a secret
 #+begin_src sh :noeval
-openssl rand -hex 64
+docker run authelia/authelia:latest authelia crypto hash generate argon2 --random --random.length 64 --random.charset alphanumeric
 #+end_src
+[[https://www.authelia.com/reference/guides/generating-secure-values/][Reference]]
 ** Generating a private key
 #+begin_src sh :noeval
 openssl genrsa 4096
