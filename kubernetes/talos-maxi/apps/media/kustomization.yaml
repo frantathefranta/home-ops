@@ -6,18 +6,19 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
-  - ./sonarr/ks.yaml
-  - ./radarr/ks.yaml
+  - ./autobrr/ks.yaml
+  - ./bazarr/ks.yaml
+  - ./beets/ks.yaml
+  - ./cross-seed-jeopardy/ks.yaml
+  - ./cross-seed/ks.yaml
+  - ./jellyseerr/ks.yaml
+  - ./plex-addons/ks.yaml
   - ./prowlarr/ks.yaml
   - ./qbittorrent/ks.yaml
-  - ./cross-seed/ks.yaml
-  - ./cross-seed-jeopardy/ks.yaml
-  - ./tautulli/ks.yaml
-  - ./autobrr/ks.yaml
-  - ./transmission/ks.yaml
-  - ./wizarr/ks.yaml
-  - ./bazarr/ks.yaml
-  - ./varroa/ks.yaml
+  - ./radarr/ks.yaml
   - ./readarr/ks.yaml
-  - ./jellyseerr/ks.yaml
-  - ./beets/ks.yaml
+  - ./sonarr/ks.yaml
+  - ./tautulli/ks.yaml
+  - ./transmission/ks.yaml
+  - ./varroa/ks.yaml
+  - ./wizarr/ks.yaml
