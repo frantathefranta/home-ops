@@ -147,7 +147,7 @@ templates:
     sync_mode: sync
     collection_order: release
     collection_mode: hide
-    schedule: weekly(friday)
+    schedule: weekly(wednesday)
   Dolby:
     sort_title: "!18_<<collection_name>>"
     sync_mode: sync

@@ -350,14 +350,14 @@ overlays:
       horizontal_align: left
       vertical_offset: 421
       vertical_align: top
-      font: /config/overlays/Fonts/Impact.ttf
+      # font: /config/overlays/Fonts/Impact.ttf
       font_size: 70
       font_color: "#FFFFFF"
       back_color: "#000000B3"
       back_radius: 25
       back_width: 190
       back_height: 185
-      file: /config/overlays/IMDb Rating.png
+      # file: /config/overlays/IMDb Rating.png
       addon_offset: 20
       addon_position: top
     plex_all: true
@@ -368,14 +368,14 @@ overlays:
       horizontal_align: left
       vertical_offset: 863
       vertical_align: top
-      font: /config/overlays/Fonts/Myriad Pro Bold.otf
+      # font: /config/overlays/Fonts/Myriad Pro Bold.otf
       font_size: 70
       font_color: "#FFFFFF"
       back_color: "#000000B3"
       back_radius: 25
       back_width: 190
       back_height: 216
-      file: /config/overlays/Metacritic.png
+      # file: /config/overlays/Metacritic.png
       addon_offset: 20
       addon_position: top
     plex_all: true
@@ -386,14 +386,14 @@ overlays:
       horizontal_align: left
       vertical_offset: 626
       vertical_align: top
-      font: /config/overlays/Fonts/Franklin Gothic Demi.ttf
+      # font: /config/overlays/Fonts/Franklin Gothic Demi.ttf
       font_size: 70
       font_color: "#FFFFFF"
       back_color: "#000000B3"
       back_radius: 25
       back_width: 190
       back_height: 217
-      file: /config/overlays/Rotten Tomatoes Popcorn Spilled.png
+      # file: /config/overlays/Rotten Tomatoes Popcorn Spilled.png
       addon_offset: 20
       addon_position: top
     plex_search:
@@ -406,14 +406,14 @@ overlays:
       horizontal_align: left
       vertical_offset: 626
       vertical_align: top
-      font: /config/overlays/Fonts/Franklin Gothic Demi.ttf
+      # font: /config/overlays/Fonts/Franklin Gothic Demi.ttf
       font_size: 70
       font_color: "#FFFFFF"
       back_color: "#000000B3"
       back_radius: 25
       back_width: 190
       back_height: 217
-      file: /config/overlays/Rotten Tomatoes Popcorn Upright.png
+      # file: /config/overlays/Rotten Tomatoes Popcorn Upright.png
       addon_offset: 20
       addon_position: top
     plex_search:

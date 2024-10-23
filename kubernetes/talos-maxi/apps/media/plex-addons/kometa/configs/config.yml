@@ -38,7 +38,8 @@ libraries:
     collection_files:
       - repo: Movies.yml
       - repo: Movies - Holidays by Drazzizzi.yml
-      - repo: Movies - Trakt (Unplayed) by Magic815.yml
+      # - repo: Movies - Trakt (Unplayed) by Magic815.yml
+      - repo: Movies - People by Magic815.yml
       - default: basic
       - default: imdb
     overlay_files:

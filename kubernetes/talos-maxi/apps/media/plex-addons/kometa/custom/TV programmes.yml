@@ -172,7 +172,7 @@ collections:
   IMDb Top 250:
     template: {name: Charts}
     imdb_search:
-      type: tv_series,tv_miniseries
+      type: tv_series,tv_mini_series
       votes.gte: 50000
     limit: 250
   TMDb Most Popular:
@@ -404,23 +404,16 @@ collections:
 
   Random 30 Rock:
     template: {name: Random, show: 30 Rock}
-  Random Becker:
-    template: {name: Random, show: Becker}
-  Random Impractical Jokers:
-    template: {name: Random, show: Impractical Jokers}
-  Random Malcolm in the Middle:
-    template: {name: Random, show: Malcolm in the Middle}
-  Random Seinfeld:
-    template: {name: Random, show: Seinfeld}
-  Random Superstore:
-    template: {name: Random, show: Superstore}
+
+  Random The Simpsons:
+    template: {name: Random, show: The Simpsons}
 
 ############################
 #          ACTORS          #
 ############################
 
-  Jason Bateman:
-    template: {name: Actors, person: 23532}
+  # Jason Bateman:
+  #   template: {name: Actors, person: 23532}
 
 ############################
 #        DIRECTORS         #
