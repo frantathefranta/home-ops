@@ -50,15 +50,24 @@ spec:
                 custom: true
                 spec:
                   httpGet:
-                    path: /server-info/ping
+                    path: /api/server/ping
                     port: &port 2283
-                  initialDelaySeconds: 30
-                  periodSeconds: 20
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
                   timeoutSeconds: 1
-                  failureThreshold: 10
+                  failureThreshold: 3
               readiness: *probes
               startup:
-                enabled: false
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/server/ping
+                    port: *port
+                  failureThreshold: 30
+                  periodSeconds: 5
+                  successThreshold: 1
+                  timeoutSeconds: 1
             resources:
               requests:
                 cpu: 100m
