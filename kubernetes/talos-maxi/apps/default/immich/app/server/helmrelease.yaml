@@ -38,7 +38,7 @@ spec:
             env:
               TZ: ${TIMEZONE}
               IMMICH_WORKERS_INCLUDE: api
-              IMMICH_METRICS: true
+              IMMICH_METRICS_INCLUDE: all
             envFrom:
               - configMapRef:
                   name: immich-configmap
