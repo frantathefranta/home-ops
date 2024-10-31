@@ -80,8 +80,8 @@ spec:
 
       server:
         log_level: info
-        grpc_server_max_recv_msg_size: 8388608
-        grpc_server_max_send_msg_size: 8388608
+        # grpc_server_max_recv_msg_size: 8388608
+        # grpc_server_max_send_msg_size: 8388608
 
       storage:
         type: s3
@@ -143,8 +143,8 @@ spec:
 
     monitoring:
       dashboards:
-        labels:
-          grafana_dashboard: true
+        # labels:
+        #   grafana_dashboard: true
         annotations:
           grafana_folder: Loki
       rules:
