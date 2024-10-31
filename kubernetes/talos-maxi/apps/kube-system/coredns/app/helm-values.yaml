@@ -59,3 +59,10 @@ topologySpreadConstraints:
     labelSelector:
       matchLabels:
         app.kubernetes.io/instance: coredns
+resources:
+  requests:
+    cpu: 50m
+    memory: 128Mi
+  limits:
+    cpu: 250m
+    memory: 128Mi
