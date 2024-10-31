@@ -4,6 +4,10 @@ version: "3"
 
 vars:
   KUBECONFORM_SCRIPT: "{{.SCRIPTS_DIR}}/kubeconform.sh"
+  KUBERNETES_TEMPLATES_DIR: "{{.ROOT_DIR}}/.taskfiles/Kubernetes/templates"
+  TIMENOW:
+    sh: date +%Y%m%d-%H%M%S
+
 
 tasks:
 
@@ -29,6 +33,36 @@ tasks:
     cmd: bash {{.KUBECONFORM_SCRIPT}} {{.KUBERNETES_DIR}}
     preconditions:
       - { msg: "Missing kubeconform script", sh: "test -f {{.KUBECONFORM_SCRIPT}}" }
+
+
+  iperf2:
+    desc: Start a iperf2 server on one node, and iperf2 client on another node, to benchmark network performance.
+    dir: "{{.KUBERNETES_TEMPLATES_DIR}}/iperf2"
+    vars: &iperf2-vars
+      SERVER_NAME: &iperf2-server-name 'iperf2-server-{{- .TIMENOW -}}'
+      SERVER_NS: &iperf2-server-ns '{{ .SERVER_NS | default "default" }}'
+      CLIENT_NAME: &iperf2-client-name 'iperf2-client-{{- .TIMENOW -}}'
+      CLIENT_NS: &iperf2-client-ns '{{ .CLIENT_NS | default "default" }}'
+      CLUSTER_DOMAIN: '{{ .CLUSTER_DOMAIN | default "cluster.local" }}'
+      SERVER_PORT: '{{ .SERVER_PORT | default "5001" }}'
+      SERVER_NODE: '{{ or .SERVER_NODE (fail "Missing `SERVER_NODE` environment variable!") }}'
+      CLIENT_NODE: '{{ or .CLIENT_NODE (fail "Missing `CLIENT_NODE` environment variable!") }}'
+      SERVER_ARGS: '{{ .SERVER_ARGS | default "" }}'
+      CLIENT_ARGS: '{{ .CLIENT_ARGS | default "" }}'
+    env: *iperf2-vars
+    cmds:
+      - cat ./server.yaml | envsubst | kubectl apply -f -
+      - defer: cat ./server.yaml | envsubst | kubectl delete -f -
+      - task: wait-pod-ready
+        vars:
+          NAME: '-l job-name={{.SERVER_NAME}}'
+          NS: '{{.SERVER_NS}}'
+      - cat ./client.yaml | envsubst | kubectl apply -f -
+      - defer: cat ./client.yaml | envsubst | kubectl delete -f -
+      - task: wait-finish
+        vars:
+          NAME: '{{.CLIENT_NAME}}'
+          NS: '{{.CLIENT_NS}}'
 
   .reset:
     internal: true
