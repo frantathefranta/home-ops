@@ -33,6 +33,7 @@ spec:
     service:
       main:
         controller: main
+        ipFamilyPolicy: PreferDualStack
         nameOverride: *app
         ports:
           http:
