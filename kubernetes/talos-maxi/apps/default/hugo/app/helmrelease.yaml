@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -30,7 +29,7 @@ spec:
           main:
             image:
               repository: frantathefranta/hugoblog # {"$imagepolicy": "flux-system:hugoblog-repo-policy:name"}
-              tag: 3c7078377c718501b9da641573b85d47c3a841e8-33 # {"$imagepolicy": "flux-system:hugoblog-repo-policy:tag"}
+              tag: f51433d48a4c360a5e4905e75f9dd5fc7cba6c73-34 # {"$imagepolicy": "flux-system:hugoblog-repo-policy:tag"}
     service:
       main:
         controller: main
