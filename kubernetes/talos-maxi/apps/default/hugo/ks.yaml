@@ -23,3 +23,30 @@ spec:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: www
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/imagerepository-image-v1beta2.json
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: hugoblog
+  namespace: flux-system
+spec:
+  image: frantathefranta/hugoblog
+  interval: 5m
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/imagepolicy-image-v1beta2.json
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: hugoblog-repo-policy
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: hugoblog
+  filterTags:
+    ## use "pattern: '[a-f0-9]+-(?P<ts>[0-9]+)'" if you copied the workflow example using github.run_number
+    pattern: '[a-f0-9]+-(?P<ts>[0-9]+)'
+    extract: '$ts'
+  policy:
+    numerical:
+      order: asc
