@@ -24,12 +24,39 @@ spec:
   values:
     controllers:
       main:
-        strategy: Recreate
+        replicas: 2
+        strategy: RollingUpdate
         containers:
           main:
             image:
               repository: frantathefranta/hugoblog # {"$imagepolicy": "flux-system:hugoblog-repo-policy:name"}
               tag: 43ac4de4aee6d20144892c59a2147a42b07ebccd-35 # {"$imagepolicy": "flux-system:hugoblog-repo-policy:tag"}
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: &port 80
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 128Mi
+    defaultPodOptions:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: topology.kubernetes.io/zone
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: *app
     service:
       main:
         controller: main
@@ -37,7 +64,7 @@ spec:
         nameOverride: *app
         ports:
           http:
-            port: &port 80
+            port: *port
     ingress:
       main:
         className: external
