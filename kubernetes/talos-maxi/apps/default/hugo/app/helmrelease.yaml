@@ -29,7 +29,7 @@ spec:
           main:
             image:
               repository: frantathefranta/hugoblog # {"$imagepolicy": "flux-system:hugoblog-repo-policy:name"}
-              tag: f51433d48a4c360a5e4905e75f9dd5fc7cba6c73-34 # {"$imagepolicy": "flux-system:hugoblog-repo-policy:tag"}
+              tag: 43ac4de4aee6d20144892c59a2147a42b07ebccd-35 # {"$imagepolicy": "flux-system:hugoblog-repo-policy:tag"}
     service:
       main:
         controller: main
