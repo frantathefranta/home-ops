@@ -113,5 +113,11 @@ spec:
         path: /emc1/media
         globalMounts:
         - path: /media
+      data-jeopardy:
+        type: nfs
+        server: ${NAS_IP}
+        path: /emc1/jeopardy
+        globalMounts:
+        - path: /jeopardy
       add-ons:
         type: emptyDir
