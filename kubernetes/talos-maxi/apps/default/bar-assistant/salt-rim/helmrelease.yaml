@@ -32,7 +32,7 @@ spec:
           app:
             image:
               repository: barassistant/salt-rim
-              tag: 3.2.2
+              tag: 3.3.0
             env:
               API_URL: https://bar-api.${SECRET_DOMAIN}
               MEILISEARCH_URL: https://bar.${SECRET_DOMAIN}/search
