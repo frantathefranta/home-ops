@@ -51,6 +51,16 @@ spec:
               requests:
                 cpu: 10m
                 memory: 500Mi
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
