@@ -31,7 +31,7 @@ nodes:
       topology.kubernetes.io/region: *cluster
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "bc:24:11:22:55:36"
+          hardwareAddr: "BC:24:11:2A:7B:8C"
         dhcp: false
         addresses:
           - "10.33.50.1/16"
