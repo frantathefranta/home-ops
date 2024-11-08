@@ -34,6 +34,49 @@ tasks:
     preconditions:
       - { msg: "Missing kubeconform script", sh: "test -f {{.KUBECONFORM_SCRIPT}}" }
 
+  race-ns-pod-security:
+    aliases: [nsps]
+    desc: While true loop labelling a given namespace with Pod Security labels, if external source creates namespace (e.g. Azure Arc's Helm apply with `--create-namespace`)
+    vars:
+      NS: &ns-fail '{{ or .NS (fail "Missing `NS` environment variable!") }}'
+      PS: '{{ or .PS (fail "Missing `PS` environment variable!") }}'
+    cmds:
+      - while true; do kubectl label namespaces {{.NS}} "pod-security.kubernetes.io/enforce={{.PS}}" >/dev/null 2>/dev/null || true; kubectl label namespaces {{.NS}} "pod-security.kubernetes.io/enforce-version=latest" >/dev/null 2>/dev/null || true; done
+
+  wait-pod-pending:
+    aliases: [waitp]
+    internal: true
+    desc: Wait for a job's pod to change its status to pending
+    vars:
+      NAME: &name-fail '{{ or .NAME (fail "Missing `NAME` environment variable!") }}'
+      NS: *ns-fail
+    cmds:
+      - |
+        until [[ $(kubectl -n {{.NS}} get pod {{.NAME}} -o jsonpath='{.items[*].status.phase}') == "Pending" ]]; do sleep 1; done
+
+  wait-pod-ready:
+    internal: true
+    desc: Wait for a pod to be ready
+    vars:
+      NAME: *name-fail
+      NS: *ns-fail
+    cmds:
+      - until kubectl wait pod -n {{.NS}} {{.NAME}} --for=condition=Ready --timeout=1h; do sleep 1; done
+
+  wait-finish:
+    internal: true
+    desc: Wait for a job's pod to change its status to pending
+    vars:
+      NAME: *name-fail
+      NS: *ns-fail
+      TYPE: '{{ .TYPE | default "job" }}'
+      # WAIT_ARGS: '{{.WAIT_ARGS | default "echo \"{{.NAME}} is still running, logs:\" && kubectl -n {{.NS}} logs {{.NAME}} --since 2s -f;"}}'
+    cmds:
+      - |-
+        until kubectl -n {{.NS}} wait {{.TYPE}}/{{.NAME}} --for condition=complete --timeout=2s; do
+          echo "{{.NAME}} is still running, logs:" && kubectl -n {{.NS}} logs {{.TYPE}}/{{.NAME}} --since 2s -f || true;
+        done
+
 
   iperf2:
     desc: Start a iperf2 server on one node, and iperf2 client on another node, to benchmark network performance.
@@ -51,19 +94,18 @@ tasks:
       CLIENT_ARGS: '{{ .CLIENT_ARGS | default "" }}'
     env: *iperf2-vars
     cmds:
-      - cat ./server.yaml | envsubst | kubectl apply -f -
-      - defer: cat ./server.yaml | envsubst | kubectl delete -f -
+      - cat "{{.KUBERNETES_TEMPLATES_DIR}}/iperf2/server.yaml" | envsubst | kubectl apply -f -
+      - defer: cat "{{.KUBERNETES_TEMPLATES_DIR}}/iperf2/server.yaml" | envsubst | kubectl delete -f -
       - task: wait-pod-ready
         vars:
           NAME: '-l job-name={{.SERVER_NAME}}'
           NS: '{{.SERVER_NS}}'
-      - cat ./client.yaml | envsubst | kubectl apply -f -
-      - defer: cat ./client.yaml | envsubst | kubectl delete -f -
+      - cat "{{.KUBERNETES_TEMPLATES_DIR}}/iperf2/client.yaml" | envsubst | kubectl apply -f -
+      - defer: cat "{{.KUBERNETES_TEMPLATES_DIR}}/iperf2/client.yaml" | envsubst | kubectl delete -f -
       - task: wait-finish
         vars:
           NAME: '{{.CLIENT_NAME}}'
           NS: '{{.CLIENT_NS}}'
-
   .reset:
     internal: true
     cmd: rm -rf {{.KUBERNETES_DIR}}
