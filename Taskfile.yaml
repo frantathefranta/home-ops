@@ -3,10 +3,9 @@
 version: "3"
 
 vars:
+  CLUSTER: '{{.CLUSTER | default "main"}}'
   KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
-  PRIVATE_DIR: "{{.ROOT_DIR}}/.private"
-  SCRIPTS_DIR: "{{.ROOT_DIR}}/scripts"
-  # Files
+  CLUSTER_DIR: '{{.KUBERNETES_DIR}}/{{.CLUSTER}}'
   AGE_FILE: "{{.ROOT_DIR}}/age.key"
   # BOOTSTRAP_CONFIG_FILE: "{{.ROOT_DIR}}/config.yaml"
   # KUBECONFIG_FILE: "{{.KUBERNETES_DIR}}/kubeconfig"
