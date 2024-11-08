@@ -25,7 +25,7 @@ nodes:
   - hostname: "talos-network"
     ipAddress: "10.33.50.1"
     installDisk: "/dev/sda"
-    talosImageURL: factory.talos.dev/installer/129be4a9491518e286e4149029dfaa47e5e1a1455f92fc6b44537afbd1729a06
+    talosImageURL: factory.talos.dev/installer/f47977a3ac2bbe3ee4456434ea165a57fded9a133ec3de057cdcfdb47c3453da
     controlPlane: true
     nodeLabels:
       topology.kubernetes.io/region: *cluster
