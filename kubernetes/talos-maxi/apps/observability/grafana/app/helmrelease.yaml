@@ -370,6 +370,11 @@ spec:
           gnetId: 5342
           revision: 9
           datasource: Prometheus
+        etcd-storage:
+          # renovate: depName="etcd"
+          gnetId: 22236
+          revision: 1
+          datasource: Prometheus
         minio:
           # renovate: depName="MinIO Dashboard"
           gnetId: 13502
