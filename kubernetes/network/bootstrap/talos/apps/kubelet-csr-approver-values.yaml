@@ -1,0 +1,3 @@
+---
+providerRegex: talos-network
+bypassDnsResolution: true
