@@ -12,6 +12,7 @@ resources:
   - ./cross-seed-jeopardy/ks.yaml
   - ./cross-seed/ks.yaml
   - ./jellyseerr/ks.yaml
+  - ./pinchflat/ks.yaml
   - ./plex-addons/ks.yaml
   - ./prowlarr/ks.yaml
   - ./qbittorrent/ks.yaml
