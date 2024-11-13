@@ -102,6 +102,7 @@ spec:
             fsGroupChangePolicy: OnRootMismatch
     service:
       app:
+        ipFamilyPolicy: PreferDualStack
         controller: *app
         ports:
           http:
