@@ -50,3 +50,13 @@ spec:
                 memory: 50Mi
               limits:
                 memory: 100Mi
+    defaultPodOptions:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: topology.kubernetes.io/zone
+                operator: NotIn
+                values:
+                - talos-protactinium
