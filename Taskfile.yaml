@@ -5,7 +5,7 @@ version: "3"
 vars:
   CLUSTER: '{{.CLUSTER | default "main"}}'
   KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
-  CLUSTER_DIR: '{{.KUBERNETES_DIR}}/{{.CLUSTER}}'
+  CLUSTER_DIR: '{{.ROOT_DIR}}/kubernetes/{{.CLUSTER}}'
   AGE_FILE: "{{.ROOT_DIR}}/age.key"
   # BOOTSTRAP_CONFIG_FILE: "{{.ROOT_DIR}}/config.yaml"
   # KUBECONFIG_FILE: "{{.KUBERNETES_DIR}}/kubeconfig"
@@ -14,7 +14,7 @@ vars:
 
 env:
   KUBECONFIG: '{{.CLUSTER_DIR}}/kubeconfig'
-  TALOSCONFIG: '{{.CLUSTER_DIR}}/bootstrap/talos/talosconfig'
+  TALOSCONFIG: '{{.CLUSTER_DIR}}/bootstrap/talos/clusterconfig/talosconfig'
   PYTHONDONTWRITEBYTECODE: "1"
   SOPS_AGE_KEY_FILE: "{{.AGE_FILE}}"
   VIRTUAL_ENV: "{{.ROOT_DIR}}/.venv"
