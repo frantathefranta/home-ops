@@ -12,7 +12,7 @@ vars:
   # renovate: datasource=github-releases depName=getsops/sops
   SOPS_VERSION: v3.9.1
   # renovate: datasource=github-releases depName=derailed/k9s
-  K9S_VERSION: v0.32.6
+  K9S_VERSION: v0.32.7
 
 tasks:
 
