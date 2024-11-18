@@ -13,6 +13,8 @@ vars:
   SOPS_VERSION: v3.9.1
   # renovate: datasource=github-releases depName=derailed/k9s
   K9S_VERSION: v0.32.7
+  # renovate: datasource=github-releases depName=cilium/cilium-cli
+  CILIUM_CLI_VERSION: v0.16.20
 
 tasks:
 
@@ -83,7 +85,10 @@ tasks:
         platforms: ["linux/amd64"]
       - cmd: curl -L -o talosctl "https://github.com/siderolabs/talos/releases/download/{{.TALOS_VERSION}}/talosctl-linux-amd64"
         platforms: ["linux/amd64"]
+      - cmd: curl -L -o cilium.tar.gz "https://github.com/cilium/cilium-cli/releases/download/{{.CILIUM_CLI_VERSION}}/cilium-linux-amd64.tar.gz"
+        platforms: ["linux/amd64"]
       - cmd: tar xvzf k9s.tar.gz && rm k9s.tar.gz; rm LICENSE; rm README*
+      - cmd: tar xvzf cilium.tar.gz && rm cilium.tar.gz
       - cmd: chmod +x sops
       # - cmd: chmod +x kubectl
       - cmd: chmod +x talosctl
