@@ -9,6 +9,8 @@ vars:
   ARCHFILE: "{{.ROOT_DIR}}/.taskfiles/Workstation/Archfile"
   BREWFILE: "{{.ROOT_DIR}}/.taskfiles/Workstation/Brewfile"
   GENERIC_BIN_DIR: "{{.ROOT_DIR}}/.bin"
+  # renovate: datasource=github-releases depName=go-task/task
+  TASK_VERSION: v3.40.0
   # renovate: datasource=github-releases depName=getsops/sops
   SOPS_VERSION: v3.9.1
   # renovate: datasource=github-releases depName=derailed/k9s
@@ -87,7 +89,10 @@ tasks:
         platforms: ["linux/amd64"]
       - cmd: curl -L -o cilium.tar.gz "https://github.com/cilium/cilium-cli/releases/download/{{.CILIUM_CLI_VERSION}}/cilium-linux-amd64.tar.gz"
         platforms: ["linux/amd64"]
+      - cmd: curl -L -o task.tar.gz "https://github.com/go-task/task/releases/download/{{.TASK_VERSION}}/task_linux_amd64.tar.gz"
+        platforms: ["linux/amd64"]
       - cmd: tar xvzf k9s.tar.gz && rm k9s.tar.gz; rm LICENSE; rm README*
+      - cmd: tar xvzf task.tar.gz && rm task.tar.gz; rm LICENSE; rm README*; rm -r completion/
       - cmd: tar xvzf cilium.tar.gz && rm cilium.tar.gz
       - cmd: chmod +x sops
       # - cmd: chmod +x kubectl

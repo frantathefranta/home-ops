@@ -9,15 +9,32 @@ x-vars: &vars
     sh: yq 'select(document_index == 1).spec.postBuild.substitute.TALOS_SCHEMATIC_ID' {{.KUBERNETES_DIR}}/{{.cluster}}/apps/system-upgrade/system-upgrade-controller/ks.yaml
   KUBERNETES_VERSION:
     sh: yq 'select(document_index == 1).spec.postBuild.substitute.KUBERNETES_VERSION' {{.KUBERNETES_DIR}}/{{.cluster}}/apps/system-upgrade/system-upgrade-controller/ks.yaml
-  CONTROLLER:
-    sh: talosctl --context {{.cluster}} config info --output json | jq --raw-output '.endpoints[]' | shuf -n 1
+  # CONTROLLER:
+  #   sh: talosctl --context {{.CLUSTER}} config info --output json | jq --raw-output '.endpoints[]' | shuf -n 1
 
 vars:
   TALHELPER_SECRET_FILE: "{{.CLUSTER_DIR}}/bootstrap/talos/talsecret.sops.yaml"
   TALHELPER_CONFIG_FILE: "{{.CLUSTER_DIR}}/bootstrap/talos/talconfig.yaml"
-  TALOS_CLUSTERCONFIG: "{{.CLUSTER_DIR}}/bootstrap/talos/clusterconfig/talosconfig"
+  KUBECONFIG: "{{.CLUSTER_DIR}}/kubeconfig"
+  TALOSCONFIG: "{{.CLUSTER_DIR}}/bootstrap/talos/clusterconfig/talosconfig"
 
 tasks:
+  test_envs:
+    vars:
+      CLUSTER: '{{.CLUSTER}}'
+    cmds:
+      - echo "{{.KUBERNETES_DIR}}"
+      - echo "{{.KUBECONFIG}}"
+      - echo "{{.TALOSCONFIG}}"
+      - echo "{{.CLUSTER}}"
+      - echo "{{.CLUSTER_DIR}}"
+      - echo "{{.TALHELPER_CONFIG_FILE}}"
+
+    requires:
+      vars: ["CLUSTER"]
+    preconditions:
+      - { msg: "Argument (CLUSTER) is required", sh: "test -n {{.CLUSTER}}" }
+
   bootstrap:
     desc: Bootstrap the Talos cluster
     summary: |
@@ -26,8 +43,7 @@ tasks:
     prompt: Bootstrap Talos on the '{{.CLUSTER}}' cluster ... continue?
     vars: &vars
       CLUSTER: '{{.CLUSTER}}'
-      CONTROLLER:
-        sh: talosctl --context {{.CLUSTER}} config info --output json | jq --raw-output '.endpoints[]' | shuf -n 1
+      TALOSCONFIG: '{{.TALOSCONFIG}}'
     cmds:
       - task: gensecret
         vars: { cluster: "{{.CLUSTER}}" }
@@ -51,12 +67,13 @@ tasks:
 
   gensecret:
     desc: Generate the Talos secrets
-    dir: "{{.KUBERNETES_DIR}}/{{.CLUSTER}}/bootstrap/talos/"
     cmds:
-      - talhelper -f {{.TALHELPER_CONFIG_FILE}} gensecret > {{.TALHELPER_SECRET_FILE}}
+      - talhelper -f {{.CLUSTER_DIR}}/bootstrap/talos/talconfig.yaml gensecret > {{.CLUSTER_DIR}}/bootstrap/talos/talsecret.sops.yaml
       - task: :sops:.encrypt-file
         vars:
-          file: "{{.TALHELPER_SECRET_FILE}}"
+          file: "{{.CLUSTER_DIR}}/talos/talsecret.sops.yaml"
+    requires:
+      vars: ["CLUSTER"]
     preconditions:
       - { msg: "Argument (CLUSTER) is required", sh: "test -n {{.CLUSTER}}" }
       - {
@@ -64,7 +81,7 @@ tasks:
           sh: "test -f {{.TALHELPER_CONFIG_FILE}}",
         }
     status:
-      - test -f "{{.TALHELPER_SECRET_FILE}}"
+      - test -f "{{.CLUSTER_DIR}}/bootstrap/talos/talsecret.sops.yaml"
 
   genconfig:
     desc: Generate the Talos configs
@@ -84,25 +101,30 @@ tasks:
   config-apply:
     desc: Apply the Talos config on a nodes for a new cluster
     cmd: talhelper gencommand apply --extra-flags=--insecure | bash
-    dir: "{{.CLUSTER_DIR}}/bootstrap/talos/"
+    dir: "{{.KUBERNETES_DIR}}/{{.CLUSTER}}/bootstrap/talos/"
     preconditions:
       - { msg: "Argument (CLUSTER) is required", sh: "test -n {{.CLUSTER}}" }
       - {
           msg: "Missing talhelper config file",
           sh: "test -f {{.TALHELPER_CONFIG_FILE}}",
         }
-      - { msg: "Missing talconfig", sh: "test -f {{.TALOS_CLUSTERCONFIG}}" }
+      - { msg: "Missing talconfig", sh: "test -f {{.CLUSTER_DIR}}/bootstrap/talos/clusterconfig/talosconfig" }
 
   bootstrap-install:
     desc: Install the Talos cluster
-    cmd: until talosctl --context {{.CLUSTER}} --nodes {{.CONTROLLER}} bootstrap; do sleep 10; done
-    vars: *vars
+    cmds:
+      - until talosctl --talosconfig {{.TALOSCONFIG}} --context {{.CLUSTER}} --nodes {{.CONTROLLER}} bootstrap; do sleep 10; done
+      - talosctl kubeconfig --nodes {{.CONTROLLER}} --force --force-context-name {{.CLUSTER}} {{.CLUSTER_DIR}}
+    vars: &vars
+      CONTROLLER:
+        sh: talosctl --talosconfig {{.TALOSCONFIG}} --context {{.CLUSTER}} config info --output json | jq --raw-output '.endpoints[]' | shuf -n 1
     requires:
-      vars: ["CLUSTER"]
+      vars: ["CLUSTER", "TALOSCONFIG"]
     preconditions:
       - { msg: "Argument (CLUSTER) is required", sh: "test -n {{.CLUSTER}}" }
-      - test -f {{.KUBERNETES_DIR}}/{{.cluster}}/bootstrap/talos/clusterconfig/talosconfig
+      - test -f {{.CLUSTER_DIR}}/bootstrap/talos/clusterconfig/talosconfig
       - talosctl --context {{.CLUSTER}} config info >/dev/null 2>&1
+      # - [ "$(talosctl --context network config info -o json | jq --raw-output '.context')" = {{.CLUSTER}} ]
 
   bootstrap-apps:
     desc: Bootstrap core apps needed for Talos
@@ -177,11 +199,15 @@ tasks:
     desc: Apply the Talos config on all nodes for an existing cluster
     dir: "{{.KUBERNETES_DIR}}/{{.CLUSTER}}/bootstrap/talos/"
     cmd: talhelper gencommand apply | bash
+    vars:
+      CLUSTER: '{{.CLUSTER}}'
+    requires:
+      vars: ["CLUSTER"]
     preconditions:
       - { msg: "Argument (CLUSTER) is required", sh: "test -n {{.CLUSTER}}" }
       - {
           msg: "Missing talhelper config file",
-          sh: "test -f {{.KUBERNETES_DIR}}/{{.CLUSTER}}/bootstrap/talos/{{.TALHELPER_CONFIG_FILE}}",
+          sh: "test -f {{.TALHELPER_CONFIG_FILE}}",
         }
 
   soft-nuke:

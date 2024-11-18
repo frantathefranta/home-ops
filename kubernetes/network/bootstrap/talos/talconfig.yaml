@@ -25,13 +25,13 @@ nodes:
   - hostname: "talos-network"
     ipAddress: "10.33.50.1"
     installDisk: "/dev/vda"
-    talosImageURL: factory.talos.dev/installer/f620e83e255195c47bf18ad98871b792343ee5b32181dad1a1f083f3a7e2dcba
+    talosImageURL: factory.talos.dev/installer/88d1f7a5c4f1d3aba7df787c448c1d3d008ed29cfb34af53fa0df4336a56040b
     controlPlane: true
     nodeLabels:
       topology.kubernetes.io/region: *cluster
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "BC:24:11:2A:7B:8C"
+          hardwareAddr: "bc:24:11:2a:7b:8c"
         dhcp: false
         addresses:
           - "10.33.50.1/16"
