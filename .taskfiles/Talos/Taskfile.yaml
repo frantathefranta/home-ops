@@ -213,18 +213,18 @@ tasks:
   soft-nuke:
     desc: Resets nodes back to maintenance mode so you can re-deploy again straight after
     prompt: This will destroy your cluster and reset the nodes back to maintenance mode... continue?
-    dir: "{{.KUBERNETES_DIR}}/{{.cluster}}/bootstrap/talos/"
+    dir: "{{.CLUSTER_DIR}}/bootstrap/talos/"
     cmd: talhelper gencommand reset --extra-flags "--reboot --system-labels-to-wipe STATE --system-labels-to-wipe EPHEMERAL --graceful=false --wait=false" | bash
     preconditions:
-      - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }
+      - { msg: "Argument (CLUSTER) is required", sh: "test -n {{.CLUSTER}}" }
 
   hard-nuke:
     desc: Resets nodes back completely and reboots them
     prompt: This will destroy your cluster and reset the nodes... continue?
-    dir: "{{.KUBERNETES_DIR}}/{{.cluster}}/bootstrap/talos/"
+    dir: "{{.CLUSTER_DIR}}/bootstrap/talos/"
     cmd: talhelper gencommand reset --extra-flags "--reboot --graceful=false --wait=false" | bash
     preconditions:
-      - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }
+      - { msg: "Argument (CLUSTER) is required", sh: "test -n {{.CLUSTER}}" }
 
   node-shutdown:
     desc: Shutdown individual Talos nodes.
