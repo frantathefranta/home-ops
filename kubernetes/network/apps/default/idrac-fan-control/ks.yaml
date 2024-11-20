@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/talos-maxi/apps/default/idrac-fan-control/actinium
+  path: ./kubernetes/network/apps/default/idrac-fan-control/actinium
   prune: true
   sourceRef:
     kind: GitRepository
@@ -33,7 +33,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/talos-maxi/apps/default/idrac-fan-control/thorium
+  path: ./kubernetes/network/apps/default/idrac-fan-control/thorium
   prune: true
   sourceRef:
     kind: GitRepository
@@ -56,7 +56,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/talos-maxi/apps/default/idrac-fan-control/protactinium
+  path: ./kubernetes/network/apps/default/idrac-fan-control/protactinium
   prune: true
   sourceRef:
     kind: GitRepository
