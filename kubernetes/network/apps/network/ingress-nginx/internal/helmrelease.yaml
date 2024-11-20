@@ -24,7 +24,7 @@ spec:
   values:
     fullnameOverride: ingress-nginx-internal
     controller:
-      replicaCount: 2
+      replicaCount: 1
       service:
         externalTrafficPolicy: Cluster
         ipFamilyPolicy: PreferDualStack
@@ -73,15 +73,6 @@ spec:
             any: true
       extraArgs:
         default-ssl-certificate: "network/${SECRET_DOMAIN/./-}-production-tls"
-      topologySpreadConstraints:
-        - maxSkew: 1
-          topologyKey: topology.kubernetes.io/zone
-          whenUnsatisfiable: DoNotSchedule
-          labelSelector:
-            matchLabels:
-              app.kubernetes.io/name: ingress-nginx
-              app.kubernetes.io/instance: ingress-nginx-internal
-              app.kubernetes.io/component: controller
       resources:
         requests:
           cpu: 100m
