@@ -43,7 +43,7 @@ spec:
     policy: sync
     sources: ["crd", "ingress"]
     txtPrefix: k8s.
-    txtOwnerId: talos-maxi
+    txtOwnerId: network
     domainFilters:
       - ${SECRET_DOMAIN_ROOT}
     serviceMonitor:
