@@ -9,10 +9,10 @@ clusterName: &cluster network
 endpoint: https://10.33.50.25:6443
 clusterPodNets:
   - "10.69.0.0/16"
-  - "fd20:6ff9:e40f::/56"
+  - "${CLUSTER_POD_V6_CIDR}"
 clusterSvcNets:
   - "10.96.0.0/16"
-  - "fd25:6ff9:e40f::/112"
+  - "${CLUSTER_SVC_V6_CIDR}"
 additionalApiServerCertSans: &sans
   - "10.33.50.25"
   - 127.0.0.1 # KubePrism
@@ -35,7 +35,6 @@ nodes:
         dhcp: false
         addresses:
           - "10.33.50.1/16"
-          - "fd32:6ff9:e40f:3333::501/64"
         mtu: 1500
         routes:
           - network: 0.0.0.0/0
@@ -82,7 +81,7 @@ patches:
         extraArgs:
           rotate-server-certificates: true
         nodeIP:
-          validSubnets: ["10.33.0.0/16", "fd32:6ff9:e40f:3333::/64"]
+          validSubnets: ["10.33.0.0/16", "${CLUSTER_NODE_V6_CIDR}"]
 
   # Force nameserver
   - |-

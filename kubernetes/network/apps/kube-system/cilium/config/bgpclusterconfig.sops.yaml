@@ -1,0 +1,42 @@
+apiVersion: cilium.io/v2alpha1
+kind: CiliumBGPClusterConfig
+metadata:
+    name: cilium-bgp
+spec:
+    nodeSelector:
+        matchLabels:
+            kubernetes.io/os: linux
+    bgpInstances:
+        - name: cluster
+          localASN: 65070
+          peers:
+            - name: arista01
+              peerASN: 65033
+              peerAddress: ENC[AES256_GCM,data:t/TsdI7XdLNc,iv:rqmxkm3usqmsXafbQe1vqMfQpUIZcMqk4lhOEZRnkIU=,tag:k1jWL8UEvGN6wXAhnlIKWQ==,type:str]
+              peerConfigRef:
+                name: cilium-peer
+            - name: arista01-v6
+              peerASN: 65033
+              peerAddress: ENC[AES256_GCM,data:6HCwawJbcclz07lznNllP5E/TkZ4ow==,iv:zThgiOdYMD5Cll1Nl8/aJGpiV9V1a7Jmmr30gwdepYE=,tag:ly9p6PEZ8/zI3IgeOVVwiw==,type:str]
+              peerConfigRef:
+                name: cilium-peer-v6
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1dvj29v7swu6e0pw5t5mwpjscktts4d676a8lre7vpf995qf58aqqqy6c32
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBFUG9VeE1aNUVGOHVYR3Yv
+            VW9jTXRuUHI4SURXOXdUOVFnWStENkdpcVZZCnpRckM0cC9kN2dHVzdKZHZRWUhG
+            UzdEdTI0ZHh4RU1kL3plRmN3M2dvcGsKLS0tIHRYVlc4UDJCckJLOTFqVitjN1lo
+            SVJWUm95RTRuazVMZnFxc0dKMDRGU2sKDj3Vc2UmFlvaoZILmgubaDjiz+OAwUhT
+            uJxv8RrQ5tVXyT0+GyWf8ytukHj+TkWJtdzm/1C/Hr9+0I2TdLvaTw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2024-11-20T21:46:01Z"
+    mac: ENC[AES256_GCM,data:Rs+PDjmEbnTUff4lmHseTiIGGoLCiKFclDUEeydQ+YlenbCHrfA7Ohu/bBhEu3lJYPuguh3+VrvDKqlPEuNpAzi2eGg4hFwG0wFaaWaFaYZnvvugLFAitmPqFkVh39z9VlqLi4h00c7vNmmP1+3rBhd0Wg6nIadIRF073s2J30U=,iv:DTq4KCVG/2Iwc475mdahTVmTcLWMjThGjQRRQ22vSSU=,tag:IMgc4rgUoRfhOBCs5d9TUA==,type:str]
+    pgp: []
+    encrypted_regex: peerAddress
+    version: 3.9.1
