@@ -8,6 +8,7 @@ spec:
   targetNamespace: default
   dependsOn:
     - name: crunchy-postgres-cluster-vector
+    - name: crunchy-postgres-stores
     - name: dragonfly-cluster
     - name: external-secrets-stores
   path: ./kubernetes/talos-maxi/apps/default/immich/app

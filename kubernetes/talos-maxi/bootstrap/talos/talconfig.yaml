@@ -9,10 +9,10 @@ clusterName: &cluster talos-maxi
 endpoint: https://10.33.40.25:6443
 clusterPodNets:
   - "10.69.0.0/16"
-  - "fd20:6ff9:e40f::/56"
+  - "${CLUSTER_POD_V6_CIDR}"
 clusterSvcNets:
   - "10.96.0.0/16"
-  - "fd25:6ff9:e40f::/112"
+  - "${CLUSTER_SVC_V6_CIDR}"
 additionalApiServerCertSans: &sans
   - "10.33.40.25"
   - 127.0.0.1 # KubePrism
@@ -36,7 +36,6 @@ nodes:
         dhcp: false
         addresses:
           - "10.33.35.1/16"
-          - "fd30:6ff9:e40f:3333::351/64"
         mtu: 1500
         routes:
           - network: 0.0.0.0/0
@@ -57,7 +56,6 @@ nodes:
         dhcp: false
         addresses:
           - "10.33.35.2/16"
-          - "fd30:6ff9:e40f:3333::352/64"
         mtu: 1500
         routes:
           - network: 0.0.0.0/0
@@ -78,7 +76,6 @@ nodes:
         dhcp: false
         addresses:
           - "10.33.35.3/16"
-          - "fd30:6ff9:e40f:3333::353/64"
         mtu: 1500
         routes:
           - network: 0.0.0.0/0
@@ -99,7 +96,6 @@ nodes:
         dhcp: false
         addresses:
           - "10.33.35.11/16"
-          - "fd30:6ff9:e40f:3333::3511/64"
         mtu: 1500
         routes:
           - network: 0.0.0.0/0
@@ -118,7 +114,6 @@ nodes:
         dhcp: false
         addresses:
           - "10.33.35.12/16"
-          - "fd30:6ff9:e40f:3333::3512/64"
         mtu: 1500
         routes:
           - network: 0.0.0.0/0
@@ -137,7 +132,6 @@ nodes:
         dhcp: false
         addresses:
           - "10.33.35.13/16"
-          - "fd30:6ff9:e40f:3333::3513/64"
         mtu: 1500
         routes:
           - network: 0.0.0.0/0
@@ -182,7 +176,7 @@ patches:
         extraArgs:
           rotate-server-certificates: true
         nodeIP:
-          validSubnets: ["10.33.0.0/16", "fd30:6ff9:e40f:3333::/64"]
+          validSubnets: ["10.33.0.0/16", "${CLUSTER_NODE_V6_CIDR}"]
 
   # Force nameserver
   - |-
@@ -239,7 +233,8 @@ controlPlane:
         controllerManager:
           extraArgs:
             bind-address: 0.0.0.0
-            node-cidr-mask-size-ipv6: "64"
+            # On my residential ISP connection I only get a /60, of which I've given /64 to the Pod subnet. It needs to be split using /80 mask, otherwise the first node is going to take the whole /64
+            node-cidr-mask-size-ipv6: "80"
         coreDNS:
           disabled: true
         proxy:
