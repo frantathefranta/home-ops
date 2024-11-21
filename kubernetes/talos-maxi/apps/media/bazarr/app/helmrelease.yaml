@@ -50,27 +50,29 @@ spec:
               limits:
                 memory: 1024M
             probes:
-              liveness:
-                enabled: false
-              readiness:
-                enabled: false
-              # liveness: &probes
-              #   enabled: true
-              #   custom: true
-              #   spec:
-              #     httpGet:
-              #       path: /health
-              #       port: 6767
-              #     initialDelaySeconds: 60
-              #     periodSeconds: 10
-              #     timeoutSeconds: 1
-              #     failureThreshold: 3
-              # readiness: *probes
-              # startup:
-              #   enabled: true
-              #   spec:
-              #     failureThreshold: 30
-              #     periodSeconds: 5
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: 6767
+                  initialDelaySeconds: 60
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: 6767
+                  failureThreshold: 30
+                  periodSeconds: 5
+                  successThreshold: 1
+                  timeoutSeconds: 1
           subcleaner:
             image:
               repository: registry.k8s.io/git-sync/git-sync
