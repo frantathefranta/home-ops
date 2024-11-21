@@ -15,7 +15,6 @@ resources:
   - ./lubelog/ks.yaml
   - ./immich/ks.yaml
   - ./paperless/ks.yaml
-  - ./idrac-fan-control/ks.yaml
   - ./miniflux/ks.yaml
   - ./syncthing/ks.yaml
   - ./tandoor/ks.yaml

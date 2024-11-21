@@ -17,6 +17,8 @@ vars:
   K9S_VERSION: v0.32.7
   # renovate: datasource=github-releases depName=cilium/cilium-cli
   CILIUM_CLI_VERSION: v0.16.20
+  # renovate: datasource=github-releases depName=jkroepke/helm-secrets
+  HELM_SECRETS_VERSION: v4.6.2
 
 tasks:
 
@@ -98,3 +100,4 @@ tasks:
       # - cmd: chmod +x kubectl
       - cmd: chmod +x talosctl
       - cmd: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | USE_SUDO="false" HELM_INSTALL_DIR="." bash
+      - cmd: helm plugin install https://github.com/jkroepke/helm-secrets --version {{.HELM_SECRETS_VERSION}}
