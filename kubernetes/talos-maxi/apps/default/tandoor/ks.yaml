@@ -28,3 +28,6 @@ spec:
       APP: *app
       GATUS_SUBDOMAIN: recipes
       VOLSYNC_CAPACITY: 1Gi
+      VOLSYNC_ACCESSMODES: ReadWriteOnce
+      VOLSYNC_STORAGECLASS: ceph-rbd
+      VOLSYNC_SNAPSHOTCLASS: ceph-rbd-snapshot
