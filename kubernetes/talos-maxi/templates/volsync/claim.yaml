@@ -6,7 +6,7 @@ metadata:
   labels:
     app.kubernetes.io/name: "${APP}"
 spec:
-  accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteMany}"]
+  accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
   dataSourceRef:
     kind: ReplicationDestination
     apiGroup: volsync.backube
@@ -14,4 +14,4 @@ spec:
   resources:
     requests:
       storage: "${VOLSYNC_CAPACITY}"
-  storageClassName: "${VOLSYNC_STORAGECLASS:-cephfs}"
+  storageClassName: "${VOLSYNC_STORAGECLASS:-ceph-rbd}"
