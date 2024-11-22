@@ -43,9 +43,9 @@ spec:
     monitoring:
       enabled: true
       createPrometheusRules: true
-      externalMgrEndpoints:
-        - ip: ${CEPH1_NODE}
-          externalMgrPrometheusPort: 9283
+      # externalMgrEndpoints:
+      #   - ip: haproxy-ceph-metrics.rook-ceph-external.svc.cluster.local
+      #     externalMgrPrometheusPort: 9283
       externalMgrPrometheusPort: 9283
       interval: 15s
 
