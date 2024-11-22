@@ -70,11 +70,22 @@ spec:
                   httpGet:
                     path: /transmission/web/
                     port: *port
-                  initialDelaySeconds: 120
-                  periodSeconds: 60
-                  timeoutSeconds: 5
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /transmission/web/
+                    port: *port
+                  failureThreshold: 30
+                  periodSeconds: 5
+                  successThreshold: 1
+                  timeoutSeconds: 1
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
