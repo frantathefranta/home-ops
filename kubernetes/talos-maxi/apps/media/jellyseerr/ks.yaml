@@ -28,3 +28,6 @@ spec:
       GATUS_SUBDOMAIN: requests
       GATUS_PATH: /api/v1/status
       VOLSYNC_CAPACITY: 2Gi
+      VOLSYNC_ACCESSMODES: ReadWriteOnce
+      VOLSYNC_STORAGECLASS: ceph-rbd
+      VOLSYNC_SNAPSHOTCLASS: ceph-rbd-snapshot

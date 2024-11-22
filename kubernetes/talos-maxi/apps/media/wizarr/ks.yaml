@@ -26,3 +26,6 @@ spec:
       APP: *app
       VOLSYNC_CAPACITY: 2Gi
       GATUS_SUBDOMAIN: join
+      VOLSYNC_ACCESSMODES: ReadWriteOnce
+      VOLSYNC_STORAGECLASS: ceph-rbd
+      VOLSYNC_SNAPSHOTCLASS: ceph-rbd-snapshot

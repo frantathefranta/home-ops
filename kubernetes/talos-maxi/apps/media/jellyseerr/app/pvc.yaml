@@ -4,8 +4,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: jellyseerr-cache
 spec:
-  accessModes: ["ReadWriteMany"]
+  accessModes: ["ReadWriteOnce"]
   resources:
     requests:
       storage: 15Gi
-  storageClassName: cephfs
+  storageClassName: ceph-rbd
