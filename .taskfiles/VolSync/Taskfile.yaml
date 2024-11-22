@@ -22,6 +22,7 @@ x-env-vars: &env-vars
 vars:
   VOLSYNC_SCRIPTS_DIR: "{{.ROOT_DIR}}/.taskfiles/VolSync/scripts"
   VOLSYNC_TEMPLATES_DIR: "{{.ROOT_DIR}}/.taskfiles/VolSync/templates"
+  KUBECONFIG: "{{.CLUSTER_DIR}}/kubeconfig"
   ts: '{{now | date "150405"}}'
 
 tasks:
@@ -66,31 +67,43 @@ tasks:
       - test -f {{.VOLSYNC_TEMPLATES_DIR}}/list.tmpl.yaml
     silent: true
 
-  unlock:
-    desc: Unlock a Restic repository for an application
-    summary: |
-      Args:
-        cluster: Cluster to run command against (required)
-        ns: Namespace the PVC is in (default: default)
-        app: Application to unlock (required)
-    cmds:
-      - envsubst < <(cat {{.VOLSYNC_TEMPLATES_DIR}}/unlock.tmpl.yaml) | kubectl --context {{.cluster}} apply -f -
-      - bash {{.VOLSYNC_SCRIPTS_DIR}}/wait-for-job.sh {{.job}} {{.ns}} {{.cluster}}
-      - kubectl --context {{.cluster}} -n {{.ns}} wait job/{{.job}} --for condition=complete --timeout=1m
-      - kubectl --context {{.cluster}} -n {{.ns}} logs job/{{.job}} --container minio
-      - kubectl --context {{.cluster}} -n {{.ns}} logs job/{{.job}} --container r2
-      - kubectl --context {{.cluster}} -n {{.ns}} delete job {{.job}}
-    env: *env-vars
-    requires:
-      vars: ["cluster", "app"]
-    vars:
-      ns: '{{.ns | default "default"}}'
-      job: volsync-unlock-{{.app}}
-    preconditions:
-      - test -f {{.VOLSYNC_SCRIPTS_DIR}}/wait-for-job.sh
-      - test -f {{.VOLSYNC_TEMPLATES_DIR}}/unlock.tmpl.yaml
-    silent: true
+  # unlock:
+  #   desc: Unlock a Restic repository for an application
+  #   summary: |
+  #     Args:
+  #       cluster: Cluster to run command against (required)
+  #       ns: Namespace the PVC is in (default: default)
+  #       app: Application to unlock (required)
+  #   cmds:
+  #     - envsubst < <(cat {{.VOLSYNC_TEMPLATES_DIR}}/unlock.tmpl.yaml) | kubectl --context {{.cluster}} apply -f -
+  #     - bash {{.VOLSYNC_SCRIPTS_DIR}}/wait-for-job.sh {{.job}} {{.ns}} {{.cluster}}
+  #     - kubectl --context {{.cluster}} -n {{.ns}} wait job/{{.job}} --for condition=complete --timeout=1m
+  #     - kubectl --context {{.cluster}} -n {{.ns}} logs job/{{.job}} --container minio
+  #     - kubectl --context {{.cluster}} -n {{.ns}} logs job/{{.job}} --container r2
+  #     - kubectl --context {{.cluster}} -n {{.ns}} delete job {{.job}}
+  #   env: *env-vars
+  #   requires:
+  #     vars: ["cluster", "app"]
+  #   vars:
+  #     ns: '{{.ns | default "default"}}'
+  #     job: volsync-unlock-{{.app}}
+  #   preconditions:
+  #     - test -f {{.VOLSYNC_SCRIPTS_DIR}}/wait-for-job.sh
+  #     - test -f {{.VOLSYNC_TEMPLATES_DIR}}/unlock.tmpl.yaml
+  #   silent: true
 
+  unlock:
+    desc: Unlock all restic source repos [CLUSTER=main]
+    cmds:
+      - for: { var: SOURCES, split: "\n" }
+        cmd: kubectl --namespace {{splitList "," .ITEM | first}} patch --field-manager=flux-client-side-apply replicationsources {{splitList "," .ITEM | last}} --type merge --patch "{\"spec\":{\"restic\":{\"unlock\":\"{{now | unixEpoch}}\"}}}"
+    vars:
+      SOURCES:
+        sh: kubectl get replicationsources --all-namespaces --no-headers --output=jsonpath='{range .items[*]}{.metadata.namespace},{.metadata.name}{"\n"}{end}'
+    requires:
+      vars: [CLUSTER]
+    preconditions:
+      - which kubectl
   # To run backup jobs in parallel for all replicationsources:
   #   - kubectl get replicationsources --all-namespaces --no-headers | awk '{print $2, $1}' | xargs --max-procs=4 -l bash -c 'task volsync:snapshot app=$0 ns=$1'
   snapshot:
@@ -176,25 +189,25 @@ tasks:
       - for: { var: dest }
         cmd: |
           {{- $items := (split "/" .ITEM) }}
-          kubectl --context {{.cluster}} delete pvc -n {{ $items._0 }} {{ $items._1 }}
+          kubectl --context {{.CLUSTER}} delete pvc -n {{ $items._0 }} {{ $items._1 }}
       - for: { var: cache }
         cmd: |
           {{- $items := (split "/" .ITEM) }}
-          kubectl --context {{.cluster}} delete pvc -n {{ $items._0 }} {{ $items._1 }}
+          kubectl --context {{.CLUSTER}} delete pvc -n {{ $items._0 }} {{ $items._1 }}
       - for: { var: snaps }
         cmd: |
           {{- $items := (split "/" .ITEM) }}
-          kubectl --context {{.cluster}} delete volumesnapshot -n {{ $items._0 }} {{ $items._1 }}
-    env: *env-vars
+          kubectl --context {{.CLUSTER}} delete volumesnapshot -n {{ $items._0 }} {{ $items._1 }}
+    # env: *env-vars
     requires:
-      vars: ["cluster"]
+      vars: ["CLUSTER"]
     vars:
       dest:
-        sh: kubectl --context {{.cluster}} get pvc --all-namespaces --no-headers | grep "bootstrap-dest" | awk '{print $1 "/" $2}'
+        sh: kubectl --context {{.CLUSTER}} get pvc --all-namespaces --no-headers | grep "bootstrap-dest" | awk '{print $1 "/" $2}'
       cache:
-        sh: kubectl --context {{.cluster}} get pvc --all-namespaces --no-headers | grep "bootstrap-cache" | awk '{print $1 "/" $2}'
+        sh: kubectl --context {{.CLUSTER}} get pvc --all-namespaces --no-headers | grep "bootstrap-cache" | awk '{print $1 "/" $2}'
       snaps:
-        sh: kubectl --context {{.cluster}} get volumesnapshot --all-namespaces --no-headers | grep "bootstrap-dest" | awk '{print $1 "/" $2}'
+        sh: kubectl --context {{.CLUSTER}} get volumesnapshot --all-namespaces --no-headers | grep "bootstrap-dest" | awk '{print $1 "/" $2}'
 
   # Suspend the Flux ks and hr
   .suspend:
