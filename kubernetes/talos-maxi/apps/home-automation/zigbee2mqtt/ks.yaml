@@ -27,3 +27,6 @@ spec:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 500Mi
+      VOLSYNC_ACCESSMODES: ReadWriteOnce
+      VOLSYNC_STORAGECLASS: ceph-rbd
+      VOLSYNC_SNAPSHOTCLASS: ceph-rbd-snapshot
