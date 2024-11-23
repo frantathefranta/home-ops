@@ -22,7 +22,7 @@ metadata:
       ]
 spec:
   postgresVersion: 16
-  image: ghcr.io/frantathefranta/cdpgvector:0.3.0@sha256:b5aea88f9ffea792601c16fe401723950113466ebe0253de0f8a9465cc2e00b2
+  image: ghcr.io/frantathefranta/cdpgvector:0.4.0@sha256:2a4d720e48c3121364eabff1389d57823beae003b6a89481b0c851800aad2553
   instances:
     - name: postgres-vector
       metadata:
