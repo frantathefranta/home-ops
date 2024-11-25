@@ -35,16 +35,11 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/tautulli/tautulli
-              tag: v2.15.0@sha256:f13daee2a403a95a51902b2625de5f6b944f034e9cd790e9d2a0c5e84c9842cb
+              repository: ghcr.io/onedr0p/tautulli
+              tag: v2.15.0@sha256:96285c7e57dc77b790bb934be25d1d18a7c220b0f9e29748f65b2374bbef24c8
             env:
-              TZ: America/New_York
-            command: ["/usr/local/bin/python", "Tautulli.py"]
-            args: [
-              "--config", "/config/config.ini",
-              "--datadir", "/config",
-              "--port", "80"
-            ]
+              TZ: ${TIMEZONE}
+              TAUTULLI__PORT: &port 80
             probes:
               liveness: &probes
                 enabled: true
@@ -52,7 +47,7 @@ spec:
                 spec:
                   httpGet:
                     path: /status
-                    port: &port 80
+                    port: *port
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
@@ -65,7 +60,7 @@ spec:
                   httpGet:
                     path: /status
                     port: *port
-                  failureThreshold: 45
+                  failureThreshold: 30
                   periodSeconds: 5
                   successThreshold: 1
                   timeoutSeconds: 1
@@ -94,8 +89,6 @@ spec:
             port: *port
     ingress:
       app:
-        # annotations:
-        #   external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
         className: internal
         hosts:
           - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
