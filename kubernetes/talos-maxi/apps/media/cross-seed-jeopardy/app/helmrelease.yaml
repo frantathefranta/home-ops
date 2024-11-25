@@ -89,6 +89,7 @@ spec:
         existingClaim: transmission-jeopardy
         globalMounts:
           - path: /transmission
+            readOnly: true
       data:
         type: nfs
         server: ${NAS_IP}

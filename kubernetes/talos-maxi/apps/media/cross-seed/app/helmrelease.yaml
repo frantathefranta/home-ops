@@ -89,6 +89,7 @@ spec:
         existingClaim: qbittorrent
         globalMounts:
           - path: /qbittorrent
+            readOnly: true
       data:
         type: nfs
         server: ${NAS_IP}
