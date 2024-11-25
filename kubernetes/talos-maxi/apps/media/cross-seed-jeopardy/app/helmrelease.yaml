@@ -89,6 +89,7 @@ spec:
         existingClaim: transmission-jeopardy
         globalMounts:
           - path: /transmission
+            subPath: transmission/torrents
             readOnly: true
       data:
         type: nfs
