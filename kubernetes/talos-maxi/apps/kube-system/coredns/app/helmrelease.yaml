@@ -26,7 +26,6 @@ spec:
   valuesFrom:
     - kind: ConfigMap
       name: coredns-helm-values
-
   values:
     service:
       clusterIP: "10.96.0.10"

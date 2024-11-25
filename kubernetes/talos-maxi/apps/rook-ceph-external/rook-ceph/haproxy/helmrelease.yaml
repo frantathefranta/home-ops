@@ -46,6 +46,7 @@ spec:
         ports:
           http:
             port: 8404
+      # TODO: Add a configuration for RGW
     persistence:
       config:
         type: configMap
