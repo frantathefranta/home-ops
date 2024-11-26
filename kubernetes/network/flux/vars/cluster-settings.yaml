@@ -2,9 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: cluster-settings
+  name: cluster-settings-network
   namespace: flux-system
 data:
-  TIMEZONE: "America/Detroit"
-  CLUSTER_CIDR: "10.69.0.0/16"
-  NODE_CIDR: "10.33.50.0/24"
+  CLUSTER: network
