@@ -44,6 +44,10 @@ spec:
       runAsGroup: "${VOLSYNC_GID:-568}"
       fsGroup: "${VOLSYNC_GID:-568}"
     capacity: "${VOLSYNC_CAPACITY}"
+    # TODO: Enable these options after migration to shared folder is complete
+    # enableFileDeletion: true
+    # cleanupCachePVC: true
+    # cleanupTempPVC: true
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource

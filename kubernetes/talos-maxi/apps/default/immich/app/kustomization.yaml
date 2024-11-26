@@ -7,5 +7,4 @@ resources:
   - ./machine-learning
   - ./microservices
   - ./server
-  - ../../../../templates/gatus/external
-
+  - ../../../../../shared/templates/gatus/external
