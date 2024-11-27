@@ -82,9 +82,9 @@ spec:
       - name: ceph-objectstore
         spec:
           gateway:
-            port: 80
+            port: 7480
             externalRgwEndpoints:
-              - ip: 10.32.10.15 # HAproxy endpoint
+              - ip: haproxy-rados-gw.rook-ceph-external.svc.cluster.local # HAproxy endpoint
         storageClass:
           enabled: true
           name: ceph-bucket

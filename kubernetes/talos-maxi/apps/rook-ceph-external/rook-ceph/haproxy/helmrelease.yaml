@@ -36,11 +36,11 @@ spec:
                     path: /
               readiness: *probes
     service:
-      ceph-metrics:
+      rados-gw:
         controller: haproxy
         ports:
           http:
-            port: 9283
+            port: 7480
       stats:
         controller: haproxy
         ports:
