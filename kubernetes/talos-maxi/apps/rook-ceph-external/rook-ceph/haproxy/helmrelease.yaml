@@ -46,7 +46,7 @@ spec:
         ports:
           http:
             port: 8404
-      # TODO: Add a configuration for RGW
+      # TODO: Setup prometheus metrics for HAProxy https://www.haproxy.com/documentation/haproxy-configuration-tutorials/alerts-and-monitoring/prometheus/
     persistence:
       config:
         type: configMap
