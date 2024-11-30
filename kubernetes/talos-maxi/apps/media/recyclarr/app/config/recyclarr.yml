@@ -1,0 +1,216 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/recyclarr/recyclarr/master/schemas/config-schema.json
+sonarr:
+  sonarr:
+    base_url: http://sonarr.media.svc.cluster.local
+    api_key: !env_var SONARR_API_KEY
+
+    # Custom Format Configuration
+    delete_old_custom_formats: true
+    replace_existing_custom_formats: true
+
+    include:
+      - template: sonarr-quality-definition-series
+      - template: sonarr-v4-quality-profile-web-1080p
+      - template: sonarr-v4-custom-formats-web-1080p
+      - template: sonarr-v4-quality-profile-web-2160p
+      - template: sonarr-v4-custom-formats-web-2160p
+      - template: sonarr-v4-quality-profile-anime
+      - template: sonarr-v4-custom-formats-anime
+
+    quality_profiles:
+      - name: WEB-1080p
+      - name: BR > WEB > DVD
+        reset_unmatched_scores:
+          enabled: true
+        upgrade:
+          allowed: true
+          until_quality: Bluray-2160p
+          until_score: 10000
+        quality_sort: top
+        qualities:
+          - name: Bluray-2160p
+          - name: Bluray-2160p Remux
+          - name: Bluray-1080p
+          - name: Bluray-1080p Remux
+          - name: WEBDL-2160p
+          - name: WEBDL-1080p
+          - name: WEBRip
+            qualities: ["WEBRip-2160p", "WEBRip-1080p"]
+          - name: WEB 720p
+            qualities: ["WEBDL-720p", "WEBRip-720p"]
+          - name: HDTV-1080p
+          - name: HDTV-720p
+          - name: WEB 480p
+            qualities: ["WEBDL-480p", "WEBRip-480p"]
+          - name: DVD
+          - name: SDTV
+
+    custom_formats:
+      - trash_ids:
+          - 32b367365729d530ca1c124a0b180c64 # Bad Dual Groups
+          - 82d40da2bc6923f41e14394075dd4b03 # No-RlsGroup
+          - e1a997ddb54e3ecbfe06341ad323c458 # Obfuscated
+          - 06d66ab109d4d2eddb2794d21526d140 # Retags
+          - 6f808933a71bd9666531610cb8c059cc # BR-DISK (BTN)
+        assign_scores_to:
+          - name: WEB-2160p
+          - name: WEB-1080p
+          - name: BR > WEB > DVD
+
+      - trash_ids:
+          - 1b3994c551cbb92a2c781af061f4ab44 # Scene
+        assign_scores_to:
+          - name: WEB-2160p
+          - name: WEB-1080p
+          - name: BR > WEB > DVD
+            score: 0
+
+     # HDR Formats
+      - trash_ids:
+          - 9b27ab6498ec0f31a3353992e19434ca # DV (WEBDL)
+          - 0dad0a507451acddd754fe6dc3a7f5e7 # HDR10+ Boost
+          - 385e9e8581d33133c3961bdcdeffb7b4 # DV HDR10+ Boost
+          - 6d0d8de7b57e35518ac0308b0ddf404e # DV
+          - 7878c33f1963fefb3d6c8657d46c2f0a # DV HDR10
+          - 2b239ed870daba8126a53bd5dc8dc1c8 # DV HDR10+
+          - 1f733af03141f068a540eec352589a89 # DV HLG
+          - 27954b0a80aab882522a88a4d9eae1cd # DV SDR
+          - 3e2c4e748b64a1a1118e0ea3f4cf6875 # HDR
+          - bb019e1cd00f304f80971c965de064dc # HDR (undefined)
+          - 3497799d29a085e2ac2df9d468413c94 # HDR10
+          - a3d82cbef5039f8d295478d28a887159 # HDR10+
+          - 17e889ce13117940092308f48b48b45b # HLG
+          - 2a7e3be05d3861d6df7171ec74cad727 # PQ
+
+        assign_scores_to:
+          - name: WEB-2160p
+          - name: BR > WEB > DVD
+
+     # Good Release Groups
+      - trash_ids:
+          - d6819cba26b1a6508138d25fb5e32293 # HD Bluray Tier 01
+          - c2216b7b8aa545dc1ce8388c618f8d57 # HD Bluray Tier 02
+          - 9965a052eb87b0d10313b1cea89eb451 # Remux Tier 01
+          - 8a1d0c3d7497e741736761a1da866a2e # Remux Tier 02
+          - d0c516558625b04b363fa6c5c2c7cfd4 # WEB Scene
+          - e6258996055b9fbab7e9cb2f75819294 # WEB Tier 01
+          - 58790d4e2fdcd9733aa7ae68ba2bb503 # WEB Tier 02
+          - d84935abd3f8556dcd51d4f27e22d0a6 # WEB Tier 03
+          - 5d9fd1b1e06cd8a475462f40214b7df6 # FLUX
+        assign_scores_to:
+          - name: BR > WEB > DVD
+
+      # Audio
+      - trash_ids:
+          # Audio Advanced #1
+          - b6fbafa7942952a13e17e2b1152b539a # ATMOS (undefined)
+          - 63487786a8b01b7f20dd2bc90dd4a477 # DD+
+          - 4232a509ce60c4e208d13825b7c06264 # DD+ ATMOS
+          - 5964f2a8b3be407d083498e4459d05d0 # DTS
+          - 9d00418ba386a083fbf4d58235fc37ef # DTS X
+          - c1a25cd67b5d2e08287c957b1eb903ec # DTS-ES
+          - c429417a57ea8c41d57e6990a8b0033f # DTS-HD MA
+          - 1808e4b9cee74e064dfae3f1db99dbfe # TrueHD
+          - 0d7824bb924701997f874e7ff7d4844a # TrueHD ATMOS
+
+          # Audio Advanced #2
+          - a50b8a0c62274a7c38b09a9619ba9d86 # AAC
+          - dbe00161b08a25ac6154c55f95e6318d # DD
+          - cfa5fbd8f02a86fc55d8d223d06a5e1f # DTS-HD HRA
+          - 851bd64e04c9374c51102be3dd9ae4cc # FLAC
+          - 3e8b714263b26f486972ee1e0fe7606c # MP3
+          - 28f6ef16d61e2d1adfce3156ed8257e3 # Opus
+          - 30f70576671ca933adbdcfc736a69718 # PCM
+
+          # Audio Channels
+          - bd6dd5e043aa27ff4696a08d011c7d96 # 1.0 Mono
+          - 834e534f103938853ffced4203b53e72 # 2.0 Stereo
+          - 42cba7e38c7947a6d1d0a62580ee6d62 # 3.0 Sound
+          - 1895195e84767de180653914ce207245 # 4.0 Sound
+          - 3fbafa924f361e66fbc6187af82dfa85 # 5.1 Surround
+          - 9fb6d778592c293467437593ef394bf1 # 6.1 Surround
+          - 204c8c3e7315bb0ea81332774fa888d6 # 7.1 Surround
+        assign_scores_to:
+          - name: BR > WEB > DVD
+
+      - trash_ids:
+          - 026d5aadd1a6b4e550b134cb6c72b3ca # Uncensored
+        assign_scores_to:
+          - name: Remux-1080p - Anime
+            score: 0 # Adjust scoring as desired
+
+      - trash_ids:
+          - b2550eb333d27b75833e25b8c2557b38 # 10bit
+        assign_scores_to:
+          - name: Remux-1080p - Anime
+            score: 0 # Adjust scoring as desired
+
+      - trash_ids:
+          - 418f50b10f1907201b6cfdf881f467b7 # Anime Dual Audio
+        assign_scores_to:
+          - name: Remux-1080p - Anime
+            score: 0 # Adjust scoring as desired
+
+# radarr:
+#   radarr:
+#     base_url: http://radarr.media.svc.cluster.local
+#     api_key: !env_var RADARR_API_KEY
+
+#     # Custom Format Configuration
+#     delete_old_custom_formats: true
+#     replace_existing_custom_formats: true
+
+#     quality_definition:
+#       type: movie
+
+#     quality_profiles:
+#       - name: SQP-1 (1080p)
+#       - name: SQP-1 (2160p)
+
+#     include:
+#       - template: radarr-quality-definition-sqp-streaming
+#       - template: radarr-quality-profile-sqp-1-1080p
+#       - template: radarr-custom-formats-sqp-1-1080p
+#       - template: radarr-quality-profile-sqp-1-2160p-default
+#       - template: radarr-custom-formats-sqp-1-2160p
+#       - template: radarr-quality-profile-anime
+#       - template: radarr-custom-formats-anime
+
+#     custom_formats:
+#       - trash_ids:
+#           - 7a0d1ad358fee9f5b074af3ef3f9d9ef # HALLOWED
+#           - b6832f586342ef70d9c128d40c07b872 # Bad Dual Groups
+#           - 90cedc1fea7ea5d11298bebd3d1d3223 # EVO (no WEBDL)
+#           - ae9b7c9ebde1f3bd336a8cbd1ec4c5e5 # No-RlsGroup
+#           - 7357cf5161efbf8c4d5d0c30b4815ee2 # Obfuscated
+#           - 5c44f52a8714fdd79bb4d98e2673be1f # Retags
+#           - f537cf427b64c38c8e36298f657e4828 # Scene
+#         assign_scores_to:
+#           - name: SQP-1 (1080p)
+#           - name: SQP-1 (2160p)
+
+#       - trash_ids:
+#           - 839bea857ed2c0a8e084f3cbdbd65ecb # x265 (no HDR/DV)
+#         assign_scores_to:
+#           - name: SQP-1 (1080p)
+#           - name: SQP-1 (2160p)
+#             score: 0
+
+#       - trash_ids:
+#           - 064af5f084a0a24458cc8ecd3220f93f # Uncensored
+#         assign_scores_to:
+#           - name: Remux-1080p - Anime
+#             score: 0 # Adjust scoring as desired
+
+#       - trash_ids:
+#           - a5d148168c4506b55cf53984107c396e # 10bit
+#         assign_scores_to:
+#           - name: Remux-1080p - Anime
+#             score: 0 # Adjust scoring as desired
+
+#       - trash_ids:
+#           - 4a3b087eea2ce012fcc1ce319259a3be # Anime Dual Audio
+#         assign_scores_to:
+#           - name: Remux-1080p - Anime
+#             score: 0 # Adjust scoring as desired
