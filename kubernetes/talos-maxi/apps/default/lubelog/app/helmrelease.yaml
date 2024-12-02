@@ -45,7 +45,9 @@ spec:
               LOGGING__LOGLEVEL__DEFAULT: debug
             envFrom:
               - secretRef:
-                  name: "{{ .Release.Name }}-secret"
+                  name: lubelog-secret
+              - secretRef:
+                  name: lubelog-db-secret
             resources:
               requests:
                 cpu: 15m

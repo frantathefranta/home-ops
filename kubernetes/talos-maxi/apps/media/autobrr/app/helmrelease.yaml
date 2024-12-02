@@ -40,6 +40,8 @@ spec:
             envFrom:
               - secretRef:
                   name: autobrr-secret
+              - secretRef:
+                  name: autobrr-db-secret
             probes:
               liveness:
                 enabled: true

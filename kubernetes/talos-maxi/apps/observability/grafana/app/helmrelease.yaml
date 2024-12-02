@@ -45,6 +45,7 @@ spec:
       GF_SECURITY_COOKIE_SAMESITE: *app
     envFromSecrets:
       - name: grafana-secret
+      - name: grafana-db-secret
     grafana.ini:
       analytics:
         check_for_updates: false

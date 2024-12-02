@@ -48,6 +48,8 @@ spec:
             envFrom:
               - secretRef:
                   name: authelia-secret
+              - secretRef:
+                  name: authelia-db-secret
             probes:
               liveness: &probes
                 enabled: true
