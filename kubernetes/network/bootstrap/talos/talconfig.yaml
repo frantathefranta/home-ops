@@ -41,6 +41,19 @@ nodes:
             gateway: "10.33.0.1"
         vip:
           ip: "10.33.50.25"
+    patches:
+      # sysctls
+      - |-
+        machine:
+          sysctls:
+            net.core.bpf_jit_harden: "1"
+            net.ipv6.conf.all.accept_ra: "2"
+            net.ipv6.conf.all.forwarding: "1"
+            net.ipv6.conf.eth0.accept_ra: "2"
+            net.ipv6.conf.eth0.forwarding: "1"
+            net.ipv6.conf.eth0.accept_ra: "2"
+            net.ipv6.conf.eth0.forwarding: "1"
+            vm.nr_hugepages: "1024"
 
 patches:
   # Configure containerd
@@ -98,8 +111,7 @@ patches:
           enabled: true
           resolveMemberNames: true
           # Incompatible with Cilium bpf masquerade. siderolabs/talos/#8836
-          # Replaced by a Cilium redirect policy.
-          # forwardKubeDNSToHost: false
+          forwardKubeDNSToHost: false
 
   # Configure NTP
   - |-
@@ -117,7 +129,6 @@ patches:
         fs.inotify.max_user_instances: "8192"
         net.core.rmem_max: "2500000"
         net.core.wmem_max: "2500000"
-        net.ipv6.conf.eth0.forwarding: 1
 
   # Mount openebs-hostpath in kubelet
   - |-

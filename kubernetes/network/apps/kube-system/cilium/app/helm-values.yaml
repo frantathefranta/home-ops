@@ -3,7 +3,9 @@ autoDirectNodeRoutes: true
 bgpControlPlane:
   enabled: true
 bpf:
-  masquerade: false
+  datapathMode: veth
+  masquerade: true
+  tproxy: true
 cgroup:
   automount:
     enabled: false
@@ -33,9 +35,9 @@ kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
 l2announcements:
   enabled: false
 loadBalancer:
-  acceleration: native
+  acceleration: best-effort
   algorithm: maglev
-  mode: snat
+  mode: dsr
 localRedirectPolicy: true
 operator:
   replicas: 1
