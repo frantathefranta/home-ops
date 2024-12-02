@@ -44,13 +44,6 @@ spec:
           enabled: true
           annotations:
             grafana_folder: Cilium
-      # tls:
-      #   auto:
-      #     method: certmanager
-      #     certManagerIssuerRef:
-      #       name: cluster-ca
-      #       kind: ClusterIssuer
-      #       group: cert-manager.io
       relay:
         enabled: true
         rollOutPods: true
@@ -64,9 +57,9 @@ spec:
           enabled: true
           className: internal
           hosts: ["hubble.${SECRET_DOMAIN}"]
-    loadBalancer:
-      l7:
-        backend: envoy
+    # loadBalancer:
+    #   l7:
+    #     backend: envoy
     socketLB:
       # this will fix issue with nginx's keeping persistent connections to dead CoreDNS'es.
       hostNamespaceOnly: true

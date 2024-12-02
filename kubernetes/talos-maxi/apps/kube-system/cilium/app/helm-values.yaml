@@ -1,14 +1,9 @@
 ---
 autoDirectNodeRoutes: true
-bandwidthManager:
-  enabled: true
-  bbr: true
 bgpControlPlane:
   enabled: true
 bpf:
-  datapathMode: veth
   masquerade: false
-  tproxy: true
 cgroup:
   automount:
     enabled: false
@@ -27,6 +22,7 @@ ipam:
 ipv4:
   enabled: true
 ipv4NativeRoutingCIDR: "10.69.0.0/16"
+# ipv6NativeRoutingCIDR: "fd20:6ff9:e40f::/56"
 ipv6:
   enabled: true
 enableIPv6Masquerade: false
@@ -37,13 +33,14 @@ kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
 l2announcements:
   enabled: false
 loadBalancer:
-  acceleration: best-effort
+  acceleration: native
   algorithm: maglev
-  mode: dsr
+  mode: snat
 localRedirectPolicy: true
 operator:
   replicas: 1
   rollOutPods: true
+
 rollOutCiliumPods: true
 routingMode: native
 securityContext:
