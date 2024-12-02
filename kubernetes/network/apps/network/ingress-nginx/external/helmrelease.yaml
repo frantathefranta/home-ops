@@ -30,6 +30,7 @@ spec:
       service:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: "external-network.${SECRET_DOMAIN}"
+          lbipam.cilium.io/ips: ${SVC_NGINX_EXTERNAL}
         externalTrafficPolicy: Cluster
         ipFamilyPolicy: PreferDualStack
         ipFamilies:

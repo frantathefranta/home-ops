@@ -6,7 +6,7 @@ metadata:
 spec:
   allowFirstLastIPs: "Yes"
   blocks:
-    - cidr: "${NODE_CIDR}"
+    - cidr: "${CLUSTER_LBA_CIDR}"
     - cidr: "${CLUSTER_LBA_V6_CIDR}"
   serviceSelector:
     matchExpressions:

@@ -26,6 +26,8 @@ spec:
     controller:
       replicaCount: 1
       service:
+        annotations:
+          lbipam.cilium.io/ips: ${SVC_NGINX_INTERNAL}
         externalTrafficPolicy: Cluster
         ipFamilyPolicy: PreferDualStack
         ipFamilies:
