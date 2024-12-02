@@ -17,6 +17,8 @@ vars:
   K9S_VERSION: v0.32.7
   # renovate: datasource=github-releases depName=cilium/cilium-cli
   CILIUM_CLI_VERSION: v0.16.20
+  # renovate: datasource=github-releases depName=cilium/hubble
+  HUBBLE_CLI_VERSION: v1.16.4
   # renovate: datasource=github-releases depName=jkroepke/helm-secrets
   HELM_SECRETS_VERSION: v4.6.2
 
@@ -91,11 +93,14 @@ tasks:
         platforms: ["linux/amd64"]
       - cmd: curl -L -o cilium.tar.gz "https://github.com/cilium/cilium-cli/releases/download/{{.CILIUM_CLI_VERSION}}/cilium-linux-amd64.tar.gz"
         platforms: ["linux/amd64"]
+      - cmd: curl -L -o hubble.tar.gz "https://github.com/cilium/hubble/releases/download/{{.HUBBLE_CLI_VERSION}}/hubble-linux-amd64.tar.gz"
+        platforms: ["linux/amd64"]
       - cmd: curl -L -o task.tar.gz "https://github.com/go-task/task/releases/download/{{.TASK_VERSION}}/task_linux_amd64.tar.gz"
         platforms: ["linux/amd64"]
       - cmd: tar xvzf k9s.tar.gz && rm k9s.tar.gz; rm LICENSE; rm README*
       - cmd: tar xvzf task.tar.gz && rm task.tar.gz; rm LICENSE; rm README*; rm -r completion/
       - cmd: tar xvzf cilium.tar.gz && rm cilium.tar.gz
+      - cmd: tar xvzf hubble.tar.gz && rm hubble.tar.gz
       - cmd: chmod +x sops
       # - cmd: chmod +x kubectl
       - cmd: chmod +x talosctl
