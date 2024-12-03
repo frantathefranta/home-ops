@@ -44,8 +44,6 @@ spec:
                   name: immich-configmap
               - secretRef:
                   name: immich-secret
-              - secretRef:
-                  name: immich-db-secret
             probes:
               liveness: &probes
                 enabled: true

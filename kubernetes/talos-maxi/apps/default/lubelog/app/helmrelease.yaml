@@ -46,8 +46,6 @@ spec:
             envFrom:
               - secretRef:
                   name: lubelog-secret
-              # - secretRef:
-              #     name: lubelog-db-secret
             resources:
               requests:
                 cpu: 15m

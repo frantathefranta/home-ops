@@ -52,8 +52,6 @@ spec:
             envFrom:
             - secretRef:
                 name: readarr-secret
-            - secretRef:
-                name: readarr-db-secret
             probes:
               liveness: &probes
                 enabled: true
