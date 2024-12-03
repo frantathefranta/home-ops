@@ -32,7 +32,7 @@ spec:
           app:
             image:
               repository: barassistant/server
-              tag: 4.2.0
+              tag: 4.2.1
             env:
               BASE_URL: https://bar.${SECRET_DOMAIN}
               # MEILISEARCH_URL: https://bar.${SECRET_DOMAIN}/search
