@@ -91,6 +91,10 @@ spec:
         existingClaim: *app
       tmp:
         type: emptyDir
+      yt-dlp:
+        type: emptyDir
+        globalMounts:
+          - path: /etc/yt-dlp
       downloads:
         type: nfs
         server: ${NAS_IP}
