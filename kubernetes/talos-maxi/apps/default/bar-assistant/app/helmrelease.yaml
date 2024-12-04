@@ -28,16 +28,31 @@ spec:
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
+        initContainers:
+          chown-app:
+            image:
+              repository: docker.io/library/alpine
+              tag: "3.20"
+            command:
+              - /bin/sh
+              - -c
+            args:
+              - |
+                chown 33:33 /var/www/cocktails
+            securityContext:
+              runAsUser: 0
         containers:
           bar-assistant:
             image:
               repository: barassistant/server
-              tag: 4.2.1
+              tag: 4.0.0
             env:
               BASE_URL: https://bar.${SECRET_DOMAIN}
               # MEILISEARCH_URL: https://bar.${SECRET_DOMAIN}/search
               APP_URL: https://bar-api.${SECRET_DOMAIN}
+              APP_DEBUG: true
               LOG_CHANNEL: stderr
+              LOG_LEVEL: debug
               MEILISEARCH_HOST: http://meilisearch:7700
               MEILISEARCH_URL: https://bar.${SECRET_DOMAIN}/search
               REDIS_HOST: dragonfly.database.svc.cluster.local
@@ -45,39 +60,41 @@ spec:
             envFrom:
               - secretRef:
                   name: &secret bar-assistant-secret
-            securityContext:
-              # privileged: true
-              # runAsUser: 33
-              # runAsGroup: 33
-              # readOnlyRootFilesystem: false
+            # securityContext:
+            #   # privileged: true
+            #   runAsUser: 568
+            #   runAsGroup: 568
+            #   fsGroup: 568
+            #   supplementalGroups: [33]
+            #   # readOnlyRootFilesystem: false
             resources:
               requests:
                 cpu: 10m
               limits:
                 memory: 128Mi
-          salt-rim:
-            image:
-              repository: barassistant/salt-rim
-              tag: 3.5.0
-            env:
-              API_URL: https://bar-api.${SECRET_DOMAIN}
-              MEILISEARCH_URL: https://bar.${SECRET_DOMAIN}/search
-              BAR_NAME: "Cara's Bar"
-              DESCRIPTION: "Coolest Bar in Town"
-              DEFAULT_LOCALE: en-US
-          meilisearch:
-            image:
-              repository: docker.io/getmeili/meilisearch
-              tag: v1.11
-            env:
-              MEILI_ENV: production
-            envFrom:
-              - secretRef:
-                  name: *secret
-          nginx:
-            image:
-              repository: ghcr.io/nginxinc/nginx-unprivileged
-              tag: 1.27.3
+          # salt-rim:
+          #   image:
+          #     repository: barassistant/salt-rim
+          #     tag: 3.5.0
+          #   env:
+          #     API_URL: https://bar-api.${SECRET_DOMAIN}
+          #     MEILISEARCH_URL: https://bar.${SECRET_DOMAIN}/search
+          #     BAR_NAME: "Cara's Bar"
+          #     DESCRIPTION: "Coolest Bar in Town"
+          #     DEFAULT_LOCALE: en-US
+          # meilisearch:
+          #   image:
+          #     repository: docker.io/getmeili/meilisearch
+          #     tag: v1.11
+          #   env:
+          #     MEILI_ENV: production
+          #   envFrom:
+          #     - secretRef:
+          #         name: *secret
+          # nginx:
+          #   image:
+          #     repository: ghcr.io/nginxinc/nginx-unprivileged
+          #     tag: 1.27.3
     service:
       app:
         controller: *app
@@ -99,27 +116,29 @@ spec:
               identifier: app
               port: http
     persistence:
-      config:
+      app:
         existingClaim: *app
         globalMounts:
           - path: /var/www/cocktails
             subPath: cocktails
-          - path: /var/www/cocktails/storage/bar-assistant
-            subPath: bar-assistant
+        #   - path: /var/www/cocktails/storage/bar-assistant
+        #     subPath: bar-assistant
+        #   - path: /var/www/cocktails/storage/bar-assistant/uploads
+        #     subPath: uploads
       # cache:
       #   type: emptyDir
       #   globalMounts:
       #     - path: /var/www/cocktails
       #       subPath: cocktails
-      nginx-config:
-        type: configMap
-        name: bar-assistant-configmap
-        advancedMounts:
-          bar-assistant:
-            nginx:
-              - path: /etc/nginx/nginx.conf
-                subPath: nginx-config
-                readOnly: true
+      # nginx-config:
+      #   type: configMap
+      #   name: bar-assistant-configmap
+      #   advancedMounts:
+      #     bar-assistant:
+      #       nginx:
+      #         - path: /etc/nginx/nginx.conf
+      #           subPath: nginx-config
+      #           readOnly: true
       # memory:
       #   type: emptyDir
       #   globalMounts:
