@@ -29,7 +29,7 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          app:
+          bar-assistant:
             image:
               repository: barassistant/server
               tag: 4.2.1
@@ -44,45 +44,46 @@ spec:
               ALLOW_REGISTRATION: true
             envFrom:
               - secretRef:
-                  name: bar-assistant-secret
-            # probes:
-            #   liveness: &probes
-            #     enabled: true
-            #     custom: true
-            #     spec:
-            #       httpGet:
-            #         path: /
-            #         port: &port 5555
-            #       initialDelaySeconds: 0
-            #       periodSeconds: 10
-            #       timeoutSeconds: 1
-            #       failureThreshold: 3
-            #   readiness: *probes
+                  name: &secret bar-assistant-secret
             securityContext:
-              privileged: true
-              # allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: false
-              # capabilities: { drop: ["ALL"] }
+              # privileged: true
+              # runAsUser: 33
+              # runAsGroup: 33
+              # readOnlyRootFilesystem: false
             resources:
               requests:
                 cpu: 10m
               limits:
                 memory: 128Mi
-    # defaultPodOptions:
-    #   securityContext:
-    #     privileged: true
-        # runAsNonRoot: true
-        # runAsUser: 33
-        # runAsGroup: 33
-        # fsGroup: 33
-        # fsGroupChangePolicy: OnRootMismatch
-        # seccompProfile: { type: RuntimeDefault }
+          salt-rim:
+            image:
+              repository: barassistant/salt-rim
+              tag: 3.5.0
+            env:
+              API_URL: https://bar-api.${SECRET_DOMAIN}
+              MEILISEARCH_URL: https://bar.${SECRET_DOMAIN}/search
+              BAR_NAME: "Cara's Bar"
+              DESCRIPTION: "Coolest Bar in Town"
+              DEFAULT_LOCALE: en-US
+          meilisearch:
+            image:
+              repository: docker.io/getmeili/meilisearch
+              tag: v1.11
+            env:
+              MEILI_ENV: production
+            envFrom:
+              - secretRef:
+                  name: *secret
+          nginx:
+            image:
+              repository: ghcr.io/nginxinc/nginx-unprivileged
+              tag: 1.27.3
     service:
       app:
         controller: *app
         ports:
           http:
-            port: 8080
+            port: 3000
     ingress:
       app:
         className: internal
@@ -90,7 +91,7 @@ spec:
         #   nginx.ingress.kubernetes.io/rewrite-target: "/"
         #   external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
         hosts:
-        - host: "bar-api.${SECRET_DOMAIN}"
+        - host: "bar.${SECRET_DOMAIN}"
           paths:
           # - path: /bar(/|$)(.*)
           - path: /
@@ -101,12 +102,24 @@ spec:
       config:
         existingClaim: *app
         globalMounts:
-          - path: /var/www/cocktails/storage/bar-assistant
-      cache:
-        type: emptyDir
-        globalMounts:
           - path: /var/www/cocktails
             subPath: cocktails
+          - path: /var/www/cocktails/storage/bar-assistant
+            subPath: bar-assistant
+      # cache:
+      #   type: emptyDir
+      #   globalMounts:
+      #     - path: /var/www/cocktails
+      #       subPath: cocktails
+      nginx-config:
+        type: configMap
+        name: bar-assistant-configmap
+        advancedMounts:
+          bar-assistant:
+            nginx:
+              - path: /etc/nginx/nginx.conf
+                subPath: nginx-config
+                readOnly: true
       # memory:
       #   type: emptyDir
       #   globalMounts:

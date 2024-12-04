@@ -6,3 +6,9 @@ resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
   - ../../../../../shared/templates/volsync
+configMapGenerator:
+  - name: bar-assistant-configmap
+    files:
+      - ./config/nginx-config
+generatorOptions:
+  disableNameSuffixHash: true
