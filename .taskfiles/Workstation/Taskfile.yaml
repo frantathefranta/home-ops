@@ -16,7 +16,7 @@ vars:
   # renovate: datasource=github-releases depName=derailed/k9s
   K9S_VERSION: v0.32.7
   # renovate: datasource=github-releases depName=cilium/cilium-cli
-  CILIUM_CLI_VERSION: v0.16.20
+  CILIUM_CLI_VERSION: v0.16.21
   # renovate: datasource=github-releases depName=cilium/hubble
   HUBBLE_CLI_VERSION: v1.16.4
   # renovate: datasource=github-releases depName=jkroepke/helm-secrets
