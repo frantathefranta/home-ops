@@ -10,7 +10,7 @@ vars:
   BREWFILE: "{{.ROOT_DIR}}/.taskfiles/Workstation/Brewfile"
   GENERIC_BIN_DIR: "{{.ROOT_DIR}}/.bin"
   # renovate: datasource=github-releases depName=go-task/task
-  TASK_VERSION: v3.40.0
+  TASK_VERSION: v3.40.1
   # renovate: datasource=github-releases depName=getsops/sops
   SOPS_VERSION: v3.9.2
   # renovate: datasource=github-releases depName=derailed/k9s
