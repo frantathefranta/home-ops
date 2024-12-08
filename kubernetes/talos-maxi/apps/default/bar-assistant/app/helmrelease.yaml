@@ -45,7 +45,7 @@ spec:
           bar-assistant:
             image:
               repository: barassistant/server
-              tag: 4.2.2
+              tag: 4.2.3
             env:
               BASE_URL: https://bar.${SECRET_DOMAIN}
               # MEILISEARCH_URL: https://bar.${SECRET_DOMAIN}/search
