@@ -1,4 +1,7 @@
 #+title: Setting up BGP outside the cluster
+* Subnet setup
+** IPv6
+On my residential ISP connection I only get a /60. I've dedicated a /64 subnet to kubernetes, of which I've given /96 to this cluster's Pod subnet. It needs to be split using a bigger than /96 mask since the by default it gives a /64 to each node. I've used a /112 mask, which allows 2^16 nodes to have 2^16 pods.
 * Arista
 I use an Arista DCS-7050SX-64 L3 switch for routing in my homelab. The BGP setup looks like this:
 #+begin_src sh :noeval

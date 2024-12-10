@@ -194,7 +194,7 @@ patches:
           resolveMemberNames: true
           # Incompatible with Cilium bpf masquerade. siderolabs/talos/#8836
           # Replaced by a Cilium redirect policy.
-          # forwardKubeDNSToHost: false
+          forwardKubeDNSToHost: false
 
   # Configure NTP
   - |-
@@ -233,8 +233,7 @@ controlPlane:
         controllerManager:
           extraArgs:
             bind-address: 0.0.0.0
-            # On my residential ISP connection I only get a /60, of which I've given /64 to the Pod subnet. It needs to be split using /80 mask, otherwise the first node is going to take the whole /64
-            node-cidr-mask-size-ipv6: "80"
+            node-cidr-mask-size-ipv6: "112"
         coreDNS:
           disabled: true
         proxy:

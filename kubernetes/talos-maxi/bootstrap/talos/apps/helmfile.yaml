@@ -44,3 +44,13 @@ releases:
     needs:
       - observability/prometheus-operator-crds
       - kube-system/cilium
+  - name: spegel
+    namespace: kube-system
+    chart: oci://ghcr.io/spegel-org/helm-charts/spegel
+    version: v0.0.27
+    values: ["../../../apps/kube-system/spegel/app/helm-values.yaml"]
+    needs:
+      - observability/prometheus-operator-crds
+      - kube-system/cilium
+      - kube-system/coredns
+      - kube-system/kubelet-csr-approver

@@ -2,7 +2,7 @@ service:
     clusterIP: ENC[AES256_GCM,data:SvaONpDCXOzc4g==,iv:BNOqxKiEIAQxCcgIsXkTAlNr1lN+Pww+3dduiSOlif4=,tag:gikTjKxcuICkhOiLg6FWow==,type:str]
     clusterIPs:
         - ENC[AES256_GCM,data:CJI+EotnhWgMIA==,iv:X9qnQAGgjouRxRC82tkrvXYbfLL4BjXyowXxs3ppBuI=,tag:ZtqPM/T820/FrsD2vhN+Gg==,type:str]
-        - ENC[AES256_GCM,data:YfpOL/tU/URNQVvS8UU7LAdzKTYRi9rudFVa,iv:J2Ha97POlxCyiFLq/DaC0I/WjETHAVq8D7LB3AxmTo0=,tag:Zf+aYM3QhuraKcaV/j4Mwg==,type:str]
+        - ENC[AES256_GCM,data:1wwIoh5t2IScZcIpo9PhdlJFSKhWfmDRFiiIKac=,iv:Mu/n5ofmXz+P6JeFE8KBF2EWZOKlOZ1/6TlMDABwDwQ=,tag:EbjncYU2cwSHuJXzhjTSPA==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -18,8 +18,8 @@ sops:
             Um1peXhOd3JLUlNhdUJ4K2wwQ3ppY0UK3UTapVht6yxUzZPzBeYLGnReB9CHJrHA
             UvTMuu1wNyn/Eqvj2Cb5pCSjA6bvSAKfgZbq+vLNSj/Zn27pIy5TWA==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2024-11-21T16:05:33Z"
-    mac: ENC[AES256_GCM,data:DVVCzdwxW03OKoxldfWhXItqGhnnKqoJfYve3nRcfvGSvswt7ZQ2ZoG02o+ZohQWYR9/9vM1Gmj5nmNkkRyJD149HRCwkENHXgoXNCzmEtWieqPSJJKLLXRP4rHkboo3yB0KXa6lzgN1I7ObowvqYIH1RLj0PAbzi0VKbkPtDf0=,iv:nT9tgWf5ZEP0E0gjqro766Mt1t4fN5XU9eloGXBFZkE=,tag:uPsgiP6FilbXHsCpBKa/xA==,type:str]
+    lastmodified: "2024-12-10T20:42:29Z"
+    mac: ENC[AES256_GCM,data:sTSGZ7LbCMzrUnIW4v5icTT0jwYzv1+SyZ1WcHYlpABQb/LX1VWdY32nUkyursP2oOitfmw1jMPgNMVcrKO8UL8rA3LdQVlqs/HXv7sf2Q3xLJ62jcku360twiuln3CoQ7sJXQFC8mToWkxEaETKxWGPU8/TljmtxY9m+zvKNcM=,iv:XlAGGfwfjkB0bHsMFy2HsEY59H0o/VHHvNRyibCbmqE=,tag:Mv9A9Gve+YtuDOx4Z5WZ0Q==,type:str]
     pgp: []
     unencrypted_suffix: _unencrypted
-    version: 3.9.1
+    version: 3.9.2
