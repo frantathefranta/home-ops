@@ -32,13 +32,8 @@ nodes:
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "bc:24:11:2a:7b:8c"
-        dhcp: false
-        addresses:
-          - "10.33.50.1/16"
+        dhcp: true
         mtu: 1500
-        routes:
-          - network: 0.0.0.0/0
-            gateway: "10.33.0.1"
         vip:
           ip: "10.33.50.25"
     patches:
@@ -145,7 +140,7 @@ controlPlane:
         controllerManager:
           extraArgs:
             bind-address: 0.0.0.0
-            node-cidr-mask-size-ipv6: "64"
+            node-cidr-mask-size-ipv6: "120"
         coreDNS:
           disabled: true
         proxy:

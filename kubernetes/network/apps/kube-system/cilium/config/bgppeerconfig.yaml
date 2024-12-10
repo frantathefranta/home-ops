@@ -8,8 +8,8 @@ spec:
     - afi: ipv4
       safi: unicast
       advertisements:
-        matchLabels:
-          advertise: bgp
+        matchExpressions:
+          - { key: advertise, operator: In, values: ["bgp", "bgpv4"] }
   timers:
     connectRetryTimeSeconds: 12
     holdTimeSeconds: 9
@@ -27,8 +27,8 @@ spec:
     - afi: ipv6
       safi: unicast
       advertisements:
-        matchLabels:
-          advertise: bgp
+        matchExpressions:
+          - { key: advertise, operator: In, values: ["bgp", "bgpv6"] }
   timers:
     connectRetryTimeSeconds: 12
     holdTimeSeconds: 9
