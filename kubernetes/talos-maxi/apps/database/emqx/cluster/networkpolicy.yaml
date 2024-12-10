@@ -1,0 +1,12 @@
+---
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: "emqx-allow-ingress"
+spec:
+  endpointSelector:
+    matchLabels:
+      apps.emqx.io/instance: emqx
+  ingress:
+  - fromEntities:
+    - "world"
