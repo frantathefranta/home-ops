@@ -5,7 +5,6 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-  - ./pvc.yaml
   - ../../../../../shared/templates/volsync
 configMapGenerator:
   - name: bar-assistant-configmap

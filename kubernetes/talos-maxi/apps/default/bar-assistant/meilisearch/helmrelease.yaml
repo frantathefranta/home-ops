@@ -37,7 +37,7 @@ spec:
               MEILI_ENV: production
             envFrom:
               - secretRef:
-                  name: bar-assistant-secret
+                  name: meilisearch-secret
             # probes:
             #   liveness: &probes
             #     enabled: true

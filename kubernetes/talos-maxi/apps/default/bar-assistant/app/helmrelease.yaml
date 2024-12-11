@@ -22,10 +22,14 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph-external
+    - name: volsync
+      namespace: storage
   values:
     controllers:
       bar-assistant:
-        strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
@@ -48,17 +52,16 @@ spec:
               repository: barassistant/server
               tag: 4.2.3
             env:
-              BASE_URL: https://bar.${SECRET_DOMAIN}
-              APP_URL: https://bar-api.${SECRET_DOMAIN}
+              APP_URL: https://bar.${SECRET_DOMAIN}/bar
               APP_DEBUG: true
               LOG_CHANNEL: stderr
               LOG_LEVEL: debug
-              MEILISEARCH_HOST: http://bar-assistant:7700
+              MEILISEARCH_HOST: http://meilisearch:7700
               REDIS_HOST: dragonfly.database.svc.cluster.local
               ALLOW_REGISTRATION: true
             envFrom:
               - secretRef:
-                  name: &secret bar-assistant-secret
+                  name: bar-assistant-secret
             securityContext:
               privileged: true
             #   runAsUser: 568
@@ -71,37 +74,35 @@ spec:
                 cpu: 10m
               limits:
                 memory: 128Mi
-          # salt-rim:
-          #   image:
-          #     repository: barassistant/salt-rim
-          #     tag: 3.5.0
-          #   env:
-          #     API_URL: https://bar-api.${SECRET_DOMAIN}
-          #     MEILISEARCH_URL: https://bar.${SECRET_DOMAIN}/search
-          #     BAR_NAME: "Cara's Bar"
-          #     DESCRIPTION: "Coolest Bar in Town"
-          #     DEFAULT_LOCALE: en-US
-          meilisearch:
+          salt-rim:
             image:
-              repository: docker.io/getmeili/meilisearch
-              tag: v1.8
+              repository: barassistant/salt-rim
+              tag: 3.5.0
             env:
-              MEILI_ENV: production
-            envFrom:
-              - secretRef:
-                  name: *secret
-          # nginx:
+              API_URL: https://bar.${SECRET_DOMAIN}/bar
+              MEILISEARCH_URL: https://bar.${SECRET_DOMAIN}/search
+              BAR_NAME: "Cara's Bar"
+              DESCRIPTION: "Coolest Bar in Town"
+              DEFAULT_LOCALE: en-US
+          # meilisearch:
           #   image:
-          #     repository: ghcr.io/nginxinc/nginx-unprivileged
-          #     tag: 1.27.3
+          #     repository: docker.io/getmeili/meilisearch
+          #     tag: v1.8
+          #   env:
+          #     MEILI_ENV: production
+          #   envFrom:
+          #     - secretRef:
+          #         name: *secret
+          nginx:
+            image:
+              repository: ghcr.io/nginxinc/nginx-unprivileged
+              tag: 1.27.3
     service:
       app:
         controller: *app
         ports:
           http:
             port: 3000
-          meilisearch:
-            port: 7700
     ingress:
       app:
         className: internal
@@ -122,10 +123,10 @@ spec:
         globalMounts:
           - path: /var/www/cocktails/storage/bar-assistant
             subPath: bar-assistant
-      meili-data:
-        existingClaim: meilisearch
-        globalMounts:
-          - path: /meili_data
+      # meili-data:
+      #   existingClaim: meilisearch
+      #   globalMounts:
+      #     - path: /meili_data
         #   - path: /var/www/cocktails/storage/bar-assistant
         #     subPath: bar-assistant
         #   - path: /var/www/cocktails/storage/bar-assistant/uploads
@@ -135,15 +136,15 @@ spec:
       #   globalMounts:
       #     - path: /var/www/cocktails
       #       subPath: cocktails
-      # nginx-config:
-      #   type: configMap
-      #   name: bar-assistant-configmap
-      #   advancedMounts:
-      #     bar-assistant:
-      #       nginx:
-      #         - path: /etc/nginx/nginx.conf
-      #           subPath: nginx-config
-      #           readOnly: true
+      nginx-config:
+        type: configMap
+        name: bar-assistant-configmap
+        advancedMounts:
+          bar-assistant:
+            nginx:
+              - path: /etc/nginx/nginx.conf
+                subPath: nginx-config
+                readOnly: true
       # memory:
       #   type: emptyDir
       #   globalMounts:

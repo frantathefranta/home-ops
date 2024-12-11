@@ -25,7 +25,7 @@ http {
     }
 
     location /search/ {
-        proxy_pass http://localhost:7700/;
+        proxy_pass http://meilisearch:7700/;
     }
 
     location / {
