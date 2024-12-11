@@ -77,7 +77,7 @@ spec:
           salt-rim:
             image:
               repository: barassistant/salt-rim
-              tag: 3.5.0
+              tag: 3.5.1
             env:
               API_URL: https://bar.${SECRET_DOMAIN}/bar
               MEILISEARCH_URL: https://bar.${SECRET_DOMAIN}/search
