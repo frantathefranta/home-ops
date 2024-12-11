@@ -37,7 +37,7 @@ spec:
               MEILI_ENV: production
             envFrom:
               - secretRef:
-                  name: meilisearch-secret
+                  name: bar-assistant-secret
             # probes:
             #   liveness: &probes
             #     enabled: true
@@ -72,18 +72,18 @@ spec:
         ports:
           http:
             port: 7700
-    ingress:
-      app:
-        className: internal
-        # annotations:
-        #   external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
-        hosts:
-        - host: "bar.${SECRET_DOMAIN}"
-          paths:
-          - path: /search/
-            service:
-              identifier: app
-              port: http
+    # ingress:
+    #   app:
+    #     className: internal
+    #     # annotations:
+    #     #   external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
+    #     hosts:
+    #     - host: "bar.${SECRET_DOMAIN}"
+    #       paths:
+    #       - path: /search/
+    #         service:
+    #           identifier: app
+    #           port: http
     persistence:
       config:
         existingClaim: *app

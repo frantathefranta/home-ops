@@ -38,7 +38,8 @@ spec:
               - -c
             args:
               - |
-                chown 33:33 /var/www/cocktails
+                 chown 33:33 /var/www/cocktails/storage/bar-assistant
+
             securityContext:
               runAsUser: 0
         containers:
@@ -48,20 +49,18 @@ spec:
               tag: 4.2.3
             env:
               BASE_URL: https://bar.${SECRET_DOMAIN}
-              # MEILISEARCH_URL: https://bar.${SECRET_DOMAIN}/search
               APP_URL: https://bar-api.${SECRET_DOMAIN}
               APP_DEBUG: true
               LOG_CHANNEL: stderr
               LOG_LEVEL: debug
-              MEILISEARCH_HOST: http://meilisearch:7700
-              MEILISEARCH_URL: https://bar.${SECRET_DOMAIN}/search
+              MEILISEARCH_HOST: http://localhost:7700
               REDIS_HOST: dragonfly.database.svc.cluster.local
               ALLOW_REGISTRATION: true
             envFrom:
               - secretRef:
                   name: &secret bar-assistant-secret
-            # securityContext:
-            #   # privileged: true
+            securityContext:
+              privileged: true
             #   runAsUser: 568
             #   runAsGroup: 568
             #   fsGroup: 568
@@ -82,15 +81,15 @@ spec:
           #     BAR_NAME: "Cara's Bar"
           #     DESCRIPTION: "Coolest Bar in Town"
           #     DEFAULT_LOCALE: en-US
-          # meilisearch:
-          #   image:
-          #     repository: docker.io/getmeili/meilisearch
-          #     tag: v1.11
-          #   env:
-          #     MEILI_ENV: production
-          #   envFrom:
-          #     - secretRef:
-          #         name: *secret
+          meilisearch:
+            image:
+              repository: docker.io/getmeili/meilisearch
+              tag: v1.8
+            env:
+              MEILI_ENV: production
+            envFrom:
+              - secretRef:
+                  name: *secret
           # nginx:
           #   image:
           #     repository: ghcr.io/nginxinc/nginx-unprivileged
@@ -119,8 +118,12 @@ spec:
       app:
         existingClaim: *app
         globalMounts:
-          - path: /var/www/cocktails
-            subPath: cocktails
+          - path: /var/www/cocktails/storage/bar-assistant
+            subPath: bar-assistant
+      meili-data:
+        existingClaim: meilisearch
+        globalMounts:
+          - path: /meili_data
         #   - path: /var/www/cocktails/storage/bar-assistant
         #     subPath: bar-assistant
         #   - path: /var/www/cocktails/storage/bar-assistant/uploads
