@@ -11,3 +11,4 @@ resources:
   - ./intel.yaml
   - ./itzg.yaml
   - ./stevehipwell.yaml
+  - ./meilisearch.yaml

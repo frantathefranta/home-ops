@@ -22,10 +22,18 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph-external
+    - name: volsync
+      namespace: storage
+    - name: salt-rim
+      namespace: default
+    - name: meilisearch
+      namespace: default
   values:
     controllers:
       bar-assistant:
-        strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
@@ -39,9 +47,6 @@ spec:
             args:
               - |
                  chown 33:33 /var/www/cocktails/storage/bar-assistant
-
-            securityContext:
-              runAsUser: 0
         containers:
           bar-assistant:
             image:
@@ -49,102 +54,77 @@ spec:
               tag: 4.2.3
             env:
               BASE_URL: https://bar.${SECRET_DOMAIN}
-              APP_URL: https://bar-api.${SECRET_DOMAIN}
-              APP_DEBUG: true
-              LOG_CHANNEL: stderr
-              LOG_LEVEL: debug
-              MEILISEARCH_HOST: http://bar-assistant:7700
+              APP_URL: https://bar.${SECRET_DOMAIN}/bar
+              MEILISEARCH_HOST: http://meilisearch:7700
               REDIS_HOST: dragonfly.database.svc.cluster.local
-              ALLOW_REGISTRATION: true
+              CACHE_DRIVER: redis
+              SESSION_DRIVER: redis
+              ALLOW_REGISTRATION: false
             envFrom:
               - secretRef:
-                  name: &secret bar-assistant-secret
+                  name: bar-assistant-secret
             securityContext:
               privileged: true
-            #   runAsUser: 568
-            #   runAsGroup: 568
-            #   fsGroup: 568
-            #   supplementalGroups: [33]
-            #   # readOnlyRootFilesystem: false
             resources:
               requests:
                 cpu: 10m
+                memory: 256M
               limits:
-                memory: 128Mi
-          # salt-rim:
-          #   image:
-          #     repository: barassistant/salt-rim
-          #     tag: 3.5.0
-          #   env:
-          #     API_URL: https://bar-api.${SECRET_DOMAIN}
-          #     MEILISEARCH_URL: https://bar.${SECRET_DOMAIN}/search
-          #     BAR_NAME: "Cara's Bar"
-          #     DESCRIPTION: "Coolest Bar in Town"
-          #     DEFAULT_LOCALE: en-US
-          meilisearch:
+                memory: 512M
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /healthcheck
+                    port: 8080
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+          nginx:
             image:
-              repository: docker.io/getmeili/meilisearch
-              tag: v1.8
-            env:
-              MEILI_ENV: production
-            envFrom:
-              - secretRef:
-                  name: *secret
-          # nginx:
-          #   image:
-          #     repository: ghcr.io/nginxinc/nginx-unprivileged
-          #     tag: 1.27.3
+              repository: ghcr.io/nginxinc/nginx-unprivileged
+              tag: 1.27.3
     service:
       app:
+        ipFamilyPolicy: PreferDualStack
         controller: *app
         ports:
-          http:
-            port: 3000
-          meilisearch:
-            port: 7700
+          nginx:
+            port: &nginx-port 3000
     ingress:
       app:
-        className: internal
-        # annotations:
-        #   nginx.ingress.kubernetes.io/rewrite-target: "/"
-        #   external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
+        className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: external-maxi.${SECRET_DOMAIN}
         hosts:
         - host: "bar.${SECRET_DOMAIN}"
           paths:
-          # - path: /bar(/|$)(.*)
-          - path: /
-            service:
-              identifier: app
-              port: http
+            - path: /
+              service:
+                identifier: app
+                port: *nginx-port
     persistence:
       app:
         existingClaim: *app
         globalMounts:
           - path: /var/www/cocktails/storage/bar-assistant
             subPath: bar-assistant
-      meili-data:
-        existingClaim: meilisearch
-        globalMounts:
-          - path: /meili_data
-        #   - path: /var/www/cocktails/storage/bar-assistant
-        #     subPath: bar-assistant
-        #   - path: /var/www/cocktails/storage/bar-assistant/uploads
-        #     subPath: uploads
-      # cache:
-      #   type: emptyDir
-      #   globalMounts:
-      #     - path: /var/www/cocktails
-      #       subPath: cocktails
-      # nginx-config:
-      #   type: configMap
-      #   name: bar-assistant-configmap
-      #   advancedMounts:
-      #     bar-assistant:
-      #       nginx:
-      #         - path: /etc/nginx/nginx.conf
-      #           subPath: nginx-config
-      #           readOnly: true
-      # memory:
-      #   type: emptyDir
-      #   globalMounts:
-      #     - path: /var/cache/nginx
+      nginx-config:
+        type: configMap
+        name: bar-assistant-configmap
+        advancedMounts:
+          bar-assistant:
+            nginx:
+              - path: /etc/nginx/nginx.conf
+                subPath: nginx-config
+                readOnly: true
+      memory:
+        type: emptyDir
+        advancedMounts:
+          bar-assistant:
+            nginx:
+              - path: /var/cache/nginx

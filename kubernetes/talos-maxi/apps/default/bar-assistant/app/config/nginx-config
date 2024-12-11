@@ -25,11 +25,11 @@ http {
     }
 
     location /search/ {
-        proxy_pass http://localhost:7700/;
+        proxy_pass http://meilisearch:7700/;
     }
 
     location / {
-        proxy_pass http://localhost:8080/;
+        proxy_pass http://salt-rim:8080/;
     }
   }
 }

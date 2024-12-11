@@ -34,64 +34,33 @@ spec:
               repository: barassistant/salt-rim
               tag: 3.5.1
             env:
-              API_URL: https://bar-api.${SECRET_DOMAIN}
+              BASE_URL: https://bar.${SECRET_DOMAIN}
+              API_URL: https://bar.${SECRET_DOMAIN}/bar
               MEILISEARCH_URL: https://bar.${SECRET_DOMAIN}/search
-              BAR_NAME: "Cara's Bar"
-              DESCRIPTION: "Coolest Bar in Town"
               DEFAULT_LOCALE: en-US
-            # probes:
-            #   liveness: &probes
-            #     enabled: true
-            #     custom: true
-            #     spec:
-            #       httpGet:
-            #         path: /
-            #         port: &port 5555
-            #       initialDelaySeconds: 0
-            #       periodSeconds: 10
-            #       timeoutSeconds: 1
-            #       failureThreshold: 3
-            #   readiness: *probes
-            securityContext:
-              privileged: true
-              # allowPrivilegeEscalation: false
-              # readOnlyRootFilesystem: true
-              # capabilities: { drop: ["ALL"] }
+              MAILS_ENABLED: true
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: &port 8080
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
             resources:
               requests:
                 cpu: 10m
               limits:
                 memory: 128Mi
-    # defaultPodOptions:
-    #   securityContext:
-    #     runAsNonRoot: true
-    #     runAsUser: 65534
-    #     runAsGroup: 65534
-    #     seccompProfile: { type: RuntimeDefault }
     service:
       app:
+        ipFamilyPolicy: PreferDualStack
         controller: *app
         ports:
           http:
-            port: 8080
-    ingress:
-      app:
-        className: internal
-        # annotations:
-        #   external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
-        hosts:
-        - host: "bar.${SECRET_DOMAIN}"
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
-    # persistence:
-    #   tmp-nginx:
-    #     type: emptyDir
-    #     globalMounts:
-    #       - path: /var/www
-    #   tmp:
-    #     type: emptyDir
-    #     globalMounts:
-    #       - path: /var/cache
+            port: *port
