@@ -9,4 +9,3 @@ resources:
   - ./snapshot-controller/ks.yaml
   - ./volsync/ks.yaml
   - ./minio/ks.yaml
-  # - ./longhorn/ks.yaml

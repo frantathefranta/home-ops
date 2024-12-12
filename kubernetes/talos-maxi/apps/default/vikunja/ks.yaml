@@ -19,8 +19,6 @@ spec:
     - name: external-secrets-stores
     - name: crunchy-postgres-operator-cluster
     - name: crunchy-postgres-stores
-    # - name: longhorn
-    # - name: volsync
     - name: authelia
     - name: dragonfly-cluster
     - name: smtp-relay
