@@ -17,6 +17,15 @@ $ python3 create-external-cluster-resources.py --rbd-data-pool-name talos-maxi-p
  * ~--rgw-endpoint~ is only necessary if you want to add S3 ObjectStore functionality. [[https://pve.proxmox.com/wiki/User:Grin/Ceph_Object_Gateway][Guide on how to set that up on Proxmox]]
 ** Running the ~import-external-cluster.sh~ script
 When your ~operator~ and ~cluster~ HelmReleases are deployed, you can run this script. Make sure that you have the right ~OPERATOR_NAMESPACE~ env var set in the script, or export a new env ~CSI_DRIVER_NAME_PREFIX~ if you have a non-standard namespace (like I do). If this is set wrong, your provisioner will be named wrong and your PVCs will not start provisioning.
+** Importing the cluster information automatically
+Alternatively, if you don't want to run ~import-external-cluster.sh~ on each cluster bootstrap, you can create these files:
+ - ~rbd-secrets.yaml~
+ - ~cephfs-secrets.yaml~
+ - ~storageclass.yaml~
+ - ~monitor-config.yaml~
+   and if you want to add the Object Store, add ~rgw-secret.yaml~
+
+You can select how these secrets get populated with values, I chose to add them in ~<cluster>/flux/vars/cluster-secrets.sops.yaml~ and ~shared/settings/cluster-secrets.sops.yaml~ (flux will populate the ~${VALUE}~ fields then).
 * Ceph Object Store
 It's possible to also connect to the Rados GW from the *Kubernetes* cluster. I've chosen to use *HAProxy* to load balance the 3 endpoints of my nodes. An important thing there is to set the ~rgw_dns_name~ to the hostname that you set for the ~rook-ceph-cluster~ deployment. In my case, I just set it to ~haproxy-rados-gw.rook-ceph-external.svc.cluster.local~. If you don't do this, you'll get this kind of error:
 #+begin_src shell
