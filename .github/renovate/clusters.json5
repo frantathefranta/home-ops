@@ -1,0 +1,15 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "packageRules": [
+    {
+      "description": "Separate PRs for talos-maxi cluster",
+      "matchFileNames": ["**/kubernetes/talos-maxi/**"],
+      "additionalBranchPrefix": "maxi-"
+    },
+    {
+      "description": "Separate PRs for network cluster",
+      "matchFileNames": ["**/kubernetes/network/**"],
+      "additionalBranchPrefix": "network-"
+    }
+  ]
+}
