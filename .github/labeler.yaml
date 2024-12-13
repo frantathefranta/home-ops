@@ -1,10 +1,4 @@
 ---
-area/ansible:
-  - changed-files:
-      - any-glob-to-any-file: ansible/**/*
-area/bootstrap:
-  - changed-files:
-      - any-glob-to-any-file: bootstrap/**/*
 area/github:
   - changed-files:
       - any-glob-to-any-file: .github/**/*
@@ -15,3 +9,10 @@ area/taskfile:
   - changed-files:
       - any-glob-to-any-file: .taskfiles/**/*
       - any-glob-to-any-file: Taskfile*
+# Cluster
+cluster/talos-maxi:
+  - changed-files:
+      - any-glob-to-any-file: kubernetes/talos-maxi/**/*
+cluster/network:
+  - changed-files:
+      - any-glob-to-any-file: kubernetes/network/**/*
