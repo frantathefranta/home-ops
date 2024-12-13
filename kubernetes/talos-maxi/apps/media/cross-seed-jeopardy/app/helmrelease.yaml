@@ -37,7 +37,7 @@ spec:
           app:
             image:
               repository: ghcr.io/cross-seed/cross-seed
-              tag: 6.1.1@sha256:5cb54b46a614f362c0332a91e5754d6998d45ae27ccc2c77b04b1a3493816331
+              tag: 6.2.0@sha256:da47b009ee166da47aa691d0963d581c717fbbd4e7e48a260451414e465b0f5f
             args:
               - daemon
             envFrom:
@@ -46,15 +46,29 @@ spec:
               - secretRef:
                   name: cross-seed-jeopardy-secret
             probes:
-              liveness:
+              liveness: &probes
                 enabled: true
-              readiness:
-                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/ping
+                    port: &port 2468
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
               startup:
                 enabled: true
+                custom: true
                 spec:
+                  httpGet:
+                    path: /api/ping
+                    port: *port
                   failureThreshold: 30
                   periodSeconds: 5
+                  successThreshold: 1
+                  timeoutSeconds: 1
             resources:
               requests:
                 cpu: 10m
@@ -67,13 +81,12 @@ spec:
               capabilities:
                 drop:
                   - ALL
-
     service:
       app:
         controller: cross-seed-jeopardy
         ports:
           http:
-            port: 2468
+            port: *port
 
     persistence:
       config:
