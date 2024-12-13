@@ -84,6 +84,34 @@ spec:
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
+          salt-rim:
+            image:
+              repository: barassistant/salt-rim
+              tag: 3.5.1
+            env:
+              BASE_URL: https://bar.${SECRET_DOMAIN}
+              API_URL: https://bar.${SECRET_DOMAIN}/bar
+              MEILISEARCH_URL: https://bar.${SECRET_DOMAIN}/search
+              DEFAULT_LOCALE: en-US
+              MAILS_ENABLED: true
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 8080
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 128Mi
           nginx:
             image:
               repository: ghcr.io/nginxinc/nginx-unprivileged
@@ -95,6 +123,13 @@ spec:
         ports:
           nginx:
             port: &nginx-port 3000
+      salt-rim:
+        ipFamilyPolicy: PreferDualStack
+        controller: *app
+        ports:
+          salt-rim:
+            port: 8080
+
     ingress:
       app:
         className: external
