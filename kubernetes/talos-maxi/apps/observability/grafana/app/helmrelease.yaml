@@ -320,12 +320,6 @@ spec:
           gnetId: 15038
           revision: 3
           datasource: Prometheus
-        frigate:
-          # renovate: depName="Frigate"
-          gnetId: 18226
-          revision: 9
-          datasource:
-            - { name: DS_PROMETHEUS, value: Prometheus }
         nginx:
           url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
           datasource: Prometheus

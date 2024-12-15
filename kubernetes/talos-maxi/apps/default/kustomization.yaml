@@ -6,7 +6,6 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
-  # - ./frigate/ks.yaml
   - ./vikunja/ks.yaml
   - ./glauth/ks.yaml
   - ./authelia/ks.yaml
