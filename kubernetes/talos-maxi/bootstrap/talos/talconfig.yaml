@@ -138,14 +138,15 @@ nodes:
             gateway: "10.33.0.1"
   - hostname: "talos-g3-mini"
     ipAddress: "10.33.35.21"
-    installDisk: "/dev/sda"
-    talosImageURL: factory.talos.dev/installer/f1fa163ad7fce7452037c7c34af6ca50a9397a73a6fd1a23ab7deb2c83ba5e48
+    installDiskSelector:
+      model: "SK hynix*"
+    talosImageURL: factory.talos.dev/installer/e11c30450087af46650a294aef9a80a394613b943ef12bb44ea283a8c81f7ac0
     controlPlane: false
     nodeLabels:
       topology.kubernetes.io/region: *cluster
       topology.kubernetes.io/zone: nonProxmox
-    nodeTaints:
-      intel-gpu: true:NoSchedule
+    # nodeTaints:
+    #   intel-gpu: true:NoSchedule
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "10:62:e5:18:1a:2e"

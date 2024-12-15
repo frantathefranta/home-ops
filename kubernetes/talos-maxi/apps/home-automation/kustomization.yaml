@@ -7,3 +7,4 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./zigbee2mqtt/ks.yaml
+  - ./zwave-js-ui/ks.yaml
