@@ -20,10 +20,6 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-  values:
-    providerRegex: talos-network
-    bypassDnsResolution: true
-    metrics:
-      enable: true
-      serviceMonitor:
-        enabled: true
+  valuesFrom:
+    - kind: ConfigMap
+      name: kubelet-csr-approver-helm-values
