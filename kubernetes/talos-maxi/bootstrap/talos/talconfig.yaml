@@ -136,6 +136,26 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: "10.33.0.1"
+  - hostname: "talos-g3-mini"
+    ipAddress: "10.33.35.21"
+    installDisk: "/dev/sda"
+    talosImageURL: factory.talos.dev/installer/f1fa163ad7fce7452037c7c34af6ca50a9397a73a6fd1a23ab7deb2c83ba5e48
+    controlPlane: false
+    nodeLabels:
+      topology.kubernetes.io/region: *cluster
+      topology.kubernetes.io/zone: nonProxmox
+    nodeTaints:
+      intel-gpu: true:NoSchedule
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "10:62:e5:18:1a:2e"
+        dhcp: false
+        addresses:
+          - "10.33.35.21/16"
+        mtu: 1500
+        routes:
+          - network: 0.0.0.0/0
+            gateway: "10.33.0.1"
 
 patches:
   # Configure containerd
