@@ -148,8 +148,9 @@ nodes:
     # nodeTaints:
     #   intel-gpu: true:NoSchedule
     networkInterfaces:
-      - deviceSelector:
-          hardwareAddr: "10:62:e5:18:1a:2e"
+      - interface: eno1
+        # deviceSelector:
+        #   hardwareAddr: "10:62:e5:18:1a:2e"
         dhcp: true
         # addresses:
         #   - "10.33.35.21/16"
