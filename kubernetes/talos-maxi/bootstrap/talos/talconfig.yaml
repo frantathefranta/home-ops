@@ -158,6 +158,11 @@ nodes:
         #   - network: 0.0.0.0/0
         #     gateway: "10.33.0.1"
         vlans:
+          - vlanId: 20
+            mtu: 1500
+            dhcp: true
+            dhcpOptions:
+              routeMetric: 4096
           - vlanId: 50
             mtu: 1500
             dhcp: true
