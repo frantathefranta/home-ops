@@ -51,7 +51,7 @@ spec:
           bar-assistant:
             image:
               repository: barassistant/server
-              tag: 4.2.3
+              tag: 4.2.4
             env:
               BASE_URL: https://bar.${SECRET_DOMAIN}
               APP_URL: https://bar.${SECRET_DOMAIN}/bar
