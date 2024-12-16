@@ -26,7 +26,6 @@ spec:
       retries: 3
   values:
     fullnameOverride: gha-runner-scale-set-controller
-    replicaCount: 2
     metrics:
       controllerManagerAddr: ":8080"
       listenerAddr: ":8080"
