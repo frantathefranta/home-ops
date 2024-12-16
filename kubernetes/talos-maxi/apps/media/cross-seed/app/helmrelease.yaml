@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: cross-seed
+  name: &app cross-seed
 spec:
   interval: 30m
   chart:
@@ -38,6 +38,9 @@ spec:
             image:
               repository: ghcr.io/cross-seed/cross-seed
               tag: 6.2.1@sha256:f20dbee55ceafbe398679181331fd8a110f7da0fbcd77cfdbc02e1b438a5e1fa
+            env:
+              CROSS_SEED_PORT: &port 2468
+              TZ: ${TIMEZONE}
             args:
               - daemon
             envFrom:
@@ -52,23 +55,23 @@ spec:
                 spec:
                   httpGet:
                     path: /api/ping
-                    port: &port 2468
+                    port: *port
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
-              startup:
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /api/ping
-                    port: *port
-                  failureThreshold: 30
-                  periodSeconds: 5
-                  successThreshold: 1
-                  timeoutSeconds: 1
+              # startup:
+              #   enabled: true
+              #   custom: true
+              #   spec:
+              #     httpGet:
+              #       path: /api/ping
+              #       port: *port
+              #     failureThreshold: 30
+              #     periodSeconds: 5
+              #     successThreshold: 1
+              #     timeoutSeconds: 1
             resources:
               requests:
                 cpu: 10m
@@ -84,7 +87,7 @@ spec:
 
     service:
       app:
-        controller: cross-seed
+        controller: *app
         ports:
           http:
             port: *port
@@ -99,15 +102,18 @@ spec:
           - path: /config/config.js
             subPath: config.js
             readOnly: true
+      tmp:
+        type: emptyDir
       qbittorrent:
         existingClaim: qbittorrent
         globalMounts:
-          - path: /qbittorrent/qBittorrent/BT_backup
+          - path: /config/qBittorrent/BT_backup
             subPath: qBittorrent/BT_backup
             readOnly: true
-      data:
+      media:
         type: nfs
         server: ${NAS_IP}
         path: /emc1/media
         globalMounts:
-        - path: /media
+          - path: /media
+            # subPath: media
