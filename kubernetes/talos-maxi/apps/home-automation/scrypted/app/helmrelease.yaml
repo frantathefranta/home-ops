@@ -24,11 +24,24 @@ spec:
 
         pod:
           annotations:
+            # k8s.v1.cni.cncf.io/networks: |
+            #   [{
+            #     "name":"multus-iot",
+            #     "namespace": "network",
+            #     "ips": ["10.0.50.210/24"],
+            #     "mac": "10:62:e5:18:1a:2f"
+            #   }]
             k8s.v1.cni.cncf.io/networks: |
               [{
                 "name":"multus-wireless",
                 "namespace": "network",
                 "ips": ["10.0.20.210/24"],
+                "mac": "10:62:e5:18:1a:2f"
+              },
+              {
+                "name":"multus-iot",
+                "namespace": "network",
+                "ips": ["10.0.50.210/24"],
                 "mac": "10:62:e5:18:1a:2f"
               }]
           securityContext:

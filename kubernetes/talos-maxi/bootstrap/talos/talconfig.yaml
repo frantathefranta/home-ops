@@ -166,9 +166,11 @@ nodes:
               routeMetric: 4096
           - vlanId: 50
             mtu: 1500
-            dhcp: true
-            dhcpOptions:
-              routeMetric: 4096
+            addresses:
+              - "10.0.50.21/24"
+            # dhcp: true
+            # dhcpOptions:
+            #   routeMetric: 4096
     patches:
     # Configure udev rules
       - |-
