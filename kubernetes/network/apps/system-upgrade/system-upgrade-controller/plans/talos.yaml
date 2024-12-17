@@ -21,6 +21,9 @@ spec:
       - key: feature.node.kubernetes.io/system-os_release.VERSION_ID
         operator: NotIn
         values: ["${TALOS_VERSION}"]
+      - key: topology.kubernetes.io/zone
+        operator: NotIn
+        values: ["nonProxmox"]
       # - key: factory.talos.dev/schematic-id.part-0
       #   operator: In
       #   values: ["${TALOS_SCHEMATIC_ID:0:32}"]
