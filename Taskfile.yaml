@@ -21,7 +21,9 @@ env:
 
 includes:
   ansible: .taskfiles/Ansible/Taskfile.yaml
-  external-secrets: .taskfiles/ExternalSecrets/Taskfile.yaml
+  external-secrets:
+    aliases: ["es"]
+    taskfile: .taskfiles/ExternalSecrets/Taskfile.yaml
   kubernetes:
     aliases: ["k8s"]
     taskfile: .taskfiles/Kubernetes/Taskfile.yaml

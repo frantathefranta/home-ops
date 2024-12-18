@@ -1,44 +1,50 @@
 ---
 version: "3"
 
+vars:
+  KUBECONFIG: "{{.CLUSTER_DIR}}/kubeconfig"
+
 tasks:
   sync:
     desc: Sync an ExternalSecret for a cluster
     summary: |
       Args:
-        cluster: Cluster to run command against (required)
+        CLUSTER: Cluster to run command against (required)
         ns: Namespace the externalsecret is in (default: default)
         secret: Secret to sync (required)
-    cmd: kubectl --context {{.cluster}} -n {{.ns}} annotate externalsecret {{.secret}} force-sync=$(date +%s) --overwrite
-    env:
-      # KUBECONFIG: "{{.KUBERNETES_DIR}}/{{.cluster}}/kubeconfig"
-      KUBECONFIG: "{{.KUBERNETES_DIR}}/kubeconfig"
+    cmd: kubectl --context {{.CLUSTER}} -n {{.ns}} annotate externalsecret {{.secret}} force-sync=$(date +%s) --overwrite
+    # env:
+      # KUBECONFIG: "{{.KUBERNETES_DIR}}/{{.CLUSTER}}/kubeconfig"
+      # KUBECONFIG: "{{.KUBERNETES_DIR}}/kubeconfig"
     vars:
-      cluster: '{{ or .cluster (fail "Argument (cluster) is required") }}'
+      CLUSTER: '{{ or .CLUSTER (fail "Argument (cluster) is required") }}'
       ns: '{{.ns | default "default"}}'
       secret: '{{ or .secret (fail "Argument (secret) is required") }}'
+    requires:
+      vars: ["CLUSTER"]
     preconditions:
       - {
           msg: "ExternalSecret not found",
-          sh: "kubectl --context {{.cluster}} -n {{.ns}} get externalsecret {{.secret}}",
+          sh: "kubectl --context {{.CLUSTER}} -n {{.ns}} get externalsecret {{.secret}}",
         }
+      - { msg: "Argument (CLUSTER) is required", sh: "test -n {{.CLUSTER}}" }
 
   sync-all:
     desc: Sync all ExternalSecrets for a cluster
     summary: |
       Args:
-        cluster: Cluster to run command against (required)
+        CLUSTER: CLUSTER to run command against (required)
     cmds:
       - for: { var: secrets, split: "" }
         task: sync
         vars:
-          cluster: "{{.cluster}}"
+          CLUSTER: "{{.CLUSTER}}"
           ns: '{{$a := split "|" .ITEM}}{{$a._0}}'
           secret: '{{$a := split "|" .ITEM}}{{$a._1}}'
     env:
-      # KUBECONFIG: "{{.KUBERNETES_DIR}}/{{.cluster}}/kubeconfig"
+      # KUBECONFIG: "{{.KUBERNETES_DIR}}/{{.CLUSTER}}/kubeconfig"
       KUBECONFIG: "{{.KUBERNETES_DIR}}/kubeconfig"
     vars:
-      cluster: '{{ or .cluster (fail "Argument (cluster) is required") }}'
+      CLUSTER: '{{ or .CLUSTER (fail "Argument (CLUSTER) is required") }}'
       secrets:
-        sh: kubectl --context {{.cluster}} get externalsecret --all-namespaces --no-headers -A | awk '{print $1 "|" $2}'
+        sh: kubectl --context {{.CLUSTER}} get externalsecret --all-namespaces --no-headers -A | awk '{print $1 "|" $2}'
