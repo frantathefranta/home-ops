@@ -35,13 +35,12 @@ spec:
         resources:
           requests:
             storage: 5Gi
-      # walVolumeClaimSpec: # TODO: Research what this does
-      #   storageClassName: openebs-hostpath
-      #   accessModes:
-      #     - ReadWriteOnce
-      #   resources:
-      #     requests:
-      #       storage: 5Gi
+      walVolumeClaimSpec: # TODO: Research what this does
+        storageClassName: ceph-rbd
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 5Gi
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: topology.kubernetes.io/zone
