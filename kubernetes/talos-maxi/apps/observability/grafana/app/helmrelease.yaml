@@ -448,7 +448,7 @@ spec:
     testFramework:
       enabled: false
     topologySpreadConstraints:
-      - maxSkew: 1
+      - maxSkew: 2
         topologyKey: topology.kubernetes.io/zone
         whenUnsatisfiable: DoNotSchedule
         labelSelector:
