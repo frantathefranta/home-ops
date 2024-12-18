@@ -140,7 +140,7 @@ nodes:
     ipAddress: "10.33.35.21"
     installDiskSelector:
       model: "SK hynix*"
-    talosImageURL: factory.talos.dev/installer/a26bed244ddd8b74627a1fde8287cd60108686a966e65b276a3004fe26998040
+    talosImageURL: factory.talos.dev/installer/e11c30450087af46650a294aef9a80a394613b943ef12bb44ea283a8c81f7ac0
     controlPlane: false
     nodeLabels:
       topology.kubernetes.io/region: *cluster
@@ -181,6 +181,12 @@ nodes:
               - SUBSYSTEM=="drm", KERNEL=="renderD*", GROUP="44", MODE="0660"
               # Coral Edge M.2 TPU
               - SUBSYSTEM=="apex", KERNEL=="apex*", GROUP="44", MODE="0660"
+      # - |-
+      #   machine:
+      #     kubelet:
+      #       extraConfig:
+      #         registerWithTaints:
+      #           intel-gpu: true:NoSchedule
 
 patches:
   # Configure containerd
