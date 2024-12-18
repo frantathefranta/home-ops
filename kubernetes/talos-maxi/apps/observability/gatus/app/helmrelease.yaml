@@ -83,7 +83,7 @@ spec:
         options:
           - { name: ndots, value: "1" }
       topologySpreadConstraints:
-        - maxSkew: 1
+        - maxSkew: 2
           topologyKey: topology.kubernetes.io/zone
           whenUnsatisfiable: DoNotSchedule
           labelSelector:
