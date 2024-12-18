@@ -24,6 +24,9 @@ spec:
       - key: topology.kubernetes.io/zone
         operator: NotIn
         values: ["nonProxmox"]
+      - key: kubernetes.io/hostname
+        operator: NotIn
+        values: ["talos-g3-mini"]
       # - key: factory.talos.dev/schematic-id.part-0
       #   operator: In
       #   values: ["${TALOS_SCHEMATIC_ID:0:32}"]
