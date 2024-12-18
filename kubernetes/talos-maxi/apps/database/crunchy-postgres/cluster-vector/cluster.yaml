@@ -22,7 +22,7 @@ metadata:
       ]
 spec:
   postgresVersion: 16
-  image: ghcr.io/frantathefranta/cdpgvector:0.3.0@sha256:b5aea88f9ffea792601c16fe401723950113466ebe0253de0f8a9465cc2e00b2
+  image: ghcr.io/budimanjojo/cdpgvecto.rs:16@sha256:3980b793001df2d59ad17b7b67652fb42c52f4f38c62146d85b318ef4ba7b60f
   instances:
     - name: postgres-vector
       metadata:
@@ -35,6 +35,13 @@ spec:
         resources:
           requests:
             storage: 5Gi
+      # walVolumeClaimSpec: # TODO: Research what this does
+      #   storageClassName: openebs-hostpath
+      #   accessModes:
+      #     - ReadWriteOnce
+      #   resources:
+      #     requests:
+      #       storage: 5Gi
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: topology.kubernetes.io/zone
