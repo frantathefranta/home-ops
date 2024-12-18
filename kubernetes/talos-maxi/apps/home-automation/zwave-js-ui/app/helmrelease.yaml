@@ -29,6 +29,10 @@ spec:
     defaultPodOptions:
       nodeSelector:
         feature.node.kubernetes.io/usb-ff_10c4_ea60.present: "true"
+      tolerations:
+        - key: special
+          operator: Exists
+          effect: NoSchedule
 
     controllers:
       zwave-js-ui:

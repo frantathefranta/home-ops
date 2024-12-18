@@ -17,6 +17,11 @@ spec:
         namespace: flux-system
 
   values:
+    defaultPodOptions:
+      tolerations:
+        - key: special
+          operator: Exists
+          effect: NoSchedule
     controllers:
       scrypted:
         annotations:
