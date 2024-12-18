@@ -37,6 +37,10 @@ spec:
     defaultPodOptions:
       nodeSelector:
         kubernetes.io/hostname: talos-g3-mini
+      tolerations:
+        - key: special
+          operator: Exists
+          effect: NoSchedule
     controllers:
       uninstall:
         type: job
