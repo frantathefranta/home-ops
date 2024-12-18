@@ -23,6 +23,10 @@ spec:
       priorityClassName: system-node-critical
       nodeSelector:
         kubernetes.io/hostname: talos-g3-mini
+      tolerations:
+        - key: special
+          operator: Exists
+          effect: NoSchedule
 
     controllers:
       generic-device-plugin:

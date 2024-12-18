@@ -19,3 +19,7 @@ spec:
     name: intel-gpu-plugin
     sharedDevNum: 3
     nodeFeatureRule: true
+    tolerations:
+      - key: special
+        operator: Exists
+        effect: NoSchedule
