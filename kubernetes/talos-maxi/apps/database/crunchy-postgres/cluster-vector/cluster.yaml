@@ -35,7 +35,7 @@ spec:
         resources:
           requests:
             storage: 5Gi
-      walVolumeClaimSpec: # TODO: Research what this does
+      walVolumeClaimSpec:
         storageClassName: ceph-rbd
         accessModes: ["ReadWriteOnce"]
         resources:
