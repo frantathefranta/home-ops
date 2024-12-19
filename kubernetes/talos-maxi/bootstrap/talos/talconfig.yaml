@@ -71,8 +71,9 @@ nodes:
       topology.kubernetes.io/region: *cluster
       topology.kubernetes.io/zone: protactinium
     networkInterfaces:
-      - deviceSelector:
-          hardwareAddr: "bc:24:11:8b:fc:be"
+      - interface: eth0
+      # - deviceSelector:
+      #     hardwareAddr: "bc:24:11:8b:fc:be"
         dhcp: false
         addresses:
           - "10.33.35.3/16"
@@ -109,8 +110,7 @@ nodes:
       topology.kubernetes.io/region: *cluster
       topology.kubernetes.io/zone: thorium
     networkInterfaces:
-      - deviceSelector:
-          hardwareAddr: "bc:24:11:60:58:8c"
+      - interface: eth0
         dhcp: false
         addresses:
           - "10.33.35.12/16"
@@ -126,9 +126,12 @@ nodes:
     nodeLabels:
       topology.kubernetes.io/region: *cluster
       topology.kubernetes.io/zone: protactinium
+    kernelModules:
+      - name: ixgbevf
     networkInterfaces:
-      - deviceSelector:
-          hardwareAddr: "bc:24:11:32:cf:8a"
+      - interface: eth0
+          # hardwareAddr: "bc:24:11:32:cf:8a"
+          # driver: ixgbevf
         dhcp: false
         addresses:
           - "10.33.35.13/16"
@@ -136,6 +139,14 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: "10.33.0.1"
+        # vlans:
+        #   - vlanId: 33
+        #     addresses:
+        #       - "10.33.35.13/16"
+        #     mtu: 1500
+        #     routes:
+        #       - network: 0.0.0.0/0
+        #         gateway: "10.33.0.1"
   - hostname: "talos-g3-mini"
     ipAddress: "10.33.35.21"
     installDiskSelector:
