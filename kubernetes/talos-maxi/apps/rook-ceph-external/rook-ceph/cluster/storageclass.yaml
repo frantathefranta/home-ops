@@ -15,6 +15,7 @@ parameters:
   csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
   csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph-external
   imageFeatures: layering
+  # imageFeatures: layering,fast-diff,object-map,deep-flatten,exclusive-lock # TODO: Uncomment this at next cluster bootstrap
   imageFormat: "2"
   pool: ${RBD_POOL_NAME}
 reclaimPolicy: Delete
