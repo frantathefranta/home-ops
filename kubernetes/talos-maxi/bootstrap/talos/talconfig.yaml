@@ -151,7 +151,7 @@ nodes:
     ipAddress: "10.33.35.21"
     installDiskSelector:
       model: "SK hynix*"
-    talosImageURL: factory.talos.dev/installer/e11c30450087af46650a294aef9a80a394613b943ef12bb44ea283a8c81f7ac0
+    talosImageURL: factory.talos.dev/installer/0b13754612577000b1d6a89683e002ba41efbc0a57c91d29be8da96a0dfd8a6f
     controlPlane: false
     nodeLabels:
       topology.kubernetes.io/region: *cluster
