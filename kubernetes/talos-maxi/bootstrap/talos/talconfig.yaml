@@ -155,7 +155,7 @@ nodes:
     controlPlane: false
     nodeLabels:
       topology.kubernetes.io/region: *cluster
-      topology.kubernetes.io/zone: nonProxmox
+      # topology.kubernetes.io/zone: nonProxmox
     # nodeTaints:
     #   intel-gpu: true:NoSchedule
     networkInterfaces:
