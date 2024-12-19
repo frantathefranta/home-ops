@@ -31,8 +31,7 @@ nodes:
       topology.kubernetes.io/region: *cluster
       topology.kubernetes.io/zone: actinium
     networkInterfaces:
-      - deviceSelector:
-          hardwareAddr: "bc:24:11:22:55:36"
+      - interface: eth0
         dhcp: false
         addresses:
           - "10.33.35.1/16"
@@ -89,8 +88,7 @@ nodes:
       topology.kubernetes.io/region: *cluster
       topology.kubernetes.io/zone: actinium
     networkInterfaces:
-      - deviceSelector:
-          hardwareAddr: "bc:24:11:ef:cb:ec"
+      - interface: eth0
         dhcp: false
         addresses:
           - "10.33.35.11/16"
