@@ -28,8 +28,8 @@ spec:
   dependsOn:
     - name: prometheus-operator-crds
       namespace: observability
-    - name: openebs
-      namespace: openebs-system
+    - name: rook-ceph-cluster
+      namespace: rook-ceph-external
     # - name: thanos
     #   namespace: observability
   values:
@@ -60,7 +60,7 @@ spec:
         storage:
           volumeClaimTemplate:
             spec:
-              storageClassName: openebs-hostpath
+              storageClassName: ceph-rbd
               resources:
                 requests:
                   storage: 1Gi
@@ -166,10 +166,10 @@ spec:
         storageSpec:
           volumeClaimTemplate:
             spec:
-              storageClassName: openebs-hostpath
+              storageClassName: ceph-rbd
               resources:
                 requests:
-                  storage: 75Gi
+                  storage: 20Gi
     nodeExporter:
       enabled: true
     prometheus-node-exporter:
