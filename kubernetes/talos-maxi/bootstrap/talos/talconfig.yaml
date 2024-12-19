@@ -274,6 +274,11 @@ patches:
         net.ipv6.conf.all.forwarding: "1"
         vm.nr_hugepages: "1024"
 
+  - |-
+    machine:
+      kernel:
+        modules:
+          - name: nbd
   # Mount openebs-hostpath in kubelet
   - |-
     machine:
