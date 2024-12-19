@@ -51,8 +51,7 @@ nodes:
       topology.kubernetes.io/region: *cluster
       topology.kubernetes.io/zone: thorium
     networkInterfaces:
-      - deviceSelector:
-          hardwareAddr: "bc:24:11:c6:17:fe"
+      - interface: eth0
         dhcp: false
         addresses:
           - "10.33.35.2/16"
@@ -72,8 +71,6 @@ nodes:
       topology.kubernetes.io/zone: protactinium
     networkInterfaces:
       - interface: eth0
-      # - deviceSelector:
-      #     hardwareAddr: "bc:24:11:8b:fc:be"
         dhcp: false
         addresses:
           - "10.33.35.3/16"
