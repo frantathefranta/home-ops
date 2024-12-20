@@ -5,4 +5,11 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ./rbac.yaml
-  - ./crd.yaml
+  # renovate: depName=k8snetworkplumbingwg/network-attachment-definition-client datasource=github-releases
+  - https://raw.githubusercontent.com/k8snetworkplumbingwg/network-attachment-definition-client/refs/tags/v1.7.5/artifacts/networks-crd.yaml
+configMapGenerator:
+  - name: multus-configmap
+    files:
+      - ./resources/00-multus.conf
+generatorOptions:
+  disableNameSuffixHash: true
