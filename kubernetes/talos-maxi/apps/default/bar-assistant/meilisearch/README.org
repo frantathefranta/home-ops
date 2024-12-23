@@ -1,0 +1,68 @@
+#+title: Meilisearch
+* Upgrade
+Meilisearch doesn't have an automatic upgrade system between major versions. A few options to deal with that:
+** Update Pod
+1. [[https://www.meilisearch.com/docs/learn/update_and_migration/updating#step-1-export-data][Create a meilisearch dump]]
+2. Scale down meilisearch ~StatefulSet~
+   #+begin_src sh
+kubectl scale statefulsets -n default meilisearch --replicas=0
+   #+end_src
+3. Deploy update pod with the version of meilisearch you are updating to (in this example *1.12*)
+   #+begin_src yaml
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: meilisearch-pod-update
+  namespace: default
+spec:
+  containers:
+  - name: main
+    image: getmeili/meilisearch:v1.12
+    command: ['sh', '-c', 'sleep 999']
+    securityContext:
+       privileged: true
+    volumeMounts:
+      - name: meilisearch
+        mountPath: /meili_data
+  volumes:
+    - name: meilisearch
+      persistentVolumeClaim:
+        claimName: meilisearch
+   #+end_src
+4. Once pod is deployed, run this in it:
+   #+begin_src sh
+meilisearch --import-dump dumps/{dump_uid.dump} --master-key="YOUR_MASTER_KEY"
+# Replace dump_uid with the correct information
+   #+end_src
+5. Delete pod, scale up ~StatefulSet~ of the new version
+   #+begin_src sh
+kubectl scale statefulsets -n default meilisearch --replicas=1
+   #+end_src
+** Update Job
+Steps 3 and 4 should be possible to run in a Job, but I haven't gotten around to making it work yet. Rough outline:
+#+begin_src yaml
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.31.4-standalone/job-batch-v1.json
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: meilisearch-update
+  namespace: default
+spec:
+  ttlSecondsAfterFinished: 3600
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: main
+          image: getmeili/meilisearch:v1.12
+          args: ["meilisearch --import-dump /meili_data/dumps/20241223-153107471.dump"]
+          volumeMounts:
+            - name: meilisearch
+              mountPath: /meili_data
+      volumes:
+        - name: meilisearch
+          persistentVolumeClaim:
+            claimName: meilisearch
+#+end_src
