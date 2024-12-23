@@ -32,13 +32,8 @@ nodes:
       topology.kubernetes.io/zone: actinium
     networkInterfaces:
       - interface: eth0
-        dhcp: false
-        addresses:
-          - "10.33.35.1/16"
+        dhcp: true
         mtu: 1500
-        routes:
-          - network: 0.0.0.0/0
-            gateway: "10.33.0.1"
         vip:
           ip: "10.33.40.25"
   - hostname: "talos-thorium"
@@ -51,13 +46,8 @@ nodes:
       topology.kubernetes.io/zone: thorium
     networkInterfaces:
       - interface: eth0
-        dhcp: false
-        addresses:
-          - "10.33.35.2/16"
+        dhcp: true
         mtu: 1500
-        routes:
-          - network: 0.0.0.0/0
-            gateway: "10.33.0.1"
         vip:
           ip: "10.33.40.25"
   - hostname: "talos-protactinium"
@@ -70,13 +60,8 @@ nodes:
       topology.kubernetes.io/zone: protactinium
     networkInterfaces:
       - interface: eth0
-        dhcp: false
-        addresses:
-          - "10.33.35.3/16"
+        dhcp: true
         mtu: 1500
-        routes:
-          - network: 0.0.0.0/0
-            gateway: "10.33.0.1"
         vip:
           ip: "10.33.40.25"
   - hostname: "talos-actinium-agent"
@@ -89,13 +74,8 @@ nodes:
       topology.kubernetes.io/zone: actinium
     networkInterfaces:
       - interface: eth0
-        dhcp: false
-        addresses:
-          - "10.33.35.11/16"
+        dhcp: true
         mtu: 1500
-        routes:
-          - network: 0.0.0.0/0
-            gateway: "10.33.0.1"
   - hostname: "talos-thorium-agent"
     ipAddress: "10.33.35.12"
     installDisk: "/dev/sda"
@@ -106,13 +86,8 @@ nodes:
       topology.kubernetes.io/zone: thorium
     networkInterfaces:
       - interface: eth0
-        dhcp: false
-        addresses:
-          - "10.33.35.12/16"
+        dhcp: true
         mtu: 1500
-        routes:
-          - network: 0.0.0.0/0
-            gateway: "10.33.0.1"
   - hostname: "talos-protactinium-agent"
     ipAddress: "10.33.35.13"
     installDisk: "/dev/sda"
@@ -121,27 +96,10 @@ nodes:
     nodeLabels:
       topology.kubernetes.io/region: *cluster
       topology.kubernetes.io/zone: protactinium
-    kernelModules:
-      - name: ixgbevf
     networkInterfaces:
       - interface: eth0
-          # hardwareAddr: "bc:24:11:32:cf:8a"
-          # driver: ixgbevf
-        dhcp: false
-        addresses:
-          - "10.33.35.13/16"
+        dhcp: true
         mtu: 1500
-        routes:
-          - network: 0.0.0.0/0
-            gateway: "10.33.0.1"
-        # vlans:
-        #   - vlanId: 33
-        #     addresses:
-        #       - "10.33.35.13/16"
-        #     mtu: 1500
-        #     routes:
-        #       - network: 0.0.0.0/0
-        #         gateway: "10.33.0.1"
   - hostname: "talos-g3-mini"
     ipAddress: "10.33.35.21"
     installDiskSelector:
