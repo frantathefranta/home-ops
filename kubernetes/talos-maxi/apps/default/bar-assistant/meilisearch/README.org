@@ -8,7 +8,7 @@ Meilisearch doesn't have an automatic upgrade system between major versions. A f
 kubectl scale statefulsets -n default meilisearch --replicas=0
    #+end_src
 3. Deploy update pod with the version of meilisearch you are updating to (in this example *1.12*)
-   #+begin_src yaml
+#+begin_src yaml
 ---
 apiVersion: v1
 kind: Pod
@@ -29,7 +29,7 @@ spec:
     - name: meilisearch
       persistentVolumeClaim:
         claimName: meilisearch
-   #+end_src
+#+end_src
 4. Once pod is deployed, run this in it:
    #+begin_src sh
 meilisearch --import-dump dumps/{dump_uid.dump} --master-key="YOUR_MASTER_KEY"
