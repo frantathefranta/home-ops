@@ -19,6 +19,8 @@ spec:
   dependsOn:
     - name: scrypted
       namespace: home-automation
+    - name: rook-ceph-cluster
+      namespace: rook-ceph-external
   values:
     controllers:
       birdnet:
@@ -78,5 +80,12 @@ spec:
                   port: http
 
     persistence:
-      config:
+      data:
         existingClaim: *app
+      config:
+        type: secret
+        name: birdnet-secret
+        globalMounts:
+          - path: /config/config.yaml
+            subPath: config.yaml
+            readOnly: true
