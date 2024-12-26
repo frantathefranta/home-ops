@@ -1,0 +1,68 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app birdnet
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.6.0
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+
+  values:
+    controllers:
+      birdnet:
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        # pod:
+        #   securityContext:
+        #     runAsUser: 568
+        #     runAsGroup: 568
+        #     fsGroup: 568
+        #     fsGroupChangePolicy: "OnRootMismatch"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/tphakala/birdnet-go
+              tag: dev@sha256:9c5b7d8be2bf83263686b667038f1c79d2fefec707bb467cfe0dfd4808fb1587
+            args:
+              - realtime
+              - --rtsp
+              - rtsp://scrypted.home-automation.svc.cluster.local:34135/257656a9151ff8d4
+              - --rtsptransport
+              - tcp
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: 8080
+
+    ingress:
+      app:
+        className: internal
+        hosts:
+          - host: birdnet.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+
+    persistence:
+      config:
+        existingClaim: *app

@@ -9,3 +9,4 @@ resources:
   - ./zigbee2mqtt/ks.yaml
   - ./zwave-js-ui/ks.yaml
   - ./scrypted/ks.yaml
+  - ./birdnet/ks.yaml
