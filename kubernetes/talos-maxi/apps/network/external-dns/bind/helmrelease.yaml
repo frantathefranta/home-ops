@@ -25,9 +25,9 @@ spec:
       retries: 3
   values:
     fullnameOverride: *name
-    logLevel: info
-    service:
-      ipFamilyPolicy: PreferDualStack
+    logLevel: debug
+    # service:
+    #   ipFamilyPolicy: PreferDualStack
     domainFilters:
       - "${SECRET_DOMAIN}"
 
