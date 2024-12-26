@@ -29,5 +29,9 @@ spec:
       config:
         core:
           sources: ["pci", "system", "usb"]
+      tolerations:
+        - key: special
+          operator: Exists
+          effect: NoSchedule
     prometheus:
       enable: true
