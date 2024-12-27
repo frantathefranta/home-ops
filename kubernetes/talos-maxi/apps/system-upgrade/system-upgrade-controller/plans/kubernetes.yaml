@@ -26,9 +26,6 @@ spec:
     - key: node-role.kubernetes.io/control-plane
       operator: Exists
       effect: NoSchedule
-    - key: special
-      operator: Exists
-      effect: NoSchedule
   prepare: &prepare
     image: ghcr.io/siderolabs/talosctl:${TALOS_VERSION}
     envs:
