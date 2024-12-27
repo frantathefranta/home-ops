@@ -3,9 +3,9 @@
 apiVersion: upgrade.cattle.io/v1
 kind: Plan
 metadata:
-  name: kubernetes
+  name: talos-g3-mini
 spec:
-  version: ${KUBERNETES_VERSION}
+  version: ${TALOS_VERSION}
   serviceAccountName: system-upgrade
   secrets:
     - name: talos
@@ -18,8 +18,12 @@ spec:
       - key: feature.node.kubernetes.io/system-os_release.ID
         operator: In
         values: ["talos"]
-      - key: node-role.kubernetes.io/control-plane
-        operator: Exists
+      - key: feature.node.kubernetes.io/system-os_release.VERSION_ID
+        operator: NotIn
+        values: ["${TALOS_VERSION}"]
+      - key: kubernetes.io/hostname
+        operator: In
+        values: ["talos-g3-mini"]
   tolerations:
     - key: CriticalAddonsOnly
       operator: Exists
@@ -44,5 +48,7 @@ spec:
     <<: *prepare
     args:
       - --nodes=$(NODE_IP)
-      - upgrade-k8s
-      - --to=$(SYSTEM_UPGRADE_PLAN_LATEST_VERSION)
+      - upgrade
+      - --image=factory.talos.dev/installer/0b13754612577000b1d6a89683e002ba41efbc0a57c91d29be8da96a0dfd8a6f:$(SYSTEM_UPGRADE_PLAN_LATEST_VERSION)
+      - --preserve=true
+      - --wait=false
