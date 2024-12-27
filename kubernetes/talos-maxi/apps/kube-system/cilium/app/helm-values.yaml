@@ -6,8 +6,8 @@ bandwidthManager:
 bgpControlPlane:
   enabled: true
 bpf:
-  datapathMode: veth
-  masquerade: false
+  datapathMode: netkit
+  masquerade: true
   tproxy: true
 cgroup:
   automount:
