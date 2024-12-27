@@ -2,6 +2,10 @@ CLUSTER_NODE_V6_CIDR: ENC[AES256_GCM,data:6t4DwaCPF3MdOtsnn6trde3I313nhb/y,iv:7E
 CLUSTER_POD_V6_CIDR: ENC[AES256_GCM,data:jaPAq6jIW04JAY37FGAMd+FPy6HuwPyriFkw6kuZkw==,iv:FoK9WxO9zvk4qC+iFEHoq8xhsJ1jb6sCfEQgZD8UlOM=,tag:7aMaxeNUTbEs1pUm+CT6nA==,type:str]
 CLUSTER_LBA_V6_CIDR: ENC[AES256_GCM,data:3OPuZRxSR7404Or7F4zb8CE8xIRjaitfEPte1kf3cAE=,iv:apuQmTqgvem3Md0ZfSvIWpxV/Q6XmoO406mW6Zj3AvE=,tag:f+HaU/P42n21t8Z8BY0DOg==,type:str]
 CLUSTER_SVC_V6_CIDR: ENC[AES256_GCM,data:EC9KAbDuCs7/ZYiX7PI56cf1LntqC6BG4un/0uC+w20=,iv:KY95QNr0hlA+uMlS8euWqh/YYN+1GwwGkRYHTo8piPc=,tag:Oofrjgbsg+V7rNAK6w8s8w==,type:str]
+CLOUD_DOMAIN: ENC[AES256_GCM,data:ieYfazagbkxIMx0=,iv:+8odfHYVyoeH+VIzIC/CqMU77NZO5DEByPvNVne9ENQ=,tag:BQIuUHogIGly0AjG2ABTYA==,type:str]
+UPTIME_IP_V4: ENC[AES256_GCM,data:ZSyJslt0OK2k5CE1,iv:6HvCBzfSC71LqDHXVp0fpJjj62FZ0nzwz/jpzNnmDZE=,tag:MQ/GgLifm4L6BtWo1csv3Q==,type:str]
+DNS_IPV6_0: ENC[AES256_GCM,data:1oAX9Rk7Xg2NNk/ougI5ulotSpxX+OeB8lwp9fPn,iv:JXWcBEXk2bcrQE9ak2fqeKHkL8KPHIAANfh2WsQa1rc=,tag:SfX+UoFX0mss0/ci4hA2sw==,type:str]
+DNS_IPV6_1: ENC[AES256_GCM,data:mI0+VTa8wdspXoxgLxiruWswdwNteGBEwBE4MC9b,iv:8CgfS5fWGvICed9bMHQWIksRhAF5Yr+O2FrBhSqFHFg=,tag:iiVEkNRrvgvywcb50ugvAg==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -17,8 +21,8 @@ sops:
             YTZkclFkUlAvaElKSkp3eDJ0Tk8zMVUKvTfZGnroMBig3BrjswuxnhJg5bGv86fj
             gvKFs4QBPL+Xzq47sSPdWeq7bqn9rzVp4OMJ8vIU/N+OybfvbpPN0Q==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2024-12-10T20:37:34Z"
-    mac: ENC[AES256_GCM,data:yznPolJE1wjP6keLTGDrVRGKy6+XFEpHKKD0szKb4N/mmOEzDHY6DnPB0GzybaKc/pfbqUIYm9rKe8mKr2AnGg49xqM4s35jq7zhN8RC8+Mq0LwX4O6887eFgUyg6wlvn/QGQDhJdmzOIv4RStbJQRYyaXRcYW9IgEUwg94wjDE=,iv:mH4cYCwSGDalXp8emNW2elyv0zTT244dYLI2Q03Rjbc=,tag:JCyBTLcLfTvSWjzKHwpW0A==,type:str]
+    lastmodified: "2024-12-27T16:08:59Z"
+    mac: ENC[AES256_GCM,data:BkIuuMQIuH2WbDOwwizRgFJlqkROhkJE7poSTXzhRlrxl01boTdXer4gY7tv8pnDL86mv+H5bEMxWqFNXJ34sshND7BI7+LN/pvf0G27kShPsOnRDWYxxjSV+Ys8h5OJCHW7TFl0tvfFeP39iNAha02IofBF9T18mNjvs14nUCo=,iv:8+57H03BPt+6FnkUwUG7mVbZAQfX5NbPFeY3ITmYses=,tag:xvbhO8NW+ko+jtsq35oSXQ==,type:str]
     pgp: []
     unencrypted_suffix: _unencrypted
     version: 3.9.2
