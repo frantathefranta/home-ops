@@ -7,6 +7,7 @@
     ':dependencyDashboard',
     ':semanticCommits',
     ':automergeBranch',
+    ':timezone(America/Detroit)',
     'github>frantathefranta/home-ops//.github/renovate/grafanaDashboards.json5',
     'github>frantathefranta/home-ops//.github/renovate/autoMerge.json5',
     'github>frantathefranta/home-ops//.github/renovate/semanticCommits.json5',
@@ -21,9 +22,9 @@
     'prIgnoreNotification',
   ],
   rebaseWhen: 'conflicted',
-  assignees: [
-    'frantathefranta',
-  ],
+  assigneesFromCodeOwners: true,
+  reviewersFromCodeOwners: true,
+  ignorePaths: ["**/*.sops.*", "**/resources/**", "**/docs/**"],
   flux: {
     fileMatch: [
       '(^|/)ansible/.+\\.ya?ml(?:\\.j2)?$',
