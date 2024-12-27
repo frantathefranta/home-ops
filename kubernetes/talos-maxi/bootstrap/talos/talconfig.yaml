@@ -191,7 +191,7 @@ patches:
         extraArgs:
           rotate-server-certificates: true
         nodeIP:
-          validSubnets: ["10.33.0.0/16", "${CLUSTER_NODE_V6_CIDR}"]
+          validSubnets: ["10.33.35.0/27", "${CLUSTER_NODE_V6_CIDR}"]
 
   # Force nameserver
   - |-
@@ -272,7 +272,7 @@ controlPlane:
           extraArgs:
             listen-metrics-urls: http://0.0.0.0:2381
           advertisedSubnets:
-            - "10.33.0.0/16"
+            - "10.33.35.0/27"
 
     # Disable default API server admission plugins.
     - |-
