@@ -57,12 +57,12 @@ spec:
           enabled: true
           className: internal
           hosts: ["hubble.${SECRET_DOMAIN}"]
-    # loadBalancer:
-    #   l7:
-    #     backend: envoy
-    socketLB:
-      # this will fix issue with nginx's keeping persistent connections to dead CoreDNS'es.
-      hostNamespaceOnly: true
+    loadBalancer:
+      l7:
+        backend: envoy
+    # socketLB:
+    #   # this will fix issue with nginx's keeping persistent connections to dead CoreDNS'es.
+    #   hostNamespaceOnly: true
     operator:
       replicas: 1
       rollOutPods: true
