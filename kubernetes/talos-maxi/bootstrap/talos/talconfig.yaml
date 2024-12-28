@@ -215,7 +215,6 @@ patches:
           enabled: true
           resolveMemberNames: true
           # Incompatible with Cilium bpf masquerade. siderolabs/talos/#8836
-          # Replaced by a Cilium redirect policy.
           forwardKubeDNSToHost: false
 
   # Configure NTP
@@ -237,6 +236,8 @@ patches:
         net.core.bpf_jit_harden: "1"
         net.ipv6.conf.all.accept_ra: "2"
         net.ipv6.conf.all.forwarding: "1"
+        net.ipv4.tcp_rmem: 4096 131072 33554432  # 1K, 128K, 32M; QUIC and 10 Gbps
+        net.ipv4.tcp_wmem: 4096 131072 33554432  # 1K, 128K, 32M; QUIC and 10 Gbps
         vm.nr_hugepages: "1024"
 
   - |-
