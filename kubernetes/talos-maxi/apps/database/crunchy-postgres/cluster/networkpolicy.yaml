@@ -1,0 +1,12 @@
+---
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: "postgres-cluster-allow-ingress"
+spec:
+  endpointSelector:
+    matchLabels:
+      postgres-operator.crunchydata.com/cluster: postgres
+  ingress:
+  - fromEntities:
+    - "world"
