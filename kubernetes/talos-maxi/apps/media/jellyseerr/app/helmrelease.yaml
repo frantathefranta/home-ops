@@ -40,9 +40,9 @@ spec:
               # CONFIG_DIRECTORY: /app/config
               LOG_LEVEL: info
               PORT: &port 80
-            envFrom:
-              - secretRef:
-                  name: jellyseerr-secret
+            # envFrom:
+            #   - secretRef:
+            #       name: jellyseerr-secret
             probes:
               liveness: &probes
                 enabled: true
