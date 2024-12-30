@@ -11,6 +11,7 @@ resources:
   - ./beets/ks.yaml
   - ./cross-seed-jeopardy/ks.yaml
   - ./cross-seed/ks.yaml
+  - ./dashbrr/ks.yaml
   - ./jellyseerr/ks.yaml
   - ./pinchflat/ks.yaml
   - ./plex-addons/ks.yaml
