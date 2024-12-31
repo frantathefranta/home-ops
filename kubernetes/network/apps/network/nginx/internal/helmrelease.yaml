@@ -2,14 +2,14 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: ingress-nginx-internal
+  name: nginx-internal
   namespace: network
 spec:
   interval: 30m
   chart:
     spec:
       chart: ingress-nginx
-      version: 4.11.3
+      version: 4.12.0
       sourceRef:
         kind: HelmRepository
         name: ingress-nginx
@@ -22,9 +22,9 @@ spec:
     remediation:
       retries: 3
   values:
-    fullnameOverride: ingress-nginx-internal
+    fullnameOverride: nginx-internal
     controller:
-      replicaCount: 2
+      replicaCount: 1
       service:
         annotations:
           lbipam.cilium.io/ips: ${SVC_NGINX_INTERNAL}
@@ -44,6 +44,7 @@ spec:
               operator: In
               values: ["internal"]
       config:
+        allow-snippet-annotations: true
         block-user-agents: "GPTBot,~*GPTBot*,ChatGPT-User,~*ChatGPT-User*,Google-Extended,~*Google-Extended*,CCBot,~*CCBot*,Omgilibot,~*Omgilibot*,FacebookBot,~*FacebookBot*" # taken from https://github.com/superseriousbusiness/gotosocial/blob/main/internal/web/robots.go
         client-body-buffer-size: 100M
         client-body-timeout: 120
@@ -75,15 +76,6 @@ spec:
             any: true
       extraArgs:
         default-ssl-certificate: "network/${SECRET_DOMAIN/./-}-production-tls"
-      topologySpreadConstraints:
-        - maxSkew: 1
-          topologyKey: topology.kubernetes.io/zone
-          whenUnsatisfiable: DoNotSchedule
-          labelSelector:
-            matchLabels:
-              app.kubernetes.io/name: ingress-nginx
-              app.kubernetes.io/instance: ingress-nginx-internal
-              app.kubernetes.io/component: controller
       resources:
         requests:
           cpu: 100m

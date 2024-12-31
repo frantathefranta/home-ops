@@ -2,14 +2,13 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: ingress-nginx-internal
-  namespace: network
+  name: nginx-external
 spec:
   interval: 30m
   chart:
     spec:
       chart: ingress-nginx
-      version: 4.12.0
+      version: 4.11.3
       sourceRef:
         kind: HelmRepository
         name: ingress-nginx
@@ -21,29 +20,35 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
+  dependsOn:
+    - name: cloudflared
+      namespace: network
   values:
-    fullnameOverride: ingress-nginx-internal
+    fullnameOverride: nginx-external
     controller:
-      replicaCount: 1
+      replicaCount: 2
       service:
         annotations:
-          lbipam.cilium.io/ips: ${SVC_NGINX_INTERNAL}
+          external-dns.alpha.kubernetes.io/hostname: "external-maxi.${SECRET_DOMAIN}"
+          lbipam.cilium.io/ips: ${SVC_NGINX_EXTERNAL}
         externalTrafficPolicy: Cluster
         ipFamilyPolicy: PreferDualStack
         ipFamilies:
           - IPv4
           - IPv6
       ingressClassResource:
-        name: internal
-        default: true
-        controllerValue: k8s.io/internal
+        name: external
+        default: false
+        controllerValue: k8s.io/external
       admissionWebhooks:
         objectSelector:
           matchExpressions:
             - key: ingress-class
               operator: In
-              values: ["internal"]
+              values: ["external"]
       config:
+        allow-snippet-annotations: true
+        annotations-risk-level: Critical
         block-user-agents: "GPTBot,~*GPTBot*,ChatGPT-User,~*ChatGPT-User*,Google-Extended,~*Google-Extended*,CCBot,~*CCBot*,Omgilibot,~*Omgilibot*,FacebookBot,~*FacebookBot*" # taken from https://github.com/superseriousbusiness/gotosocial/blob/main/internal/web/robots.go
         client-body-buffer-size: 100M
         client-body-timeout: 120
@@ -75,6 +80,18 @@ spec:
             any: true
       extraArgs:
         default-ssl-certificate: "network/${SECRET_DOMAIN/./-}-production-tls"
+      terminationGracePeriodSeconds: 120
+      publishService:
+        enabled: false
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: topology.kubernetes.io/zone
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: ingress-nginx
+              app.kubernetes.io/instance: nginx-external
+              app.kubernetes.io/component: controller
       resources:
         requests:
           cpu: 100m

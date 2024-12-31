@@ -2,7 +2,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app ingress-nginx-certificates
+  name: &app nginx-certificates
   namespace: flux-system
 spec:
   targetNamespace: network
@@ -11,7 +11,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: cert-manager-issuers
-  path: ./kubernetes/talos-maxi/apps/network/ingress-nginx/certificates
+  path: ./kubernetes/network/apps/network/nginx/certificates
   prune: true
   sourceRef:
     kind: GitRepository
@@ -24,7 +24,7 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app ingress-nginx-internal
+  name: &app nginx-internal
   namespace: flux-system
 spec:
   targetNamespace: network
@@ -32,8 +32,8 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: ingress-nginx-certificates
-  path: ./kubernetes/talos-maxi/apps/network/ingress-nginx/internal
+    - name: nginx-certificates
+  path: ./kubernetes/network/apps/network/nginx/internal
   prune: true
   sourceRef:
     kind: GitRepository
@@ -46,7 +46,7 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app ingress-nginx-external
+  name: &app nginx-external
   namespace: flux-system
 spec:
   targetNamespace: network
@@ -54,8 +54,8 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: ingress-nginx-certificates
-  path: ./kubernetes/talos-maxi/apps/network/ingress-nginx/external
+    - name: nginx-certificates
+  path: ./kubernetes/network/apps/network/nginx/external
   prune: true
   sourceRef:
     kind: GitRepository
