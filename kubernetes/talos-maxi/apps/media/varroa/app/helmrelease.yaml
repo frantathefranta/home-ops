@@ -74,6 +74,16 @@ spec:
           - path: /config/config.yaml
             subPath: config.yaml
             readOnly: true
+      certs:
+        type: secret
+        name: ${SECRET_DOMAIN/./-}-production-tls
+        globalMounts:
+          - path: /config/certs/varroa_cert.pem
+            subPath: tls.crt
+            readOnly: true
+          - path: /config/certs/varroa_key.pem
+            subPath: tls.key
+            readOnly: true
       music:
         enabled: true
         type: nfs
