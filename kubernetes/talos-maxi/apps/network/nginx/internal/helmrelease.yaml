@@ -78,8 +78,8 @@ spec:
       extraArgs:
         default-ssl-certificate: "network/${SECRET_DOMAIN/./-}-production-tls"
       terminationGracePeriodSeconds: 120
-      publishService:
-        enabled: false
+      # publishService:
+      #   enabled: false
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: topology.kubernetes.io/zone
