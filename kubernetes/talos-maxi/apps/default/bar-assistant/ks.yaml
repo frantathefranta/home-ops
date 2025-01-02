@@ -27,6 +27,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      GATUS_SUBDOMAIN: bar
       VOLSYNC_CAPACITY: 1Gi
       VOLSYNC_ACCESSMODES: ReadWriteOnce
       VOLSYNC_STORAGECLASS: ceph-rbd

@@ -6,6 +6,7 @@ resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
   - ../../../../../shared/templates/volsync
+  - ../../../../../shared/templates/gatus/external
 configMapGenerator:
   - name: bar-assistant-configmap
     files:
