@@ -147,20 +147,21 @@ jobs:
         run: |
           cluster="${{ matrix.paths }}"
           cluster="${cluster/kubernetes\//}"
+          cluster="${cluster//-/_}"
           echo "cluster=${cluster^^}" >> $GITHUB_ENV
 
-      - name: Fetch static secrets from Akeyless
-        uses: akeyless-community/akeyless-github-action@v1.1.2
-        id: fetch-secrets
-        with:
-          access-id: ${{ vars.AKEYLESS_ACCESS_ID }}
-          access-type: access_key
-          api-url: https://api.akeyless.io
-          access-key: ${{ secrets.AKEYLESS_ACCESS_KEY }}
-          static-secrets: |
-            - name: "/TALOSCONFIG"
-              output-name: "TALOSCONFIG"
-              key: "TALOSCONFIG_${{ env.cluster }}_BASE64"
+      # - name: Fetch static secrets from Akeyless
+      #   uses: akeyless-community/akeyless-github-action@v1.0.1
+      #   id: fetch-secrets
+      #   with:
+      #     access-id: ${{ vars.AKEYLESS_ACCESS_ID }}
+      #     access-type: access_key
+      #     api-url: https://api.akeyless.io
+      #     access-key: ${{ secrets.AKEYLESS_ACCESS_KEY }}
+      #     static-secrets: |
+      #       - name: "/TALOSCONFIG"
+      #         output-name: "TALOSCONFIG"
+      #         key: "TALOSCONFIG_${{ env.cluster }}_BASE64"
       # - name: Configure 1password
       #   uses: 1password/load-secrets-action/configure@v2
       #   with:
@@ -177,7 +178,7 @@ jobs:
         id: talosconfig
         uses: timheuer/base64-to-file@v1
         with:
-          encodedString: "${{ steps.fetch-secrets.outputs.TALOSCONFIG }}"
+          encodedString: "${{ secrets[format('TALOSCONFIG_{0}_BASE64', env.cluster)] }}"
           fileName: talosconfig
 
       - name: Setup Homebrew
