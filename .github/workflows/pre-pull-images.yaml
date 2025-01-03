@@ -150,10 +150,6 @@ jobs:
           cluster="${cluster//-/_}"
           echo "cluster=${cluster^^}" >> $GITHUB_ENV
 
-      - name: Create a secret name
-        run: |
-          secret_name="TALOSCONFIG_${cluster}_BASE64
-
       - name: Write talosconfig
         id: talosconfig
         uses: timheuer/base64-to-file@v1
