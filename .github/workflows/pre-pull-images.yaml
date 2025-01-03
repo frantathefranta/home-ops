@@ -150,29 +150,9 @@ jobs:
           cluster="${cluster//-/_}"
           echo "cluster=${cluster^^}" >> $GITHUB_ENV
 
-      # - name: Fetch static secrets from Akeyless
-      #   uses: akeyless-community/akeyless-github-action@v1.0.1
-      #   id: fetch-secrets
-      #   with:
-      #     access-id: ${{ vars.AKEYLESS_ACCESS_ID }}
-      #     access-type: access_key
-      #     api-url: https://api.akeyless.io
-      #     access-key: ${{ secrets.AKEYLESS_ACCESS_KEY }}
-      #     static-secrets: |
-      #       - name: "/TALOSCONFIG"
-      #         output-name: "TALOSCONFIG"
-      #         key: "TALOSCONFIG_${{ env.cluster }}_BASE64"
-      # - name: Configure 1password
-      #   uses: 1password/load-secrets-action/configure@v2
-      #   with:
-      #     service-account-token: ${{ secrets.ONEPASS_SA_TOKEN }}
-
-      # - name: Get Secrets
-      #   uses: 1password/load-secrets-action@v2
-      #   with:
-      #     export-env: true
-      #   env:
-      #     TALOSCONFIG_BASE64: op://Kubernetes/kubernetes/TALOSCONFIG_${{ env.cluster }}_BASE64
+      - name: Create a secret name
+        run: |
+          secret_name="TALOSCONFIG_${cluster}_BASE64
 
       - name: Write talosconfig
         id: talosconfig
