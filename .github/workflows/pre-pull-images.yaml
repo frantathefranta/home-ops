@@ -150,7 +150,7 @@ jobs:
           echo "cluster=${cluster^^}" >> $GITHUB_ENV
 
       - name: Fetch static secrets from Akeyless
-        uses: akeyless-community/akeyless-github-action@v1.0.1
+        uses: akeyless-community/akeyless-github-action@v1.1.2
         id: fetch-secrets
         with:
           access-id: ${{ vars.AKEYLESS_ACCESS_ID }}
