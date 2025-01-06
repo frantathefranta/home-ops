@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: descheduler
+  name: &app descheduler
 spec:
   interval: 30m
   chart:
@@ -67,11 +67,24 @@ spec:
                 - RemovePodsViolatingInterPodAntiAffinity
                 - RemovePodsViolatingNodeAffinity
                 - RemovePodsViolatingNodeTaints
-    rbac:
-      create: true
     service:
       enabled: true
     serviceMonitor:
       enabled: true
     leaderElection:
       enabled: true
+
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              version: v1
+              kind: ClusterRole
+              name: *app
+            patch: |
+              - op: add
+                path: /rules/0
+                value:
+                  apiGroups: ["policy"]
+                  resources: ["poddisruptionbudgets"]
+                  verbs: ["get", "watch", "list"]
