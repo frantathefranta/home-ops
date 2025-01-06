@@ -16,13 +16,17 @@ spec:
         namespace: flux-system
   interval: 30m
   values:
+    defaultPodOptions:
+      tolerations:
+        - key: node-role.kubernetes.io/control-plane
+          effect: NoSchedule
     controllers:
       fstrim:
         type: cronjob
 
         cronjob:
           schedule: "0 0 * * 1"
-          parallelism: 6 # Set this to your number of nodes
+          parallelism: 7 # Set this to your number of nodes
 
         pod:
           hostNetwork: true
