@@ -111,7 +111,8 @@ spec:
       api:
         enabled: true
         className: internal
-        # annotations:
+        annotations:
+          external-dns.alpha.kubernetes.io/ttl: "24h"
         #   external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
         hosts:
           - host: s3.${SECRET_DOMAIN}
