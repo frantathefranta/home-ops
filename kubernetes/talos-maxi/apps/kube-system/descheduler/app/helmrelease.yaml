@@ -67,6 +67,8 @@ spec:
                 - RemovePodsViolatingInterPodAntiAffinity
                 - RemovePodsViolatingNodeAffinity
                 - RemovePodsViolatingNodeTaints
+    rbac:
+      create: true
     service:
       enabled: true
     serviceMonitor:
