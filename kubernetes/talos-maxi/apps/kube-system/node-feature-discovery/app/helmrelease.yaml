@@ -30,8 +30,26 @@ spec:
         core:
           sources: ["pci", "system", "usb"]
       tolerations:
+        - key: "node-role.kubernetes.io/control-plane"
+          operator: "Equal"
+          value: ""
+          effect: "NoSchedule"
         - key: special
           operator: Exists
           effect: NoSchedule
+    topologyUpdater:
+      enable: false
+      createCRDs: true
+      tolerations:
+        - key: "node-role.kubernetes.io/control-plane"
+          operator: "Equal"
+          value: ""
+          effect: "NoSchedule"
+    gc:
+      tolerations:
+        - key: "node-role.kubernetes.io/control-plane"
+          operator: "Equal"
+          value: ""
+          effect: "NoSchedule"
     prometheus:
       enable: true
