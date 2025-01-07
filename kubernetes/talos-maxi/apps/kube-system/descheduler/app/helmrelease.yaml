@@ -36,6 +36,17 @@ spec:
                 evictLocalStoragePods: true
                 evictSystemCriticalPods: true
                 nodeFit: true
+            - name: RemoveFailedPods
+              args:
+                reasons:
+                - "ContainerStatusUnknown"
+                - "NodeAffinity"
+                - "Terminated"
+                - "UnexpectedAdmissionError"
+                includingInitContainers: true
+                excludeOwnerKinds:
+                - "Job"
+                minPodLifetimeSeconds: 3600
             - name: RemovePodsViolatingInterPodAntiAffinity
             - name: RemovePodsViolatingNodeAffinity
               args:
@@ -64,6 +75,7 @@ spec:
                 - LowNodeUtilization
             deschedule:
               enabled:
+                - RemoveFailedPods
                 - RemovePodsViolatingInterPodAntiAffinity
                 - RemovePodsViolatingNodeAffinity
                 - RemovePodsViolatingNodeTaints
