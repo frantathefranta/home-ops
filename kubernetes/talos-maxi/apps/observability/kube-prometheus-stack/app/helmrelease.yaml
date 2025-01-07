@@ -40,6 +40,15 @@ spec:
       service:
         ipDualStack:
           enabled: true
+      admissionWebhooks:
+        certManager:
+          enabled: true
+          admissionCert:
+            duration: 2160h  # 90d
+          issuerRef:
+            name: cluster-ca
+            kind: ClusterIssuer
+            group: cert-manager.io
     alertmanager:
       ingress:
         enabled: true
