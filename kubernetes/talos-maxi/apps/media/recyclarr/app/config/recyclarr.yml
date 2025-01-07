@@ -179,9 +179,9 @@ radarr:
         quality_sort: top
         qualities:
           - name: Bluray-2160p
-          - name: Remux-2160p
+            qualities: ["Bluray-2160p", "Remux-2160p"]
           - name: Bluray-1080p
-          - name: Remux-1080p
+            qualities: ["Bluray-1080p", "Remux-1080p"]
           - name: WEBDL-2160p
           - name: WEBDL-1080p
           - name: WEBRip
@@ -297,7 +297,6 @@ radarr:
             score: 0
 
       - trash_ids:
-          - 7a0d1ad358fee9f5b074af3ef3f9d9ef # HALLOWED
           - b6832f586342ef70d9c128d40c07b872 # Bad Dual Groups
           - 90cedc1fea7ea5d11298bebd3d1d3223 # EVO (no WEBDL)
           - ae9b7c9ebde1f3bd336a8cbd1ec4c5e5 # No-RlsGroup
