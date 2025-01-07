@@ -8,6 +8,11 @@
     },
     {
       "matchDatasources": ["docker"],
+      "matchPackagePatterns": ["transmission"],
+      "allowedVersions": "<4.0.6 || >4.0.6"
+    },
+    {
+      "matchDatasources": ["docker"],
       "matchPackagePatterns": ["postgresql"],
       "allowedVersions": "<18"
     }
