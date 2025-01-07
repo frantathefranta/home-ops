@@ -51,5 +51,11 @@ spec:
           operator: "Equal"
           value: ""
           effect: "NoSchedule"
+    tls:
+      enabled: true
+      certManager: true
+      certManagerCertificate:
+        issuerKind: ClusterIssuer
+        issuerName: cluster-ca
     prometheus:
       enable: true
