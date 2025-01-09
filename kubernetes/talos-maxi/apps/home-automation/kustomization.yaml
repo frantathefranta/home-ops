@@ -6,7 +6,8 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
+  - ./birdnet/ks.yaml
+  - ./music-assistant/ks.yaml
+  - ./scrypted/ks.yaml
   - ./zigbee2mqtt/ks.yaml
   - ./zwave-js-ui/ks.yaml
-  - ./scrypted/ks.yaml
-  - ./birdnet/ks.yaml
