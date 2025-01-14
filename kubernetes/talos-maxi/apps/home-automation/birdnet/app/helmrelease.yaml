@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: ghcr.io/tphakala/birdnet-go
-              tag: dev@sha256:d8b380c0409a47fb5d0f4207513eca065fcd8af1c9223b3bf93e5c692ae3f6d4
+              tag: dev@sha256:998a489c99cc0d3e5234f9f815d31d6945779220cd2230ab0243039171c58d26
             probes:
               liveness:
                 enabled: true
