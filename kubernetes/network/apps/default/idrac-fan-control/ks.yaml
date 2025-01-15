@@ -11,7 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   path: ./kubernetes/network/apps/default/idrac-fan-control/actinium
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
@@ -34,7 +34,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   path: ./kubernetes/network/apps/default/idrac-fan-control/thorium
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
@@ -57,7 +57,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   path: ./kubernetes/network/apps/default/idrac-fan-control/protactinium
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
