@@ -179,6 +179,14 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/postgres
+          - name: pinchflat
+            orgId: 1
+            folder: Pinchflat
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/pinchflat
     dashboards:
       default:
         node-feature-discovery:
@@ -414,6 +422,25 @@ spec:
           datasource: Prometheus
         crunchy-query-statistics:
           url: https://raw.githubusercontent.com/CrunchyData/postgres-operator-examples/main/kustomize/monitoring/grafana/dashboards/query_statistics.json
+          datasource: Prometheus
+      pinchflat:
+        application:
+          url: https://raw.githubusercontent.com/kieraneglin/pinchflat/refs/heads/master/priv/grafana/application.json
+          datasource: Prometheus
+        beam:
+          url: https://raw.githubusercontent.com/kieraneglin/pinchflat/refs/heads/master/priv/grafana/beam.json
+          datasource: Prometheus
+        ecto:
+          url: https://raw.githubusercontent.com/kieraneglin/pinchflat/refs/heads/master/priv/grafana/ecto.json
+          datasource: Prometheus
+        oban:
+          url: https://raw.githubusercontent.com/kieraneglin/pinchflat/refs/heads/master/priv/grafana/oban.json
+          datasource: Prometheus
+        phoenix:
+          url: https://raw.githubusercontent.com/kieraneglin/pinchflat/refs/heads/master/priv/grafana/phoenix.json
+          datasource: Prometheus
+        phoenix_live_view:
+          url: https://raw.githubusercontent.com/kieraneglin/pinchflat/refs/heads/master/priv/grafana/phoenix_live_view.json
           datasource: Prometheus
     sidecar:
       dashboards:
