@@ -6,12 +6,14 @@ repositories:
     url: https://coredns.github.io/helm
   - name: postfinance
     url: https://postfinance.github.io/kubelet-csr-approver
+  - name: jetstack
+    url: https://charts.jetstack.io
 
 helmDefaults:
   wait: true
   waitForJobs: true
   timeout: 600
-  recreatePods: true
+  # recreatePods: true
   force: true
 
 releases:
@@ -36,6 +38,15 @@ releases:
     needs:
       - observability/prometheus-operator-crds
       - kube-system/cilium
+
+  # - name: cert-manager # TODO: Uncomment when pulling secrets from external-secrets is done
+  #   namespace: cert-manager
+  #   chart: jetstack/cert-manager
+  #   version: v1.16.3
+  #   values: ["../../../apps/kube-system/cert-manager/app/helm-values.yaml"]
+  #   needs:
+  #     - kube-system/coredns
+
   - name: kubelet-csr-approver
     namespace: kube-system
     chart: postfinance/kubelet-csr-approver
@@ -45,3 +56,18 @@ releases:
       - observability/prometheus-operator-crds
       - kube-system/cilium
       - kube-system/coredns
+
+  - name: flux-operator
+    namespace: flux-system
+    chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
+    version: 0.13.0
+    values: ["../../../apps/flux-system/flux-operator/instance/helm-values.yaml"]
+
+  - name: flux-instance
+    namespace: flux-system
+    chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance
+    version: 0.13.0
+    wait: false
+    values: ["../../../apps/flux-system/flux-operator/instance/helm-values.yaml"]
+    needs:
+      - flux-system/flux-operator
