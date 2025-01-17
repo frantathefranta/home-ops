@@ -14,7 +14,7 @@ spec:
   prune: false
   sourceRef:
     kind: GitRepository
-    name: home-kubernetes
+    name: flux-system
   dependsOn:
     - name: external-secrets-stores
   wait: false # no flux ks dependents
@@ -37,7 +37,7 @@ spec:
   prune: false
   sourceRef:
     kind: GitRepository
-    name: home-kubernetes
+    name: flux-system
   dependsOn:
     - name: external-secrets-stores
   wait: false # no flux ks dependents
@@ -60,7 +60,7 @@ spec:
   prune: false
   sourceRef:
     kind: GitRepository
-    name: home-kubernetes
+    name: flux-system
   dependsOn:
     - name: external-secrets-stores
   wait: false # no flux ks dependents
