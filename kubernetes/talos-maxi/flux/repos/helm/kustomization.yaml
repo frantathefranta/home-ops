@@ -1,0 +1,14 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./actions-runner-controller.yaml
+  - ./crunchy-userinit.yaml
+  - ./crunchy-users.yaml
+  - ./crunchydata.yaml
+  - ./emqx.yaml
+  - ./grafana.yaml
+  - ./intel.yaml
+  - ./itzg.yaml
+  - ./stevehipwell.yaml
+  - ./meilisearch.yaml
