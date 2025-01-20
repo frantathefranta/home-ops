@@ -45,7 +45,7 @@ spec:
     txtPrefix: k8s.
     txtOwnerId: network
     domainFilters:
-      - ${SECRET_DOMAIN_ROOT}
+      - franta.us
     serviceMonitor:
       enabled: true
     podAnnotations:
