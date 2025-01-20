@@ -6,8 +6,8 @@ metadata:
 spec:
   allowFirstLastIPs: "Yes"
   blocks:
-    - cidr: "${CLUSTER_LBA_CIDR}"
-    - cidr: "${CLUSTER_LBA_V6_CIDR}"
+    - cidr: "${cluster_lba_cidr}"
+    - cidr: "${cluster_lba_cidr_v6}"
   serviceSelector:
     matchExpressions:
       - { key: not-used, operator: NotIn, values: [not-used] }
