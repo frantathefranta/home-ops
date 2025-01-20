@@ -16,7 +16,7 @@ data:
           hide-hostname: true
           hide-url: true
         dns:
-          query-name: "${APP}.${SECRET_DOMAIN}"
+          query-name: "${APP}.franta.us"
           query-type: A
         conditions:
           - "len([BODY]) == 0"
