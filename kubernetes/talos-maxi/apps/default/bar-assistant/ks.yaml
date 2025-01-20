@@ -16,7 +16,7 @@ spec:
     - name: salt-rim
     - name: meilisearch
   path: ./kubernetes/talos-maxi/apps/default/bar-assistant/app
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -47,7 +47,7 @@ spec:
   dependsOn:
     - name: external-secrets-stores
   path: ./kubernetes/talos-maxi/apps/default/bar-assistant/meilisearch
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -68,7 +68,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   path: ./kubernetes/talos-maxi/apps/default/bar-assistant/salt-rim
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

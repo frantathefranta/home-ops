@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: qbittorrent
   path: ./kubernetes/talos-maxi/apps/observability/exporters/qbittorrent-exporter/app
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

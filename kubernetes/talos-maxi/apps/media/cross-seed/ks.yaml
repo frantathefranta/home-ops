@@ -14,7 +14,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   path: "./kubernetes/talos-maxi/apps/media/cross-seed/app"
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: minio
   path: ./kubernetes/talos-maxi/apps/database/crunchy-postgres/app
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -37,7 +37,7 @@ spec:
     - name: crunchy-postgres-operator
     - name: external-secrets-stores
   path: ./kubernetes/talos-maxi/apps/database/crunchy-postgres/cluster
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -60,7 +60,7 @@ spec:
     - name: crunchy-postgres-operator
     - name: external-secrets-stores
   path: ./kubernetes/talos-maxi/apps/database/crunchy-postgres/cluster-vector
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -83,7 +83,7 @@ spec:
 #   dependsOn:
 #     - name: crunchy-postgres-operator-cluster
 #   path: ./kubernetes/talos-maxi/apps/database/crunchy-postgres/userinit-controller
-#   prune: false
+#   prune: true
 #   sourceRef:
 #     kind: GitRepository
 #     name: flux-system
@@ -105,7 +105,7 @@ spec:
   dependsOn:
     - name: crunchy-postgres-operator
   path: ./kubernetes/talos-maxi/apps/database/crunchy-postgres/users
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -128,7 +128,7 @@ spec:
   dependsOn:
     - name: external-secrets
   path: ./kubernetes/talos-maxi/apps/database/crunchy-postgres/clustersecretstore
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

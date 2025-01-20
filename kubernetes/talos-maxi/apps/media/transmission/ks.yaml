@@ -11,7 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   path: ./kubernetes/talos-maxi/apps/media/transmission/jeopardy
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -39,7 +39,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   path: ./kubernetes/talos-maxi/apps/media/transmission/music
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
