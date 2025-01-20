@@ -5,6 +5,6 @@ metadata:
   name: cloudflared
 spec:
   endpoints:
-    - dnsName: "external-network.${SECRET_DOMAIN}"
+    - dnsName: "external-network.franta.us"
       recordType: CNAME
-      targets: ["${SECRET_CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"]
+      targets: ["f38c7795-d069-4708-bd78-f88f0d3f8171.cfargotunnel.com"]
