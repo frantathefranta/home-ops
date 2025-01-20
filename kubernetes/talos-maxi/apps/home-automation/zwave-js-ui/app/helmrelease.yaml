@@ -81,7 +81,7 @@ spec:
         controller: *app
         type: LoadBalancer
         annotations:
-          lbipam.cilium.io/ips: "${SVC_ZWAVE_ADDR}"
+          lbipam.cilium.io/ips: 10.33.40.71,${cluster_lba_prefix_v6}:71
           external-dns.alpha.kubernetes.io/hostname: zwave-ws.franta.us
         ports:
           websocket:

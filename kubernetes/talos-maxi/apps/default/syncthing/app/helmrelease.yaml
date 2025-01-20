@@ -75,7 +75,7 @@ spec:
         ipFamilyPolicy: PreferDualStack
         type: LoadBalancer
         annotations:
-          lbipam.cilium.io/ips: "${SVC_SYNC_ADDR}"
+          lbipam.cilium.io/ips: 10.33.40.70,${cluster_lba_prefix_v6}:70
         externalTrafficPolicy: Cluster
         ports:
           discovery:

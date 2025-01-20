@@ -100,7 +100,7 @@ spec:
         controller: transmission
         type: LoadBalancer
         annotations:
-          io.cilium/lb-ipam-ips: ${SVC_TJ_ADDR}
+          lbipam.cilium.io/ips: 10.33.40.64,${cluster_lba_prefix_v6}:64
         ports:
           http:
             port: *port
