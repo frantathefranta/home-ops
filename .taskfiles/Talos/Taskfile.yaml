@@ -127,6 +127,37 @@ tasks:
       # - [ "$(talosctl --context network config info -o json | jq --raw-output '.context')" = {{.CLUSTER}} ]
 
   bootstrap-apps:
+    env:
+      AKEYLESS_ACCESS_ID:
+        sh: akeyless get-secret-value --name bootstrap/external-secrets --jq-expression '.AKEYLESS_ACCESS_ID'
+      AKEYLESS_ACCESS_TYPE:
+        sh: akeyless get-secret-value --name bootstrap/external-secrets --jq-expression '.AKEYLESS_ACCESS_TYPE'
+      AKEYLESS_ACCESS_TYPE_PARAM:
+        sh: akeyless get-secret-value --name bootstrap/external-secrets --jq-expression '.AKEYLESS_ACCESS_TYPE_PARAM'
+      INGRESS_NGINX_TLS_CRT:
+        sh: akeyless get-secret-value --name {{.CLUSTER}}-cluster-tls --jq-expression '."tls.crt"'
+      INGRESS_NGINX_TLS_KEY:
+        sh: akeyless get-secret-value --name {{.CLUSTER}}-cluster-tls --jq-expression '."tls.key"'
+      BGP_PEER_V6:
+        sh: akeyless get-secret-value --name cilium --jq-expression '.{{.CLUSTER}}_BGP_PEER_V6'
+      LBA_CIDR_V6:
+        sh: akeyless get-secret-value --name cilium --jq-expression '.{{.CLUSTER}}_LBA_CIDR_V6'
+      SVC_PREFIX_V6:
+        sh: akeyless get-secret-value --name cilium --jq-expression '.{{.CLUSTER}}_SVC_PREFIX_V6'
+    cmds:
+      - until kubectl --kubeconfig {{.KUBERNETES_DIR}}/{{.CLUSTER}}/kubeconfig wait --for=condition=Ready=False nodes --all --timeout=600s; do sleep 10; done
+      - minijinja-cli {{.CLUSTER_DIR}}/bootstrap/talos/apps/templates/resources.yaml.j2 | kubectl apply --server-side --filename -
+      - helmfile --file {{.KUBERNETES_DIR}}/{{.CLUSTER}}/bootstrap/talos/apps/helmfile.yaml apply --skip-diff-on-install --suppress-diff --kube-context {{.CLUSTER}}
+      - minijinja-cli {{.CLUSTER_DIR}}/bootstrap/talos/apps/templates/cilium.yaml.j2 | kubectl apply --server-side --filename -
+    requires:
+      vars: ["CLUSTER"]
+    preconditions:
+      - { msg: "Argument (CLUSTER) is required", sh: "test -n {{.CLUSTER}}" }
+      - akeyless get-secret-value --name bootstrap/external-secrets
+      - test -f {{.KUBERNETES_DIR}}/{{.CLUSTER}}/bootstrap/talos/clusterconfig/talosconfig
+      - talosctl --context {{.CLUSTER}} config info >/dev/null 2>&1
+      - test -f {{.KUBERNETES_DIR}}/{{.CLUSTER}}/bootstrap/talos/apps/helmfile.yaml
+  bootstrap-apps-old:
     desc: Bootstrap core apps needed for Talos
     cmds:
       - until kubectl --kubeconfig {{.KUBERNETES_DIR}}/{{.CLUSTER}}/kubeconfig wait --for=condition=Ready=False nodes --all --timeout=600s; do sleep 10; done
@@ -238,6 +269,38 @@ tasks:
     preconditions:
       - { msg: "Argument (CLUSTER) is required", sh: "test -n {{.CLUSTER}}" }
       - { msg: "Argument (HOSTNAME) is required", sh: "test -n {{.HOSTNAME}}" }
+
+  update-cluster-secrets:
+    env:
+      # AKEYLESS_ACCESS_ID:
+      #   sh: akeyless get-secret-value --name bootstrap/external-secrets --jq-expression '.AKEYLESS_ACCESS_ID'
+      # AKEYLESS_ACCESS_TYPE:
+      #   sh: akeyless get-secret-value --name bootstrap/external-secrets --jq-expression '.AKEYLESS_ACCESS_TYPE'
+      # AKEYLESS_ACCESS_TYPE_PARAM:
+      #   sh: akeyless get-secret-value --name bootstrap/external-secrets --jq-expression '.AKEYLESS_ACCESS_TYPE_PARAM'
+      # INGRESS_NGINX_TLS_CRT:
+      #   sh: akeyless get-secret-value --name {{.CLUSTER}}-cluster-tls --jq-expression '."tls.crt"'
+      # INGRESS_NGINX_TLS_KEY:
+      #   sh: akeyless get-secret-value --name {{.CLUSTER}}-cluster-tls --jq-expression '."tls.key"'
+      BGP_PEER_V6:
+        sh: akeyless get-secret-value --name cilium --jq-expression '.{{.CLUSTER}}_BGP_PEER_V6'
+      LBA_CIDR_V6:
+        sh: akeyless get-secret-value --name cilium --jq-expression '.{{.CLUSTER}}_LBA_CIDR_V6'
+      SVC_PREFIX_V6:
+        sh: akeyless get-secret-value --name cilium --jq-expression '.{{.CLUSTER}}_SVC_PREFIX_V6'
+    cmds:
+      # - until kubectl --kubeconfig {{.KUBERNETES_DIR}}/{{.CLUSTER}}/kubeconfig wait --for=condition=Ready=False nodes --all --timeout=600s; do sleep 10; done
+      # - minijinja-cli {{.CLUSTER_DIR}}/bootstrap/talos/apps/templates/resources.yaml.j2 | kubectl apply --server-side --filename -
+      # - helmfile --file {{.KUBERNETES_DIR}}/{{.CLUSTER}}/bootstrap/talos/apps/helmfile.yaml apply --skip-diff-on-install --suppress-diff --kube-context {{.CLUSTER}}
+      - minijinja-cli {{.CLUSTER_DIR}}/bootstrap/talos/apps/templates/cilium.yaml.j2 | kubectl apply --server-side --filename -
+    requires:
+      vars: ["CLUSTER"]
+    preconditions:
+      - { msg: "Argument (CLUSTER) is required", sh: "test -n {{.CLUSTER}}" }
+      - akeyless get-secret-value --name bootstrap/external-secrets
+      - test -f {{.KUBERNETES_DIR}}/{{.CLUSTER}}/bootstrap/talos/clusterconfig/talosconfig
+      - talosctl --context {{.CLUSTER}} config info >/dev/null 2>&1
+      - test -f {{.KUBERNETES_DIR}}/{{.CLUSTER}}/bootstrap/talos/apps/helmfile.yaml
 
   cluster-shutdown:
     desc: Shutdown all Talos nodes.

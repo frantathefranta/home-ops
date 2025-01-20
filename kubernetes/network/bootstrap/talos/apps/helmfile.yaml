@@ -6,6 +6,8 @@ repositories:
     url: https://coredns.github.io/helm
   - name: postfinance
     url: https://postfinance.github.io/kubelet-csr-approver
+  - name: external-secrets
+    url: https://charts.external-secrets.io
   - name: jetstack
     url: https://charts.jetstack.io
 
@@ -13,7 +15,6 @@ helmDefaults:
   wait: true
   waitForJobs: true
   timeout: 600
-  # recreatePods: true
   force: true
 
 releases:
@@ -39,13 +40,21 @@ releases:
       - observability/prometheus-operator-crds
       - kube-system/cilium
 
-  # - name: cert-manager # TODO: Uncomment when pulling secrets from external-secrets is done
-  #   namespace: cert-manager
-  #   chart: jetstack/cert-manager
-  #   version: v1.16.3
-  #   values: ["../../../apps/kube-system/cert-manager/app/helm-values.yaml"]
-  #   needs:
-  #     - kube-system/coredns
+  - name: cert-manager
+    namespace: cert-manager
+    chart: jetstack/cert-manager
+    version: v1.16.3
+    values: ["../../../apps/kube-system/cert-manager/app/helm-values.yaml"]
+    needs:
+      - kube-system/coredns
+
+  - name: external-secrets
+    namespace: external-secrets
+    chart: external-secrets/external-secrets
+    version: 0.12.1
+    values: ["../../../apps/external-secrets/external-secrets/app/helm-values.yaml"]
+    needs:
+      - kube-system/coredns
 
   - name: kubelet-csr-approver
     namespace: kube-system
