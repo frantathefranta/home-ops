@@ -14,7 +14,7 @@ spec:
   prune: false
   sourceRef:
     kind: GitRepository
-    name: home-kubernetes
+    name: flux-system
   dependsOn:
     - name: external-secrets-stores
     - name: crunchy-postgres-operator-cluster

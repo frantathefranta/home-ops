@@ -14,7 +14,7 @@
 #   prune: false
 #   sourceRef:
 #     kind: GitRepository
-#     name: home-kubernetes
+#     name: flux-system
 #   wait: false # no flux ks dependents
 #   interval: 30m
 #   retryInterval: 1m
@@ -37,7 +37,7 @@
 #   prune: false
 #   sourceRef:
 #     kind: GitRepository
-#     name: home-kubernetes
+#     name: flux-system
 #   wait: false # no flux ks dependents
 #   interval: 30m
 #   retryInterval: 1m
@@ -64,7 +64,7 @@
 #   prune: false
 #   sourceRef:
 #     kind: GitRepository
-#     name: home-kubernetes
+#     name: flux-system
 #   wait: false # no flux ks dependents
 #   interval: 30m
 #   retryInterval: 1m

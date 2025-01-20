@@ -20,7 +20,7 @@ spec:
   interval: 3m0s
   sourceRef:
     kind: GitRepository
-    name: home-kubernetes
+    name: flux-system
   update:
     path: ./kubernetes/talos-maxi/apps
     strategy: Setters
