@@ -14,7 +14,7 @@ spec:
     - name: jellyseerr
     - name: external-secrets-stores
   path: ./kubernetes/talos-maxi/apps/observability/exporters/jellyseerr-exporter/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

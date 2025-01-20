@@ -14,7 +14,7 @@ spec:
     - name: radarr
     - name: external-secrets-stores
   path: ./kubernetes/talos-maxi/apps/observability/exporters/radarr-exporter/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

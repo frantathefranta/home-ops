@@ -19,7 +19,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
-  prune: true
+  prune: false
   wait: false
   interval: 30m
   retryInterval: 1m

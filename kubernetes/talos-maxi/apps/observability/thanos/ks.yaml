@@ -16,7 +16,7 @@ spec:
     - name: dragonfly-cluster
     - name: minio
   path: ./kubernetes/talos-maxi/apps/observability/thanos/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

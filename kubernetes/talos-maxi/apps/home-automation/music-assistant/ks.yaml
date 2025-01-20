@@ -14,7 +14,7 @@ spec:
     - name: rook-ceph-cluster
     - name: volsync
   path: "./kubernetes/talos-maxi/apps/home-automation/music-assistant/app"
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

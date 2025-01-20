@@ -16,7 +16,7 @@ spec:
     name: home-kubernetes
   interval: 30m
   timeout: 5m
-  prune: true
+  prune: false
   wait: true
   dependsOn:
     - name: cert-manager
@@ -38,7 +38,7 @@ spec:
     name: home-kubernetes
   interval: 30m
   timeout: 5m
-  prune: true
+  prune: false
   wait: true
   dependsOn:
     - name: intel-device-plugins-operator
@@ -57,7 +57,7 @@ spec:
   dependsOn:
     - name: intel-device-plugins-gpu
   path: "./kubernetes/talos-maxi/apps/kube-system/intel-device-plugins/exporter"
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

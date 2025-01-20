@@ -12,7 +12,7 @@ spec:
   dependsOn:
     - name: loki
   path: ./kubernetes/talos-maxi/apps/observability/vector/aggregator
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
@@ -34,7 +34,7 @@ spec:
   dependsOn:
     - name: vector-aggregator
   path: ./kubernetes/talos-maxi/apps/observability/vector/agent
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
