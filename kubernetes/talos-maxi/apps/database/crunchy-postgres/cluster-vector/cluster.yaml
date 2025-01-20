@@ -119,7 +119,7 @@ spec:
         - name: repo2
           s3: &r2
             bucket: crunchy-pgo
-            endpoint: ${CLUSTER_SECRET_CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com
+            endpoint: ${R2_ENDPOINT}
             region: us-east-1 #https://developers.cloudflare.com/r2/api/s3/api/#bucket-region
           schedules:
             full: "0 2 * * 0" # Sunday at 2am
