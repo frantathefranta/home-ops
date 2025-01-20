@@ -26,8 +26,8 @@ spec:
     controller:
       replicaCount: 1
       service:
-        annotations:
-          lbipam.cilium.io/ips: ${SVC_NGINX_INTERNAL}
+        # annotations:
+        #   lbipam.cilium.io/ips: ${SVC_NGINX_INTERNAL}
         externalTrafficPolicy: Cluster
         ipFamilyPolicy: PreferDualStack
         ipFamilies:
@@ -75,7 +75,7 @@ spec:
           namespaceSelector:
             any: true
       extraArgs:
-        default-ssl-certificate: "network/${SECRET_DOMAIN/./-}-production-tls"
+        default-ssl-certificate: "network/franta.us-production-tls"
       resources:
         requests:
           cpu: 100m
