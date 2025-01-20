@@ -1,24 +1,10 @@
 ---
 apiVersion: v1
-kind: Secret
-type: kubernetes.io/rook
-metadata:
-  name: rook-ceph-mon
-  namespace: rook-ceph-external
-stringData:
-  cluster-name: rook-ceph-external
-  admin-secret: ${ROOK_EXTERNAL_ADMIN_SECRET}
-  ceph-secret: ${ROOK_EXTERNAL_USER_SECRET}
-  ceph-username: ${ROOK_EXTERNAL_USERNAME}
-  fsid: ${ROOK_EXTERNAL_FSID}
-  mon-secret: ${ROOK_EXTERNAL_MONITOR_SECRET}
----
-apiVersion: v1
 kind: ConfigMap
 metadata:
   name: rook-ceph-mon-endpoints
   namespace: rook-ceph-external
 data:
-  data: actinium=${CEPH1_NODE}:3300,thorium=${CEPH2_NODE}:3300,protactinium=${CEPH3_NODE}:3300
+  data: actinium=10.40.1.50:3300,thorium=10.40.1.60:3300,protactinium=10.40.1.70:3300
   mapping: '{"node":{}}'
   maxMonId: "2"

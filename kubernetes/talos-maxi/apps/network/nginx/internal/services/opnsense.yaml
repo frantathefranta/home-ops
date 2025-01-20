@@ -33,7 +33,7 @@ metadata:
 spec:
   ingressClassName: internal
   rules:
-  - host: opnsense.${SECRET_DOMAIN}
+  - host: opnsense.franta.us
     http:
       paths:
       - path: /
@@ -45,4 +45,4 @@ spec:
               number: 443
   tls:
     - hosts:
-      - "opnsense.${SECRET_DOMAIN}"
+      - "opnsense.franta.us"

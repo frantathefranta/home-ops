@@ -53,9 +53,9 @@ spec:
       ingress:
         enabled: true
         # annotations:
-        #   external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
+        #   external-dns.alpha.kubernetes.io/target: internal.franta.us
         ingressClassName: internal
-        hosts: ["alertmanager.${SECRET_DOMAIN}"]
+        hosts: ["alertmanager.franta.us"]
         pathType: Prefix
         service:
           ipDualStack:
@@ -122,9 +122,9 @@ spec:
       ingress:
         enabled: true
         # annotations:
-        #   external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
+        #   external-dns.alpha.kubernetes.io/target: internal.franta.us
         ingressClassName: internal
-        hosts: ["prometheus.${SECRET_DOMAIN}"]
+        hosts: ["prometheus.franta.us"]
         pathType: Prefix
         service:
           ipDualStack:

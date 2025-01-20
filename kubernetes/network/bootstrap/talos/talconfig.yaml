@@ -149,6 +149,11 @@ controlPlane:
           extraArgs:
             bind-address: 0.0.0.0
 
+        apiServer:
+          extraArgs:
+            runtime-config: admissionregistration.k8s.io/v1alpha1=true
+            feature-gates: MutatingAdmissionPolicy=true
+
     # ETCD configuration
     - |-
       cluster:

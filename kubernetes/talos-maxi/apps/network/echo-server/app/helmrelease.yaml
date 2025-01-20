@@ -82,9 +82,9 @@ spec:
       app:
         className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: "external-maxi.${SECRET_DOMAIN}"
+          external-dns.alpha.kubernetes.io/target: "external-maxi.franta.us"
         hosts:
-          - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: "{{ .Release.Name }}.franta.us"
             paths:
               - path: /
                 service:

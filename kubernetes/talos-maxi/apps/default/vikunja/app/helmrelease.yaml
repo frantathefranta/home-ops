@@ -40,14 +40,14 @@ spec:
             env:
               VIKUNJA_SERVICE_ENABLEREGISTRATION: false
               VIKUNJA_SERVICE_TIMEZONE: "${TIMEZONE}"
-              VIKUNJA_SERVICE_PUBLICURL: &host "vikunja.${SECRET_DOMAIN}"
+              VIKUNJA_SERVICE_PUBLICURL: &host "vikunja.franta.us"
               VIKUNJA_SERVICE_ENABLEPUBLICTEAMS: true
               VIKUNJA_AUTH_LOCAL: false
               VIKUNJA_METRICS_ENABLED: true
               VIKUNJA_MAILER_ENABLED: true
               VIKUNJA_MAILER_HOST: smtp-relay.default.svc.cluster.local
               VIKUNJA_MAILER_PORT: 25
-              VIKUNJA_MAILER_FROMEMAIL: "vikunja@${SECRET_DOMAIN}"
+              VIKUNJA_MAILER_FROMEMAIL: "vikunja@franta.us"
               VIKUNJA_MAILER_SKIPTLSVERIFY: true
               VIKUNJA_REDIS_ENABLED: true
               VIKUNJA_REDIS_HOST: "dragonfly.database.svc.cluster.local:6379"
@@ -109,7 +109,7 @@ spec:
       app:
         className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: external-maxi.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: external-maxi.franta.us
         hosts:
           - host: *host
             paths:

@@ -111,7 +111,7 @@ spec:
             readOnly: true
       jeopardy:
         type: nfs
-        server: ${NAS_IP}
+        server: 10.40.1.50
         path: /emc1/jeopardy
         globalMounts:
           - path: /jeopardy

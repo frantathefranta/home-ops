@@ -6,9 +6,9 @@ metadata:
   name: mc-router
 spec:
   endpoints:
-    - dnsName: "mc.${SECRET_DOMAIN}"
+    - dnsName: "mc.franta.us"
       recordType: CNAME
-      targets: ["external-maxi.${SECRET_DOMAIN}"]
+      targets: ["external-maxi.franta.us"]
       providerSpecific:
         - name: external-dns.alpha.kubernetes.io/cloudflare-proxied
           value: 'false'

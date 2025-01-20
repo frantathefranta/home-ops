@@ -40,7 +40,7 @@ spec:
               # Configure application
               PAPERLESS_APPS: allauth.socialaccount.providers.openid_connect
               PAPERLESS_REDIS_PREFIX: pngx
-              PAPERLESS_URL: https://paperless.${SECRET_DOMAIN}
+              PAPERLESS_URL: https://paperless.franta.us
               PAPERLESS_PORT: "8000"
               PAPERLESS_TIME_ZONE: ${TIMEZONE}
               PAPERLESS_WEBSERVER_WORKERS: "2"
@@ -82,9 +82,9 @@ spec:
       app:
         className: internal
         # annotations:
-        #   external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
+        #   external-dns.alpha.kubernetes.io/target: internal.franta.us
         hosts:
-        - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+        - host: "{{ .Release.Name }}.franta.us"
           paths:
           - path: /
             service:
@@ -97,7 +97,7 @@ spec:
           - path: /data/local
       nas:
         type: nfs
-        server: ${NAS_IP}
+        server: 10.40.1.50
         path: /emc1/documents
         globalMounts:
           - path: /data/remote

@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cilium-secret
+  namespace: flux-system
+stringData:
+  bgp_peer: 10.33.0.1
+  bgp_peer_v6: {{ ENV.BGP_PEER_V6 }}
+  cluster_lba_cidr: 10.33.40.0/24
+  cluster_lba_cidr_v6: {{ ENV.LBA_CIDR_V6 }}
+  cluster_svc_prefix_v6: "{{ ENV.SVC_PREFIX_V6 }}"

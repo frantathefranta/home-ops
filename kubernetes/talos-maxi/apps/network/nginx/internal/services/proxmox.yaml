@@ -33,7 +33,7 @@ metadata:
 spec:
   ingressClassName: internal
   rules:
-  - host: proxmox.${SECRET_DOMAIN}
+  - host: proxmox.franta.us
     http:
       paths:
       - path: /
@@ -45,4 +45,4 @@ spec:
               number: 443
   tls:
     - hosts:
-      - "proxmox.${SECRET_DOMAIN}"
+      - "proxmox.franta.us"

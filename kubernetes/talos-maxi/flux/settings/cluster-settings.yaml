@@ -10,3 +10,6 @@ data:
   RBD_POOL_NAME: talos-maxi-rbd
   CEPHFS_METADATA_POOL_NAME: talos-maxi-fs_metadata
   CEPHFS_POOL_NAME: talos-maxi-fs_data
+  VOLSYNC_STORAGECLASS: ceph-rbd
+  VOLSYNC_SNAPSHOTCLASS: csi-rbd-snapshot
+  VOLSYNC_CACHE_SNAPSHOTCLASS: ceph-rbd

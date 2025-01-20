@@ -63,9 +63,9 @@ spec:
       app:
         className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: external-maxi.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: external-maxi.franta.us
         hosts:
-          - host: join.${SECRET_DOMAIN}
+          - host: join.franta.us
             paths:
               - path: /
                 service:

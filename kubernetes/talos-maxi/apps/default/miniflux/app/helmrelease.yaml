@@ -35,7 +35,7 @@ spec:
               repository: ghcr.io/miniflux/miniflux
               tag: 2.2.4@sha256:20adbf84f0d8cd24b4ebbc138e31087419a274fd9c717c6a909b0773b4538b98
             env:
-              BASE_URL: https://miniflux.${SECRET_DOMAIN}
+              BASE_URL: https://miniflux.franta.us
               CREATE_ADMIN: "1"
               # DEBUG: "1"
               LOG_DATE_TIME: "1"
@@ -94,10 +94,10 @@ spec:
     ingress:
       app:
         annotations:
-          external-dns.alpha.kubernetes.io/target: external-maxi.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: external-maxi.franta.us
         className: external
         hosts:
-          - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: "{{ .Release.Name }}.franta.us"
             paths:
               - path: /
                 service:

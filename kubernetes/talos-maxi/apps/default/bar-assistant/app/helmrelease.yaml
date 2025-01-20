@@ -53,8 +53,8 @@ spec:
               repository: barassistant/server
               tag: 4.3.2
             env:
-              BASE_URL: https://bar.${SECRET_DOMAIN}
-              APP_URL: https://bar.${SECRET_DOMAIN}/bar
+              BASE_URL: https://bar.franta.us
+              APP_URL: https://bar.franta.us/bar
               MEILISEARCH_HOST: http://meilisearch:7700
               REDIS_HOST: dragonfly.database.svc.cluster.local
               CACHE_DRIVER: redis
@@ -99,9 +99,9 @@ spec:
       app:
         className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: external-maxi.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: external-maxi.franta.us
         hosts:
-        - host: "bar.${SECRET_DOMAIN}"
+        - host: "bar.franta.us"
           paths:
             - path: /
               service:

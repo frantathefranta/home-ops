@@ -42,15 +42,15 @@ spec:
       params:
         - name: dell-idrac-0
           module: ["dell"]
-          target: bmc-actinium.infra.${SECRET_DOMAIN}
+          target: bmc-actinium.infra.franta.us
           auth: ["public_v2"]
         - name: dell-idrac-1
           module: ["dell"]
-          target: bmc-thorium.infra.${SECRET_DOMAIN}
+          target: bmc-thorium.infra.franta.us
           auth: ["public_v2"]
         - name: dell-idrac-2
           module: ["dell"]
-          target: bmc-protactinium.infra.${SECRET_DOMAIN}
+          target: bmc-protactinium.infra.franta.us
           auth: ["public_v2"]
       path: /snmp
       scrapeTimeout: 30s

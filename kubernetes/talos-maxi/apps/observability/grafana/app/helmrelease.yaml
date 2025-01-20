@@ -33,15 +33,15 @@ spec:
     admin:
       existingSecret: grafana-secret
     env:
-      GF_AUTH_GENERIC_OAUTH_API_URL: https://auth.${SECRET_DOMAIN}/api/oidc/userinfo
-      GF_AUTH_GENERIC_OAUTH_AUTH_URL: https://auth.${SECRET_DOMAIN}/api/oidc/authorization
+      GF_AUTH_GENERIC_OAUTH_API_URL: https://auth.franta.us/api/oidc/userinfo
+      GF_AUTH_GENERIC_OAUTH_AUTH_URL: https://auth.franta.us/api/oidc/authorization
       GF_AUTH_GENERIC_OAUTH_CLIENT_ID: grafana
-      GF_AUTH_GENERIC_OAUTH_TOKEN_URL: https://auth.${SECRET_DOMAIN}/api/oidc/token
+      GF_AUTH_GENERIC_OAUTH_TOKEN_URL: https://auth.franta.us/api/oidc/token
       GF_DATE_FORMATS_USE_BROWSER_LOCALE: true
       GF_EXPLORE_ENABLED: true
       GF_FEATURE_TOGGLES_ENABLE: publicDashboards
       GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: natel-discrete-panel,pr0ps-trackmap-panel,panodata-map-panel
-      GF_SERVER_ROOT_URL: https://grafana.${SECRET_DOMAIN}
+      GF_SERVER_ROOT_URL: https://grafana.franta.us
       GF_SECURITY_COOKIE_SAMESITE: *app
     envFromSecrets:
       - name: grafana-secret
@@ -51,7 +51,7 @@ spec:
         check_for_plugin_updates: false
         reporting_enabled: false
       auth:
-        signout_redirect_url: "https://auth.${SECRET_DOMAIN}/logout"
+        signout_redirect_url: "https://auth.franta.us/logout"
         oauth_auto_login: true
         oauth_allow_insecure_email_lookup: true
       auth.anonymous:
@@ -467,9 +467,9 @@ spec:
     ingress:
       enabled: true
       # annotations:
-      #   external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
+      #   external-dns.alpha.kubernetes.io/target: internal.franta.us
       ingressClassName: internal
-      hosts: ["grafana.${SECRET_DOMAIN}"]
+      hosts: ["grafana.franta.us"]
     persistence:
       enabled: false
     testFramework:

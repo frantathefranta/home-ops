@@ -110,7 +110,7 @@ spec:
           name: repo1
           s3: &minio
             bucket: postgresql-maxi
-            endpoint: s3.${SECRET_DOMAIN}
+            endpoint: s3.franta.us
             region: us-east-1
           schedules:
             full: "0 1 * * 0"           # Sunday at 1am
@@ -138,7 +138,7 @@ spec:
     type: LoadBalancer
     metadata:
       annotations:
-        external-dns.alpha.kubernetes.io/hostname: cpgo-vector.${SECRET_DOMAIN}
+        external-dns.alpha.kubernetes.io/hostname: cpgo-vector.franta.us
         io.cilium/lb-ipam-ips: "${SVC_CPGO_VECTOR_ADDR}"
   monitoring:
     pgmonitor:

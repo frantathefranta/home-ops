@@ -65,7 +65,7 @@ spec:
         size: 10Gi
     query:
       replicas: 3
-      extraArgs: ["--alert.query-url=https://thanos.${SECRET_DOMAIN}"]
+      extraArgs: ["--alert.query-url=https://thanos.franta.us"]
       # additionalStores: ["thanos.turbo.ac:10901"]
     queryFrontend:
       enabled: true
@@ -91,7 +91,7 @@ spec:
         #       thanos-query-frontend
         #     )
         hosts:
-          - thanos.${SECRET_DOMAIN}
+          - thanos.franta.us
       podAnnotations: &podAnnotations
         configmap.reloader.stakater.com/reload: *configMap
     rule:

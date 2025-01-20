@@ -7,13 +7,13 @@ metadata:
 spec:
   staticConfigs:
     - targets:
-        - platinum.infra.${SECRET_DOMAIN}:9100
+        - platinum.infra.franta.us:9100
         - 10.32.10.210:9100 # FIXME: Change this to FQDN
-        - opnsense.infra.${SECRET_DOMAIN}:9100
-        - bastion.infra.${SECRET_DOMAIN}:9100
-        - actinium.infra.${SECRET_DOMAIN}:9100
-        - thorium.infra.${SECRET_DOMAIN}:9100
-        - protactinium.infra.${SECRET_DOMAIN}:9100
+        - opnsense.infra.franta.us:9100
+        - bastion.infra.franta.us:9100
+        - actinium.infra.franta.us:9100
+        - thorium.infra.franta.us:9100
+        - protactinium.infra.franta.us:9100
         - 10.0.50.30:9100 # Home Assistant
   metricsPath: /metrics
   relabelings:

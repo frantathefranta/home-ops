@@ -55,7 +55,7 @@ spec:
       main:
         className: internal
         hosts:
-          - host: varroa.${SECRET_DOMAIN}
+          - host: varroa.franta.us
             paths:
               - path: /
                 pathType: Prefix
@@ -78,6 +78,6 @@ spec:
         enabled: true
         type: nfs
         path: /emc1/music
-        server: ${NAS_IP}
+        server: 10.40.1.50
         globalMounts:
           - path: /music

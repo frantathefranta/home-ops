@@ -186,6 +186,14 @@ patches:
           service:
             disabled: false
 
+  # Enable MutatingAdmissionPolicy
+  - |-
+    cluster:
+      apiServer:
+        extraArgs:
+          runtime-config: admissionregistration.k8s.io/v1alpha1=true
+          feature-gates: MutatingAdmissionPolicy=true
+
   # Configure kubelet
   - |-
     machine:

@@ -87,10 +87,10 @@ spec:
     ingress:
       app:
         # annotations:
-        #   external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
+        #   external-dns.alpha.kubernetes.io/target: internal.franta.us
         className: internal
         hosts:
-          - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: "{{ .Release.Name }}.franta.us"
             paths:
               - path: /
                 service:

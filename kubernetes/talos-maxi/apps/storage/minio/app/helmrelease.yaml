@@ -33,12 +33,12 @@ spec:
               repository: quay.io/minio/minio
               tag: RELEASE.2025-01-18T00-31-37Z
             env:
-              MINIO_API_CORS_ALLOW_ORIGIN: https://minio.${SECRET_DOMAIN},https://s3.${SECRET_DOMAIN}
-              MINIO_BROWSER_REDIRECT_URL: https://minio.${SECRET_DOMAIN}
+              MINIO_API_CORS_ALLOW_ORIGIN: https://minio.franta.us,https://s3.franta.us
+              MINIO_BROWSER_REDIRECT_URL: https://minio.franta.us
               MINIO_PROMETHEUS_JOB_ID: minio
-              MINIO_PROMETHEUS_URL: https://prometheus-maxi.${SECRET_DOMAIN}
+              MINIO_PROMETHEUS_URL: https://prometheus-maxi.franta.us
               MINIO_PROMETHEUS_AUTH_TYPE: public
-              MINIO_SERVER_URL: https://s3.${SECRET_DOMAIN}
+              MINIO_SERVER_URL: https://s3.franta.us
               MINIO_UPDATE: "off"
             envFrom:
               - secretRef:
@@ -102,7 +102,7 @@ spec:
         enabled: true
         className: internal
         hosts:
-          - host: "minio.${SECRET_DOMAIN}"
+          - host: "minio.franta.us"
             paths:
               - path: /
                 service:
@@ -112,7 +112,7 @@ spec:
         enabled: true
         className: internal
         hosts:
-          - host: s3.${SECRET_DOMAIN}
+          - host: s3.franta.us
             paths:
               - path: /
                 service:
@@ -122,7 +122,7 @@ spec:
       data:
         enabled: true
         type: nfs
-        server: ${NAS_IP}
+        server: 10.40.1.50
         path: /emc1/minio
         globalMounts:
           - path: /data

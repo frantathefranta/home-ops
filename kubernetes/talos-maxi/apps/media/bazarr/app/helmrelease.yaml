@@ -107,9 +107,9 @@ spec:
       app:
         className: internal
         # annotations:
-        #   external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
+        #   external-dns.alpha.kubernetes.io/target: internal.franta.us
         hosts:
-        - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+        - host: "{{ .Release.Name }}.franta.us"
           paths:
           - path: /
             service:
@@ -120,13 +120,13 @@ spec:
         existingClaim: *app
       data:
         type: nfs
-        server: ${NAS_IP}
+        server: 10.40.1.50
         path: /emc1/media
         globalMounts:
         - path: /media
       data-jeopardy:
         type: nfs
-        server: ${NAS_IP}
+        server: 10.40.1.50
         path: /emc1/jeopardy
         globalMounts:
         - path: /jeopardy

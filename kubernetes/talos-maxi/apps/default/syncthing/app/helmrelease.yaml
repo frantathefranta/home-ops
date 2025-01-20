@@ -91,7 +91,7 @@ spec:
       app:
         className: internal
         hosts:
-          - host: &host "sync.${SECRET_DOMAIN}"
+          - host: &host "sync.franta.us"
             paths:
               - path: /
                 service:

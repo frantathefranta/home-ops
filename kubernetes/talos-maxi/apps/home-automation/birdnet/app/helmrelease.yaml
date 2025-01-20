@@ -62,7 +62,7 @@ spec:
       app:
         className: internal
         hosts:
-          - host: birdnet.${SECRET_DOMAIN}
+          - host: birdnet.franta.us
             paths:
               - path: /
                 service:

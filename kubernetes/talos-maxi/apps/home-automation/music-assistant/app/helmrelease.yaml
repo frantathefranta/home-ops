@@ -70,7 +70,7 @@ spec:
       app:
         className: internal
         hosts:
-          - host: mass.${SECRET_DOMAIN}
+          - host: mass.franta.us
             paths:
               - path: /
                 service:
@@ -84,7 +84,7 @@ spec:
           - path: /data
       music:
         type: nfs
-        server: ${NAS_IP}
+        server: 10.40.1.50
         path: /emc1/music
         globalMounts:
           - path: /music

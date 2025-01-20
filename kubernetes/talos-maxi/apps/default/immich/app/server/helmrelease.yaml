@@ -112,10 +112,10 @@ spec:
     ingress:
       app:
         annotations:
-          external-dns.alpha.kubernetes.io/target: external-maxi.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: external-maxi.franta.us
         className: external
         hosts:
-          - host: "photos.${SECRET_DOMAIN}"
+          - host: "photos.franta.us"
             paths:
               - path: /
                 pathType: Prefix
@@ -125,7 +125,7 @@ spec:
     persistence:
       library:
         type: nfs
-        server: ${NAS_IP}
+        server: 10.40.1.50
         path: /emc1/photos
         globalMounts:
           - path: /usr/src/app/upload

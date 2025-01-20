@@ -4,11 +4,11 @@ kind: Ingress
 metadata:
   name: emqx-dashboard
   # annotations:
-  #   external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
+  #   external-dns.alpha.kubernetes.io/target: internal.franta.us
 spec:
   ingressClassName: internal
   rules:
-    - host: emqx.${SECRET_DOMAIN}
+    - host: emqx.franta.us
       http:
         paths:
           - path: /

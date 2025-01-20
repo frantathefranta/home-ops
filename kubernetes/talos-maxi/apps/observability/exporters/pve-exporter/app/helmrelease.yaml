@@ -82,7 +82,7 @@ spec:
               module:
                 - default
               target:
-                - "pve.infra.${SECRET_DOMAIN}"
+                - "pve.infra.franta.us"
     persistence:
       tmp:
         type: emptyDir

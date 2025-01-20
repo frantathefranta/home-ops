@@ -82,7 +82,7 @@ spec:
         type: LoadBalancer
         annotations:
           lbipam.cilium.io/ips: "${SVC_ZWAVE_ADDR}"
-          external-dns.alpha.kubernetes.io/hostname: zwave-ws.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/hostname: zwave-ws.franta.us
         ports:
           websocket:
             port: 3000
@@ -101,7 +101,7 @@ spec:
         enabled: true
         className: internal
         hosts:
-          - host: zwave.${SECRET_DOMAIN}
+          - host: zwave.franta.us
             paths:
               - path: /
                 pathType: Prefix

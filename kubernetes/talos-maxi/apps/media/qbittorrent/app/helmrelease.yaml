@@ -93,10 +93,10 @@ spec:
     ingress:
       app:
         # annotations:
-        #   external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
+        #   external-dns.alpha.kubernetes.io/target: internal.franta.us
         className: internal
         hosts:
-          - host: qb.${SECRET_DOMAIN}
+          - host: qb.franta.us
             paths:
               - path: /
                 service:
@@ -107,7 +107,7 @@ spec:
         existingClaim: qbittorrent
       media:
         type: nfs
-        server: ${NAS_IP}
+        server: 10.40.1.50
         path: /emc1/media
         globalMounts:
           - path: /media

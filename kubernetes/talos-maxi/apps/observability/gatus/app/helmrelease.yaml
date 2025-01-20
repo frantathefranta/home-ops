@@ -128,9 +128,9 @@ spec:
           # gethomepage.dev/description: Status Page
           # gethomepage.dev/widget.type: gatus
           # gethomepage.dev/widget.url: http://gatus.observability
-          external-dns.alpha.kubernetes.io/target: external-maxi.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: external-maxi.franta.us
         hosts:
-          - host: status-maxi.${SECRET_DOMAIN}
+          - host: status-maxi.franta.us
             paths:
             - path: /
               service:

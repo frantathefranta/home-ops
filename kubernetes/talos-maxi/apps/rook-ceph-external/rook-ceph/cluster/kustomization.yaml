@@ -5,8 +5,6 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ./monitor-config.yaml
-  - ./rbd-secrets.yaml
-  - ./cephfs-secrets.yaml
-  - ./rgw-secret.yaml
+  - ./externalsecret.yaml
   - ./storageclass.yaml
   - ./prometheusrule.yaml

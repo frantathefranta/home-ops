@@ -17,7 +17,7 @@ parameters:
   imageFeatures: layering
   # imageFeatures: layering,fast-diff,object-map,deep-flatten,exclusive-lock # TODO: Uncomment this at next cluster bootstrap
   imageFormat: "2"
-  pool: ${RBD_POOL_NAME}
+  pool: talos-maxi-rbd
 reclaimPolicy: Delete
 ---
 apiVersion: storage.k8s.io/v1
@@ -33,7 +33,7 @@ parameters:
   csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph-external
   csi.storage.k8s.io/provisioner-secret-name: rook-csi-cephfs-provisioner
   csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph-external
-  fsName: ${CEPHFS_FS_NAME}
-  pool: ${CEPHFS_POOL_NAME}
+  fsName: talos-maxi-fs
+  pool: talos-maxi-fs_data
 allowVolumeExpansion: true
 reclaimPolicy: Delete

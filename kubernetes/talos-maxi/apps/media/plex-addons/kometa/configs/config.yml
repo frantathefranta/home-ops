@@ -141,7 +141,7 @@ omdb:
   cache_expiration: 60
 
 plex:
-  url: http://platinum.iot.${SECRET_DOMAIN}:32400
+  url: http://platinum.iot.franta.us:32400
   token: <<PLEX_API_KEY>>
   timeout: 60
   clean_bundles: false

@@ -1,0 +1,23 @@
+---
+apiVersion: cilium.io/v2alpha1
+kind: CiliumBGPClusterConfig
+metadata:
+    name: cilium-bgp
+spec:
+    nodeSelector:
+        matchLabels:
+            kubernetes.io/os: linux
+    bgpInstances:
+        - name: cluster
+          localASN: 65069
+          peers:
+            - name: arista01
+              peerASN: 65033
+              peerAddress: ${bgp_peer}
+              peerConfigRef:
+                name: cilium-peer
+            - name: arista01-v6
+              peerASN: 65033
+              peerAddress: ${bgp_peer_v6}
+              peerConfigRef:
+                name: cilium-peer-v6

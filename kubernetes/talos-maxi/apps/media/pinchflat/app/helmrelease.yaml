@@ -90,7 +90,7 @@ spec:
       app:
         className: internal
         hosts:
-          - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: "{{ .Release.Name }}.franta.us"
             paths:
               - path: /
                 service:
@@ -107,7 +107,7 @@ spec:
           - path: /etc/yt-dlp
       downloads:
         type: nfs
-        server: ${NAS_IP}
+        server: 10.40.1.50
         path: /emc1/media
         globalMounts:
         - path: /downloads

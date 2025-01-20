@@ -45,9 +45,9 @@ spec:
       createPrometheusRules: true
       externalMgrPrometheusPort: 9283 # IP doesn't need to be specified, operator will find it itself
       externalMgrEndpoints:
-        - ip: ${CEPH1_NODE}
-        - ip: ${CEPH2_NODE}
-        - ip: ${CEPH3_NODE}
+        - ip: 10.40.1.50
+        - ip: 10.40.1.60
+        - ip: 10.40.1.70
       interval: 15s
 
     # -- Settings for the block pool snapshot class

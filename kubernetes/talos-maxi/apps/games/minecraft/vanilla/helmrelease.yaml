@@ -71,7 +71,7 @@ spec:
         enabled: true
         existingClaim: *app
     serviceAnnotations:
-      mc-router.itzg.me/externalServerName: &host vanilla.${SECRET_DOMAIN}
+      mc-router.itzg.me/externalServerName: &host vanilla.franta.us
     minecraftServer:
       eula: true
       version: "1.21"
@@ -108,7 +108,7 @@ spec:
           ingressClassName: external
           enabled: true
           annotations:
-            external-dns.alpha.kubernetes.io/target: mc.${SECRET_DOMAIN}
+            external-dns.alpha.kubernetes.io/target: mc.franta.us
             external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
             external-dns.alpha.kubernetes.io/exclude-bind: "true"
           hosts:

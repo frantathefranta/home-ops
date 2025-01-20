@@ -33,7 +33,7 @@ metadata:
 spec:
   ingressClassName: internal
   rules:
-  - host: hass.${SECRET_DOMAIN}
+  - host: hass.franta.us
     http:
       paths:
       - path: /
@@ -45,4 +45,4 @@ spec:
               number: 8123
   tls:
     - hosts:
-      - "hass.${SECRET_DOMAIN}"
+      - "hass.franta.us"

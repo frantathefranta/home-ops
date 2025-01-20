@@ -29,7 +29,7 @@ spec:
       replicaCount: 2
       service:
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: "external-maxi.${SECRET_DOMAIN}"
+          external-dns.alpha.kubernetes.io/hostname: "external-maxi.franta.us"
           external-dns.alpha.kubernetes.io/ttl: "24h"
           lbipam.cilium.io/ips: ${SVC_NGINX_EXTERNAL}
         externalTrafficPolicy: Cluster

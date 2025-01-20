@@ -111,10 +111,10 @@ spec:
     ingress:
       app:
         # annotations:
-        #   external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
+        #   external-dns.alpha.kubernetes.io/target: internal.franta.us
         className: internal
         hosts:
-          - host: transmission-jeopardy.${SECRET_DOMAIN}
+          - host: transmission-jeopardy.franta.us
             paths:
               - path: /
                 service:
@@ -127,7 +127,7 @@ spec:
         type: emptyDir
       media:
         type: nfs
-        server: ${NAS_IP}
+        server: 10.40.1.50
         path: /emc1/jeopardy
         globalMounts:
           - path: /jeopardy

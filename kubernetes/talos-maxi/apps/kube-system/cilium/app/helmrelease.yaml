@@ -63,7 +63,7 @@ spec:
         ingress:
           enabled: true
           className: internal
-          hosts: ["hubble.${SECRET_DOMAIN}"]
+          hosts: ["hubble.franta.us"]
     loadBalancer:
       l7:
         backend: envoy

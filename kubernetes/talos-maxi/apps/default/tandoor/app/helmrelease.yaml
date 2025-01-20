@@ -43,7 +43,7 @@ spec:
               DEBUG: 0
               ALLOWED_HOSTS: "*"
               DB_ENGINE: django.db.backends.postgresql
-              DEFAULT_FROM_EMAIL: recipes@${SECRET_DOMAIN}
+              DEFAULT_FROM_EMAIL: recipes@franta.us
               GUNICORN_MEDIA: 0
               REMOTE_USER_AUTH: 0
               FRACTION_PREF_DEFAULT: 0
@@ -111,9 +111,9 @@ spec:
       app:
         className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: "external-maxi.${SECRET_DOMAIN}"
+          external-dns.alpha.kubernetes.io/target: "external-maxi.franta.us"
         hosts:
-          - host: &host "recipes.${SECRET_DOMAIN}"
+          - host: &host "recipes.franta.us"
             paths:
               - path: /
                 service:
