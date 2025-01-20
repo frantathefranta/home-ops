@@ -288,6 +288,8 @@ tasks:
         sh: akeyless get-secret-value --name cilium --jq-expression '."{{.CLUSTER}}_LBA_CIDR_V6"'
       SVC_PREFIX_V6:
         sh: akeyless get-secret-value --name cilium --jq-expression '."{{.CLUSTER}}_SVC_PREFIX_V6"'
+      LBA_PREFIX_V6:
+        sh: akeyless get-secret-value --name cilium --jq-expression '."{{.CLUSTER}}_LBA_PREFIX_V6"'
     cmds:
       # - until kubectl --kubeconfig {{.KUBERNETES_DIR}}/{{.CLUSTER}}/kubeconfig wait --for=condition=Ready=False nodes --all --timeout=600s; do sleep 10; done
       # - minijinja-cli {{.CLUSTER_DIR}}/bootstrap/talos/apps/templates/resources.yaml.j2 | kubectl apply --server-side --filename -

@@ -29,9 +29,9 @@ spec:
       replicaCount: 2
       service:
         annotations:
+          lbipam.cilium.io/ips: 10.33.40.20,${cluster_lba_prefix_v6}:20
           external-dns.alpha.kubernetes.io/hostname: "external-maxi.franta.us"
           external-dns.alpha.kubernetes.io/ttl: "24h"
-          lbipam.cilium.io/ips: ${SVC_NGINX_EXTERNAL}
         externalTrafficPolicy: Cluster
         ipFamilyPolicy: PreferDualStack
         ipFamilies:
@@ -80,7 +80,7 @@ spec:
           namespaceSelector:
             any: true
       extraArgs:
-        default-ssl-certificate: "network/${SECRET_DOMAIN/./-}-production-tls"
+        default-ssl-certificate: "network/franta.us-production-tls"
       terminationGracePeriodSeconds: 120
       publishService:
         enabled: false
