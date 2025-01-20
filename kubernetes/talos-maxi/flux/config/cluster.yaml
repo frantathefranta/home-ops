@@ -1,23 +1,4 @@
 ---
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: GitRepository
-metadata:
-  name: home-kubernetes
-  namespace: flux-system
-spec:
-  interval: 30m
-  url: "ssh://git@github.com/frantathefranta/home-ops.git"
-  secretRef:
-    name: github-deploy-key
-  ref:
-    branch: "main"
-  ignore: |
-    # exclude all
-    /*
-    # include kubernetes directory
-    !/kubernetes/talos-maxi
-    !/kubernetes/shared
----
 # yaml-language-server: $schema=https://kube-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -25,6 +6,7 @@ metadata:
   name: cluster-shared
   namespace: flux-system
 spec:
+  targetNamespace: flux-system
   interval: 30m
   path: ./kubernetes/shared
   prune: true
@@ -32,49 +14,53 @@ spec:
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
-  decryption:
-    provider: sops
-    secretRef:
-      name: sops-age
-  postBuild:
-    substituteFrom:
-      - name: cluster-settings
-        kind: ConfigMap
-        optional: true
-      - name: cluster-secrets
-        kind: Secret
-        optional: true
 ---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster
+  name: cluster-repos
+  namespace: flux-system
+spec:
+  targetNamespace: flux-system
+  interval: 30m
+  path: ./kubernetes/talos-maxi/flux/repos
+  prune: true
+  wait: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-settings
+  namespace: flux-system
+spec:
+  targetNamespace: flux-system
+  interval: 30m
+  path: ./kubernetes/talos-maxi/flux/settings
+  prune: true
+  wait: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-apps
   namespace: flux-system
 spec:
   interval: 30m
   dependsOn:
+    - name: cluster-repos
     - name: cluster-shared
-  path: ./kubernetes/talos-maxi/flux
+    - name: cluster-settings
+  path: ./kubernetes/talos-maxi/apps
   prune: true
-  wait: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
-  decryption:
-    provider: sops
-    secretRef:
-      name: sops-age
-  postBuild:
-    substituteFrom:
-      - kind: ConfigMap
-        name: cluster-settings
-        optional: true
-      - name: cluster-settings-talos-maxi
-        kind: ConfigMap
-        optional: true
-      - name: cluster-secrets
-        kind: Secret
-        optional: true
-      - name: cluster-secrets-talos-maxi
-        kind: Secret
-        optional: true
