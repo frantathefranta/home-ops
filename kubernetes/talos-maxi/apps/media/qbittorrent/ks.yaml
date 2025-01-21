@@ -39,6 +39,10 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
   path: ./kubernetes/talos-maxi/apps/media/qbittorrent/tools
   prune: true
   sourceRef:
