@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: quay.io/minio/minio
-              tag: RELEASE.2025-01-18T00-31-37Z
+              tag: RELEASE.2025-01-20T14-49-07Z
             env:
               MINIO_API_CORS_ALLOW_ORIGIN: https://minio.franta.us,https://s3.franta.us
               MINIO_BROWSER_REDIRECT_URL: https://minio.franta.us
