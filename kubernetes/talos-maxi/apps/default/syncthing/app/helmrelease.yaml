@@ -38,7 +38,7 @@ spec:
               repository: docker.io/syncthing/syncthing
               tag: 1.29.2
             env:
-              TZ: ${TIMEZONE}
+              TZ: America/Detroit
               PGID: 1000
               PUID: 1000
             resources:

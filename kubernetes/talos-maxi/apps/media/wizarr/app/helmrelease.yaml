@@ -38,7 +38,7 @@ spec:
               repository:  ghcr.io/wizarrrr/wizarr
               tag: 4.2.0
             env:
-              TZ: ${TIMEZONE}
+              TZ: America/Detroit
             resources:
               requests:
                 cpu: 15m

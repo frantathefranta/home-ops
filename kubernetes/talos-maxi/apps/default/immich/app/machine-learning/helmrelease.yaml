@@ -37,7 +37,7 @@ spec:
               repository: ghcr.io/immich-app/immich-machine-learning
               tag: v1.124.2@sha256:a134652b47278edfdac3187d61558e78679be39c810536193a41e9e0d894c5f4
             env:
-              TZ: ${TIMEZONE}
+              TZ: America/Detroit
             envFrom:
               - configMapRef:
                   name: immich-configmap

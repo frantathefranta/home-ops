@@ -39,7 +39,7 @@ spec:
               repository: ghcr.io/music-assistant/server
               tag: 2.3.6@sha256:7c43aadfaf9109feab4c514648124701bf6b70410932ffcbf0c9daa7bdfbc2b2
             env:
-              TZ: ${TIMEZONE}
+              TZ: America/Detroit
             probes:
               liveness:
                 enabled: true

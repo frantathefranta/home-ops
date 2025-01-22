@@ -64,7 +64,7 @@ spec:
       failureThreshold: 30
       periodSeconds: 10
     extraEnv:
-      TZ: ${TIMEZONE}
+      TZ: America/Detroit
       ENABLE_AUTOPAUSE: TRUE # Doesn't work in Kubes
     persistence:
       dataDir:

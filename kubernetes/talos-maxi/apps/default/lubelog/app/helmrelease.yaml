@@ -40,7 +40,7 @@ spec:
               repository: ghcr.io/hargata/lubelogger
               tag: v1.4.3
             env:
-              TZ: ${TIMEZONE}
+              TZ: America/Detroit
               LC_ALL: en_US.UTF-8
               LOGGING__LOGLEVEL__DEFAULT: debug
             envFrom:
