@@ -38,7 +38,7 @@ spec:
                   name: pve-exporter
             image:
               repository: prompve/prometheus-pve-exporter
-              tag: 3.5.0
+              tag: 3.5.1
             probes:
               liveness: &probes
                 enabled: true
