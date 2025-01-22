@@ -109,14 +109,14 @@ jobs:
           echo "images=${images}" >> $GITHUB_OUTPUT
 
   pre-pull-images:
-    if: ${{ needs.extract-images.outputs.images != '[]' }}
+    if: ${{ needs.compare-images.outputs.images != '[]' }}
     name: Pre-pull Images
     runs-on: ["gha-runner-scale-set"]
     needs: ["compare-images", "changed-clusters"]
     strategy:
       matrix:
-        images: ${{ fromJSON(needs.extract-images.outputs.images) }}
-        paths: ${{ fromJSON(needs.extract-images.outputs.paths) }}
+        images: ${{ fromJSON(needs.compare-images.outputs.images) }}
+        paths: ${{ fromJSON(needs.changed-clusters.outputs.matrix) }}
       max-parallel: 4
       fail-fast: false
     steps:
