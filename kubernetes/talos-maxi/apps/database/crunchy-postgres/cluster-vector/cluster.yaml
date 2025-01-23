@@ -79,29 +79,25 @@ spec:
         - secret:
             name: crunchy-pgo-vector-secret
       global: &backupFlag
-        archive-timeout: "60"
-        archive-push-queue-max: 4GiB
         compress-type: lz4
         compress-level: "9"
         # PVC
         repo1-retention-full: "30" # days
         repo1-retention-full-type: "time"
-
-        repo2-bundle: "y"
+        # R2
         repo2-block: "y"
-        repo2-path: "/pgdata/crunchy-pgo-vector/repo2"
-        repo2-s3-uri-style: "path"
+        repo2-bundle: "y"
+        repo2-path: "/pgdata/crunchy-pgo-vector"
         repo2-retention-full-type: "time"
         repo2-retention-full: "7"
-        repo2-retention-diff: "14"
-        repo2-cipher-type: "aes-256-cbc"
-
+        # repo2-cipher-type: "aes-256-cbc"
+        repo2-s3-uri-style: "path"
+        # Minio
         repo3-bundle: "y"
         repo3-block: "y"
         repo3-retention-full-type: time
-        repo3-retention-full: "14"
-        repo3-retention-diff: "30"
-        repo3-path: "/pgdata/crunchy-pgo-vector/repo1"
+        repo3-retention-full: "30"
+        repo3-path: "/pgdata/crunchy-pgo-vector"
         repo3-s3-uri-style: path
       manual:
         repoName: repo1
