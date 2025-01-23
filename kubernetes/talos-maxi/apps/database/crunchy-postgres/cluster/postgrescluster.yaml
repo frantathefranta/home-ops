@@ -124,29 +124,29 @@ spec:
         type: AlphaNumeric
   backups:
     pgbackrest:
-      # image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.53-0
       configuration: &backupConfig
         - secret:
             name: crunchy-pgo-secret
       global: &backupFlag
-        archive-timeout: "60"
         compress-type: bz2
         compress-level: "9"
-        delta: "y"
-        repo1-bundle: "y"
-        repo1-block: "y"
-        repo1-path: /pgdata/crunchy-pgo/repo1
-        repo1-s3-uri-style: path
-        repo1-retention-full-type: time
-        repo1-retention-full: "14"
-        repo1-retention-diff: "30"
-        repo2-bundle: "y"
+        # PVC
+        repo1-retention-full: "30" # days
+        repo1-retention-full-type: "time"
+        # R2
         repo2-block: "y"
-        repo2-path: /pgdata/crunchy-pgo/repo2
-        repo2-s3-uri-style: path
+        repo2-bundle: "y"
+        repo2-path: /pgdata/crunchy-pgo
         repo2-retention-full-type: time
-        repo2-retention-full: "2"
-        repo2-retention-diff: "7"
+        repo2-retention-full: "7"
+        repo2-s3-uri-style: path
+        # Minio
+        repo3-bundle: "y"
+        repo3-block: "y"
+        repo3-path: /pgdata/crunchy-pgo/
+        repo3-retention-full-type: time
+        repo3-retention-full: "30"
+        repo3-s3-uri-style: path
       manual:
         repoName: repo1
         options:
@@ -156,31 +156,44 @@ spec:
           app.kubernetes.io/name: crunchy-postgres-backup
       repos:
         - name: repo1
-          s3: &minio
-            bucket: postgresql-maxi
-            endpoint: s3.franta.us
-            region: us-east-1
+          volume: &nfs
+            volumeClaimSpec:
+              storageClassName: nfs-slow #csi-driver-nfs
+              volumeName: postgres-cluster-nfs
+              accessModes: ["ReadWriteMany"]
+              resources:
+                requests:
+                  storage: 1Mi
           schedules:
-            full: "0 1 * * 0" # Sunday at 1am
-            differential: "0 1 * * 1-6" # Mon-Sat at 1am
-            incremental: "0 3-23 * * *" # Every hour except 1-2am
+            full: "20 1 * * 0" # Sunday at 01:30
+            differential: "20 1 * * 1-6" # Mon-Sat at 01:30
+            incremental: "20 3-23 * * *" # Every hour except 01:30-2:30
         - name: repo2
           s3: &r2
             bucket: crunchy-pgo
             endpoint: ${R2_ENDPOINT}
             region: us-east-1 #https://developers.cloudflare.com/r2/api/s3/api/#bucket-region
           schedules:
-            full: "0 2 * * 0" # Sunday at 2am
-            differential: "0 2 * * 1-6" # Mon-Sat at 2am
+            full: "25 2 * * 0" # Sunday at 2am
+            differential: "25 2 * * 1-6" # Mon-Sat at 2am
+        - name: repo3
+          s3: &minio
+            bucket: postgresql-maxi
+            endpoint: s3.franta.us
+            region: us-east-1
+          schedules:
+            full: "10 1 * * 0" # Sunday at 1am
+            differential: "10 1 * * 1-6" # Mon-Sat at 1am
+            incremental: "10 3-23 * * *" # Every hour except 1-2am
       jobs:
-        ttlSecondsAfterFinished: 60
+        ttlSecondsAfterFinished: 600
   dataSource:
     pgbackrest:
       stanza: db
       configuration: *backupConfig
       global: *backupFlag
       repo:
-        name: repo1
+        name: repo3
         s3: *minio
   monitoring:
     pgmonitor:

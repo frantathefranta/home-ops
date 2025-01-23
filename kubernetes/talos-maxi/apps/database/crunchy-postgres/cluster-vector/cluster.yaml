@@ -138,7 +138,7 @@ spec:
             differential: "15 1 * * 1-6" # Mon-Sat at 1am
             incremental: "15 3-23 * * *" # Every hour except 1-2am
       jobs:
-        ttlSecondsAfterFinished: 60
+        ttlSecondsAfterFinished: 600
   dataSource:
     pgbackrest:
       stanza: db
