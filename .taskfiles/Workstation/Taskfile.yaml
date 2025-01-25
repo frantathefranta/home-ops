@@ -12,7 +12,7 @@ vars:
   # renovate: datasource=github-releases depName=go-task/task
   TASK_VERSION: v3.41.0
   # renovate: datasource=github-releases depName=getsops/sops
-  SOPS_VERSION: v3.9.3
+  SOPS_VERSION: v3.9.4
   # renovate: datasource=github-releases depName=derailed/k9s
   K9S_VERSION: v0.32.7
   # renovate: datasource=github-releases depName=cilium/cilium-cli
