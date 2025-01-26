@@ -81,6 +81,7 @@ spec:
       global: &backupFlag
         compress-type: lz4
         compress-level: "9"
+        archive-timeout: "300"
         # PVC
         repo1-retention-full: "30" # days
         repo1-retention-full-type: "time"
