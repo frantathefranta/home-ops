@@ -81,7 +81,6 @@ spec:
       global: &backupFlag
         compress-type: lz4
         compress-level: "9"
-        archive-timeout: "300"
         archive-push-queue-max: 4GiB
         # PVC
         repo1-retention-full: "14" # days
