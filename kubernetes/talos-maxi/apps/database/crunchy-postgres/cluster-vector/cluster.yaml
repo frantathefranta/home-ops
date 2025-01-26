@@ -82,8 +82,9 @@ spec:
         compress-type: lz4
         compress-level: "9"
         archive-timeout: "300"
+        archive-push-queue-max: 4GiB
         # PVC
-        repo1-retention-full: "30" # days
+        repo1-retention-full: "14" # days
         repo1-retention-full-type: "time"
         # R2
         repo2-block: "y"
