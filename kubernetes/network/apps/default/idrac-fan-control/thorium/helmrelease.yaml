@@ -34,8 +34,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/frantathefranta/dell_idrac_fan_controller
-              tag: v1.7@sha256:495ab409a20323be4205bcd09a6345ac842255a79121a1a7dbeffb45a9a62cae
+              repository: ghcr.io/tigerblue77/dell_idrac_fan_controller
+              tag: latest@sha256:eda09016a4acbee8883996f3b8cd4832a723200999bd037934675e75e2f00908
             env:
               FAN_SPEED: 15
               CPU_TEMPERATURE_THRESHOLD: 85
