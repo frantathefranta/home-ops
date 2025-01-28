@@ -148,11 +148,11 @@ spec:
       repo:
         name: repo3
         s3: *minio
-  service:
-    type: LoadBalancer
-    metadata:
-      annotations:
-        external-dns.alpha.kubernetes.io/hostname: cpgo-vector.franta.us
+  # service:
+  #   type: LoadBalancer
+  #   metadata:
+  #     annotations:
+  #       external-dns.alpha.kubernetes.io/hostname: cpgo-vector.franta.us
   monitoring:
     pgmonitor:
       exporter:
@@ -162,24 +162,24 @@ spec:
             memory: 64M
           limits:
             memory: 512M
-  proxy:
-    pgBouncer:
-      port: 5432
-      replicas: *replica
-      metadata:
-        labels:
-          app.kubernetes.io/name: crunchy-postgres-vector-pgbouncer
-      config:
-        global:
-          pool_mode: transaction
-          client_tls_sslmode: prefer
-          default_pool_size: "100"
-          max_client_conn: "500"
-      topologySpreadConstraints:
-        - maxSkew: 1
-          topologyKey: topology.kubernetes.io/zone
-          whenUnsatisfiable: DoNotSchedule
-          labelSelector:
-            matchLabels:
-              postgres-operator.crunchydata.com/cluster: *name
-              postgres-operator.crunchydata.com/role: pgbouncer-vector
+  # proxy:
+  #   pgBouncer:
+  #     port: 5432
+  #     replicas: *replica
+  #     metadata:
+  #       labels:
+  #         app.kubernetes.io/name: crunchy-postgres-vector-pgbouncer
+  #     config:
+  #       global:
+  #         pool_mode: transaction
+  #         client_tls_sslmode: prefer
+  #         default_pool_size: "100"
+  #         max_client_conn: "500"
+  #     topologySpreadConstraints:
+  #       - maxSkew: 1
+  #         topologyKey: topology.kubernetes.io/zone
+  #         whenUnsatisfiable: DoNotSchedule
+  #         labelSelector:
+  #           matchLabels:
+  #             postgres-operator.crunchydata.com/cluster: *name
+  #             postgres-operator.crunchydata.com/role: pgbouncer-vector
