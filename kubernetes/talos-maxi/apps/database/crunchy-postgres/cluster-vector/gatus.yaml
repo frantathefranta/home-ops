@@ -10,7 +10,7 @@ data:
     endpoints:
       - name: cpgo-vector
         group: infrastructure
-        url: tcp://postgres-vector-pgbouncer.database.svc.cluster.local:5432
+        url: tcp://postgres-vector-primary.database.svc.cluster.local:5432
         interval: 1m
         conditions: ["[CONNECTED] == true"]
         alerts: [{ type: pushover }]
