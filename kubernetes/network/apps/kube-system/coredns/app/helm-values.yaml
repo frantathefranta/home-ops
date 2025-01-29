@@ -16,10 +16,10 @@ servers:
     port: 53
     plugins:
       - name: errors
-      - name: health
+      - name: health # Necessary for liveness probe
         configBlock: |-
           lameduck 5s
-      - name: ready
+      - name: ready # Necessary for readiness probe
       - name: log
         configBlock: |-
           class error
@@ -37,6 +37,11 @@ servers:
       - name: loop
       - name: reload
       - name: loadbalance
+livenessProbe:
+  initialDelaySeconds: 10 # default is 60
+readinessProbe:
+  initialDelaySeconds: 5 # default is 30
+
 affinity:
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
