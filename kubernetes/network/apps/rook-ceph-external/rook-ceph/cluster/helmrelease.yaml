@@ -1,0 +1,65 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: rook-ceph-cluster
+spec:
+  interval: 30m
+  timeout: 15m
+  chart:
+    spec:
+      chart: rook-ceph-cluster
+      version: v1.16.2
+      sourceRef:
+        kind: HelmRepository
+        name: rook-ceph
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    operatorNamespace: rook-ceph-external
+    cephClusterSpec:
+      external:
+        enable: true
+      crashCollector:
+        disable: true
+      cephVersion:
+        image: quay.io/ceph/ceph:v19.2.0
+      healthCheck:
+        daemonHealth:
+          mon:
+            disabled: false
+            interval: 45s
+    monitoring:
+      enabled: false
+
+    # -- Settings for the block pool snapshot class
+    # @default -- See [RBD Snapshots](../Storage-Configuration/Ceph-CSI/ceph-csi-snapshot.md#rbd-snapshots)
+    cephBlockPoolsVolumeSnapshotClass:
+      enabled: true
+      name: ceph-rbd-snapshot
+      isDefault: true
+      deletionPolicy: Delete
+      # see https://rook.io/docs/rook/v1.10/Storage-Configuration/Ceph-CSI/ceph-csi-snapshot/#rbd-snapshots for available configuration
+      parameters: # Only pool needs to be specified as snapshotter secret and clusterID are already pre-selected
+        pool: talos-network
+
+    cephBlockPools: {}
+
+    # # -- A list of CephFileSystem configurations to deploy
+    # # @default -- See [below](#ceph-file-systems)
+    cephFileSystems: {}
+
+    # # -- A list of CephObjectStore configurations to deploy
+    # # @default -- See [below](#ceph-object-stores)
+    cephObjectStores: {}
