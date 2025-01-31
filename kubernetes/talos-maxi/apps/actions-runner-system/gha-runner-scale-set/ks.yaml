@@ -7,6 +7,7 @@ metadata:
 spec:
   dependsOn:
     - name: gha-runner-scale-set-controller
+      namespace: actions-runner-system
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app

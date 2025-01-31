@@ -35,7 +35,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: emqx
-      namespace: default
+      namespace: database
   path: ./kubernetes/talos-maxi/apps/database/emqx/cluster
   prune: true
   sourceRef:

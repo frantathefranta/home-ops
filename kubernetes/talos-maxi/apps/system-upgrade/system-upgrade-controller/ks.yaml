@@ -4,7 +4,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app system-upgrade-controller
-  namespace: flux-system
 spec:
   targetNamespace: system-upgrade
   commonMetadata:
@@ -12,11 +11,13 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: node-feature-discovery
+      namespace: kube-system
   path: ./kubernetes/talos-maxi/apps/system-upgrade/system-upgrade-controller/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   wait: true
   interval: 30m
   retryInterval: 1m
@@ -27,7 +28,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app system-upgrade-controller-plans
-  namespace: flux-system
 spec:
   targetNamespace: system-upgrade
   commonMetadata:
@@ -35,11 +35,13 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: system-upgrade-controller
+      namespace: system-upgrade
   path: ./kubernetes/talos-maxi/apps/system-upgrade/system-upgrade-controller/plans
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   wait: false
   interval: 30m
   retryInterval: 1m
