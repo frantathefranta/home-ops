@@ -4,7 +4,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app vikunja
-  namespace: flux-system
 spec:
   targetNamespace: default
   commonMetadata:
@@ -15,13 +14,20 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   dependsOn:
     - name: external-secrets-stores
+      namespace: external-secrets
     - name: crunchy-postgres-operator-cluster
+      namespace: database
     - name: crunchy-postgres-stores
+      namespace: database
     - name: authelia
+      namespace: default
     - name: dragonfly-cluster
+      namespace: database
     - name: smtp-relay
+      namespace: default
   wait: false
   interval: 30m
   retryInterval: 1m

@@ -12,13 +12,17 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: crunchy-postgres-operator-cluster
+      namespace: database
     - name: crunchy-postgres-stores
+      namespace: database
     - name: external-secrets-stores
+      namespace: external-secrets
   path: ./kubernetes/talos-maxi/apps/default/tandoor/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   wait: false
   interval: 30m
   retryInterval: 1m

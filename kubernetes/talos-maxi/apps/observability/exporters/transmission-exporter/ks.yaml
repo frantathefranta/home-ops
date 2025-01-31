@@ -4,7 +4,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app transmission-music-exporter
-  namespace: flux-system
 spec:
   targetNamespace: observability
   commonMetadata:
@@ -12,11 +11,13 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: transmission-music
+      namespace: media
   path: ./kubernetes/talos-maxi/apps/observability/exporters/transmission-exporter/music
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   wait: true
   interval: 30m
   retryInterval: 1m
@@ -27,7 +28,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app transmission-jeopardy-exporter
-  namespace: flux-system
 spec:
   targetNamespace: observability
   commonMetadata:
@@ -35,11 +35,13 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: transmission-jeopardy
+      namespace: media
   path: ./kubernetes/talos-maxi/apps/observability/exporters/transmission-exporter/jeopardy
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   wait: true
   interval: 30m
   retryInterval: 1m

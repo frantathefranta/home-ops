@@ -4,21 +4,24 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app paperless
-  namespace: flux-system
 spec:
   targetNamespace: default
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: crunchy-postgres-stores
-    - name: dragonfly-cluster
     - name: external-secrets-stores
+      namespace: external-secrets
+    - name: crunchy-postgres-operator-cluster
+      namespace: database
+    - name: crunchy-postgres-stores
+      namespace: database
   path: ./kubernetes/talos-maxi/apps/default/paperless/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   wait: false # no flux ks dependents
   interval: 30m
   retryInterval: 1m
