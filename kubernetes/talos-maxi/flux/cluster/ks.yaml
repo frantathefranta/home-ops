@@ -3,49 +3,45 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-shared
+  name: cluster-meta
   namespace: flux-system
 spec:
-  targetNamespace: flux-system
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
   interval: 30m
-  path: ./kubernetes/shared
+  path: ./kubernetes/talos-maxi/flux/meta
   prune: true
-  wait: true
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
+  targetNamespace: flux-system
+  timeout: 5m
+  wait: true
 ---
 # yaml-language-server: $schema=https://kube-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-repos
+  name: cluster-shared-meta
   namespace: flux-system
 spec:
-  targetNamespace: flux-system
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
   interval: 30m
-  path: ./kubernetes/talos-maxi/flux/repos
+  path: ./kubernetes/shared/meta
   prune: true
-  wait: true
   sourceRef:
     kind: GitRepository
     name: flux-system
----
-# yaml-language-server: $schema=https://kube-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: cluster-settings
-  namespace: flux-system
-spec:
+    namespace: flux-system
   targetNamespace: flux-system
-  interval: 30m
-  path: ./kubernetes/talos-maxi/flux/settings
-  prune: true
+  timeout: 5m
   wait: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
 ---
 # yaml-language-server: $schema=https://kube-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -54,13 +50,19 @@ metadata:
   name: cluster-apps
   namespace: flux-system
 spec:
-  interval: 30m
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
   dependsOn:
-    - name: cluster-repos
-    - name: cluster-shared
-    - name: cluster-settings
+    - name: cluster-meta
+    - name: cluster-shared-meta
+  interval: 30m
   path: ./kubernetes/talos-maxi/apps
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
+  timeout: 5m
+  wait: false
