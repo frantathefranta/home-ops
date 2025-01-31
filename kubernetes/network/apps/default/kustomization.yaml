@@ -7,3 +7,4 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./idrac-fan-control/ks.yaml
+  - ./syncthing/ks.yaml
