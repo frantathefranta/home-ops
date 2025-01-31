@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &name external-dns-internal
+  name: &name external-dns-bind
 spec:
   interval: 30m
   chart:
@@ -26,14 +26,14 @@ spec:
   values:
     fullnameOverride: *name
     logLevel: info
-    service:
-      ipFamilyPolicy: PreferDualStack
+    # service:
+    #   ipFamilyPolicy: PreferDualStack
     domainFilters:
       - "franta.us"
 
     env:
       - name: EXTERNAL_DNS_RFC2136_HOST
-        value: "10.0.30.53"
+        value: "10.33.10.0"
       - name: EXTERNAL_DNS_RFC2136_PORT
         value: "53"
       - name: EXTERNAL_DNS_RFC2136_ZONE
@@ -75,8 +75,9 @@ spec:
     sources:
       - ingress
       - service
-    txtPrefix: "k8s."
-    txtOwnerId: talos-network
+
+    txtPrefix: "k8s.talos-network."
+    txtOwnerId: default
 
   postRenderers:
     - kustomize:
