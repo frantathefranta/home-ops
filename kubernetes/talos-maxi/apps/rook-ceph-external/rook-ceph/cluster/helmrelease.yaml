@@ -24,6 +24,9 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
+  dependsOn:
+  - name: snapshot-controller
+    namespace: storage
   uninstall:
     keepHistory: false
   values:
