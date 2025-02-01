@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
+  - ./resources/grafana-dashboard.yaml
   - ../../../../../shared/templates/gatus/guarded
 configMapGenerator:
   - name: autobrr-loki-rules
