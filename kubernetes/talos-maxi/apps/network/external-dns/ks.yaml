@@ -59,7 +59,7 @@ spec:
   dependsOn:
     - name: external-secrets-stores
   path: ./kubernetes/talos-maxi/apps/network/external-dns/external
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -82,7 +82,7 @@ spec:
   dependsOn:
     - name: external-secrets-stores
   path: ./kubernetes/talos-maxi/apps/network/external-dns/opnsense-unbound
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -105,7 +105,7 @@ spec:
 #   dependsOn:
 #     - name: external-secrets-stores
 #   path: ./kubernetes/talos-maxi/apps/network/external-dns/bind-opnsense
-#   prune: true
+#   prune: false
 #   sourceRef:
 #     kind: GitRepository
 #     name: flux-system

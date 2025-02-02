@@ -9,7 +9,7 @@ spec:
   targetNamespace: flux-system
   interval: 30m
   path: ./kubernetes/shared
-  prune: true
+  prune: false
   wait: true
   sourceRef:
     kind: GitRepository
@@ -25,7 +25,7 @@ spec:
   targetNamespace: flux-system
   interval: 30m
   path: ./kubernetes/talos-maxi/flux/repos
-  prune: true
+  prune: false
   wait: true
   sourceRef:
     kind: GitRepository
@@ -41,7 +41,7 @@ spec:
   targetNamespace: flux-system
   interval: 30m
   path: ./kubernetes/talos-maxi/flux/settings
-  prune: true
+  prune: false
   wait: true
   sourceRef:
     kind: GitRepository
@@ -60,7 +60,7 @@ spec:
     - name: cluster-shared
     - name: cluster-settings
   path: ./kubernetes/talos-maxi/apps
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system

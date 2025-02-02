@@ -12,7 +12,7 @@ spec:
     - name: dragonfly-cluster
     - name: external-secrets-stores
   path: ./kubernetes/talos-maxi/apps/default/immich/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system

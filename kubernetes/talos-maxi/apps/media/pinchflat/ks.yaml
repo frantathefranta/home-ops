@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: volsync
   path: ./kubernetes/talos-maxi/apps/media/pinchflat/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system

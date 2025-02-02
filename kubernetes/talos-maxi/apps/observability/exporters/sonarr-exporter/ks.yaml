@@ -14,7 +14,7 @@ spec:
     - name: sonarr
     - name: external-secrets-stores
   path: ./kubernetes/talos-maxi/apps/observability/exporters/sonarr-exporter/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system

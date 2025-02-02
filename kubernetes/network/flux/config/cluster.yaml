@@ -8,7 +8,7 @@ metadata:
 spec:
   interval: 30m
   path: ./kubernetes/shared
-  prune: true
+  prune: false
   wait: true
   sourceRef:
     kind: GitRepository
@@ -28,7 +28,7 @@ spec:
 #   targetNamespace: flux-system
 #   interval: 30m
 #   path: ./kubernetes/network/flux/repositories
-#   prune: true
+#   prune: false
 #   wait: true
 #   sourceRef:
 #     kind: GitRepository
@@ -44,7 +44,7 @@ spec:
   targetNamespace: flux-system
   interval: 30m
   path: ./kubernetes/network/flux/settings
-  prune: true
+  prune: false
   wait: true
   sourceRef:
     kind: GitRepository
@@ -67,7 +67,7 @@ spec:
     - name: cluster-shared
     - name: cluster-settings
   path: ./kubernetes/network/apps
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system

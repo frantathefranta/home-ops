@@ -21,7 +21,7 @@ spec:
     - name: external-secrets-stores
     - name: smtp-relay
   path: ./kubernetes/talos-maxi/apps/default/authelia/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system
