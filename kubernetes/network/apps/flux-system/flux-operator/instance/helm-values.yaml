@@ -6,6 +6,7 @@ instance:
   cluster:
     networkPolicy: false
   components:
+  - ../../flux/meta/components/cluster-vars
     - source-controller
     - kustomize-controller
     - helm-controller

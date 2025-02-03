@@ -13,11 +13,11 @@ spec:
           peers:
             - name: arista01
               peerASN: 65033
-              peerAddress: ${bgp_peer}
+              peerAddress: ${BGP_PEER}
               peerConfigRef:
                 name: cilium-peer
             - name: arista01-v6
               peerASN: 65033
-              peerAddress: ${bgp_peer_v6}
+              peerAddress: ${BGP_PEER_V6}
               peerConfigRef:
                 name: cilium-peer-v6
