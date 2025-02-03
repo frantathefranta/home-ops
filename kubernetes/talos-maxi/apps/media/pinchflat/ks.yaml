@@ -4,19 +4,20 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app pinchflat
-  namespace: flux-system
 spec:
   targetNamespace: media
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: volsync
+    - name: rook-ceph-cluster
+      namespace: rook-ceph-external
   path: ./kubernetes/talos-maxi/apps/media/pinchflat/app
   prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   wait: false
   interval: 30m
   timeout: 5m

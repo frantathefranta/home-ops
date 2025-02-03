@@ -2,16 +2,16 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: observability
 resources:
-  # Pre Flux-Kustomizations
-  - ./namespace.yaml
-  # Flux-Kustomizations
   - ./gatus/ks.yaml
   - ./grafana/ks.yaml
-  # - ./thanos/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
   - ./loki/ks.yaml
   - ./prometheus-operator-crds/ks.yaml
   - ./vector/ks.yaml
   - ./kromgo/ks.yaml
   - ./exporters
+components:
+  - ../../../shared/meta/components/alerts
+  - ../../../shared/meta/components/namespace

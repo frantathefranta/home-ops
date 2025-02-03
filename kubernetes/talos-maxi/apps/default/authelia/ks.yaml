@@ -4,7 +4,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app authelia
-  namespace: flux-system
 spec:
   targetNamespace: default
   commonMetadata:
@@ -15,16 +14,22 @@ spec:
     secretRef:
       name: sops-age
   dependsOn:
-    - name: crunchy-postgres-operator-cluster
-    - name: crunchy-postgres-stores
-    - name: dragonfly-cluster
     - name: external-secrets-stores
+      namespace: external-secrets
+    - name: crunchy-postgres-operator-cluster
+      namespace: database
+    - name: crunchy-postgres-stores
+      namespace: database
+    - name: dragonfly-cluster
+      namespace: database
     - name: smtp-relay
+      namespace: default
   path: ./kubernetes/talos-maxi/apps/default/authelia/app
   prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   wait: false
   interval: 30m
   retryInterval: 1m

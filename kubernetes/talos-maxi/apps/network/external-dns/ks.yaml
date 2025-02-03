@@ -4,7 +4,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app external-dns-internal
-  namespace: flux-system
 spec:
   targetNamespace: network
   commonMetadata:
@@ -12,11 +11,13 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: external-secrets-stores
+      namespace: external-secrets
   path: ./kubernetes/talos-maxi/apps/network/external-dns/internal
   prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   wait: true
   interval: 30m
   retryInterval: 1m
@@ -27,7 +28,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app external-dns-bind
-  namespace: flux-system
 spec:
   targetNamespace: network
   commonMetadata:
@@ -35,11 +35,13 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: external-secrets-stores
+      namespace: external-secrets
   path: ./kubernetes/talos-maxi/apps/network/external-dns/bind
   prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   wait: true
   interval: 30m
   retryInterval: 1m
@@ -50,7 +52,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app external-dns-external
-  namespace: flux-system
 spec:
   targetNamespace: network
   commonMetadata:
@@ -58,11 +59,13 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: external-secrets-stores
+      namespace: external-secrets
   path: ./kubernetes/talos-maxi/apps/network/external-dns/external
   prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   wait: true
   interval: 30m
   retryInterval: 1m
@@ -73,7 +76,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app external-dns-opnsense-unbound
-  namespace: flux-system
 spec:
   targetNamespace: network
   commonMetadata:
@@ -81,11 +83,13 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: external-secrets-stores
+      namespace: external-secrets
   path: ./kubernetes/talos-maxi/apps/network/external-dns/opnsense-unbound
   prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   wait: true
   interval: 30m
   retryInterval: 1m
@@ -96,7 +100,6 @@ spec:
 # kind: Kustomization
 # metadata:
 #   name: &app external-dns-bind-opnsense
-#   namespace: flux-system
 # spec:
 #   targetNamespace: network
 #   commonMetadata:
@@ -109,6 +112,7 @@ spec:
 #   sourceRef:
 #     kind: GitRepository
 #     name: flux-system
+  #   namespace: flux-system
 #   wait: true
 #   interval: 30m
 #   retryInterval: 1m

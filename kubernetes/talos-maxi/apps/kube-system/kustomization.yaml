@@ -1,8 +1,8 @@
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: kube-system
 resources:
-  - ./namespace.yaml
   - ./cilium/ks.yaml
   - ./coredns/ks.yaml
   - ./csi-driver-nfs/ks.yaml
@@ -15,3 +15,6 @@ resources:
   - ./spegel/ks.yaml
   - ./generic-device-plugin/ks.yaml
   - ./intel-device-plugins/ks.yaml
+components:
+  - ../../../shared/meta/components/alerts
+  - ../../../shared/meta/components/namespace

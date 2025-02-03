@@ -4,7 +4,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app emqx
-  namespace: flux-system
 spec:
   targetNamespace: database
   commonMetadata:
@@ -12,11 +11,13 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: external-secrets-stores
+      namespace: external-secrets
   path: ./kubernetes/talos-maxi/apps/database/emqx/app
   prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   wait: true
   interval: 30m
   retryInterval: 1m
@@ -27,7 +28,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app emqx-cluster
-  namespace: flux-system
 spec:
   targetNamespace: database
   commonMetadata:
@@ -35,11 +35,13 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: emqx
+      namespace: database
   path: ./kubernetes/talos-maxi/apps/database/emqx/cluster
   prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   wait: true
   interval: 30m
   retryInterval: 1m

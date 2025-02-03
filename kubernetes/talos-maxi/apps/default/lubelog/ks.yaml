@@ -4,7 +4,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app lubelog
-  namespace: flux-system
 spec:
   targetNamespace: default
   commonMetadata:
@@ -12,13 +11,17 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: crunchy-postgres-operator-cluster
+      namespace: database
     - name: crunchy-postgres-stores
+      namespace: database
     - name: external-secrets-stores
+      namespace: external-secrets
   path: ./kubernetes/talos-maxi/apps/default/lubelog/app
   prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   wait: false # no flux ks dependents
   interval: 30m
   retryInterval: 1m

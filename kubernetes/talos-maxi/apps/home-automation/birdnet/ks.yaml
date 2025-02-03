@@ -4,7 +4,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app birdnet
-  namespace: flux-system
 spec:
   targetNamespace: home-automation
   commonMetadata:
@@ -17,12 +16,15 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   wait: false
   dependsOn:
     - name: scrypted
+      namespace: home-automation
     - name: rook-ceph-cluster
-    - name: volsync
+      namespace: rook-ceph-external
     - name: external-secrets-stores
+      namespace: external-secrets
   postBuild:
     substitute:
       APP: *app

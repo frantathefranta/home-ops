@@ -4,7 +4,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app crunchy-postgres-operator
-  namespace: flux-system
 spec:
   targetNamespace: database
   commonMetadata:
@@ -12,11 +11,13 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: minio
+      namespace: storage
   path: ./kubernetes/talos-maxi/apps/database/crunchy-postgres/app
   prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   wait: true
   interval: 30m
   retryInterval: 1m
@@ -27,7 +28,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app crunchy-postgres-operator-cluster
-  namespace: flux-system
 spec:
   targetNamespace: database
   commonMetadata:
@@ -35,12 +35,15 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: crunchy-postgres-operator
+      namespace: database
     - name: external-secrets-stores
+      namespace: external-secrets
   path: ./kubernetes/talos-maxi/apps/database/crunchy-postgres/cluster
   prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   wait: true
   interval: 30m
   retryInterval: 1m
@@ -55,7 +58,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app crunchy-postgres-cluster-vector
-  namespace: flux-system
 spec:
   targetNamespace: database
   commonMetadata:
@@ -63,12 +65,15 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: crunchy-postgres-operator
+      namespace: database
     - name: external-secrets-stores
+      namespace: external-secrets
   path: ./kubernetes/talos-maxi/apps/database/crunchy-postgres/cluster-vector
   prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   wait: true
   interval: 30m
   retryInterval: 1m
@@ -78,35 +83,11 @@ spec:
       - kind: Secret
         name: crunchy-postgres-r2
         optional: false
-# ---
-# # yaml-language-server: $schema=https://lds-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
-# apiVersion: kustomize.toolkit.fluxcd.io/v1
-# kind: Kustomization
-# metadata:
-#   name: &app crunchy-postgres-userinit-controller
-#   namespace: flux-system
-# spec:
-#   targetNamespace: database
-#   commonMetadata:
-#     labels:
-#       app.kubernetes.io/name: *app
-#   dependsOn:
-#     - name: crunchy-postgres-operator-cluster
-#   path: ./kubernetes/talos-maxi/apps/database/crunchy-postgres/userinit-controller
-#   prune: false
-#   sourceRef:
-#     kind: GitRepository
-#     name: flux-system
-#   wait: true
-#   interval: 30m
-#   retryInterval: 1m
-#   timeout: 5m
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app crunchy-postgres-users
-  namespace: flux-system
 spec:
   targetNamespace: database
   commonMetadata:
@@ -114,11 +95,13 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: crunchy-postgres-operator
+      namespace: database
   path: ./kubernetes/talos-maxi/apps/database/crunchy-postgres/users
   prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   wait: true
   interval: 30m
   retryInterval: 1m
@@ -129,7 +112,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app crunchy-postgres-stores
-  namespace: flux-system
 spec:
   targetNamespace: database
   commonMetadata:
@@ -137,11 +119,13 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: external-secrets
+      namespace: external-secrets
   path: ./kubernetes/talos-maxi/apps/database/crunchy-postgres/clustersecretstore
   prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   wait: true
   interval: 30m
   retryInterval: 1m
