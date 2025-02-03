@@ -17,5 +17,7 @@ resources:
   - ./tandoor/ks.yaml
   - ./bar-assistant/ks.yaml
 components:
+  - ../../flux/meta/components/cluster-vars
   - ../../../shared/meta/components/alerts
+  - ../../../shared/meta/components/global-vars
   - ../../../shared/meta/components/namespace

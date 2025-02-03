@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: cluster-settings-talox-maxi
+  name: cluster-settings
   namespace: flux-system
 data:
   CLUSTER: talos-maxi

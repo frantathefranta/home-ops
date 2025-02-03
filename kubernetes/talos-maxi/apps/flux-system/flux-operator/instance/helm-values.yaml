@@ -12,6 +12,7 @@ instance:
     - notification-controller
   sync:
     kind: GitRepository
+    name: flux-system
     url: https://github.com/frantathefranta/home-ops.git
     ref: refs/heads/main
     path: kubernetes/talos-maxi/flux/cluster

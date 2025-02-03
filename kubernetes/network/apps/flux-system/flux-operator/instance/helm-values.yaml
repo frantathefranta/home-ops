@@ -6,13 +6,13 @@ instance:
   cluster:
     networkPolicy: false
   components:
-  - ../../flux/meta/components/cluster-vars
     - source-controller
     - kustomize-controller
     - helm-controller
     - notification-controller
   sync:
     kind: GitRepository
+    name: flux-system
     url: https://github.com/frantathefranta/home-ops.git
     ref: refs/heads/main
     path: kubernetes/network/flux/cluster

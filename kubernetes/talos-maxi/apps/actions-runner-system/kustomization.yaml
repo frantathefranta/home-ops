@@ -8,5 +8,7 @@ resources:
   - ./gha-runner-scale-set-controller/ks.yaml
   - ./gha-runner-scale-set/ks.yaml
 components:
+  - ../../flux/meta/components/cluster-vars
   - ../../../shared/meta/components/alerts
+  - ../../../shared/meta/components/global-vars
   - ../../../shared/meta/components/namespace
