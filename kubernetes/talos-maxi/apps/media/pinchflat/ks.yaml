@@ -13,7 +13,7 @@ spec:
     - name: rook-ceph-cluster
       namespace: rook-ceph-external
   path: ./kubernetes/talos-maxi/apps/media/pinchflat/app
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

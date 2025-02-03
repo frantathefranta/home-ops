@@ -15,7 +15,7 @@ spec:
     - name: external-secrets-stores
       namespace: external-secrets
   path: ./kubernetes/talos-maxi/apps/observability/exporters/radarr-exporter/app
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

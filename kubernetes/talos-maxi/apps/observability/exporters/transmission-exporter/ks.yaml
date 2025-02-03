@@ -13,7 +13,7 @@ spec:
     - name: transmission-music
       namespace: media
   path: ./kubernetes/talos-maxi/apps/observability/exporters/transmission-exporter/music
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -37,7 +37,7 @@ spec:
     - name: transmission-jeopardy
       namespace: media
   path: ./kubernetes/talos-maxi/apps/observability/exporters/transmission-exporter/jeopardy
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

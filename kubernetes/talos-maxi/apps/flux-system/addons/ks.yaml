@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: external-secrets-stores
   path: ./kubernetes/talos-maxi/apps/flux-system/addons/app
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

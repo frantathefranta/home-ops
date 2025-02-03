@@ -19,7 +19,6 @@ spec:
     namespace: flux-system
   targetNamespace: flux-system
   timeout: 5m
-  wait: true
 ---
 # yaml-language-server: $schema=https://kube-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -83,7 +82,7 @@ spec:
     substituteFrom:
       - kind: ConfigMap
         name: cluster-settings
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

@@ -10,7 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   path: ./kubernetes/talos-maxi/apps/media/qbittorrent/app
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -42,7 +42,7 @@ spec:
     - name: qbittorrent
       namespace: media
   path: ./kubernetes/talos-maxi/apps/media/qbittorrent/tools
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
