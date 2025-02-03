@@ -14,7 +14,7 @@ instance:
     kind: GitRepository
     url: https://github.com/frantathefranta/home-ops.git
     ref: refs/heads/main
-    path: kubernetes/network/flux/config
+    path: kubernetes/network/flux/cluster
   commonMetadata:
     labels:
       app.kubernetes.io/name: flux
