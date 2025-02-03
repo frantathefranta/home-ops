@@ -12,7 +12,6 @@ resources:
   - ./external-dns.yaml
   - ./external-secrets.yaml
   - ./fluxcd-community.yaml
-  - ./fluxcd-kustomize-mutating-webhook.yaml
   - ./ingress-nginx.yaml
   - ./jetstack.yaml
   - ./k8s-gateway.yaml
