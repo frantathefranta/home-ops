@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: gha-runner-scale-set-controller
+  name: &app actions-runner-controller
 spec:
   interval: 30m
   chart:
@@ -27,7 +27,7 @@ spec:
       strategy: rollback
       retries: 3
   values:
-    fullnameOverride: gha-runner-scale-set-controller
+    fullnameOverride: *app
     replicaCount: 2
     metrics:
       controllerManagerAddr: ":8080"

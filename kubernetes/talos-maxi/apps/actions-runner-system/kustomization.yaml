@@ -4,9 +4,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: actions-runner-system
 resources:
-  # Flux-Kustomizations
-  - ./gha-runner-scale-set-controller/ks.yaml
-  - ./gha-runner-scale-set/ks.yaml
+  - ./actions-runner-controller/ks.yaml
 components:
   - ../../flux/meta/components/cluster-vars
   - ../../../shared/meta/components/alerts

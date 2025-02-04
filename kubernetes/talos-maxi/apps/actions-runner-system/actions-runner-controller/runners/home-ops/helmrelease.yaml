@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: gha-runner-scale-set
+  name: home-ops-runner
 spec:
   interval: 30m
   chart:
@@ -25,8 +25,10 @@ spec:
       strategy: rollback
       retries: 3
   dependsOn:
-    - name: gha-runner-scale-set-controller
+    - name: actions-runner-controller
       namespace: actions-runner-system
+    - name: openebs
+      namespace: openebs-system
   valuesFrom:
     - targetPath: githubConfigSecret.github_app_id
       kind: Secret
@@ -41,19 +43,26 @@ spec:
       name: actions-runner-controller-auth-secret
       valuesKey: github_app_private_key
   values:
-    nameOverride: gha-runner-scale-set
-    runnerScaleSetName: gha-runner-scale-set
     githubConfigUrl: https://github.com/frantathefranta/home-ops
     minRunners: 1
     maxRunners: 6
     containerMode:
-      type: dind
+      type: kubernetes
+      kubernetesModeWorkVolumeClaim:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: openebs-hostpath
+        resources:
+          requests:
+            storage: 25Gi
+    controllerServiceAccount:
+      name: actions-runner-controller
+      namespace: actions-runner-system
     template:
       spec:
         containers:
           - name: runner
-            image: ghcr.io/onedr0p/actions-runner:2.322.0@sha256:34aa045b8b0b82469bcb5951e244fd2bd41b8abbd493f956092497fcdcd29209
+            image: ghcr.io/joryirving/actions-runner:2.322.0@sha256:09aed03d50ef5ad6220704a06127a0d80c6afaa29de21f11164ff294f4e433bf
             command: ["/home/runner/run.sh"]
-    controllerServiceAccount:
-      name: gha-runner-scale-set-controller
-      namespace: actions-runner-system
+            env:
+              - name: ACTIONS_RUNNER_REQUIRE_JOB_CONTAINER
+                value: "false"

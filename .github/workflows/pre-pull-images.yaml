@@ -8,11 +8,14 @@ on:
     paths:
       - kubernetes/**/apps/**
       - kubernetes/**/flux/**
-      - kubernetes/shared/**
+      - kubernetes/shared/meta**
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
   cancel-in-progress: true
+
+env:
+  HOMEBREW_NO_ANALYTICS: "1"
 
 jobs:
   changed-clusters:
@@ -78,6 +81,7 @@ jobs:
         with:
           args: >-
             get cluster
+            --all-namespaces
             --path /github/workspace/${{ matrix.paths }}/flux
             --enable-images
             --output yaml
@@ -111,7 +115,7 @@ jobs:
   pre-pull-images:
     if: ${{ needs.compare-images.outputs.images != '[]' }}
     name: Pre-pull Images
-    runs-on: ["gha-runner-scale-set"]
+    runs-on: ["home-ops-runner"]
     needs: ["compare-images", "changed-clusters"]
     strategy:
       matrix:
