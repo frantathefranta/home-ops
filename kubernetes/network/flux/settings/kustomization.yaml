@@ -1,7 +1,0 @@
----
-# yaml-language-server: $schema=https://json.schemastore.org/kustomization
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-  - ./cluster-settings.yaml
-  # - ./ks-substitution.yaml # TODO: This is a next step to do with volsync, skip for now
