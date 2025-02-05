@@ -32,6 +32,8 @@ spec:
     monitoring:
       enabled: false
     csi:
+      enableCephfsDriver: false
+      enableCephfsSnapshotter: false
       csiAddons:
         enabled: false
       enableCSIEncryption: false
