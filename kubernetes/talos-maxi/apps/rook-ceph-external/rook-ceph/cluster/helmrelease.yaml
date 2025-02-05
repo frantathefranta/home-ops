@@ -89,6 +89,7 @@ spec:
             port: 7480
             externalRgwEndpoints:
               - ip: haproxy-rados-gw.rook-ceph-external.svc.cluster.local # HAproxy endpoint
+          allowUsersInNamespaces: ["storage"]
         storageClass:
           enabled: true
           name: ceph-bucket

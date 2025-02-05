@@ -1,0 +1,65 @@
+# ---
+# # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/external-secrets.io/externalsecret_v1beta1.json
+# apiVersion: external-secrets.io/v1beta1
+# kind: ExternalSecret
+# metadata:
+#   name: &name talos-maxi-volsync
+# spec:
+#   secretStoreRef:
+#     name: akeyless-secret-store
+#     kind: ClusterSecretStore
+#   target:
+#     name: *name
+#     template:
+#       engineVersion: v2
+#       data:
+#         AWS_ACCESS_KEY_ID: '{{ .OBC_AWS_ACCESS_KEY_ID }}'
+#         AWS_SECRET_ACCESS_KEY: '{{ .OBC_AWS_SECRET_ACCESS_KEY }}'
+#   dataFrom:
+#     - extract:
+#         key: /volsync-bucket
+# ---
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: talos-maxi-volsync
+# data:
+#   BUCKET_HOST: haproxy-rados-gw.rook-ceph-external.svc.cluster.local
+#   BUCKET_NAME: talos-maxi-volsync
+#   BUCKET_PORT: "7480"
+#   BUCKET_REGION: ""
+#   BUCKET_SUBREGION: ""
+---
+apiVersion: ceph.rook.io/v1
+kind: CephObjectStoreUser
+metadata:
+  name: volsync
+spec:
+  store: ceph-objectstore
+  displayName: "Volsync"
+  # Additional permissions given to the user
+  capabilities:
+    user: "*"
+    bucket: "*"
+    metadata: "*"
+    usage: "*"
+    zone: "*"
+  clusterNamespace: rook-ceph-external
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: &bucket talos-maxi-volsync
+provisioner: rook-ceph-external.ceph.rook.io/bucket
+reclaimPolicy: Retain
+parameters:
+  bucketName: *bucket
+  objectStoreName: ceph-objectstore
+  objectStoreNamespace: rook-ceph-external
+# ---
+# apiVersion: objectbucket.io/v1alpha1
+# kind: ObjectBucketClaim
+# metadata:
+#   name: &bucket talos-maxi-volsync
+# spec:
+#   storageClassName: *bucket
