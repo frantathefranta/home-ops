@@ -51,7 +51,7 @@ spec:
           bar-assistant:
             image:
               repository: barassistant/server
-              tag: 4.3.2
+              tag: 4.4.0
             env:
               BASE_URL: https://bar.franta.us
               APP_URL: https://bar.franta.us/bar
@@ -60,6 +60,8 @@ spec:
               CACHE_DRIVER: redis
               SESSION_DRIVER: redis
               ALLOW_REGISTRATION: false
+              METRIC_ENABLED: true
+              METRICS_ALLOWED_IPS: 10.69.0.0/16
             envFrom:
               - secretRef:
                   name: bar-assistant-secret
@@ -95,6 +97,15 @@ spec:
         ports:
           nginx:
             port: &nginx-port 3000
+    serviceMonitor:
+      app:
+        serviceName: *app
+        endpoints:
+          - port: nginx
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 10s
     ingress:
       app:
         className: external
