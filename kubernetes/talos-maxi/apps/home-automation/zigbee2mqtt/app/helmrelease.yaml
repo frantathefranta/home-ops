@@ -44,6 +44,7 @@ spec:
               ZIGBEE2MQTT_CONFIG_ADVANCED_LAST_SEEN: ISO_8601
               ZIGBEE2MQTT_CONFIG_ADVANCED_LOG_LEVEL: info
               ZIGBEE2MQTT_CONFIG_ADVANCED_LOG_OUTPUT: '["console"]'
+              ZIGBEE2MQTT_CONFIG_AVAILABILITY_ENABLED: true
               ZIGBEE2MQTT_CONFIG_AVAILABILITY_ACTIVE_TIMEOUT: 60
               ZIGBEE2MQTT_CONFIG_AVAILABILITY_PASSIVE_TIMEOUT: 2000
               ZIGBEE2MQTT_CONFIG_DEVICE_OPTIONS_RETAIN: true
@@ -65,6 +66,17 @@ spec:
             envFrom:
               - secretRef:
                   name: zigbee2mqtt
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 300
+                  periodSeconds: 1
+                  initialDelaySeconds: 10
             resources:
               requests:
                 cpu: 50m
