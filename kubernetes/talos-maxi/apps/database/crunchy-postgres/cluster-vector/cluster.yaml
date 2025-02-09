@@ -28,7 +28,7 @@ spec:
       metadata:
         labels:
           app.kubernetes.io/name: crunchy-postgres-vector
-      replicas: &replica 3
+      replicas: &replica 1
       dataVolumeClaimSpec:
         storageClassName: openebs-hostpath
         accessModes: ["ReadWriteOnce"]
@@ -100,6 +100,15 @@ spec:
         repo3-retention-full: "30"
         repo3-path: "/pgdata/crunchy-pgo-vector"
         repo3-s3-uri-style: path
+        # RGW
+        repo4-bundle: "y"
+        repo4-block: "y"
+        repo4-retention-full-type: time
+        repo4-retention-full: "30"
+        repo4-storage-verify-tls: "n"
+        repo4-path: "/pgdata/pgo-vector"
+        repo4-s3-uri-style: path
+        repo4-storage-port: "7480"
       manual:
         repoName: repo1
         options: ["--type=full"]
@@ -128,11 +137,20 @@ spec:
           schedules:
             full: "30 2 * * 0" # Sunday at 2am
             differential: "30 2 * * 1-6" # Mon-Sat at 2am
-        - # Minio
-          name: repo3
+         # RGW
+        - name: repo3
           s3: &minio
             bucket: postgresql-maxi
             endpoint: s3.franta.us
+            region: us-east-1
+          schedules:
+            full: "10 1 * * 0" # Sunday at 1am
+            differential: "10 1 * * 1-6" # Mon-Sat at 1am
+            incremental: "10 3-23 * * *" # Every hour except 1-2am
+        - name: repo4
+          s3: &rgw
+            bucket: postgresql
+            endpoint: haproxy-rados-gw.rook-ceph-external.svc.cluster.local
             region: us-east-1
           schedules:
             full: "15 1 * * 0"           # Sunday at 1am
