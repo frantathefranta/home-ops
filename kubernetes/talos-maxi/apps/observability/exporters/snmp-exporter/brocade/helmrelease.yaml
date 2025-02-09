@@ -42,11 +42,11 @@ spec:
       params:
         - name: brocade01
           module: ["brocade"]
-          target: 10.33.0.10
+          target: 10.33.0.200
           auth: ["public_v2"]
         - name: brocade01-if
           module: ["if_mib"]
-          target: 10.33.0.10
+          target: 10.33.0.200
           auth: ["public_v2"]
       path: /snmp
       scrapeTimeout: 10s
