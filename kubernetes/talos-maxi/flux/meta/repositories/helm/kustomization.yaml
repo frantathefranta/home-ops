@@ -12,3 +12,4 @@ resources:
   - ./itzg.yaml
   - ./stevehipwell.yaml
   - ./meilisearch.yaml
+  - ./tofu-controller.yaml
