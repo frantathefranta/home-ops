@@ -6,6 +6,8 @@ metadata:
   name: dragonfly
 spec:
   image: ghcr.io/dragonflydb/dragonfly:v1.26.3
+  labels:
+    dragonflydb.io/cluster: dragonfly
   replicas: 3
   env:
     - name: MAX_MEMORY
@@ -13,12 +15,28 @@ spec:
         resourceFieldRef:
           resource: limits.memory
           divisor: 1Mi
+    - name: AWS_ACCESS_KEY_ID
+      valueFrom:
+        secretKeyRef:
+          key: AWS_ACCESS_KEY_ID
+          name: dragonfly-secret
+    - name: AWS_SECRET_ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          key: AWS_SECRET_ACCESS_KEY
+          name: dragonfly-secret
+    - name: AWS_REGION
+      value: ""
   args:
     - --maxmemory=$(MAX_MEMORY)Mi
     - --proactor_threads=2
     - --cluster_mode=emulated
     - --default_lua_flags=allow-undeclared-keys
     - --lock_on_hashtags
+    - --s3_endpoint=haproxy-rados-gw.rook-ceph-external.svc.cluster.local:7480
+    - --s3_use_https=false
+  snapshot:
+    dir: "s3://dragonfly"
   topologySpreadConstraints:
     - maxSkew: 1
       topologyKey: topology.kubernetes.io/zone

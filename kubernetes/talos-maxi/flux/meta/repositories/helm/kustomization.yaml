@@ -6,6 +6,7 @@ resources:
   - ./crunchy-userinit.yaml
   - ./crunchy-users.yaml
   - ./crunchydata.yaml
+  - ./dragonfly.yaml
   - ./emqx.yaml
   - ./grafana.yaml
   - ./intel.yaml
