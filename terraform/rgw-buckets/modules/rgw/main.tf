@@ -20,10 +20,15 @@ resource "rgw_user" "user" {
 
 resource "rgw_bucket_policy" "policy" {
   bucket = rgw_bucket.bucket.name
-    policy = jsonencode({
+  policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
       Effect = "Allow"
+      Principal = {
+        AWS = [
+          "arn:aws:iam::${rgw_user.user.tenant != null ? rgw_user.user.tenant : ""}:user/${rgw_user.user.username}"
+        ]
+      }
       Action = [
         "s3:ListBucket",
         "s3:DeleteObject",
