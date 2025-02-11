@@ -37,6 +37,7 @@
           shell: bash
           env:
             GITHUB_TOKEN: "${{ steps.app-token.outputs.token }}"
+            BOT_USERNAME: "lord-of-lightning-bot"
           run: |
             args=()
             args+=(--app $BOT_USERNAME)
