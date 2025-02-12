@@ -9,7 +9,7 @@ spec:
   accessModes: ["ReadWriteMany"]
   storageClassName: nfs-slow #csi-driver-nfs
   nfs:
-    server: 10.40.1.50
+    server: ${NAS_IP}
     path: /emc1/kubernetes/postgres-cluster
   mountOptions:
     - nfsvers=4.2

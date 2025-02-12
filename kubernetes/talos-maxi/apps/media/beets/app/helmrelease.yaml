@@ -95,7 +95,7 @@ spec:
             readOnly: true
       music:
         type: nfs
-        server: 10.40.1.50
+        server: ${NAS_IP}
         path: /emc1/music
         globalMounts:
         - path: /music

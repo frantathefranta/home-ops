@@ -114,7 +114,7 @@ spec:
         type: emptyDir
       data:
         type: nfs
-        server: 10.40.1.50
+        server: ${NAS_IP}
         path: /emc1/media
         globalMounts:
         - path: /media
@@ -122,6 +122,6 @@ spec:
         enabled: true
         type: nfs
         path: /emc1/jeopardy
-        server: 10.40.1.50
+        server: ${NAS_IP}
         globalMounts:
           - path: /jeopardy

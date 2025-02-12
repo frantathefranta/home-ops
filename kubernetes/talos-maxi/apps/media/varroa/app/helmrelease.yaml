@@ -78,6 +78,6 @@ spec:
         enabled: true
         type: nfs
         path: /emc1/music
-        server: 10.40.1.50
+        server: ${NAS_IP}
         globalMounts:
           - path: /music

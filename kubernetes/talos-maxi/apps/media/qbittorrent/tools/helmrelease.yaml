@@ -132,7 +132,7 @@ spec:
         enabled: true
         type: nfs
         path: /emc1/media
-        server: 10.40.1.50
+        server: ${NAS_IP}
         advancedMounts:
           orphaned:
             app:

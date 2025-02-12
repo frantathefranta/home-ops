@@ -122,7 +122,7 @@ spec:
       data:
         enabled: true
         type: nfs
-        server: 10.40.1.50
+        server: ${NAS_IP}
         path: /emc1/minio
         globalMounts:
           - path: /data

@@ -97,7 +97,7 @@ spec:
           - path: /data/local
       nas:
         type: nfs
-        server: 10.40.1.50
+        server: ${NAS_IP}
         path: /emc1/documents
         globalMounts:
           - path: /data/remote

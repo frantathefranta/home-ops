@@ -107,7 +107,7 @@ spec:
         existingClaim: qbittorrent
       media:
         type: nfs
-        server: 10.40.1.50
+        server: ${NAS_IP}
         path: /emc1/media
         globalMounts:
           - path: /media

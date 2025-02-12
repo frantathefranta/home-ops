@@ -84,7 +84,7 @@ spec:
     persistence:
       library:
         type: nfs
-        server: 10.40.1.50
+        server: ${NAS_IP}
         path: /emc1/photos
         globalMounts:
           - path: /usr/src/app/upload

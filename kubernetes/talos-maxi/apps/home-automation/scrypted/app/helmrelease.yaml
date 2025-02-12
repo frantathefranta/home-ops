@@ -118,7 +118,7 @@ spec:
           - path: /.npm
       recs:
         type: nfs
-        server: 10.40.1.50
+        server: ${NAS_IP}
         path: /emc1/scrypted
         globalMounts:
           - path: /recs
