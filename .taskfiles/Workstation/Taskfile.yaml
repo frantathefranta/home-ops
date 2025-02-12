@@ -9,16 +9,8 @@ vars:
   ARCHFILE: "{{.ROOT_DIR}}/.taskfiles/Workstation/Archfile"
   BREWFILE: "{{.ROOT_DIR}}/.taskfiles/Workstation/Brewfile"
   GENERIC_BIN_DIR: "{{.ROOT_DIR}}/.bin"
-  # renovate: datasource=github-releases depName=go-task/task
-  TASK_VERSION: v3.41.0
   # renovate: datasource=github-releases depName=getsops/sops
   SOPS_VERSION: v3.9.4
-  # renovate: datasource=github-releases depName=derailed/k9s
-  K9S_VERSION: v0.32.7
-  # renovate: datasource=github-releases depName=cilium/cilium-cli
-  CILIUM_CLI_VERSION: v0.16.24
-  # renovate: datasource=github-releases depName=cilium/hubble
-  HUBBLE_CLI_VERSION: v1.17.0
   # renovate: datasource=github-releases depName=jkroepke/helm-secrets
   HELM_SECRETS_VERSION: v4.6.2
 
@@ -83,24 +75,10 @@ tasks:
       #   platforms: ["linux/arm64"]
       - cmd: curl -L -o sops "https://github.com/getsops/sops/releases/download/{{.SOPS_VERSION}}/sops-{{.SOPS_VERSION}}.linux.arm64"
         platforms: ["linux/arm64"]
-      - cmd: curl -L -o k9s.tar.gz "https://github.com/derailed/k9s/releases/download/{{.K9S_VERSION}}/k9s_Linux_arm64.tar.gz"
-        platforms: ["linux/arm64"]
-      - cmd: curl -L -o k9s.tar.gz "https://github.com/derailed/k9s/releases/download/{{.K9S_VERSION}}/k9s_Linux_amd64.tar.gz"
-        platforms: ["linux/amd64"]
       - cmd: curl -L -o sops "https://github.com/getsops/sops/releases/download/{{.SOPS_VERSION}}/sops-{{.SOPS_VERSION}}.linux.amd64"
         platforms: ["linux/amd64"]
       - cmd: curl -L -o talosctl "https://github.com/siderolabs/talos/releases/download/{{.TALOS_VERSION}}/talosctl-linux-amd64"
         platforms: ["linux/amd64"]
-      - cmd: curl -L -o cilium.tar.gz "https://github.com/cilium/cilium-cli/releases/download/{{.CILIUM_CLI_VERSION}}/cilium-linux-amd64.tar.gz"
-        platforms: ["linux/amd64"]
-      - cmd: curl -L -o hubble.tar.gz "https://github.com/cilium/hubble/releases/download/{{.HUBBLE_CLI_VERSION}}/hubble-linux-amd64.tar.gz"
-        platforms: ["linux/amd64"]
-      - cmd: curl -L -o task.tar.gz "https://github.com/go-task/task/releases/download/{{.TASK_VERSION}}/task_linux_amd64.tar.gz"
-        platforms: ["linux/amd64"]
-      - cmd: tar xvzf k9s.tar.gz && rm k9s.tar.gz; rm LICENSE; rm README*
-      - cmd: tar xvzf task.tar.gz && rm task.tar.gz; rm LICENSE; rm README*; rm -r completion/
-      - cmd: tar xvzf cilium.tar.gz && rm cilium.tar.gz
-      - cmd: tar xvzf hubble.tar.gz && rm hubble.tar.gz
       - cmd: chmod +x sops
       # - cmd: chmod +x kubectl
       - cmd: chmod +x talosctl
