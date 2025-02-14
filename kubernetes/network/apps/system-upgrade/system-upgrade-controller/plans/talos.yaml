@@ -15,34 +15,19 @@ spec:
   exclusive: true
   nodeSelector:
     matchExpressions:
-      - key: feature.node.kubernetes.io/system-os_release.ID
+      - key: kubernetes.io/os
         operator: In
-        values: ["talos"]
-      - key: feature.node.kubernetes.io/system-os_release.VERSION_ID
-        operator: NotIn
-        values: ["${TALOS_VERSION}"]
+        values: ["linux"]
   tolerations:
-    - key: CriticalAddonsOnly
+    - key: special
       operator: Exists
-    - key: node-role.kubernetes.io/control-plane
-      operator: Exists
-      effect: NoSchedule
-  prepare: &prepare
-    image: ghcr.io/siderolabs/talosctl:${TALOS_VERSION}
+  upgrade:
+    image: ghcr.io/jfroy/tnu:0.4.0
     envs:
-      - name: NODE_IP
+      - name: NODE
         valueFrom:
           fieldRef:
-            fieldPath: status.hostIP
+            fieldPath: spec.nodeName
     args:
-      - --nodes=$(NODE_IP)
-      - health
-      - --server=false
-  upgrade:
-    <<: *prepare
-    args:
-      - --nodes=$(NODE_IP)
-      - upgrade
-      - --image=factory.talos.dev/installer/${TALOS_SCHEMATIC_ID}:$(SYSTEM_UPGRADE_PLAN_LATEST_VERSION)
-      - --preserve=true
-      - --wait=false
+      - --node=$(NODE)
+      - --tag=$(SYSTEM_UPGRADE_PLAN_LATEST_VERSION)
