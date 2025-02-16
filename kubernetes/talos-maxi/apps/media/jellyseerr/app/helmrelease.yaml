@@ -40,6 +40,7 @@ spec:
               # CONFIG_DIRECTORY: /app/config
               LOG_LEVEL: info
               PORT: &port 80
+              FORCE_IPV4_FIRST: true # Jellyseerr gets broken with IPv6
             envFrom:
               - secretRef:
                   name: jellyseerr-secret
@@ -77,7 +78,6 @@ spec:
     service:
       app:
         controller: jellyseerr
-        ipFamilyPolicy: PreferDualStack
         ports:
           http:
             port: *port
