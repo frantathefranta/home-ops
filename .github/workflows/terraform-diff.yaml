@@ -1,0 +1,125 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: "Terraform Diff"
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: ["main"]
+    paths: ["terraform/**"]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  changed-terraform:
+    name: Changed Terraform
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.changed-terraform.outputs.all_changed_and_modified_files }}
+    steps:
+      - name: Generate Token
+        uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_PRIVATE_KEY }}
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+
+      - name: Get Changed Terraform
+        id: changed-terraform
+        uses: tj-actions/changed-files@v45
+        with:
+          files: terraform/**
+          dir_names: true
+          dir_names_max_depth: 2
+          matrix: true
+
+      - name: List All Changed Terraform
+        run: echo ${{ steps.changed-terraform.outputs.all_changed_and_modified_files }}
+
+  sync:
+    name: Terraform Diff
+    runs-on: [home-ops-runner] #Backend is stored on local minio with no external ingress
+    needs: ["changed-terraform"]
+    strategy:
+      matrix:
+        paths: ${{ fromJSON(needs.changed-terraform.outputs.matrix) }}
+      max-parallel: 4
+      fail-fast: false
+    steps:
+      - name: Get Secrets
+        uses: akeyless-community/akeyless-github-action@v1.1.2
+        with:
+          access-id: ${{ secrets.AKEYLESS_ACCESS_ID }}
+          access-key: ${{ secrets.AKEYLESS_ACCESS_KEY }}
+          access-type: access_key
+          export-secrets-to-environment: true
+          static-secrets: |
+            - name: /rook-ceph
+              key: RGW_ADMIN_OPS_USER_ACCESS_KEY
+              output-name: RGW_ACCESS_KEY
+            - name: /rook-ceph
+              key: RGW_ADMIN_OPS_USER_SECRET_KEY
+              output-name: RGW_SECRET_KEY
+          parse-json-secrets: true
+
+      - name: Generate Token
+        uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_PRIVATE_KEY }}
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+
+      - name: Setup Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Setup Workflow Tools
+        run: brew install opentofu
+
+      - name: Tofu fmt
+        id: fmt
+        working-directory: ${{ matrix.paths }}
+        run: tofu fmt -check
+        continue-on-error: true
+
+      - name: Tofu Init
+        id: init
+        working-directory: ${{ matrix.paths }}
+        env:
+          AWS_ACCESS_KEY_ID: ${{ env.RGW_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ env.RGW_SECRET_KEY }}
+        run: |
+          tofu init \
+            -backend-config="access_key=$AWS_ACCESS_KEY_ID" \
+            -backend-config="secret_key=$AWS_SECRET_ACCESS_KEY"
+
+      - name: Tofu Validate
+        id: validate
+        working-directory: ${{ matrix.paths }}
+        run: tofu validate -no-color
+
+      - name: Tofu Plan
+        working-directory: ${{ matrix.paths }}
+        run: tofu plan -lock=false -var "access_id=${{ secrets.AKEYLESS_ACCESS_ID }}" -var "access_key=${{ secrets.AKEYLESS_ACCESS_KEY }}" -out .planfile | grep -v "Refreshing state...\|Reading...\|Read complete after"
+
+      - name: Post PR comment
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        uses: borchero/terraform-plan-comment@v2
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          planfile: .planfile
+          terraform-cmd: tofu
+          header: "📝 Terraform Plan for ${{ matrix.paths }}"
+          working-directory: ${{ matrix.paths }}
