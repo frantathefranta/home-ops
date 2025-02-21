@@ -33,6 +33,20 @@ spec:
   dependsOn:
     - name: rook-ceph
       namespace: rook-ceph-external
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2
+      kind: HelmRelease
+      name: rook-ceph-cluster
+      namespace: *namespace
+    - apiVersion: ceph.rook.io/v1
+      kind: CephCluster
+      name: rook-ceph-external
+      namespace: *namespace
+  healthCheckExprs:
+    - apiVersion: ceph.rook.io/v1
+      kind: CephCluster
+      failed: status.ceph.health == 'HEALTH_ERR'
+      current: status.ceph.health == 'HEALTH_OK'
   path: ./kubernetes/network/apps/rook-ceph-external/rook-ceph/cluster
   prune: false
   sourceRef:

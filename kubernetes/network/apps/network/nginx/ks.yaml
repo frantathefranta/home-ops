@@ -13,6 +13,11 @@ spec:
       namespace: cert-manager
     - name: external-secrets-stores
       namespace: external-secrets
+  healthCheckExprs:
+    - apiVersion: cert-manager.io/v1
+      kind: Certificate
+      failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
+      current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
   path: ./kubernetes/network/apps/network/nginx/certificates
   prune: true
   sourceRef:
