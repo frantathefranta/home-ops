@@ -47,7 +47,7 @@ kind: Kustomization
 metadata:
   name: &app rook-ceph-cluster
 spec:
-  targetNamespace: rook-ceph-external
+  targetNamespace: &namespace rook-ceph-external
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
@@ -56,6 +56,20 @@ spec:
       namespace: rook-ceph-external
     - name: rook-ceph-haproxy
       namespace: rook-ceph-external
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2
+      kind: HelmRelease
+      name: rook-ceph-cluster
+      namespace: *namespace
+    - apiVersion: ceph.rook.io/v1
+      kind: CephCluster
+      name: rook-ceph-external
+      namespace: *namespace
+  healthCheckExprs:
+    - apiVersion: ceph.rook.io/v1
+      kind: CephCluster
+      failed: status.ceph.health == 'HEALTH_ERR'
+      current: status.ceph.health == 'HEALTH_OK'
   path: ./kubernetes/talos-maxi/apps/rook-ceph-external/rook-ceph/cluster
   prune: false
   sourceRef:
