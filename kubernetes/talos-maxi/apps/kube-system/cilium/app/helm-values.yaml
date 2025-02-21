@@ -44,6 +44,9 @@ localRedirectPolicy: true
 operator:
   replicas: 1
   rollOutPods: true
+  tolerations:
+    - key: node-role.kubernetes.io/control-plane
+      effect: NoSchedule
 
 rollOutCiliumPods: true
 routingMode: native
