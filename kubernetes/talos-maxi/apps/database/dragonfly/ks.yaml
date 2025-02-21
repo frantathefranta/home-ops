@@ -36,6 +36,11 @@ spec:
   dependsOn:
     - name: dragonfly
       namespace: database
+  healthCheckExprs:
+    - apiVersion: dragonflydb.io/v1alpha1
+      kind: Dragonfly
+      failed: status.phase != 'ready'
+      current: status.phase == 'ready'
   path: ./kubernetes/talos-maxi/apps/database/dragonfly/cluster
   prune: true
   sourceRef:
