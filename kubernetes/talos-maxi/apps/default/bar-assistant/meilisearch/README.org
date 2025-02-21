@@ -1,4 +1,10 @@
 #+title: Meilisearch
+* Upgrade from >=1.12
+There is now an [[https://www.meilisearch.com/docs/learn/update_and_migration/updating#dumpless-upgrade-][Experimental Dumpless Upgrade]] for ~meilisearch~.
+The steps are reduced to just scaling down the ~StatefulSets~, then setting up a pod with meilisearch binary in it and running this command:
+#+begin_src sh
+meilisearch --experimental-dumpless-upgrade
+#+end_src
 * Upgrade
 Meilisearch doesn't have an automatic upgrade system between major versions. A few options to deal with that:
 ** Update Pod
