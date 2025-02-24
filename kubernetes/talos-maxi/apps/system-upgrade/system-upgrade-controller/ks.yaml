@@ -9,9 +9,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  dependsOn:
-    - name: node-feature-discovery
-      namespace: kube-system
   path: ./kubernetes/talos-maxi/apps/system-upgrade/system-upgrade-controller/app
   prune: true
   sourceRef:
