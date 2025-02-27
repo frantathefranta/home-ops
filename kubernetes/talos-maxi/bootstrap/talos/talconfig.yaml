@@ -232,7 +232,7 @@ patches:
     machine:
       time:
         disabled: false
-        servers: ["10.33.0.1"]
+        servers: ["10.33.0.1", "192.168.247.254"]
 
   # Custom sysctl settings
   - |-
