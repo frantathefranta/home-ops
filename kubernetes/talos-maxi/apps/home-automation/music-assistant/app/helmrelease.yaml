@@ -37,7 +37,7 @@ spec:
           app:
             image:
               repository: ghcr.io/music-assistant/server
-              tag: 2.4.0@sha256:56ba5cc41d7ad3838fb5606750819deeaa6c7bcda40d077f887ca80afe572e06
+              tag: 2.4.2@sha256:d75a2e636989ce6d3cb7a0435726f89f8a56a50fe88c3ea0c4c2066aeb1f487b
             env:
               TZ: America/Detroit
             probes:
