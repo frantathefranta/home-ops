@@ -4,12 +4,9 @@ kind: Kustomization
 resources:
   - ./actions-runner-controller.yaml
   - ./crunchy-userinit.yaml
-  - ./crunchy-users.yaml
-  - ./crunchydata.yaml
   - ./dragonfly.yaml
   - ./emqx.yaml
   - ./intel.yaml
   - ./itzg.yaml
-  - ./stevehipwell.yaml
   - ./meilisearch.yaml
   - ./tofu-controller.yaml
