@@ -16,6 +16,7 @@ resources:
   - ./syncthing/ks.yaml
   - ./tandoor/ks.yaml
   - ./bar-assistant/ks.yaml
+  - ./idrac-fan-control/ks.yaml
 components:
   - ../../flux/meta/components/cluster-vars
   - ../../../shared/meta/components/alerts
