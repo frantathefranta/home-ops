@@ -8,7 +8,6 @@ resources:
   - ./crunchydata.yaml
   - ./dragonfly.yaml
   - ./emqx.yaml
-  - ./grafana.yaml
   - ./intel.yaml
   - ./itzg.yaml
   - ./stevehipwell.yaml
