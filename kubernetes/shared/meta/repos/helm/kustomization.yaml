@@ -10,7 +10,6 @@ resources:
   - ./csi-driver-nfs.yaml
   - ./descheduler.yaml
   - ./external-dns.yaml
-  - ./external-secrets.yaml
   - ./fluxcd-community.yaml
   - ./ingress-nginx.yaml
   - ./jetstack.yaml

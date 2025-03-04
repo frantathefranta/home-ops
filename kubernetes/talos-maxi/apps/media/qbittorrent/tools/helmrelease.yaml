@@ -5,14 +5,10 @@ kind: HelmRelease
 metadata:
   name: qbtools
 spec:
-  chart:
-    spec:
-      chart: app-template
-      version: 3.7.1 # auto-update to semver bugfixes only
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+    namespace: flux-system
   interval: 15m
   timeout: 5m
   install:
@@ -48,17 +44,21 @@ spec:
                 valueFrom:
                   fieldRef:
                     fieldPath: metadata.namespace
-            args: [
-              "tagging",
-              "--added-on",
-              "--expired",
-              "--last-activity",
-              "--sites",
-              "--unregistered",
-              "--server", "qbittorrent.$(POD_NAMESPACE).svc.cluster.local",
-              "--port", "8080",
-              "--config", "/config/config.yaml"
-            ]
+            args:
+              [
+                "tagging",
+                "--added-on",
+                "--expired",
+                "--last-activity",
+                "--sites",
+                "--unregistered",
+                "--server",
+                "qbittorrent.$(POD_NAMESPACE).svc.cluster.local",
+                "--port",
+                "8080",
+                "--config",
+                "/config/config.yaml",
+              ]
             resources: &resources
               requests:
                 cpu: 25m
@@ -68,25 +68,34 @@ spec:
           unregistered:
             <<: *image
             env: *env
-            args: [
-              "prune",
-              "--include-tag", "unregistered",
-              "--server", "qbittorrent.$(POD_NAMESPACE).svc.cluster.local",
-              "--port", "8080"
-            ]
+            args:
+              [
+                "prune",
+                "--include-tag",
+                "unregistered",
+                "--server",
+                "qbittorrent.$(POD_NAMESPACE).svc.cluster.local",
+                "--port",
+                "8080",
+              ]
             resources: *resources
           expired:
             <<: *image
             env: *env
             args: [
-              "prune",
-              "--include-category", "remove",
-              "--include-tag", "expired", # defined in config.yaml
-              "--exclude-tag", "activity:24h",
-              # "--dry-run",
-              "--server", "qbittorrent.$(POD_NAMESPACE).svc.cluster.local",
-              "--port", "8080"
-            ]
+                "prune",
+                "--include-category",
+                "remove",
+                "--include-tag",
+                "expired", # defined in config.yaml
+                "--exclude-tag",
+                "activity:24h",
+                # "--dry-run",
+                "--server",
+                "qbittorrent.$(POD_NAMESPACE).svc.cluster.local",
+                "--port",
+                "8080",
+              ]
             resources: *resources
         pod:
           restartPolicy: OnFailure
