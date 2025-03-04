@@ -7,14 +7,10 @@ metadata:
 spec:
   interval: 30m
   timeout: 15m
-  chart:
-    spec:
-      chart: kube-prometheus-stack
-      version: 69.7.2
-      sourceRef:
-        kind: HelmRepository
-        name: prometheus-community
-        namespace: flux-system
+  chartRef:
+    kind: OCIRepository
+    name: kube-prometheus-stack
+    namespace: observability
   install:
     crds: Skip
     remediation:
@@ -44,7 +40,7 @@ spec:
         certManager:
           enabled: true
           admissionCert:
-            duration: 2160h  # 90d
+            duration: 2160h # 90d
           issuerRef:
             name: cluster-ca
             kind: ClusterIssuer
@@ -77,10 +73,10 @@ spec:
           - name: alertmanager-uptime-kuma-push
             image: ghcr.io/natrontech/alertmanager-uptime-kuma-push:v0.1.1
             ports:
-            - containerPort: 8081
+              - containerPort: 8081
             envFrom:
-            - secretRef:
-                name: alertmanager-secret
+              - secretRef:
+                  name: alertmanager-secret
     kubelet:
       enabled: true
       serviceMonitor:
