@@ -30,3 +30,37 @@ spec:
     securityContext:
        privileged: true
 #+end_src
+
+** Fixing a deleted kube-dns service
+
+#+begin_src yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: kube-dns
+  namespace: kube-system
+spec:
+  clusterIP: 10.96.0.10
+  clusterIPs:
+  - 10.96.0.10
+  - ${CLUSTER_SVC_IPV6_PREFIX}0:a
+  internalTrafficPolicy: Cluster
+  selector:
+    k8s-app: kube-dns
+    app.kubernetes.io/instance: coredns
+    app.kubernetes.io/name: coredns
+  ipFamilies:
+  - IPv4
+  - IPv6
+  ipFamilyPolicy: PreferDualStack
+  ports:
+  - name: udp-53
+    port: 53
+    protocol: UDP
+    targetPort: 53
+  - name: tcp-53
+    port: 53
+    protocol: TCP
+    targetPort: 53
+  type: ClusterIP
+#+end_src
