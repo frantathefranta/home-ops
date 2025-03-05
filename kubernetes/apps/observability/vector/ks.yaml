@@ -12,7 +12,7 @@ spec:
     - name: loki
       namespace: observability
   path: ./kubernetes/apps/observability/vector/aggregator
-  prune: true
+  prune: false # revert later
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -35,7 +35,7 @@ spec:
     - name: vector-aggregator
       namespace: observability
   path: ./kubernetes/apps/observability/vector/agent
-  prune: true
+  prune: false # revert later
   sourceRef:
     kind: GitRepository
     name: flux-system

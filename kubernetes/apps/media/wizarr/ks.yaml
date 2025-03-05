@@ -16,7 +16,7 @@ spec:
     - name: jellyseerr
       namespace: media
   path: ./kubernetes/apps/media/wizarr/app
-  prune: true
+  prune: false # revert later
   sourceRef:
     kind: GitRepository
     name: flux-system

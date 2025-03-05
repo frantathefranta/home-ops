@@ -10,7 +10,7 @@ spec:
       app.kubernetes.io/name: *app
   interval: 30m
   path: ./kubernetes/apps/kube-system/csi-driver-nfs/app
-  prune: true
+  prune: false # revert later
   sourceRef:
     kind: GitRepository
     name: flux-system

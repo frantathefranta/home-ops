@@ -15,7 +15,7 @@ spec:
     - name: external-secrets-stores
       namespace: external-secrets
   path: ./kubernetes/apps/observability/exporters/radarr-exporter/app
-  prune: true
+  prune: false # revert later
   sourceRef:
     kind: GitRepository
     name: flux-system

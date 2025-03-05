@@ -15,7 +15,7 @@ spec:
   interval: 30m
   timeout: 5m
   path: "./kubernetes/apps/home-automation/birdnet/app"
-  prune: true
+  prune: false # revert later
   sourceRef:
     kind: GitRepository
     name: flux-system

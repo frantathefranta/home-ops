@@ -13,7 +13,7 @@ spec:
     - name: minio
       namespace: storage
   path: ./kubernetes/apps/database/crunchy-postgres/app
-  prune: true
+  prune: false # revert later
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -39,7 +39,7 @@ spec:
     - name: external-secrets-stores
       namespace: external-secrets
   path: ./kubernetes/apps/database/crunchy-postgres/cluster
-  prune: true
+  prune: false # revert later
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -64,7 +64,7 @@ spec:
     - name: external-secrets-stores
       namespace: external-secrets
   path: ./kubernetes/apps/database/crunchy-postgres/cluster-vector
-  prune: true
+  prune: false # revert later
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -87,7 +87,7 @@ spec:
     - name: crunchy-postgres-operator
       namespace: database
   path: ./kubernetes/apps/database/crunchy-postgres/users
-  prune: true
+  prune: false # revert later
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -111,7 +111,7 @@ spec:
     - name: external-secrets
       namespace: external-secrets
   path: ./kubernetes/apps/database/crunchy-postgres/clustersecretstore
-  prune: true
+  prune: false # revert later
   sourceRef:
     kind: GitRepository
     name: flux-system
