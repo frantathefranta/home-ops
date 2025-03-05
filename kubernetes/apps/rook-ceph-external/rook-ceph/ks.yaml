@@ -9,7 +9,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/talos-maxi/apps/rook-ceph-external/rook-ceph/haproxy
+  path: ./kubernetes/apps/rook-ceph-external/rook-ceph/haproxy
   prune: false
   sourceRef:
     kind: GitRepository
@@ -30,7 +30,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/talos-maxi/apps/rook-ceph-external/rook-ceph/app
+  path: ./kubernetes/apps/rook-ceph-external/rook-ceph/app
   prune: false
   sourceRef:
     kind: GitRepository
@@ -70,7 +70,7 @@ spec:
       kind: CephCluster
       failed: status.ceph.health == 'HEALTH_ERR'
       current: status.ceph.health == 'HEALTH_OK'
-  path: ./kubernetes/talos-maxi/apps/rook-ceph-external/rook-ceph/cluster
+  path: ./kubernetes/apps/rook-ceph-external/rook-ceph/cluster
   prune: false
   sourceRef:
     kind: GitRepository

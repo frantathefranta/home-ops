@@ -12,7 +12,7 @@ spec:
   dependsOn:
     - name: external-dns-external
       namespace: network
-  path: ./kubernetes/talos-maxi/apps/network/cloudflared/app
+  path: ./kubernetes/apps/network/cloudflared/app
   prune: true
   sourceRef:
     kind: GitRepository

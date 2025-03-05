@@ -16,7 +16,7 @@ spec:
       namespace: database
     - name: external-secrets-stores
       namespace: external-secrets
-  path: ./kubernetes/talos-maxi/apps/observability/gatus/app
+  path: ./kubernetes/apps/observability/gatus/app
   prune: true
   sourceRef:
     kind: GitRepository

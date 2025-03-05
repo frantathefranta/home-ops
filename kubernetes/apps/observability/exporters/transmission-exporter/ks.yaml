@@ -12,7 +12,7 @@ spec:
   dependsOn:
     - name: transmission-music
       namespace: media
-  path: ./kubernetes/talos-maxi/apps/observability/exporters/transmission-exporter/music
+  path: ./kubernetes/apps/observability/exporters/transmission-exporter/music
   prune: true
   sourceRef:
     kind: GitRepository
@@ -36,7 +36,7 @@ spec:
   dependsOn:
     - name: transmission-jeopardy
       namespace: media
-  path: ./kubernetes/talos-maxi/apps/observability/exporters/transmission-exporter/jeopardy
+  path: ./kubernetes/apps/observability/exporters/transmission-exporter/jeopardy
   prune: true
   sourceRef:
     kind: GitRepository

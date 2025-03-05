@@ -12,7 +12,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/talos-maxi/apps/media/transmission/jeopardy
+  path: ./kubernetes/apps/media/transmission/jeopardy
   prune: true
   sourceRef:
     kind: GitRepository
@@ -43,7 +43,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/talos-maxi/apps/media/transmission/music
+  path: ./kubernetes/apps/media/transmission/music
   prune: true
   sourceRef:
     kind: GitRepository

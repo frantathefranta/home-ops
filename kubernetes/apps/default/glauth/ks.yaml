@@ -12,7 +12,7 @@ spec:
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
-  path: ./kubernetes/talos-maxi/apps/default/glauth/app
+  path: ./kubernetes/apps/default/glauth/app
   prune: true
   sourceRef:
     kind: GitRepository

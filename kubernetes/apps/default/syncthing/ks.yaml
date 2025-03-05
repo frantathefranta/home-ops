@@ -13,7 +13,7 @@ spec:
       namespace: external-secrets
     - name: rook-ceph-cluster
       namespace: rook-ceph-external
-  path: ./kubernetes/talos-maxi/apps/default/syncthing/app
+  path: ./kubernetes/apps/default/syncthing/app
   prune: true
   sourceRef:
     kind: GitRepository

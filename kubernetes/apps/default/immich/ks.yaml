@@ -14,7 +14,7 @@ spec:
       namespace: database
     - name: external-secrets-stores
       namespace: external-secrets
-  path: ./kubernetes/talos-maxi/apps/default/immich/app
+  path: ./kubernetes/apps/default/immich/app
   prune: true
   sourceRef:
     kind: GitRepository

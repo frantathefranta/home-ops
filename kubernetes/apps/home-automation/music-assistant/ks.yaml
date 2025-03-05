@@ -19,7 +19,7 @@ spec:
       namespace: rook-ceph-external
     - name: external-secrets-stores
       namespace: external-secrets
-  path: "./kubernetes/talos-maxi/apps/home-automation/music-assistant/app"
+  path: "./kubernetes/apps/home-automation/music-assistant/app"
   prune: true
   sourceRef:
     kind: GitRepository

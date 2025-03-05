@@ -117,7 +117,7 @@ settings:
   playlist_exclude_user:
   playlist_report: false
   verify_ssl: true
-  custom_repo: https://github.com/frantathefranta/home-ops/tree/main/kubernetes/talos-maxi/apps/media/plex-addons/kometa/custom/
+  custom_repo: https://github.com/frantathefranta/home-ops/tree/main/kubernetes/apps/media/plex-addons/kometa/custom/
   check_nightly: false
   show_unconfigured: true
   playlist_exclude_users:

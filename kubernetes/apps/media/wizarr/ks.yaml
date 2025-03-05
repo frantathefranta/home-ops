@@ -15,7 +15,7 @@ spec:
   dependsOn:
     - name: jellyseerr
       namespace: media
-  path: ./kubernetes/talos-maxi/apps/media/wizarr/app
+  path: ./kubernetes/apps/media/wizarr/app
   prune: true
   sourceRef:
     kind: GitRepository

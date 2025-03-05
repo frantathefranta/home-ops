@@ -20,7 +20,7 @@ spec:
       namespace: database
     - name: external-secrets-stores
       namespace: external-secrets
-  path: ./kubernetes/talos-maxi/apps/default/tandoor/app
+  path: ./kubernetes/apps/default/tandoor/app
   prune: true
   sourceRef:
     kind: GitRepository

@@ -19,7 +19,7 @@ spec:
       namespace: database
     - name: external-secrets-stores
       namespace: external-secrets
-  path: ./kubernetes/talos-maxi/apps/media/bazarr/app
+  path: ./kubernetes/apps/media/bazarr/app
   prune: true
   sourceRef:
     kind: GitRepository

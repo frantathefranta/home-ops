@@ -12,7 +12,7 @@ spec:
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
-  path: ./kubernetes/talos-maxi/apps/database/dragonfly/app
+  path: ./kubernetes/apps/database/dragonfly/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -41,7 +41,7 @@ spec:
       kind: Dragonfly
       failed: status.phase != 'ready'
       current: status.phase == 'ready'
-  path: ./kubernetes/talos-maxi/apps/database/dragonfly/cluster
+  path: ./kubernetes/apps/database/dragonfly/cluster
   prune: true
   sourceRef:
     kind: GitRepository

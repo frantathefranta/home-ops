@@ -16,7 +16,7 @@ spec:
       namespace: database
     - name: external-secrets-stores
       namespace: external-secrets
-  path: ./kubernetes/talos-maxi/apps/media/readarr/app
+  path: ./kubernetes/apps/media/readarr/app
   prune: true
   sourceRef:
     kind: GitRepository

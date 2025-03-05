@@ -18,7 +18,7 @@ spec:
       namespace: external-secrets
     - name: rook-ceph-cluster
       namespace: rook-ceph-external
-  path: ./kubernetes/talos-maxi/apps/media/sonarr/app
+  path: ./kubernetes/apps/media/sonarr/app
   prune: true
   sourceRef:
     kind: GitRepository

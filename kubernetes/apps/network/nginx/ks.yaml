@@ -16,7 +16,7 @@ spec:
       kind: Certificate
       failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
       current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
-  path: ./kubernetes/talos-maxi/apps/network/nginx/certificates
+  path: ./kubernetes/apps/network/nginx/certificates
   prune: true
   sourceRef:
     kind: GitRepository
@@ -39,7 +39,7 @@ spec:
   dependsOn:
     - name: nginx-certificates
       namespace: network
-  path: ./kubernetes/talos-maxi/apps/network/nginx/internal
+  path: ./kubernetes/apps/network/nginx/internal
   prune: true
   sourceRef:
     kind: GitRepository
@@ -62,7 +62,7 @@ spec:
   dependsOn:
     - name: nginx-certificates
       namespace: network
-  path: ./kubernetes/talos-maxi/apps/network/nginx/external
+  path: ./kubernetes/apps/network/nginx/external
   prune: true
   sourceRef:
     kind: GitRepository

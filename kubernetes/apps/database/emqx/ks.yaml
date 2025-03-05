@@ -12,7 +12,7 @@ spec:
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
-  path: ./kubernetes/talos-maxi/apps/database/emqx/app
+  path: ./kubernetes/apps/database/emqx/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -41,7 +41,7 @@ spec:
       kind: EMQX
       failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
       current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
-  path: ./kubernetes/talos-maxi/apps/database/emqx/cluster
+  path: ./kubernetes/apps/database/emqx/cluster
   prune: true
   sourceRef:
     kind: GitRepository

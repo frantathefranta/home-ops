@@ -9,7 +9,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/talos-maxi/apps/observability/exporters/snmp-exporter/idrac
+  path: ./kubernetes/apps/observability/exporters/snmp-exporter/idrac
   prune: true
   sourceRef:
     kind: GitRepository
@@ -30,7 +30,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/talos-maxi/apps/observability/exporters/snmp-exporter/brocade
+  path: ./kubernetes/apps/observability/exporters/snmp-exporter/brocade
   prune: true
   sourceRef:
     kind: GitRepository
@@ -51,7 +51,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/talos-maxi/apps/observability/exporters/snmp-exporter/arista
+  path: ./kubernetes/apps/observability/exporters/snmp-exporter/arista
   prune: true
   sourceRef:
     kind: GitRepository

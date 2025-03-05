@@ -12,7 +12,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/talos-maxi/apps/default/vikunja/app
+  path: ./kubernetes/apps/default/vikunja/app
   prune: true
   sourceRef:
     kind: GitRepository

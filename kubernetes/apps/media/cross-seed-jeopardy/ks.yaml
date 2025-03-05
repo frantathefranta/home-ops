@@ -16,7 +16,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: "./kubernetes/talos-maxi/apps/media/cross-seed-jeopardy/app"
+  path: "./kubernetes/apps/media/cross-seed-jeopardy/app"
   prune: true
   sourceRef:
     kind: GitRepository

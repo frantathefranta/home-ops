@@ -16,7 +16,7 @@ spec:
       namespace: database
     - name: external-secrets-stores
       namespace: external-secrets
-  path: ./kubernetes/talos-maxi/apps/media/prowlarr/app
+  path: ./kubernetes/apps/media/prowlarr/app
   prune: true
   sourceRef:
     kind: GitRepository

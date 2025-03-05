@@ -19,7 +19,7 @@ spec:
       namespace: external-secrets
     - name: emqx-cluster
       namespace: database
-  path: "./kubernetes/talos-maxi/apps/home-automation/zigbee2mqtt/app"
+  path: "./kubernetes/apps/home-automation/zigbee2mqtt/app"
   prune: true
   sourceRef:
     kind: GitRepository

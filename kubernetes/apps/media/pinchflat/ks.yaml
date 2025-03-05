@@ -15,7 +15,7 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph-external
-  path: ./kubernetes/talos-maxi/apps/media/pinchflat/app
+  path: ./kubernetes/apps/media/pinchflat/app
   prune: true
   sourceRef:
     kind: GitRepository

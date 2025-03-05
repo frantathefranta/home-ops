@@ -14,7 +14,7 @@ spec:
       namespace: media
     - name: external-secrets-stores
       namespace: external-secrets
-  path: ./kubernetes/talos-maxi/apps/observability/exporters/bazarr-exporter/app
+  path: ./kubernetes/apps/observability/exporters/bazarr-exporter/app
   prune: true
   sourceRef:
     kind: GitRepository

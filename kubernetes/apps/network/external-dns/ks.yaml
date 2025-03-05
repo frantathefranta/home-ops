@@ -12,7 +12,7 @@ spec:
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
-  path: ./kubernetes/talos-maxi/apps/network/external-dns/internal
+  path: ./kubernetes/apps/network/external-dns/internal
   prune: false
   sourceRef:
     kind: GitRepository
@@ -36,7 +36,7 @@ spec:
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
-  path: ./kubernetes/talos-maxi/apps/network/external-dns/bind
+  path: ./kubernetes/apps/network/external-dns/bind
   prune: false
   sourceRef:
     kind: GitRepository
@@ -60,7 +60,7 @@ spec:
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
-  path: ./kubernetes/talos-maxi/apps/network/external-dns/external
+  path: ./kubernetes/apps/network/external-dns/external
   prune: true
   sourceRef:
     kind: GitRepository
@@ -84,7 +84,7 @@ spec:
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
-  path: ./kubernetes/talos-maxi/apps/network/external-dns/opnsense-unbound
+  path: ./kubernetes/apps/network/external-dns/opnsense-unbound
   prune: true
   sourceRef:
     kind: GitRepository
@@ -107,7 +107,7 @@ spec:
 #       app.kubernetes.io/name: *app
 #   dependsOn:
 #     - name: external-secrets-stores
-#   path: ./kubernetes/talos-maxi/apps/network/external-dns/bind-opnsense
+#   path: ./kubernetes/apps/network/external-dns/bind-opnsense
 #   prune: true
 #   sourceRef:
 #     kind: GitRepository

@@ -9,7 +9,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: "./kubernetes/talos-maxi/apps/kube-system/intel-device-plugins/operator"
+  path: "./kubernetes/apps/kube-system/intel-device-plugins/operator"
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -35,7 +35,7 @@ spec:
   dependsOn:
     - name: intel-device-plugins-operator
       namespace: kube-system
-  path: "./kubernetes/talos-maxi/apps/kube-system/intel-device-plugins/gpu"
+  path: "./kubernetes/apps/kube-system/intel-device-plugins/gpu"
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -58,7 +58,7 @@ spec:
   dependsOn:
     - name: intel-device-plugins-gpu
       namespace: kube-system
-  path: "./kubernetes/talos-maxi/apps/kube-system/intel-device-plugins/exporter"
+  path: "./kubernetes/apps/kube-system/intel-device-plugins/exporter"
   prune: true
   sourceRef:
     kind: GitRepository

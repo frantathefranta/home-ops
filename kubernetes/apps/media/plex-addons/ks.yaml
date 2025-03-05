@@ -21,7 +21,7 @@ spec:
       namespace: media
     - name: external-secrets-stores
       namespace: external-secrets
-  path: ./kubernetes/talos-maxi/apps/media/plex-addons/kometa
+  path: ./kubernetes/apps/media/plex-addons/kometa
   prune: true
   sourceRef:
     kind: GitRepository

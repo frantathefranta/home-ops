@@ -11,7 +11,7 @@ spec:
       app.kubernetes.io/name: *app
   interval: 30m
   timeout: 5m
-  path: "./kubernetes/talos-maxi/apps/network/multus/app"
+  path: "./kubernetes/apps/network/multus/app"
   prune: true
   sourceRef:
     kind: GitRepository
@@ -31,7 +31,7 @@ spec:
       app.kubernetes.io/name: *app
   interval: 30m
   timeout: 5m
-  path: "./kubernetes/talos-maxi/apps/network/multus/config"
+  path: "./kubernetes/apps/network/multus/config"
   prune: true
   sourceRef:
     kind: GitRepository

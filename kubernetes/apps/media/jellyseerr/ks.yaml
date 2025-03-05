@@ -18,7 +18,7 @@ spec:
       namespace: external-secrets
     - name: rook-ceph-cluster
       namespace: rook-ceph-external
-  path: ./kubernetes/talos-maxi/apps/media/jellyseerr/app
+  path: ./kubernetes/apps/media/jellyseerr/app
   sourceRef:
     kind: GitRepository
     name: flux-system

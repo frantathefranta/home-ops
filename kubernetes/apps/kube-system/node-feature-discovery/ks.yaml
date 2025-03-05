@@ -12,7 +12,7 @@ spec:
   dependsOn:
     - name: cert-manager
       namespace: cert-manager
-  path: ./kubernetes/talos-maxi/apps/kube-system/node-feature-discovery/app
+  path: ./kubernetes/apps/kube-system/node-feature-discovery/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -36,7 +36,7 @@ spec:
   dependsOn:
     - name: node-feature-discovery
       namespace: kube-system
-  path: "./kubernetes/talos-maxi/apps/kube-system/node-feature-discovery/rules"
+  path: "./kubernetes/apps/kube-system/node-feature-discovery/rules"
   prune: true
   sourceRef:
     kind: GitRepository

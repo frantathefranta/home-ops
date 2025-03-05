@@ -12,7 +12,7 @@ spec:
       name: sops-age
   interval: 30m
   prune: true
-  path: ./kubernetes/talos-maxi/flux/meta
+  path: ./kubernetes/flux/meta
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -58,7 +58,7 @@ spec:
     - name: cluster-meta
     - name: cluster-shared-meta
   interval: 30m
-  path: ./kubernetes/talos-maxi/apps
+  path: ./kubernetes/apps
   patches:
     - patch: |-
         apiVersion: kustomize.toolkit.fluxcd.io/v1

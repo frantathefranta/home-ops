@@ -19,7 +19,7 @@ spec:
       namespace: database
     - name: external-secrets-stores
       namespace: external-secrets
-  path: ./kubernetes/talos-maxi/apps/default/lubelog/app
+  path: ./kubernetes/apps/default/lubelog/app
   prune: true
   sourceRef:
     kind: GitRepository

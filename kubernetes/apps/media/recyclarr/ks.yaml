@@ -21,7 +21,7 @@ spec:
       namespace: external-secrets
     - name: rook-ceph-cluster
       namespace: rook-ceph-external
-  path: ./kubernetes/talos-maxi/apps/media/recyclarr/app
+  path: ./kubernetes/apps/media/recyclarr/app
   prune: true
   sourceRef:
     kind: GitRepository

@@ -12,7 +12,7 @@ spec:
   dependsOn:
     - name: minio
       namespace: storage
-  path: ./kubernetes/talos-maxi/apps/database/crunchy-postgres/app
+  path: ./kubernetes/apps/database/crunchy-postgres/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -38,7 +38,7 @@ spec:
       namespace: database
     - name: external-secrets-stores
       namespace: external-secrets
-  path: ./kubernetes/talos-maxi/apps/database/crunchy-postgres/cluster
+  path: ./kubernetes/apps/database/crunchy-postgres/cluster
   prune: true
   sourceRef:
     kind: GitRepository
@@ -63,7 +63,7 @@ spec:
       namespace: database
     - name: external-secrets-stores
       namespace: external-secrets
-  path: ./kubernetes/talos-maxi/apps/database/crunchy-postgres/cluster-vector
+  path: ./kubernetes/apps/database/crunchy-postgres/cluster-vector
   prune: true
   sourceRef:
     kind: GitRepository
@@ -86,7 +86,7 @@ spec:
   dependsOn:
     - name: crunchy-postgres-operator
       namespace: database
-  path: ./kubernetes/talos-maxi/apps/database/crunchy-postgres/users
+  path: ./kubernetes/apps/database/crunchy-postgres/users
   prune: true
   sourceRef:
     kind: GitRepository
@@ -110,7 +110,7 @@ spec:
   dependsOn:
     - name: external-secrets
       namespace: external-secrets
-  path: ./kubernetes/talos-maxi/apps/database/crunchy-postgres/clustersecretstore
+  path: ./kubernetes/apps/database/crunchy-postgres/clustersecretstore
   prune: true
   sourceRef:
     kind: GitRepository

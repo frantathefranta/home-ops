@@ -16,7 +16,7 @@ spec:
       namespace: database
     - name: crunchy-postgres-stores
       namespace: database
-  path: ./kubernetes/talos-maxi/apps/default/miniflux/app
+  path: ./kubernetes/apps/default/miniflux/app
   prune: true
   sourceRef:
     kind: GitRepository

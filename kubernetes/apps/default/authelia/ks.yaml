@@ -24,7 +24,7 @@ spec:
       namespace: database
     - name: smtp-relay
       namespace: default
-  path: ./kubernetes/talos-maxi/apps/default/authelia/app
+  path: ./kubernetes/apps/default/authelia/app
   prune: true
   sourceRef:
     kind: GitRepository

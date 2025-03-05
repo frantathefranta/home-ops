@@ -12,7 +12,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/talos-maxi/apps/media/qbittorrent/app
+  path: ./kubernetes/apps/media/qbittorrent/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -44,7 +44,7 @@ spec:
   dependsOn:
     - name: qbittorrent
       namespace: media
-  path: ./kubernetes/talos-maxi/apps/media/qbittorrent/tools
+  path: ./kubernetes/apps/media/qbittorrent/tools
   prune: true
   sourceRef:
     kind: GitRepository
