@@ -6,6 +6,9 @@ metadata:
   name: &app transmission-jeopardy
 spec:
   targetNamespace: media
+  components:
+    - ../../../../components/gatus/guarded
+    - ../../../../components/volsync
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
@@ -34,6 +37,9 @@ metadata:
   name: &app transmission-music
 spec:
   targetNamespace: media
+  components:
+    - ../../../../components/gatus/guarded
+    - ../../../../components/volsync
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app

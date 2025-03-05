@@ -6,6 +6,9 @@ metadata:
   name: &app pinchflat
 spec:
   targetNamespace: media
+  components:
+    - ../../../../components/gatus/guarded
+    - ../../../../components/volsync
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app

@@ -6,6 +6,9 @@ metadata:
   name: &app vikunja
 spec:
   targetNamespace: default
+  components:
+    - ../../../../components/gatus/guarded
+    - ../../../../components/volsync
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app

@@ -6,6 +6,9 @@ metadata:
   name: &app birdnet
 spec:
   targetNamespace: home-automation
+  components:
+    - ../../../../components/gatus/guarded
+    - ../../../../components/volsync
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app

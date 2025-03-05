@@ -5,6 +5,9 @@ metadata:
   name: &app syncthing
 spec:
   targetNamespace: default
+  components:
+    - ../../../../components/gatus/guarded
+    - ../../../../components/volsync
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
