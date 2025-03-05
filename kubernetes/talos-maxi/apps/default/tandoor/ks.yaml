@@ -18,7 +18,7 @@ spec:
     - name: external-secrets-stores
       namespace: external-secrets
   path: ./kubernetes/talos-maxi/apps/default/tandoor/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system

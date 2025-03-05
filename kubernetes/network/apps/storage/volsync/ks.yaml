@@ -10,7 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   path: ./kubernetes/network/apps/storage/volsync/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system

@@ -67,7 +67,7 @@ spec:
     - name: meilisearch
       namespace: default
   path: ./kubernetes/talos-maxi/apps/default/bar-assistant/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system

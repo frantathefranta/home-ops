@@ -12,7 +12,7 @@ spec:
   interval: 30m
   timeout: 5m
   path: "./kubernetes/talos-maxi/apps/network/multus/app"
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -32,7 +32,7 @@ spec:
   interval: 30m
   timeout: 5m
   path: "./kubernetes/talos-maxi/apps/network/multus/config"
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system

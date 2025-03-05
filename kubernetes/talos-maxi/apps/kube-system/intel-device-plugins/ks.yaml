@@ -16,7 +16,7 @@ spec:
     namespace: flux-system
   interval: 30m
   timeout: 5m
-  prune: true
+  prune: false
   wait: true
   dependsOn:
     - name: cert-manager
@@ -42,7 +42,7 @@ spec:
     namespace: flux-system
   interval: 30m
   timeout: 5m
-  prune: true
+  prune: false
   wait: true
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
@@ -59,7 +59,7 @@ spec:
     - name: intel-device-plugins-gpu
       namespace: kube-system
   path: "./kubernetes/talos-maxi/apps/kube-system/intel-device-plugins/exporter"
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system

@@ -13,7 +13,7 @@ spec:
     - name: cert-manager
       namespace: cert-manager
   path: ./kubernetes/talos-maxi/apps/kube-system/node-feature-discovery/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -37,7 +37,7 @@ spec:
     - name: node-feature-discovery
       namespace: kube-system
   path: "./kubernetes/talos-maxi/apps/kube-system/node-feature-discovery/rules"
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system
