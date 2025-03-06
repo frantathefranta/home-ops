@@ -324,4 +324,4 @@ controlPlane:
           kubernetesTalosAPIAccess:
             enabled: true
             allowedRoles: ["os:admin"]
-            allowedKubernetesNamespaces: ["system-upgrade"]
+            allowedKubernetesNamespaces: ["system-upgrade", "actions-runner-system"]

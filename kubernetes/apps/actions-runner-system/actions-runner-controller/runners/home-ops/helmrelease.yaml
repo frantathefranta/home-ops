@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: home-ops-runner
+  name: &name home-ops-runner
 spec:
   interval: 30m
   chart:
@@ -29,21 +29,9 @@ spec:
       namespace: actions-runner-system
     - name: openebs
       namespace: openebs-system
-  valuesFrom:
-    - targetPath: githubConfigSecret.github_app_id
-      kind: Secret
-      name: actions-runner-controller-auth-secret
-      valuesKey: github_app_id
-    - targetPath: githubConfigSecret.github_app_installation_id
-      kind: Secret
-      name: actions-runner-controller-auth-secret
-      valuesKey: github_app_installation_id
-    - targetPath: githubConfigSecret.github_app_private_key
-      kind: Secret
-      name: actions-runner-controller-auth-secret
-      valuesKey: github_app_private_key
   values:
     githubConfigUrl: https://github.com/frantathefranta/home-ops
+    githubConfigSecret: home-ops-runner-secret
     minRunners: 1
     maxRunners: 6
     containerMode:
@@ -61,8 +49,21 @@ spec:
       spec:
         containers:
           - name: runner
-            image: ghcr.io/joryirving/actions-runner:2.322.0@sha256:09aed03d50ef5ad6220704a06127a0d80c6afaa29de21f11164ff294f4e433bf
+            image: ghcr.io/onedr0p/actions-runner:2.322.0@sha256:9db27092b7caab08b1dc08d5e639a3340f6e0d6ae2f91aaf93e740bd28ad9306
             command: ["/home/runner/run.sh"]
             env:
               - name: ACTIONS_RUNNER_REQUIRE_JOB_CONTAINER
                 value: "false"
+              - name: NODE
+                valueFrom:
+                  fieldRef:
+                    fieldPath: status.hostIP
+            volumeMounts:
+              - mountPath: /var/run/secrets/talos.dev
+                name: talos
+                readOnly: true
+        serviceAccountName: *name
+        volumes:
+          - name: talos
+            secret:
+              secretName: *name
