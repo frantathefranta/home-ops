@@ -22,5 +22,5 @@ spec:
     kind: GitRepository
     name: flux-system
   update:
-    path: ./kubernetes/talos-maxi/apps
+    path: ./kubernetes/apps
     strategy: Setters

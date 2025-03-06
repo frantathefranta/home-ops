@@ -1,0 +1,44 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app vikunja
+spec:
+  targetNamespace: default
+  components:
+    - ../../../../components/gatus/guarded
+    - ../../../../components/volsync
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  path: ./kubernetes/apps/default/vikunja/app
+  prune: false # revert later
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  dependsOn:
+    - name: external-secrets-stores
+      namespace: external-secrets
+    - name: crunchy-postgres-operator-cluster
+      namespace: database
+    - name: crunchy-postgres-stores
+      namespace: database
+    - name: authelia
+      namespace: default
+    - name: dragonfly-cluster
+      namespace: database
+    - name: smtp-relay
+      namespace: default
+  wait: false
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
+  postBuild:
+    substitute:
+      APP: *app
+      VOLSYNC_CAPACITY: 1Gi
+      VOLSYNC_ACCESSMODES: ReadWriteMany
+      VOLSYNC_STORAGECLASS: cephfs
+      VOLSYNC_SNAPSHOTCLASS: cephfs-snapshot

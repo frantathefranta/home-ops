@@ -1,98 +1,80 @@
 ---
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
-name: "Flux Helm Repository Sync"
+name: Helm Repo Sync
 
 on:
-  workflow_dispatch:
-    inputs:
-      clusterName:
-        description: Cluster Name
-        default: main
-        required: true
-      helmRepoNamespace:
-        description: Helm Repository Namespace
-        default: flux-system
-        required: true
-      helmRepoName:
-        description: Helm Repository Name
-        required: true
   pull_request:
     branches: ["main"]
-    paths: ["kubernetes/**/helmrelease.yaml"]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  sync:
-    name: Flux Helm Repository Sync
-    runs-on: ["home-ops-runner"]
+  pre-job:
+    name: Helm Repo Sync - Pre-Job
+    runs-on: ubuntu-latest
+    outputs:
+      any_changed: ${{ steps.changed-files.outputs.any_changed }}
+      all_changed_and_modified_files: ${{ steps.changed-files.outputs.all_changed_and_modified_files }}
     steps:
-      - name: Generate Token
-        uses: actions/create-github-app-token@v1
-        id: app-token
-        with:
-          app-id: "${{ secrets.BOT_APP_ID }}"
-          private-key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
-
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          token: "${{ steps.app-token.outputs.token }}"
-          fetch-depth: 0
 
-      - name: Setup Homebrew
-        uses: Homebrew/actions/setup-homebrew@master
-
-      - name: Setup Workflow Tools
-        shell: bash
-        run: brew install fluxcd/tap/flux yq
-
-      - name: Write kubeconfig
-        id: kubeconfig
-        uses: timheuer/base64-to-file@v1
-        with:
-          encodedString: "${{ secrets.KUBECONFIG }}"
-          fileName: kubeconfig
-
-      - if: ${{ github.event.inputs.clusterName == '' && github.event.inputs.helmRepoNamespace == '' && github.event.inputs.helmRepoName == '' }}
-        name: Get Changed Files
+      - name: Get Changed Files
         id: changed-files
         uses: tj-actions/changed-files@v45
         with:
           files: kubernetes/**/helmrelease.yaml
-          safe_output: false
 
-      - if: ${{ github.event.inputs.clusterName == '' && github.event.inputs.helmRepoNamespace == '' && github.event.inputs.helmRepoName == '' }}
-        name: List All Changed Files
-        run: echo "${{ steps.changed-files.outputs.all_changed_and_modified_files }}"
+  extract:
+    if: ${{ needs.pre-job.outputs.any_changed == 'true' }}
+    name: Helm Repo Sync - Extract Helm Repos
+    needs: pre-job
+    runs-on: ubuntu-latest
+    outputs:
+      repos: ${{ steps.extract.outputs.repos }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - if: ${{ github.event.inputs.clusterName == '' && github.event.inputs.helmRepoNamespace == '' && github.event.inputs.helmRepoName == '' }}
-        name: Sync Helm Repository
+      - name: Extract Repos
+        id: extract
         env:
-          KUBECONFIG: "${{ steps.kubeconfig.outputs.filePath }}"
-        shell: bash
+          FILTER: '[.spec.chart.spec.sourceRef] | map("\(.namespace)/\(.name)") | unique'
         run: |
-          declare -a repos=()
-          for f in ${{ steps.changed-files.outputs.all_changed_and_modified_files }}; do
-              cluster_name=$(echo "${f}" | awk -F'/' '{print $2}')
-              repo_namespace="$(yq -r '.spec.chart.spec.sourceRef.namespace' "${f}")"
-              repo_name="$(yq -r '.spec.chart.spec.sourceRef.name' "${f}")"
-              repos+=("${cluster_name}:${repo_namespace}:${repo_name}")
-          done
-          mapfile -t repos < <(printf "%s\n" "${repos[@]}" | sort -u)
-          for r in "${repos[@]}"; do
-              IFS=':' read -r cluster_name repo_namespace repo_name <<< "${r}"
-              flux \
-                  --context ${cluster_name} \
-                  --namespace ${repo_namespace} \
-                  reconcile source helm ${repo_name}
-          done
+          repos=$(yq --indent 0 --output-format json eval-all "${FILTER}" ${{ needs.pre-job.outputs.all_changed_and_modified_files }})
+          echo "repos=${repos}" >> $GITHUB_OUTPUT
 
-      - if: ${{ github.event.inputs.clusterName != '' && github.event.inputs.helmRepoNamespace != '' && github.event.inputs.helmRepoName != '' }}
-        name: Sync Helm Repository
-        env:
-          KUBECONFIG: ${{ steps.kubeconfig.outputs.filePath }}
-        shell: bash
+          echo '## Helm Repos' >> $GITHUB_STEP_SUMMARY
+          echo '```json' >> $GITHUB_STEP_SUMMARY
+          echo $repos | jq >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+  sync:
+    name: Helm Repo Sync - Sync Helm Repos
+    needs: ["pre-job", "extract"]
+    runs-on: home-ops-runner
+    if: ${{ needs.pre-job.outputs.any_changed == 'true' && needs.extract.outputs.repos != '["/"]' }}
+    steps:
+      - name: Install flux
+        run: curl -fsSL https://fluxcd.io/install.sh | bash
+
+      - name: Sync Helm Repos
         run: |
-          flux \
-              --context ${{ github.event.inputs.clusterName }} \
-              --namespace ${{ github.event.inputs.helmRepoNamespace }} \
-              reconcile source helm ${{ github.event.inputs.helmRepoName }}
+          jq --raw-output '.[] | split("/") | "\(.[0]) \(.[1])"' <<< '${{ needs.extract.outputs.repos }}' \
+              | xargs -l -r bash -c 'flux --namespace $0 reconcile source helm $1'
+
+  status:
+    if: ${{ always() }}
+    name: Helm Repo Sync - Success
+    needs: sync
+    runs-on: ubuntu-latest
+    steps:
+      - name: Any jobs failed?
+        if: ${{ contains(needs.*.result, 'failure') }}
+        run: exit 1
+
+      - name: All jobs passed or skipped?
+        if: ${{ !(contains(needs.*.result, 'failure')) }}
+        run: echo "All jobs passed or skipped" && echo "${{ toJSON(needs.*.result) }}"
