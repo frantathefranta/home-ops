@@ -11,6 +11,7 @@ resources:
   - ./descheduler.yaml
   - ./emqx.yaml
   - ./external-dns.yaml
+  - ./grafana.yaml
   - ./ingress-nginx.yaml
   - ./intel.yaml
   - ./itzg.yaml
@@ -21,6 +22,7 @@ resources:
   - ./node-feature-discovery.yaml
   - ./openebs.yaml
   - ./piraeus.yaml
+  - ./prometheus-community.yaml
   - ./postfinance.yaml
   - ./rook-ceph.yaml
   - ./tofu-controller.yaml

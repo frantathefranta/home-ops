@@ -12,13 +12,8 @@ spec:
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
-<<<<<<< HEAD:kubernetes/talos-maxi/apps/storage/minio/ks.yaml
-  path: ./kubernetes/talos-maxi/apps/storage/minio/app
-  prune: false
-=======
   path: ./kubernetes/apps/storage/minio/app
   prune: false # revert later
->>>>>>> back-to-one-cluster:kubernetes/apps/storage/minio/ks.yaml
   sourceRef:
     kind: GitRepository
     name: flux-system

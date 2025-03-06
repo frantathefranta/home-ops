@@ -9,13 +9,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-<<<<<<< HEAD:kubernetes/network/apps/system-upgrade/system-upgrade-controller/ks.yaml
-  path: ./kubernetes/network/apps/system-upgrade/system-upgrade-controller/app
-  prune: false
-=======
   path: ./kubernetes/apps/system-upgrade/system-upgrade-controller/app
   prune: false # revert later
->>>>>>> back-to-one-cluster:kubernetes/apps/system-upgrade/system-upgrade-controller/ks.yaml
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -38,13 +33,8 @@ spec:
   dependsOn:
     - name: system-upgrade-controller
       namespace: system-upgrade
-<<<<<<< HEAD:kubernetes/network/apps/system-upgrade/system-upgrade-controller/ks.yaml
-  path: ./kubernetes/network/apps/system-upgrade/system-upgrade-controller/plans
-  prune: false
-=======
   path: ./kubernetes/apps/system-upgrade/system-upgrade-controller/plans
   prune: false # revert later
->>>>>>> back-to-one-cluster:kubernetes/apps/system-upgrade/system-upgrade-controller/ks.yaml
   sourceRef:
     kind: GitRepository
     name: flux-system

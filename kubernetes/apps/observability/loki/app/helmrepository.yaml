@@ -3,13 +3,13 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: OCIRepository
 metadata:
-  name: snmp-exporter
-  namespace: flux-system
+  name: loki
+  namespace: observability
 spec:
   interval: 1h
   layerSelector:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 8.0.0
-  url: oci://ghcr.io/prometheus-community/charts/prometheus-snmp-exporter
+    tag: 6.27.0
+  url: oci://ghcr.io/grafana/helm-charts/loki

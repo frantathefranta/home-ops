@@ -9,13 +9,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-<<<<<<< HEAD:kubernetes/network/apps/storage/snapshot-controller/ks.yaml
-  path: ./kubernetes/network/apps/storage/snapshot-controller/app
-  prune: false
-=======
   path: ./kubernetes/apps/storage/snapshot-controller/app
   prune: false # revert later
->>>>>>> back-to-one-cluster:kubernetes/apps/storage/snapshot-controller/ks.yaml
   sourceRef:
     kind: GitRepository
     name: flux-system
