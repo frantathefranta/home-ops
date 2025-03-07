@@ -36,8 +36,6 @@ spec:
         enable: true
       crashCollector:
         disable: true
-      cephVersion:
-        image: quay.io/ceph/ceph:v19.2.1
       healthCheck:
         daemonHealth:
           mon:

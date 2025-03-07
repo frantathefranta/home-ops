@@ -31,6 +31,8 @@ spec:
       enabled: true
     monitoring:
       enabled: true
+    image:
+      repository: ghcr.io/rook/ceph
     csi:
       csiAddons:
         enabled: false
