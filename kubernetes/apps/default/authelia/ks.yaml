@@ -25,7 +25,7 @@ spec:
     - name: smtp-relay
       namespace: default
   path: ./kubernetes/apps/default/authelia/app
-  prune: false # revert later
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

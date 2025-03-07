@@ -16,7 +16,7 @@ spec:
     - name: rook-ceph-cluster
       namespace: rook-ceph-external
   path: ./kubernetes/apps/media/pinchflat/app
-  prune: false # revert later
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

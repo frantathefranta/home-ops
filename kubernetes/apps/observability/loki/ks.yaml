@@ -16,7 +16,7 @@ spec:
       namespace: openebs-system
   interval: 10m
   path: "./kubernetes/apps/observability/loki/app"
-  prune: false # revert later
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

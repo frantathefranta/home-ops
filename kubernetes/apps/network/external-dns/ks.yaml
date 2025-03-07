@@ -61,7 +61,7 @@ spec:
     - name: external-secrets-stores
       namespace: external-secrets
   path: ./kubernetes/apps/network/external-dns/external
-  prune: false # revert later
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -85,7 +85,7 @@ spec:
     - name: external-secrets-stores
       namespace: external-secrets
   path: ./kubernetes/apps/network/external-dns/opnsense-unbound
-  prune: false # revert later
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -108,7 +108,7 @@ spec:
 #   dependsOn:
 #     - name: external-secrets-stores
 #   path: ./kubernetes/apps/network/external-dns/bind-opnsense
-#   prune: false # revert later
+#   prune: true
 #   sourceRef:
 #     kind: GitRepository
 #     name: flux-system

@@ -11,7 +11,7 @@ spec:
     secretRef:
       name: sops-age
   interval: 30m
-  prune: false # revert later
+  prune: true
   path: ./kubernetes/flux/meta
   sourceRef:
     kind: GitRepository
@@ -62,7 +62,7 @@ spec:
         name: cluster-settings
       - kind: Secret
         name: cluster-secrets
-  prune: false # revert later
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

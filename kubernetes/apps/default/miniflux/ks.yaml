@@ -17,7 +17,7 @@ spec:
     - name: crunchy-postgres-stores
       namespace: database
   path: ./kubernetes/apps/default/miniflux/app
-  prune: false # revert later
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
