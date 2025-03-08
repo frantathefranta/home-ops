@@ -28,10 +28,18 @@ spec:
               repository: ghcr.io/tphakala/birdnet-go
               tag: v0.6.3@sha256:a705ff35fa01187a05e42f0e14d7f41dc9dd2c713dde9cd2dcd568178eae5d4c
             probes:
-              liveness:
+              liveness: &probes
                 enabled: true
-              readiness:
-                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/v1/detections
+                    port: &port 8080
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
             securityContext:
               privileged: true
 
@@ -40,7 +48,7 @@ spec:
         controller: *app
         ports:
           http:
-            port: 8080
+            port: *port
           metrics:
             port: 8090
     serviceMonitor:
