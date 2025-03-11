@@ -38,11 +38,6 @@ spec:
               TZ: America/Detroit
             args:
               - daemon
-            envFrom:
-              - secretRef:
-                  name: prowlarr-secret
-              - secretRef:
-                  name: cross-seed-secret
             probes:
               liveness: &probes
                 enabled: true
@@ -70,9 +65,8 @@ spec:
             resources:
               requests:
                 cpu: 10m
-                memory: 128Mi
               limits:
-                memory: 256Mi
+                memory: 512Mi
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -89,21 +83,17 @@ spec:
 
     persistence:
       config:
+        existingClaim: *app
+      config-cross-seeds:
         type: emptyDir
+        globalMounts:
+          - path: /config/cross-seeds
       config-file:
-        type: configMap
-        name: cross-seed-configmap
+        type: secret
+        name: cross-seed-secret
         globalMounts:
           - path: /config/config.js
             subPath: config.js
-            readOnly: true
-      tmp:
-        type: emptyDir
-      qbittorrent:
-        existingClaim: qbittorrent
-        globalMounts:
-          - path: /config/qBittorrent/BT_backup
-            subPath: qBittorrent/BT_backup
             readOnly: true
       media:
         type: nfs

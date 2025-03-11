@@ -4,7 +4,7 @@ groups:
     rules:
       - alert: CrossSeedDatabaseMalformed
         expr: |
-          sum by (app) (count_over_time({app="cross-seed"} |~ "(?i)database disk image is malformed"[1h])) > 0
+          sum by (app) (count_over_time({app="cross-seed-jeopardy"} |~ "(?i)database disk image is malformed"[1h])) > 0
         for: 2m
         labels:
           severity: critical
@@ -14,7 +14,7 @@ groups:
           summary: "{{ $labels.container }} is experiencing database issues"
       - alert: CrossSeedFailedToInject
         expr: |
-          sum by (app) (count_over_time({app="cross-seed"} |~ "(?i)failed to inject"[1h])) > 0
+          sum by (app) (count_over_time({app="cross-seed-jeopardy"} |~ "(?i)failed to inject"[1h])) > 0
         for: 2m
         labels:
           severity: critical

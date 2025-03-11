@@ -5,17 +5,15 @@ kind: Kustomization
 metadata:
   name: &app cross-seed-jeopardy
 spec:
-  targetNamespace: media
-  dependsOn:
-    - name: external-secrets-stores
-      namespace: external-secrets
-    - name: transmission-jeopardy
-      namespace: media
-    - name: prowlarr
-      namespace: media
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  targetNamespace: media
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph-external
+  components:
+    - ../../../../components/volsync
   path: "./kubernetes/apps/media/cross-seed-jeopardy/app"
   prune: true
   sourceRef:
@@ -26,3 +24,7 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m
+  postBuild:
+    substitute:
+      APP: *app
+      VOLSYNC_CAPACITY: 5Gi

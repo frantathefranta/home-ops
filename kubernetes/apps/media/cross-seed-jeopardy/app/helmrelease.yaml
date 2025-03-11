@@ -13,8 +13,6 @@ spec:
   dependsOn:
     - name: transmission-jeopardy
       namespace: media
-    - name: prowlarr
-      namespace: media
   values:
     controllers:
       cross-seed-jeopardy:
@@ -38,11 +36,6 @@ spec:
               TZ: America/Detroit
             args:
               - daemon
-            envFrom:
-              - secretRef:
-                  name: prowlarr-secret
-              - secretRef:
-                  name: cross-seed-jeopardy-secret
             probes:
               liveness: &probes
                 enabled: true
@@ -56,17 +49,17 @@ spec:
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
-              # startup:
-              #   enabled: true
-              #   custom: true
-              #   spec:
-              #     httpGet:
-              #       path: /api/ping
-              #       port: *port
-              #     failureThreshold: 30
-              #     periodSeconds: 5
-              #     successThreshold: 1
-              #     timeoutSeconds: 1
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/ping
+                    port: *port
+                  failureThreshold: 30
+                  periodSeconds: 5
+                  successThreshold: 1
+                  timeoutSeconds: 1
             resources:
               requests:
                 cpu: 10m
@@ -88,21 +81,13 @@ spec:
 
     persistence:
       config:
-        type: emptyDir
+        existingClaim: *app
       config-file:
-        type: configMap
-        name: cross-seed-jeopardy-configmap
+        type: secret
+        name: cross-seed-jeopardy-secret
         globalMounts:
           - path: /config/config.js
             subPath: config.js
-            readOnly: true
-      tmp:
-        type: emptyDir
-      transmission:
-        existingClaim: transmission-jeopardy
-        globalMounts:
-          - path: /config/torrents
-            subPath: torrents
             readOnly: true
       jeopardy:
         type: nfs
