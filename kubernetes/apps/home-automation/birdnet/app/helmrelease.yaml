@@ -88,14 +88,10 @@ spec:
         path: /emc1/birdnet
         globalMounts:
           - path: /clips
-      dotconfig:
-        type: emptyDir
-        path: /root/.config/birdnet-go
-
       config:
         type: secret
         name: birdnet-secret
         globalMounts:
-          - path: /config/config.yaml
+          - path: /etc/birdnet-go/config.yaml
             subPath: config.yaml
             readOnly: true
