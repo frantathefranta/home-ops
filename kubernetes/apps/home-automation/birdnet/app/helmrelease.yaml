@@ -40,8 +40,15 @@ spec:
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
-            securityContext:
-              privileged: true
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [10000]
+        seccompProfile: { type: RuntimeDefault }
 
     service:
       app:
@@ -75,6 +82,16 @@ spec:
     persistence:
       data:
         existingClaim: *app
+      clips:
+        type: nfs
+        server: ${NAS_IP}
+        path: /emc1/birdnet
+        globalMounts:
+          - path: /clips
+      dotconfig:
+        type: emptyDir
+        path: /root/.config/birdnet-go
+
       config:
         type: secret
         name: birdnet-secret
