@@ -1,15 +1,18 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/gateway.networking.k8s.io/gateway_v1.json
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
-  name: internal
+  name: external
+  annotations:
+    external-dns.alpha.kubernetes.io/target: &hostname external.franta.us
+  labels:
+    gateway: external
 spec:
   gatewayClassName: cilium
-  # addresses:
-  #   - type: IPAddress
-  #     value: 10.33.40.11
-  #   - type: IPAddress
-  #     value: ${CLUSTER_LBA_V6_PREFIX}:11
+  infrastructure:
+    annotations:
+      external-dns.alpha.kubernetes.io/hostname: *hostname
   listeners:
     - name: http
       protocol: HTTP
@@ -29,4 +32,3 @@ spec:
         certificateRefs:
           - kind: Secret
             name: franta.us-production-tls
-            namespace: network

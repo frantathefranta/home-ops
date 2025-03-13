@@ -3,10 +3,14 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.1/experimental-install.yaml
+  - ./certificate.yaml
   - ./kube-api.yaml
   - ./bgpadvertisement.yaml
   - ./bgpclusterconfig.yaml
   - ./bgppeerconfig.yaml
   - ./clusterwidenetworkpolicy.yaml
   - ./loadbalancerippool.yaml
-  - ./gateway.yaml
+  - ./gateway-internal.yaml
+  - ./gateway-external.yaml
+  - ./pushsecret.yaml
+  - ./services

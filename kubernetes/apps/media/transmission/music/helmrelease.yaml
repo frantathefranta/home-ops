@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: transmission-music
+  name: &app transmission-music
 spec:
   interval: 30m
   chartRef:
@@ -105,18 +105,20 @@ spec:
             enabled: true
             port: *peerport
             protocol: TCP
-    ingress:
+    route:
       app:
-        # annotations:
-        #   external-dns.alpha.kubernetes.io/target: internal.franta.us
-        className: internal
-        hosts:
-          - host: transmission-music.franta.us
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames:
+          - "{{ .Release.Name }}.franta.us"
+          - tm.franta.us
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+
     persistence:
       config:
         existingClaim: transmission-music

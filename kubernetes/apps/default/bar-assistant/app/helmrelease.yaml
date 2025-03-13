@@ -91,18 +91,19 @@ spec:
         ports:
           nginx:
             port: &nginx-port 3000
-    ingress:
+    route:
       app:
-        className: external
-        annotations:
-          external-dns.alpha.kubernetes.io/target: external-maxi.franta.us
-        hosts:
-        - host: "bar.franta.us"
-          paths:
-            - path: /
-              service:
-                identifier: app
+        hostnames:
+          - "bar.franta.us"
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
                 port: *nginx-port
+
     persistence:
       app:
         existingClaim: *app

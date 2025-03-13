@@ -61,15 +61,15 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
-      main:
-        className: external
-        annotations:
-          external-dns.alpha.kubernetes.io/target: external-maxi.franta.us
-        hosts:
-          - host: www.franta.us
-            paths:
-              - path: /
-                service:
-                  identifier: main
-                  port: http
+    route:
+      app:
+        hostnames:
+          - "www.franta.us"
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
