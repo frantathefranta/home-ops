@@ -97,7 +97,7 @@ spec:
         controller: transmission
         type: LoadBalancer
         annotations:
-          lbipam.cilium.io/ips: 10.33.40.65,${cluster_lba_prefix_v6}:65
+          lbipam.cilium.io/ips: 10.33.40.65,${CLUSTER_LBA_V6_PREFIX}:65
         ports:
           http:
             port: *port

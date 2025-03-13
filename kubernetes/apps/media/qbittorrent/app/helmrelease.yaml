@@ -78,7 +78,7 @@ spec:
         controller: qbittorrent
         type: LoadBalancer
         annotations:
-          lbipam.cilium.io/ips: 10.33.40.63,${cluster_lba_prefix_v6}:63
+          lbipam.cilium.io/ips: 10.33.40.63,${CLUSTER_LBA_V6_PREFIX}:63
         ports:
           http:
             port: *port

@@ -42,7 +42,7 @@ spec:
         controller: varroa
         type: LoadBalancer
         annotations:
-          lbipam.cilium.io/ips: 10.33.40.66,${cluster_lba_prefix_v6}:66
+          lbipam.cilium.io/ips: 10.33.40.66,${CLUSTER_LBA_V6_PREFIX}:66
         nameOverride: *app
         ports:
           http:
