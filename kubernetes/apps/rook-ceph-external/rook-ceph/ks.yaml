@@ -26,10 +26,15 @@ kind: Kustomization
 metadata:
   name: &app rook-ceph
 spec:
-  targetNamespace: rook-ceph-external
+  targetNamespace: &namespace rook-ceph-external
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2
+      kind: HelmRelease
+      name: rook-ceph-operator
+      namespace: *namespace
   path: ./kubernetes/apps/rook-ceph-external/rook-ceph/app
   prune: false
   sourceRef:
@@ -69,7 +74,7 @@ spec:
     - apiVersion: ceph.rook.io/v1
       kind: CephCluster
       failed: status.ceph.health == 'HEALTH_ERR'
-      current: status.ceph.health == 'HEALTH_OK'
+      current: status.ceph.health in ['HEALTH_OK', 'HEALTH_WARN']
   path: ./kubernetes/apps/rook-ceph-external/rook-ceph/cluster
   prune: false
   sourceRef:
