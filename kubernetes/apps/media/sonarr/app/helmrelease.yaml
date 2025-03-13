@@ -83,26 +83,19 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
+    route:
       app:
-        className: internal
-        annotations:
-          # gethomepage.dev/enabled: "true"
-          # gethomepage.dev/group: Downloads
-          # gethomepage.dev/name: Sonarr
-          # gethomepage.dev/icon: sonarr.png
-          # gethomepage.dev/description: TV Downloads
-          # gethomepage.dev/widget.type: sonarr
-          # gethomepage.dev/widget.url: http://sonarr.downloads
-          # gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_SONARR_TOKEN}}` }}"
-          # external-dns.alpha.kubernetes.io/target: internal.franta.us
-        hosts:
-        - host: "{{ .Release.Name }}.franta.us"
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+        hostnames:
+          - "{{ .Release.Name }}.franta.us"
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+
     persistence:
       config:
         existingClaim: *app

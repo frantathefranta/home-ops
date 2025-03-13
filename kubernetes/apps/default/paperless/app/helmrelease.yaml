@@ -18,10 +18,10 @@ spec:
       strategy: rollback
       retries: 3
   dependsOn:
-  - name: rook-ceph-cluster
-    namespace: rook-ceph-external
-  - name: volsync
-    namespace: storage
+    - name: rook-ceph-cluster
+      namespace: rook-ceph-external
+    - name: volsync
+      namespace: storage
   values:
     controllers:
       paperless:
@@ -61,8 +61,8 @@ spec:
               # Configure user permissions
               USERMAP_GID: "65542"
             envFrom:
-            - secretRef:
-                name: paperless-secret
+              - secretRef:
+                  name: paperless-secret
             resources:
               requests:
                 cpu: 15m
@@ -73,19 +73,19 @@ spec:
         controller: *app
         ports:
           http:
-            port: 8000
-    ingress:
+            port: &port 8000
+    route:
       app:
-        className: internal
-        # annotations:
-        #   external-dns.alpha.kubernetes.io/target: internal.franta.us
-        hosts:
-        - host: "{{ .Release.Name }}.franta.us"
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+        hostnames:
+          - "{{ .Release.Name }}.franta.us"
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
     persistence:
       config:
         existingClaim: *app

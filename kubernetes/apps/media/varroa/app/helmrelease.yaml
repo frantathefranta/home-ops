@@ -47,17 +47,18 @@ spec:
         ports:
           http:
             port: &port 20346
-    ingress:
-      main:
-        className: internal
-        hosts:
-          - host: varroa.franta.us
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: main
-                  port: http
+    route:
+      app:
+        hostnames:
+          - "{{ .Release.Name }}.franta.us"
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
     persistence:
       config:
         existingClaim: *app

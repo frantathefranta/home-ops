@@ -93,18 +93,19 @@ spec:
             path: /metrics
             interval: 1m
             scrapeTimeout: 10s
-    ingress:
+    route:
       app:
-        # annotations:
-        #   external-dns.alpha.kubernetes.io/target: internal.franta.us
-        className: internal
-        hosts:
-          - host: "{{ .Release.Name }}.franta.us"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames:
+          - "{{ .Release.Name }}.franta.us"
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+
     persistence:
       tmp:
         type: emptyDir

@@ -59,18 +59,21 @@ spec:
         controller: *app
         ports:
           http:
-            port: 8095
+            port: &port 8095
 
-    ingress:
+    route:
       app:
-        className: internal
-        hosts:
-          - host: mass.franta.us
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames:
+          - "{{ .Release.Name }}.franta.us"
+          - mass.franta.us
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
 
     persistence:
       data:

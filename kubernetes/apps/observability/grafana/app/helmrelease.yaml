@@ -454,12 +454,14 @@ spec:
       - vonage-status-panel
     serviceMonitor:
       enabled: true
-    ingress:
-      enabled: true
-      # annotations:
-      #   external-dns.alpha.kubernetes.io/target: internal.franta.us
-      ingressClassName: internal
-      hosts: ["grafana.franta.us"]
+    route:
+      main:
+        enabled: true
+        hostnames: ["{{ .Release.Name }}.franta.us"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
     persistence:
       enabled: false
     testFramework:
