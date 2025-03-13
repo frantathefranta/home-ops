@@ -1,0 +1,20 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: internal
+spec:
+  gatewayClassName: cilium
+  listeners:
+    - name: https
+      protocol: HTTPS
+      port: 443
+      hostname: "*.franta.us"
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        certificateRefs:
+          - kind: Secret
+            name: franta.us-production-tls
+            namespace: network

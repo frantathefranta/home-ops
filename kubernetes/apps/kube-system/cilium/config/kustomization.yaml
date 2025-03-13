@@ -8,3 +8,4 @@ resources:
   - ./bgppeerconfig.yaml
   - ./clusterwidenetworkpolicy.yaml
   - ./loadbalancerippool.yaml
+  - ./gateway.yaml
