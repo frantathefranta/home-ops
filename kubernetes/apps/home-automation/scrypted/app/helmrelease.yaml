@@ -78,7 +78,7 @@ spec:
         controller: *app
         ports:
           http:
-            port: 11080
+            port: &port 11080
             primary: true
           rebroadcast1:
             port: 34135
