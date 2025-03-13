@@ -5,6 +5,6 @@ metadata:
   name: cloudflared
 spec:
   endpoints:
-    - dnsName: "external-maxi.franta.us"
+    - dnsName: "external.franta.us"
       recordType: CNAME
       targets: ["0d7a89f4-a717-47f1-82f0-252e07b01b63.cfargotunnel.com"]

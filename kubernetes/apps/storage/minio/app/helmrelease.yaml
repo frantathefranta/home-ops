@@ -32,7 +32,7 @@ spec:
               MINIO_API_CORS_ALLOW_ORIGIN: https://minio.franta.us,https://s3.franta.us
               MINIO_BROWSER_REDIRECT_URL: https://minio.franta.us
               MINIO_PROMETHEUS_JOB_ID: minio
-              MINIO_PROMETHEUS_URL: https://prometheus-maxi.franta.us
+              MINIO_PROMETHEUS_URL: https://prometheus.franta.us
               MINIO_PROMETHEUS_AUTH_TYPE: public
               MINIO_SERVER_URL: https://s3.franta.us
               MINIO_UPDATE: "off"
@@ -81,9 +81,9 @@ spec:
         controller: *app
         ports:
           http:
-            port: 9001
+            port: &httpPort 9001
           s3:
-            port: 9000
+            port: &s3Port 9000
     serviceMonitor:
       app:
         serviceName: *app
@@ -93,27 +93,30 @@ spec:
             path: /minio/v2/metrics/cluster
             interval: 1m
             scrapeTimeout: 10s
-    ingress:
+    route:
       app:
-        enabled: true
-        className: internal
-        hosts:
-          - host: "minio.franta.us"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames:
+          - "{{ .Release.Name }}.franta.us"
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *httpPort
+
       api:
-        enabled: true
-        className: internal
-        hosts:
-          - host: s3.franta.us
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: s3
+        hostnames:
+          - "s3.franta.us"
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *s3Port
     persistence:
       data:
         enabled: true

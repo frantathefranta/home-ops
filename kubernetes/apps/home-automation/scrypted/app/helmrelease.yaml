@@ -85,16 +85,18 @@ spec:
           rebroadcast2:
             port: 34136
 
-    ingress:
+    route:
       app:
-        className: internal
-        hosts:
-          - host: scrypted.franta.us
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames:
+          - "{{ .Release.Name }}.franta.us"
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
 
     persistence:
       config:

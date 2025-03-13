@@ -1,10 +1,10 @@
 ---
 originRequest:
-  originServerName: "external-maxi.franta.us"
+  originServerName: "external.franta.us"
 
 ingress:
   - hostname: "franta.us"
-    service: https://nginx-external-controller.network.svc.cluster.local:443
+    service: &svc https://cilium-gateway-external.kube-system.svc.cluster.local
   - hostname: "*.franta.us"
-    service: https://nginx-external-controller.network.svc.cluster.local:443
+    service: *svc
   - service: http_status:404

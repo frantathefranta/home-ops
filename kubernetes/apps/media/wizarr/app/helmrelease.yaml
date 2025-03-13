@@ -31,7 +31,7 @@ spec:
         containers:
           app:
             image:
-              repository:  ghcr.io/wizarrrr/wizarr
+              repository: ghcr.io/wizarrrr/wizarr
               tag: 4.2.0
             env:
               TZ: America/Detroit
@@ -54,19 +54,20 @@ spec:
         controller: *app
         ports:
           http:
-            port: 5690
-    ingress:
+            port: &port 5690
+    route:
       app:
-        className: external
-        annotations:
-          external-dns.alpha.kubernetes.io/target: external-maxi.franta.us
-        hosts:
-          - host: join.franta.us
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames:
+          - "{{ .Release.Name }}.franta.us"
+          - join.franta.us
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
     persistence:
       config:
         existingClaim: *app

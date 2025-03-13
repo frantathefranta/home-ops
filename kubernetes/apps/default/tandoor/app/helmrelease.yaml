@@ -103,18 +103,19 @@ spec:
         ports:
           http:
             port: 8080
-    ingress:
+    route:
       app:
-        className: external
-        annotations:
-          external-dns.alpha.kubernetes.io/target: "external-maxi.franta.us"
-        hosts:
-          - host: &host "recipes.franta.us"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames:
+          - recipes.franta.us
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+
     persistence:
       data:
         existingClaim: *app
