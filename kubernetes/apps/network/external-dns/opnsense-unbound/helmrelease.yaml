@@ -67,7 +67,7 @@ spec:
       - --ignore-ingress-tls-spec
       - --ingress-class=internal
     policy: sync
-    sources: ["ingress", "service"]
+    sources: ["gateway-httproute", "ingress", "service"]
     txtOwnerId: talos-maxi
     txtPrefix: k8s.
     serviceMonitor:

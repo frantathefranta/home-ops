@@ -9,6 +9,7 @@ bpf:
   datapathMode: netkit
   masquerade: true
   tproxy: true
+  preAllocateMaps: true
 cgroup:
   automount:
     enabled: false
@@ -20,6 +21,13 @@ cni:
   exclusive: false
 endpointRoutes:
   enabled: true
+envoy:
+  enable: true
+  rollOutPods: true
+gatewayAPI:
+  enabled: true
+  enableAlpn: true
+  xffNumTrustedHops: 1
 hubble:
   enabled: false
 ipam:
@@ -36,6 +44,8 @@ kubeProxyReplacement: true
 kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
 l2announcements:
   enabled: false
+l7proxy:
+  enabled: true
 loadBalancer:
   acceleration: best-effort
   algorithm: maglev
@@ -60,6 +70,8 @@ securityContext:
       - IPC_LOCK
       - SYS_ADMIN
       - SYS_RESOURCE
+      - PERFMON
+      - BPF
       - DAC_OVERRIDE
       - FOWNER
       - SETGID
