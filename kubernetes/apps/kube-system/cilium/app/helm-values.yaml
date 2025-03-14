@@ -8,7 +8,7 @@ bgpControlPlane:
 bpf:
   datapathMode: netkit
   masquerade: true
-  tproxy: true
+  # tproxy: true
   preAllocateMaps: true
 cgroup:
   automount:
