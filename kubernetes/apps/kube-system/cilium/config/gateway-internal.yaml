@@ -5,7 +5,7 @@ metadata:
   name: cilium-gateway-class
 spec:
   controllerName: io.cilium/gateway-controller
-  description: The default Cilium GatewayClass
+  description: The default Cilium GatewayClass (enhanced)
   parametersRef:
     group: cilium.io
     kind: CiliumGatewayClassConfig
