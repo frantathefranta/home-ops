@@ -1,5 +1,25 @@
 ---
 apiVersion: gateway.networking.k8s.io/v1
+kind: GatewayClass
+metadata:
+  name: cilium-gateway-class
+spec:
+  controllerName: io.cilium/gateway-controller
+  description: The default Cilium GatewayClass
+  parametersRef:
+    group: cilium.io
+    kind: CiliumGatewayClassConfig
+    name: cilium-gateway-config
+---
+apiVersion: cilium.io/v2alpha1
+kind: CiliumGatewayClassConfig
+metadata:
+  name: cilium-gateway-config
+spec:
+  service:
+    ipFamilyPolicy: PreferDualStack
+---
+apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: internal
@@ -8,7 +28,7 @@ metadata:
   labels:
     gateway: internal
 spec:
-  gatewayClassName: cilium
+  gatewayClassName: cilium-gateway-class
   addresses:
     - type: IPv4Address
       value: 10.33.40.11
