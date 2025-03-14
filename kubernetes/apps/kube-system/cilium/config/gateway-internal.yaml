@@ -1,25 +1,25 @@
----
-apiVersion: gateway.networking.k8s.io/v1
-kind: GatewayClass
-metadata:
-  name: cilium-gateway-class
-spec:
-  controllerName: io.cilium/gateway-controller
-  description: The default Cilium GatewayClass (enhanced)
-  parametersRef:
-    group: cilium.io
-    kind: CiliumGatewayClassConfig
-    name: cilium-gateway-config
-    namespace: kube-system
----
-apiVersion: cilium.io/v2alpha1
-kind: CiliumGatewayClassConfig
-metadata:
-  name: cilium-gateway-config
-  namespace: kube-system
-spec:
-  service:
-    ipFamilyPolicy: RequireDualStack
+# ---
+# apiVersion: gateway.networking.k8s.io/v1
+# kind: GatewayClass
+# metadata:
+#   name: cilium-gateway-class
+# spec:
+#   controllerName: io.cilium/gateway-controller
+#   description: The default Cilium GatewayClass (enhanced)
+#   parametersRef:
+#     group: cilium.io
+#     kind: CiliumGatewayClassConfig
+#     name: cilium-gateway-config
+#     namespace: kube-system
+# ---
+# apiVersion: cilium.io/v2alpha1
+# kind: CiliumGatewayClassConfig
+# metadata:
+#   name: cilium-gateway-config
+#   namespace: kube-system
+# spec:
+#   service:
+#     ipFamilyPolicy: RequireDualStack
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
@@ -30,7 +30,7 @@ metadata:
   labels:
     gateway: internal
 spec:
-  gatewayClassName: cilium-gateway-class
+  gatewayClassName: cilium
   infrastructure:
     annotations:
       io.cilium/lb-ipam-ips: 10.33.40.11,${CLUSTER_LBA_V6_PREFIX}:11
