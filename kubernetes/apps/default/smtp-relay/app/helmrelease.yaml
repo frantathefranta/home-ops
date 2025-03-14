@@ -68,6 +68,7 @@ spec:
       app:
         controller: smtp-relay
         type: LoadBalancer
+        ipFamilyPolicy: RequireDualStack
         annotations:
           external-dns.alpha.kubernetes.io/hostname: smtp-relay.franta.us
         ports:
