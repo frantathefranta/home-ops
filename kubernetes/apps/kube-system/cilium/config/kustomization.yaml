@@ -12,6 +12,5 @@ resources:
   - ./loadbalancerippool.yaml
   - ./gateway-internal.yaml
   - ./gateway-external.yaml
-  - ./gateway-test.yaml
   - ./pushsecret.yaml
   - ./services
