@@ -60,10 +60,10 @@ spec:
       ui:
         enabled: true
         rollOutPods: true
-        ingress:
-          enabled: true
-          className: internal
-          hosts: ["hubble.franta.us"]
+        # ingress:
+        #   enabled: true
+        #   className: internal
+        #   hosts: ["hubble.franta.us"]
     loadBalancer:
       l7:
         backend: envoy
