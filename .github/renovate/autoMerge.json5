@@ -2,12 +2,77 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "packageRules": [
     {
+      "description": "Auto-merge Helm Releases",
+      "matchDatasources": [
+        "helm",
+        "docker"
+      ],
+      "automerge": true,
+      "automergeType": "pr",
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "matchPackageNames": [
+        "/kube-prometheus-stack/"
+      ],
+      "ignoreTests": false
+    },
+    {
       "description": "Auto-merge container digests and patch updates for trusted containers",
-      "matchDatasources": ["docker"],
+      "matchDatasources": [
+        "docker"
+      ],
       "automerge": true,
       "automergeType": "branch",
-      "matchUpdateTypes": ["digest"],
-      "matchPackagePatterns": ["ghcr.io/bjw-s", "ghcr.io/onedr0p", "ghcr.io/joryirving", "frantathefranta"]
+      "matchUpdateTypes": [
+        "digest"
+      ],
+      "matchPackagePatterns": [
+        "/bjw-s/",
+        "/onedr0p/",
+        "/joryirving/",
+        "/frantathefranta/"
+      ]
+    },
+    {
+      "description": "Auto-merge GitHub Releases",
+      "matchDatasources": [
+        "github-releases"
+      ],
+      "automerge": true,
+      "automergeType": "branch",
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "matchPackageNames": [
+        "/external-dns/",
+        "/gateway-api/",
+        "/prometheus-operator/"
+      ],
+      "ignoreTests": true
+    },
+    {
+      "description": [
+        "Auto-merge trusted GitHub Actions"
+      ],
+      "matchManagers": [
+        "github-actions"
+      ],
+      "automerge": true,
+      "automergeType": "branch",
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "digest"
+      ],
+      "matchPackageNames": [
+        "/^actions\\//",
+        "/^cloudflare\\//",
+        "/^renovatebot\\//"
+      ],
+      "ignoreTests": true
     }
   ]
 }

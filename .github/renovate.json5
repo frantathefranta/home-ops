@@ -1,354 +1,297 @@
 {
-  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
-  extends: [
-    'config:recommended',
-    'docker:enableMajor',
-    ':disableRateLimiting',
-    ':dependencyDashboard',
-    ':semanticCommits',
-    ':automergeBranch',
-    ':timezone(America/Detroit)',
-    'github>frantathefranta/home-ops//.github/renovate/grafanaDashboards.json5',
-    'github>frantathefranta/home-ops//.github/renovate/autoMerge.json5',
-    'github>frantathefranta/home-ops//.github/renovate/semanticCommits.json5',
-    'github>frantathefranta/home-ops//.github/renovate/commitMessage.json5',
-    'github>frantathefranta/home-ops//.github/renovate/allowedVersions.json5',
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "docker:enableMajor",
+    ":disableRateLimiting",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":automergeBranch",
+    ":timezone(America/Detroit)",
+    "helpers:pinGitHubActionDigests",
+    "github>frantathefranta/home-ops//.github/renovate/grafanaDashboards.json5",
+    "github>frantathefranta/home-ops//.github/renovate/autoMerge.json5",
+    "github>frantathefranta/home-ops//.github/renovate/semanticCommits.json5",
+    "github>frantathefranta/home-ops//.github/renovate/commitMessage.json5",
+    "github>frantathefranta/home-ops//.github/renovate/allowedVersions.json5",
   ],
-  dependencyDashboard: true,
-  dependencyDashboardTitle: 'Renovate Dashboard 🤖',
-  suppressNotifications: [
-    'prEditedNotification',
-    'prIgnoreNotification',
+  "dependencyDashboard": "true",
+  "dependencyDashboardTitle": "Renovate Dashboard 🤖",
+  "suppressNotifications": [
+    "prEditedNotification",
+    "prIgnoreNotification",
   ],
-  rebaseWhen: 'conflicted',
-  assigneesFromCodeOwners: true,
-  reviewersFromCodeOwners: true,
-  ignorePaths: ["**/*.sops.*", "**/resources/**", "**/docs/**"],
-  flux: {
-    fileMatch: [
-      '(^|/)ansible/.+\\.ya?ml(?:\\.j2)?$',
-      '(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$',
+  "rebaseWhen": "conflicted",
+  "assigneesFromCodeOwners": true,
+  "reviewersFromCodeOwners": true,
+  "ignorePaths": [
+    "**/*.sops.*",
+    "**/resources/**",
+    "**/docs/**"
+  ],
+  "flux": {
+    "fileMatch": [
+      "(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$",
     ],
   },
-  'helm-values': {
-    fileMatch: [
-      '(^|/)ansible/.+\\.ya?ml(?:\\.j2)?$',
-      '(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$',
+  "helm-values": {
+    "fileMatch": [
+      "(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$",
     ],
   },
-  helmfile: {
-    fileMatch: [
-      '(^|/)helmfile\\.ya?ml(?:\\.j2)?$',
+  "helmfile": {
+    "fileMatch": [
+      "(^|/)helmfile\\.ya?ml(?:\\.j2)?$",
     ],
   },
-  kubernetes: {
-    fileMatch: [
-      '(^|/)ansible/.+\\.ya?ml(?:\\.j2)?$',
-      '(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$',
+  "kubernetes": {
+    "fileMatch": [
+      "(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$",
     ],
   },
-  kustomize: {
-    fileMatch: [
-      '(^|/)kustomization\\.ya?ml(?:\\.j2)?$',
+  "kustomize": {
+    "fileMatch": [
+      "(^|/)kustomization\\.ya?ml(?:\\.j2)?$",
     ],
   },
-  pip_requirements: {
-    fileMatch: [
-      '(^|/)[\\w-]*requirements(-\\w+)?\\.(txt|pip)(?:\\.j2)?$',
-    ],
-  },
-  'ansible-galaxy': {
-    fileMatch: [
-      '(^|/)(galaxy|requirements)(\\.ansible)?\\.ya?ml(?:\\.j2)?$',
-    ],
-  },
-  commitMessageTopic: '{{depName}}',
-  commitMessageExtra: 'to {{newVersion}}',
-  commitMessageSuffix: '',
-  packageRules: [
+  "commitMessageTopic": "{{depName}}",
+  "commitMessageExtra": "to {{newVersion}}",
+  "commitMessageSuffix": "",
+  "packageRules": [
     {
-      description: [
-        'Auto merge Github Actions',
+      "description": [
+        "Custom versioning for minio",
       ],
-      matchManagers: [
-        'github-actions',
+      "matchDatasources": [
+        "docker",
       ],
-      automerge: true,
-      automergeType: 'branch',
-      ignoreTests: true,
-      matchUpdateTypes: [
-        'minor',
-        'patch',
+      "versioning": "regex:^RELEASE\\.(?<major>\\d+)-(?<minor>\\d+)-(?<patch>\\d+)T.*Z$",
+      "matchPackageNames": [
+        "/minio/",
       ],
     },
     {
-      description: [
-        'Custom versioning for minio',
+      "description": [
+        "Custom versioning for miniflux",
       ],
-      matchDatasources: [
-        'docker',
+      "matchDatasources": [
+        "docker",
       ],
-      versioning: 'regex:^RELEASE\\.(?<major>\\d+)-(?<minor>\\d+)-(?<patch>\\d+)T.*Z$',
-      matchPackageNames: [
-        '/minio/',
-      ],
-    },
-    {
-      description: [
-        'Custom versioning for miniflux',
-      ],
-      matchDatasources: [
-        'docker',
-      ],
-      versioning: 'regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-(?<compatibility>)$',
-      matchPackageNames: [
-        '/miniflux/',
+      "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-(?<compatibility>)$",
+      "matchPackageNames": [
+        "/miniflux/",
       ],
     },
     {
-      description: [
-        'Loose versioning for non-semver packages',
+      "description": [
+        "Flux Group",
       ],
-      matchDatasources: [
-        'docker',
+      "groupName": "Flux",
+      "matchDatasources": [
+        "docker",
+        "github-tags",
       ],
-      versioning: 'loose',
-      matchPackageNames: [
-        '/cross-seed/',
-      ],
-    },
-    {
-      description: [
-        'Flux Group',
-      ],
-      groupName: 'Flux',
-      matchDatasources: [
-        'docker',
-        'github-tags',
-      ],
-      versioning: 'semver',
-      group: {
-        commitMessageTopic: '{{{groupName}}} group',
+      "versioning": "semver",
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group",
       },
-      separateMinorPatch: true,
-      matchPackageNames: [
-        '/flux/',
-        '/fluxcd/',
+      "separateMinorPatch": true,
+      "matchPackageNames": [
+        "/flux/",
+        "/fluxcd/",
       ],
     },
     {
-      description: [
-        'Intel Device Plugins Group',
+      "description": [
+        "Intel Device Plugins Group",
       ],
-      groupName: 'Intel-Device-Plugins',
-      matchDatasources: [
-        'helm',
+      "groupName": "Intel-Device-Plugins",
+      "matchDatasources": [
+        "helm",
       ],
-      group: {
-        commitMessageTopic: '{{{groupName}}} group',
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group",
       },
-      separateMinorPatch: true,
-      matchPackageNames: [
-        '/intel-device-plugins/',
+      "separateMinorPatch": true,
+      "matchPackageNames": [
+        "/intel-device-plugins/",
       ],
     },
     {
-      description: [
-        'System Upgrade Controller Group',
+      "description": [
+        "System Upgrade Controller Group",
       ],
-      groupName: 'System Upgrade Controller',
-      matchDatasources: [
-        'docker',
-        'github-releases',
+      "groupName": "System Upgrade Controller",
+      "matchDatasources": [
+        "docker",
+        "github-releases",
       ],
-      group: {
-        commitMessageTopic: '{{{groupName}}} group',
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group",
       },
-      separateMinorPatch: true,
-      matchPackageNames: [
-        '/system-upgrade-controller/',
+      "separateMinorPatch": true,
+      "matchPackageNames": [
+        "/system-upgrade-controller/",
       ],
     },
     {
-      description: [
-        'Talos Group',
+      "description": [
+        "Talos Group",
       ],
-      groupName: 'Talos',
-      matchDatasources: [
-        'docker',
+      "groupName": "Talos",
+      "matchDatasources": [
+        "docker",
       ],
-      group: {
-        commitMessageTopic: '{{{groupName}}} group',
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group",
       },
-      separateMinorPatch: true,
-      matchPackageNames: [
-        '/siderolabs/talosctl/',
-        '/siderolabs/installer/',
-        '/factory.talos.dev/installer/',
+      "separateMinorPatch": true,
+      "matchPackageNames": [
+        "/siderolabs/talosctl/",
+        "/siderolabs/installer/",
+        "/factory.talos.dev/installer/",
       ],
     },
     {
-      description: [
-        'Volsync Group',
+      "description": [
+        "Volsync Group",
       ],
-      groupName: 'Volsync',
-      matchDatasources: [
-        'docker',
-        'helm',
+      "groupName": "Volsync",
+      "matchDatasources": [
+        "docker",
+        "helm",
       ],
-      group: {
-        commitMessageTopic: '{{{groupName}}} group',
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group",
       },
-      separateMinorPatch: true,
-      matchPackageNames: [
-        '/volsync/',
+      "separateMinorPatch": true,
+      "matchPackageNames": [
+        "/volsync/",
       ],
     },
     {
-      description: [
-        'Dragonfly Operator Group',
+      "description": [
+        "Dragonfly Operator Group",
       ],
-      groupName: 'Dragonfly Operator',
-      matchDatasources: [
-        'docker',
-        'github-releases',
+      "groupName": "Dragonfly Operator",
+      "matchDatasources": [
+        "docker",
+        "github-releases",
       ],
-      group: {
-        commitMessageTopic: '{{{groupName}}} group',
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group",
       },
-      separateMinorPatch: true,
-      matchPackageNames: [
-        '/dragonfly(?:db)?.operator/',
+      "separateMinorPatch": true,
+      "matchPackageNames": [
+        "/dragonfly(?:db)?.operator/",
       ],
     },
     {
-      description: [
-        'Rook-Ceph Group',
+      "description": [
+        "Rook-Ceph Group",
       ],
-      groupName: 'Rook-Ceph',
-      matchDatasources: [
-        'helm',
+      "groupName": "Rook-Ceph",
+      "matchDatasources": [
+        "helm",
       ],
-      group: {
-        commitMessageTopic: '{{{groupName}}} group',
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group",
       },
-      separateMinorPatch: true,
-      matchPackageNames: [
-        '/rook.ceph/',
+      "separateMinorPatch": true,
+      "matchPackageNames": [
+        "/rook.ceph/",
       ],
     },
     {
-      description: [
-        'Actions Runner Controller Group',
+      "description": [
+        "Actions Runner Controller Group",
       ],
-      groupName: 'Actions Runner Controller',
-      matchDatasources: [
-        'docker',
-        'helm',
+      "groupName": "Actions Runner Controller",
+      "matchDatasources": [
+        "docker",
+        "helm",
       ],
-      group: {
-        commitMessageTopic: '{{{groupName}}} group',
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group",
       },
-      separateMinorPatch: true,
-      matchPackageNames: [
-        '/gha-runner-scale-set/',
+      "separateMinorPatch": true,
+      "matchPackageNames": [
+        "/gha-runner-scale-set/",
       ],
     },
     {
-      description: [
-        'Use custom versioning for k3s',
+      "matchUpdateTypes": [
+        "major",
       ],
-      matchDatasources: [
-        'github-releases',
-      ],
-      versioning: 'regex:^v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)(?<compatibility>\\+k.s)\\.?(?<build>\\d+)$',
-      matchPackageNames: [
-        '/k3s/',
+      "labels": [
+        "type/major",
       ],
     },
     {
-      matchUpdateTypes: [
-        'major',
+      "matchUpdateTypes": [
+        "minor",
       ],
-      labels: [
-        'type/major',
-      ],
-    },
-    {
-      matchUpdateTypes: [
-        'minor',
-      ],
-      labels: [
-        'type/minor',
+      "labels": [
+        "type/minor",
       ],
     },
     {
-      matchUpdateTypes: [
-        'patch',
+      "matchUpdateTypes": [
+        "patch",
       ],
-      labels: [
-        'type/patch',
-      ],
-    },
-    {
-      matchDatasources: [
-        'docker',
-      ],
-      addLabels: [
-        'renovate/container',
+      "labels": [
+        "type/patch",
       ],
     },
     {
-      matchDatasources: [
-        'helm',
+      "matchDatasources": [
+        "docker",
       ],
-      addLabels: [
-        'renovate/helm',
-      ],
-    },
-    {
-      matchDatasources: [
-        'galaxy',
-        'galaxy-collection',
-      ],
-      addLabels: [
-        'renovate/ansible',
+      "addLabels": [
+        "renovate/container",
       ],
     },
     {
-      matchDatasources: [
-        'github-releases',
-        'github-tags',
+      "matchDatasources": [
+        "helm",
       ],
-      addLabels: [
-        'renovate/github-release',
+      "addLabels": [
+        "renovate/helm",
       ],
     },
     {
-      matchManagers: [
-        'github-actions',
+      "matchDatasources": [
+        "github-releases",
+        "github-tags",
       ],
-      addLabels: [
-        'renovate/github-action',
+      "addLabels": [
+        "renovate/github-release",
+      ],
+    },
+    {
+      "matchManagers": [
+        "github-actions",
+      ],
+      "addLabels": [
+        "renovate/github-action",
       ],
     },
   ],
-  customManagers: [
+  "customManagers": [
     {
-      customType: 'regex',
-      description: [
-        'Process custom dependencies',
+      "customType": "regex",
+      "description": [
+        "Process custom dependencies",
       ],
-      fileMatch: [
-        '(^|/).taskfiles/.+\\.ya?ml$',
-        '(^|/)ansible/.+\\.ya?ml(?:\\.j2)?$',
-        '(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$',
+      "fileMatch": [
+        "(^|/).taskfiles/.+\\.ya?ml$",
+        "(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$",
       ],
-      matchStrings: [
-        'datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( repository=(?<registryUrl>\\S+))?\\n.+: (&\\S+\\s)?(?<currentValue>\\S+)',
-        'datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\n.+/(?<currentValue>(v|\\d)[^/]+)',
+      "matchStrings": [
+        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( repository=(?<registryUrl>\\S+))?\\n.+: (&\\S+\\s)?(?<currentValue>\\S+)",
+        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\n.+/(?<currentValue>(v|\\d)[^/]+)",
       ],
-      datasourceTemplate: '{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}',
+      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
     },
   ],
 }
