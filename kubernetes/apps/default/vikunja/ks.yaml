@@ -7,7 +7,7 @@ metadata:
 spec:
   targetNamespace: default
   components:
-    - ../../../../components/gatus/guarded
+    - ../../../../components/gatus/external
     - ../../../../components/volsync
   commonMetadata:
     labels:
@@ -39,6 +39,3 @@ spec:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 1Gi
-      VOLSYNC_ACCESSMODES: ReadWriteMany
-      VOLSYNC_STORAGECLASS: cephfs
-      VOLSYNC_SNAPSHOTCLASS: cephfs-snapshot
