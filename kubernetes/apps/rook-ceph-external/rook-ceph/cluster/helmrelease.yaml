@@ -60,7 +60,7 @@ spec:
       deletionPolicy: Delete
       # see https://rook.io/docs/rook/v1.10/Storage-Configuration/Ceph-CSI/ceph-csi-snapshot/#rbd-snapshots for available configuration
       parameters: # Only pool needs to be specified as snapshotter secret and clusterID are already pre-selected
-        pool: talos-maxi-pv
+        pool: talos-maxi-rbd
     cephFileSystemVolumeSnapshotClass:
       enabled: true
       name: cephfs-snapshot
