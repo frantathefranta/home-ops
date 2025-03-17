@@ -1,6 +1,6 @@
 endpoints:
   - name: "${APP}"
-    group: ${CLUSTER}-guarded
+    group: guarded
     url: 1.1.1.1
     interval: 1m
     ui:
