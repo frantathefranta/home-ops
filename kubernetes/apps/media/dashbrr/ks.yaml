@@ -6,6 +6,9 @@ metadata:
   name: &app dashbrr
 spec:
   targetNamespace: media
+  components:
+    - ../../../../components/gatus/guarded
+    - ../../../../components/postgres
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
@@ -16,6 +19,11 @@ spec:
       namespace: database
     - name: external-secrets-stores
       namespace: external-secrets
+  healthCheckExprs:
+    - apiVersion: postgres-operator.crunchydata.com/v1beta1
+      kind: PostgresCluster
+      failed: status.conditions.filter(e, e.type == 'ProxyAvailable').all(e, e.status == 'False')
+      current: status.conditions.filter(e, e.type == 'ProxyAvailable').all(e, e.status == 'True')
   path: ./kubernetes/apps/media/dashbrr/app
   prune: true
   sourceRef:
