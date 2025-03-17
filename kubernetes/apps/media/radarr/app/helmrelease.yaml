@@ -17,11 +17,6 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
-  dependsOn:
-  - name: rook-ceph-cluster
-    namespace: rook-ceph-external
-  - name: volsync
-    namespace: storage
   values:
     controllers:
       radarr:
@@ -43,11 +38,20 @@ spec:
               RADARR__AUTH__REQUIRED: Radarr
               RADARR__LOG__DBENABLED: "False"
               RADARR__LOG__LEVEL: info
+              RADARR__POSTGRES__HOST: radarr-pgbouncer.media.svc
+              RADARR__POSTGRES__MAINDB: *app
+              RADARR__POSTGRES__PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: radarr-pguser-radarr
+                    key: password
+              RADARR__POSTGRES__PORT: "5432"
+              RADARR__POSTGRES__USER: *app
               RADARR__SERVER__PORT: &port 80
               RADARR__UPDATE__BRANCH: develop
             envFrom:
-            - secretRef:
-                name: radarr-secret
+              - secretRef:
+                  name: radarr-secret
             probes:
               liveness: &probes
                 enabled: true
@@ -108,4 +112,4 @@ spec:
         server: ${NAS_IP}
         path: /emc1/media
         globalMounts:
-        - path: /media
+          - path: /media
