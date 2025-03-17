@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: haproxy
+  name: &app haproxy
 spec:
   interval: 30m
   chartRef:
@@ -36,13 +36,25 @@ spec:
         controller: haproxy
         ports:
           http:
-            port: 7480
+            port: &port 7480
       stats:
         controller: haproxy
         ports:
           http:
             port: 8404
       # TODO: Setup prometheus metrics for HAProxy https://www.haproxy.com/documentation/haproxy-configuration-tutorials/alerts-and-monitoring/prometheus/
+    route:
+      app:
+        hostnames:
+          - "rgw.franta.us"
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: haproxy-rados-gw
+                port: *port
     persistence:
       config:
         type: configMap
