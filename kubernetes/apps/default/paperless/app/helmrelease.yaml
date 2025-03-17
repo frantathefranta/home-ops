@@ -53,6 +53,17 @@ spec:
               PAPERLESS_CONSUMER_POLLING: "60"
               PAPERLESS_CONSUMER_RECURSIVE: "true"
               PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: "true"
+              # Database
+              PAPERLESS_DBENGINE: postgresql
+              PAPERLESS_DBPORT: "5432"
+              PAPERLESS_DBNAME: *app
+              PAPERLESS_DBHOST: paperless-pgbouncer.default.svc
+              PAPERLESS_DBUSER: *app
+              PAPERLESS_DBPASS:
+                valueFrom:
+                  secretKeyRef:
+                    name: paperless-pguser-paperless
+                    key: password
               # Configure OCR
               PAPERLESS_OCR_LANGUAGES: eng
               PAPERLESS_OCR_LANGUAGE: eng

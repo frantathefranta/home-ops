@@ -17,11 +17,6 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
-  dependsOn:
-  - name: rook-ceph-cluster
-    namespace: rook-ceph-external
-  - name: volsync
-    namespace: storage
   values:
     controllers:
       bazarr:
@@ -36,9 +31,18 @@ spec:
               tag: 1.5.1@sha256:7c78433195385b7e6758245461ef9e33f4bbeb1d10bd48ba39ba9ebd215e68e8
             env:
               TZ: America/Detroit
+              POSTGRES_DATABASE: *app
+              POSTGRES_ENABLED: "true"
+              POSTGRES_HOST: bazarr-pgbouncer.media.svc
+              POSTGRES_USERNAME: *app
+              POSTGRES_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: bazarr-pguser-bazarr
+                    key: password
             envFrom:
-            - secretRef:
-                name: bazarr-secret
+              - secretRef:
+                  name: bazarr-secret
             resources:
               requests:
                 cpu: 10m
@@ -69,15 +73,20 @@ spec:
                   periodSeconds: 5
                   successThreshold: 1
                   timeoutSeconds: 1
+            securityContext: &securityContext
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
           subcleaner:
             image:
               repository: registry.k8s.io/git-sync/git-sync
-              tag: v4.4.0
-            args:
-            - --repo=https://github.com/KBlixt/subcleaner
-            - --branch=master
-            - --wait=86400 # 1 day
-            - --root=/add-ons
+              tag: v4.4.0@sha256:0330739a707a2969d617e859f096659ab6d149212658ac0ad7e550b59482ebf0
+            env:
+              GITSYNC_REPO: https://github.com/KBlixt/subcleaner
+              GITSYNC_REF: master
+              GITSYNC_PERIOD: 24h
+              GITSYNC_ROOT: /add-ons
+            securityContext: *securityContext
             resources:
               requests:
                 cpu: 10m
@@ -91,8 +100,6 @@ spec:
         runAsGroup: 568
         fsGroup: 568
         fsGroupChangePolicy: OnRootMismatch
-        supplementalGroups: [10000]
-        seccompProfile: { type: RuntimeDefault }
     service:
       app:
         controller: *app
@@ -113,6 +120,12 @@ spec:
                 port: *port
 
     persistence:
+      add-ons:
+        type: emptyDir
+      cache:
+        type: emptyDir
+        globalMounts:
+          - path: /config/cache
       config:
         existingClaim: *app
       data:
@@ -120,12 +133,16 @@ spec:
         server: ${NAS_IP}
         path: /emc1/media
         globalMounts:
-        - path: /media
+          - path: /media
       data-jeopardy:
         type: nfs
         server: ${NAS_IP}
         path: /emc1/jeopardy
         globalMounts:
-        - path: /jeopardy
-      add-ons:
+          - path: /jeopardy
+      log:
+        type: emptyDir
+        globalMounts:
+          - path: /config/log
+      tmp:
         type: emptyDir

@@ -18,11 +18,6 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
-  dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph-external
-    - name: volsync
-      namespace: storage
   values:
     controllers:
       jellyseerr:
@@ -33,10 +28,18 @@ spec:
               tag: 2.5.1@sha256:52ca0b18c58ec4e769b8acae9beaae37a520a365c7ead52b7fc3ba1c3352d1f0
             env:
               TZ: America/Detroit
-              # CONFIG_DIRECTORY: /app/config
+              DB_TYPE: "postgres"
+              DB_HOST: jellyseerr-pgbouncer.media.svc
+              DB_PORT: "5432"
+              DB_USER: *app
+              DB_PASS:
+                valueFrom:
+                  secretKeyRef:
+                    name: jellyseerr-pguser-jellyseerr
+                    key: password
+              DB_NAME: *app
               LOG_LEVEL: info
               PORT: &port 80
-              # FORCE_IPV4_FIRST: true # Jellyseerr gets broken with IPv6
             envFrom:
               - secretRef:
                   name: jellyseerr-secret

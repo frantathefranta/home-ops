@@ -39,6 +39,11 @@ spec:
               METRICS_COLLECTOR: "1"
               POLLING_SCHEDULER: entry_frequency
               POLLING_FREQUENCY: "15"
+              DATABASE_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: miniflux-pguser-miniflux
+                    key: pgbouncer-uri
               PORT: &port 80
               RUN_MIGRATIONS: "1"
             envFrom:

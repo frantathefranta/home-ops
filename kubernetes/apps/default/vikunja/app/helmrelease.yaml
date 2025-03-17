@@ -51,9 +51,20 @@ spec:
               VIKUNJA_REDIS_HOST: "dragonfly.database.svc.cluster.local:6379"
               VIKUNJA_REDIS_DB: 0
               VIKUNJA_KEYVALUE_TYPE: "redis"
+              # Postgres
+              VIKUNJA_DATABASE_HOST: vikunja-pgbouncer.default.svc
+              VIKUNJA_DATABASE_DATABASE: *app
+              VIKUNJA_DATABASE_USER: *app
+              VIKUNJA_DATABASE_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: vikunja-pguser-vikunja
+                    key: password
+              VIKUNJA_DATABASE_SSLMODE: require
+              VIKUNJA_DATABASE_TYPE: postgres
             envFrom:
-            - secretRef:
-                name: &secret vikunja-secret
+              - secretRef:
+                  name: &secret vikunja-secret
             resources:
               requests:
                 cpu: 50m

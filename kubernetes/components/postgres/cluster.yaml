@@ -24,6 +24,7 @@ spec:
         synchronous_commit: "on"
         parameters:
           max_connections: 500
+        pg_hba: "${PG_HBA:={}}"
   instances:
     - name: postgres
       metadata:

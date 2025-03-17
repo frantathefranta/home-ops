@@ -18,9 +18,6 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
-  dependsOn:
-  - name: rook-ceph-cluster
-    namespace: rook-ceph-external
   values:
     controllers:
       sonarr:
@@ -41,11 +38,20 @@ spec:
               SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
               SONARR__LOG__DBENABLED: "False"
               SONARR__LOG__LEVEL: info
+              SONARR__POSTGRES__HOST: sonarr-pgbouncer.media.svc
+              SONARR__POSTGRES__MAINDB: *app
+              SONARR__POSTGRES__PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: sonarr-pguser-sonarr
+                    key: password
+              SONARR__POSTGRES__PORT: "5432"
+              SONARR__POSTGRES__USER: *app
               SONARR__SERVER__PORT: &port 80
               SONARR__UPDATE__BRANCH: develop
             envFrom:
-            - secretRef:
-                name: sonarr-secret
+              - secretRef:
+                  name: sonarr-secret
             probes:
               liveness: &probes
                 enabled: true
@@ -106,7 +112,7 @@ spec:
         server: ${NAS_IP}
         path: /emc1/media
         globalMounts:
-        - path: /media
+          - path: /media
       jeopardy:
         enabled: true
         type: nfs

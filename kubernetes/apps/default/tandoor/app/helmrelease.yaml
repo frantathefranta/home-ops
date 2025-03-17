@@ -19,11 +19,6 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph-external
-    - name: volsync
-      namespace: storage
   values:
     controllers:
       tandoor:
@@ -39,6 +34,24 @@ spec:
               DEBUG: 0
               ALLOWED_HOSTS: "*"
               DB_ENGINE: django.db.backends.postgresql
+              # Postgres
+              POSTGRES_HOST: tandoor-pgbouncer.default.svc
+              POSTGRES_PORT: 5432
+              POSTGRES_USER:
+                valueFrom:
+                  secretKeyRef:
+                    name: tandoor-pguser-recipes
+                    key: user
+              POSTGRES_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: tandoor-pguser-recipes
+                    key: password
+              POSTGRES_DB:
+                valueFrom:
+                  secretKeyRef:
+                    name: tandoor-pguser-recipes
+                    key: dbname
               DEFAULT_FROM_EMAIL: recipes@franta.us
               GUNICORN_MEDIA: 0
               REMOTE_USER_AUTH: 0

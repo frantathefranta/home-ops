@@ -39,6 +39,14 @@ spec:
               AUTHELIA_TELEMETRY_METRICS_ADDRESS: tcp://0.0.0.0:8080
               AUTHELIA_TELEMETRY_METRICS_ENABLED: "true"
               AUTHELIA_THEME: dark
+              AUTHELIA_STORAGE_POSTGRES_ADDRESS: authelia-primary.default.svc
+              AUTHELIA_STORAGE_POSTGRES_DATABASE: *app
+              AUTHELIA_STORAGE_POSTGRES_USERNAME: *app
+              AUTHELIA_STORAGE_POSTGRES_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: authelia-pguser-authelia
+                    key: password
               X_AUTHELIA_CONFIG: /config/configuration.yaml
               X_AUTHELIA_CONFIG_FILTERS: template
             envFrom:
