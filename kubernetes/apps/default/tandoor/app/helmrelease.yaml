@@ -31,7 +31,7 @@ spec:
               tag: 1.5.33@sha256:e61e3280ed3fb15566230628d82cdbe9bcb68d62cac4500fda431ca8afd045a8
             env:
               TZ: America/Detroit
-              DEBUG: 0
+              DEBUG: 1
               ALLOWED_HOSTS: "*"
               DB_ENGINE: django.db.backends.postgresql
               # Postgres
