@@ -82,6 +82,7 @@ spec:
         ports:
           http:
             port: *port
+            primary: true
           bittorrent:
             enabled: true
             port: *bittorrentPort
