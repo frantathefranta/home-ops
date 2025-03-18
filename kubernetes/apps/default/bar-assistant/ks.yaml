@@ -58,7 +58,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../../components/gatus/guarded
+    - ../../../../components/gatus/external
     - ../../../../components/volsync
   dependsOn:
     - name: dragonfly-cluster
@@ -84,6 +84,3 @@ spec:
       APP: *app
       GATUS_SUBDOMAIN: bar
       VOLSYNC_CAPACITY: 1Gi
-      VOLSYNC_ACCESSMODES: ReadWriteOnce
-      VOLSYNC_STORAGECLASS: ceph-rbd
-      VOLSYNC_SNAPSHOTCLASS: ceph-rbd-snapshot
