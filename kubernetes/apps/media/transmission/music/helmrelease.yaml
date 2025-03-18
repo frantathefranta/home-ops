@@ -96,6 +96,7 @@ spec:
       app:
         controller: transmission
         type: LoadBalancer
+        ipFamilyPolicy: RequireDualStack
         annotations:
           lbipam.cilium.io/ips: 10.33.40.65,${CLUSTER_LBA_V6_PREFIX}:65
         ports:
