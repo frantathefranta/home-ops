@@ -81,11 +81,10 @@ jobs:
         with:
           token: ${{ steps.app-token.outputs.token }}
 
-      - name: Setup Homebrew
-        uses: Homebrew/actions/setup-homebrew@master
-
-      - name: Setup Workflow Tools
-        run: brew install opentofu
+      - name: Install Opentofu
+        uses: opentofu/setup-opentofu@592200bd4b9bbf4772ace78f887668b1aee8f716 # v1.0.5
+        with:
+          tofu_wrapper: false
 
       - name: Tofu fmt
         id: fmt

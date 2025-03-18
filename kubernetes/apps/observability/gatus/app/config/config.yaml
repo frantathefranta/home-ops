@@ -1,6 +1,7 @@
 ---
 web:
   port: ${WEB_PORT}
+  # No need to explicitly bind to IPv6, does it automatically
 storage:
   type: postgres
   path: ${POSTGRES_URI}?sslmode=require
