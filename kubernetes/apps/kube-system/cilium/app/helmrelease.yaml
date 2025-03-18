@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: cilium
-      version: 1.17.2
+      version: 1.18.0-pre.0
       sourceRef:
         kind: HelmRepository
         name: cilium
@@ -71,16 +71,7 @@ spec:
     #   # this will fix issue with nginx's keeping persistent connections to dead CoreDNS'es.
     #   hostNamespaceOnly: true
     operator:
-      replicas: 1
-      rollOutPods: true
-      prometheus:
-        enabled: true
-        serviceMonitor:
-          enabled: true
-      dashboards:
-        enabled: true
-        annotations:
-          grafana_folder: Cilium
+      tolerations: []
     prometheus:
       enabled: true
       serviceMonitor:
