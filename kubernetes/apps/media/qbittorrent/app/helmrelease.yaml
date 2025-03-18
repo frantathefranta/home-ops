@@ -54,7 +54,9 @@ spec:
                 enabled: true
                 spec:
                   failureThreshold: 30
-                  periodSeconds: 10
+                  periodSeconds: 5
+                  successThreshold: 1
+                  timeoutSeconds: 1
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
