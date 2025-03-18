@@ -11,7 +11,8 @@ http {
 
   include mime.types;
   server {
-    listen 8080;
+    listen 8080 default_server;
+    listen [::]:8080 default_server;
     server_name _;
     client_max_body_size 128M;
     # serve static files
