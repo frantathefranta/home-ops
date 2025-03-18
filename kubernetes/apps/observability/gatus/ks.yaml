@@ -1,21 +1,24 @@
 ---
-# yaml-language-server: $schema=https://lds-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app gatus
 spec:
   targetNamespace: observability
+  components:
+    - ../../../../components/postgres
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: crunchy-postgres-operator-cluster
       namespace: database
-    - name: crunchy-postgres-stores
-      namespace: database
-    - name: external-secrets-stores
-      namespace: external-secrets
+  healthCheckExprs:
+    - apiVersion: postgres-operator.crunchydata.com/v1beta1
+      kind: PostgresCluster
+      failed: status.conditions.filter(e, e.type == 'ProxyAvailable').all(e, e.status == 'False')
+      current: status.conditions.filter(e, e.type == 'ProxyAvailable').all(e, e.status == 'True')
   path: ./kubernetes/apps/observability/gatus/app
   prune: true
   sourceRef:

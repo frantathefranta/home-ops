@@ -1,0 +1,11 @@
+#+title: Postgres Component
+* Deploying new cluster
+The Kustomization will build the new cluster with ~spec.dataSource~ in the definition, which will try to restore the cluster from backup. If there is no backup, it will keep failing forever. To fix this, add this patch to the app ks:
+#+begin_src yaml
+patches:
+  - target:
+      kind: PostgresCluster
+    patch: |-
+      - op: remove
+        path: /spec/dataSource
+#+end_src

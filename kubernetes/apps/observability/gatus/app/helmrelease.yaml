@@ -53,9 +53,14 @@ spec:
               GATUS_CONFIG_PATH: /config
               GATUS_DELAY_START_SECONDS: 5
               WEB_PORT: &port 80
+              POSTGRES_URI:
+                valueFrom:
+                  secretKeyRef:
+                    name: gatus-pguser-gatus
+                    key: pgbouncer-uri
             envFrom:
-            - secretRef:
-                name: gatus-secret
+              - secretRef:
+                  name: gatus-secret
             probes:
               liveness: &probes
                 enabled: true
@@ -75,9 +80,6 @@ spec:
               capabilities: { drop: ["ALL"] }
             resources: *resources
     defaultPodOptions:
-      dnsConfig:
-        options:
-          - { name: ndots, value: "1" }
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: topology.kubernetes.io/zone
@@ -95,6 +97,7 @@ spec:
     service:
       app:
         controller: *app
+        ipFamilyPolicy: RequireDualStack
         ports:
           http:
             port: *port
@@ -116,7 +119,7 @@ spec:
     route:
       app:
         hostnames:
-          - "status.franta.us"
+          - "${GATUS_SUBDOMAIN}.franta.us"
         parentRefs:
           - name: external
             namespace: kube-system
