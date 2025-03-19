@@ -85,7 +85,6 @@ identity_providers:
         client_id: vikunja
         client_secret: '{{ secret "/config/oidc-secret/oidc-client-vikunja" }}'
         public: false
-        authorization_policy: two_factor
         pre_configured_consent_duration: 1y
         scopes: ["openid", "profile", "groups", "email"]
         redirect_uris: ["https://vikunja.franta.us/auth/openid/authelia"]
@@ -94,7 +93,6 @@ identity_providers:
         client_id: dashbrr
         client_secret: '{{ secret "/config/oidc-secret/oidc-client-dashbrr" }}'
         public: false
-        authorization_policy: two_factor
         pre_configured_consent_duration: 1y
         scopes: ["openid", "profile", "groups", "email"]
         redirect_uris: ["https://dashbrr.franta.us/api/auth/callback"]
@@ -103,7 +101,6 @@ identity_providers:
         client_id: grafana
         client_secret: '{{ secret "/config/oidc-secret/oidc-client-grafana" }}'
         public: false
-        authorization_policy: two_factor
         pre_configured_consent_duration: 1y
         scopes: ["openid", "profile", "groups", "email"]
         redirect_uris: ["https://grafana.franta.us/login/generic_oauth"]
@@ -112,7 +109,6 @@ identity_providers:
         client_id: "paperless"
         client_secret: '{{ secret "/config/oidc-secret/oidc-client-paperless" }}'
         public: false
-        authorization_policy: two_factor
         pre_configured_consent_duration: 1y
         scopes: ["openid", "profile", "groups", "email"]
         redirect_uris:
@@ -122,7 +118,6 @@ identity_providers:
         client_id: "tandoor"
         client_secret: '{{ secret "/config/oidc-secret/oidc-client-tandoor" }}'
         public: false
-        authorization_policy: two_factor
         pre_configured_consent_duration: 1y
         scopes: ["openid", "profile", "groups", "email"]
         redirect_uris:
@@ -132,7 +127,6 @@ identity_providers:
         client_id: lubelog
         client_secret: '{{ secret "/config/oidc-secret/oidc-client-lubelog" }}'
         public: false
-        authorization_policy: two_factor
         pre_configured_consent_duration: 1y
         scopes: ["openid", "profile", "groups", "email"]
         redirect_uris:
