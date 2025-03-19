@@ -32,7 +32,7 @@ session:
     - name: franta_session
       domain: franta.us
       authelia_url: https://auth.franta.us
-      default_redirection_url: https://franta.us
+      default_redirection_url: https://www.franta.us
   redis:
     database_index: 2
     host: dragonfly.database.svc.cluster.local
@@ -58,8 +58,18 @@ access_control:
   default_policy: two_factor
   networks:
     - name: internal
-      networks: ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"]
-  rules: []
+      networks:
+        [
+          "10.0.0.0/8",
+          "172.16.0.0/12",
+          "192.168.0.0/16",
+          "${TRUSTED_IPV6_CIDR}",
+        ]
+  rules:
+    - domain: "*.franta.us"
+      policy: "one_factor"
+      networks:
+        - "internal"
 
 identity_providers:
   oidc:
