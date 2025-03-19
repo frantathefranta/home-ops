@@ -14,7 +14,7 @@ spec:
     controllers:
       haproxy:
         strategy: RollingUpdate
-        replicas: 1
+        replicas: 2
         annotations:
           configmap.reloader.stakater.com/reload: &configmap haproxy-config
         containers:
@@ -41,8 +41,16 @@ spec:
         controller: haproxy
         ports:
           http:
-            port: 8404
-      # TODO: Setup prometheus metrics for HAProxy https://www.haproxy.com/documentation/haproxy-configuration-tutorials/alerts-and-monitoring/prometheus/
+            port: 8405
+    serviceMonitor:
+      app:
+        serviceName: *app
+        endpoints:
+          - port: stats
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 10s
     route:
       app:
         hostnames:
@@ -64,3 +72,5 @@ spec:
             app:
               - path: /usr/local/etc/haproxy/haproxy.cfg
                 subPath: haproxy.cfg
+      tmp:
+        type: emptyDir
