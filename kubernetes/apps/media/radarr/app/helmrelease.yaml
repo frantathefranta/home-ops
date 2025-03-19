@@ -27,7 +27,7 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/joryirving/radarr-develop
+              repository: ghcr.io/home-operations/radarr
               tag: 5.20.1.9773@sha256:65a33133e3323b01290c798f411dde22b87c95fa54848751a9e5800e1a9821e0
             env:
               TZ: America/Detroit

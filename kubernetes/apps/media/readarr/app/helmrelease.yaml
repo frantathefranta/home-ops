@@ -28,7 +28,7 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/joryirving/readarr-develop
+              repository: ghcr.io/home-operations/readarr
               tag: 0.4.12.2753@sha256:2d2577d3c27d8892d8d886a3dcd58215b20402aee320da4914dfbd5db373cab4
             env:
               READARR__APP__INSTANCENAME: Readarr
