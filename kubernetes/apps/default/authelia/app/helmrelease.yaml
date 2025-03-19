@@ -90,6 +90,7 @@ spec:
     service:
       app:
         controller: authelia
+        ipFamilyPolicy: RequireDualStack
         ports:
           http:
             port: *port

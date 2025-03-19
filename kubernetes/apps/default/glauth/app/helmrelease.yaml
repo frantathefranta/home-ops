@@ -69,6 +69,7 @@ spec:
     service:
       app:
         controller: *app
+        ipFamilyPolicy: RequireDualStack
         ports:
           http:
             port: *port
