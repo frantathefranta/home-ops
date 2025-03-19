@@ -31,8 +31,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/joryirving/tautulli
-              tag: 2.15.1@sha256:288551344f170412d26821c38a51a90e81a4c2af65598c25d231a1283626abbe
+              repository: ghcr.io/home-operations/tautulli
+              tag: 2.15.1@sha256:48029409b1a98d2e7564fdf2fc7eced0c9355533fd7a20a3167b964305f1ab0e
             env:
               TZ: America/Detroit
               TAUTULLI__PORT: &port 80
