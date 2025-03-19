@@ -26,7 +26,7 @@ spec:
           app:
             image:
               repository: ghcr.io/home-operations/prowlarr
-              tag: 1.32.2.4987@sha256:c9c1d5dbda92c940cf00e343f0ccb3e69312411a553d333ce564f427e2b3c270
+              tag: 1.32.2.4987@sha256:77f6b6850d6191f68d2d2d4d21655b103acc5c6f6243d8cb62bb75888499b78a
             env:
               TZ: America/Detroit
               PROWLARR__APP__INSTANCENAME: Prowlarr
