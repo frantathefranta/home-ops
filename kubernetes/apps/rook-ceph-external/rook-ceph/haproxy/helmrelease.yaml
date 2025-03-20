@@ -21,7 +21,7 @@ spec:
           app:
             image:
               repository: docker.io/haproxy
-              tag: 3.1.5
+              tag: 3.1.6
             probes:
               liveness: &probes
                 enabled: true
