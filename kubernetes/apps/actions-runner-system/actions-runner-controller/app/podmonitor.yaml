@@ -8,7 +8,7 @@ spec:
   podMetricsEndpoints:
     - interval: 15s
       path: /metrics
-      targetPort: 8080
+      portNumber: 8080
   selector:
     matchLabels:
       app.kubernetes.io/name: gha-rs-controller
