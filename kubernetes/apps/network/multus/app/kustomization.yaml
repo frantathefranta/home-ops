@@ -5,8 +5,8 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ./rbac.yaml
-  # renovate: depName=k8snetworkplumbingwg/network-attachment-definition-client datasource=github-releases
-  - https://raw.githubusercontent.com/k8snetworkplumbingwg/network-attachment-definition-client/refs/tags/v1.7.5/artifacts/networks-crd.yaml
+  # renovate: datasource=github-releases depName=k8snetworkplumbingwg/network-attachment-definition-client
+  - https://github.com/k8snetworkplumbingwg/network-attachment-definition-client/raw/refs/tags/v1.7.6/artifacts/networks-crd.yaml
 configMapGenerator:
   - name: multus-configmap
     files:
