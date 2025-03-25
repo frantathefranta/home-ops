@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - ./proxmox.yaml
   - ./home-assistant.yaml
-  - ./opnsense.yaml
+  # - ./opnsense.yaml
