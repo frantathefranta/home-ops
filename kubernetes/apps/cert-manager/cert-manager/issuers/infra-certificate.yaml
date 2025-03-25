@@ -1,0 +1,43 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: "infra.franta.us-production"
+spec:
+  secretName: "infra.franta.us-production-tls"
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: "infra.franta.us"
+  dnsNames:
+    - "infra.franta.us"
+    - "*.infra.franta.us"
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/external-secrets.io/pushsecret_v1alpha1.json
+apiVersion: external-secrets.io/v1alpha1
+kind: PushSecret
+metadata:
+  name: &name infra-franta-us-tls
+spec:
+  secretStoreRefs:
+    - name: akeyless-secret-store
+      kind: ClusterSecretStore
+  selector:
+    secret:
+      name: infra.franta.us-production-tls
+  template:
+    engineVersion: v2
+    data:
+      tls.crt: '{{ index . "tls.crt" | b64enc }}'
+      tls.key: '{{ index . "tls.key" | b64enc }}'
+  data:
+    - match:
+        secretKey: &key tls.crt
+        remoteRef:
+          remoteKey: *name
+          property: *key
+    - match:
+        secretKey: &key tls.key
+        remoteRef:
+          remoteKey: *name
+          property: *key

@@ -5,3 +5,4 @@ resources:
   - ./externalsecret.yaml
   - ./issuers.yaml
   - ./ca.yaml
+  - ./infra-certificate.yaml
