@@ -38,7 +38,7 @@ spec:
   values:
     fullnameOverride: *app
     replicaCount: 2
-    metrics:
-      controllerManagerAddr: ":8080"
-      listenerAddr: ":8080"
-      listenerEndpoint: "/metrics"
+    # metrics:
+    #   controllerManagerAddr: ":8080"
+    #   listenerAddr: ":8080"
+    #   listenerEndpoint: "/metrics"
