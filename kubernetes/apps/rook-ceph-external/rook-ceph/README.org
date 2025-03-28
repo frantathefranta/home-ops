@@ -38,6 +38,8 @@ What you want to see is this:
 $ curl haproxy-rados-gw.rook-ceph-external.svc.cluster.local:7480
 <?xml version="1.0" encoding="UTF-8"?><ListAllMyBucketsResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/"><Owner><ID>anonymous</ID></Owner><Buckets></Buckets></ListAllMyBucketsResult>
 #+end_src
+** HAProxy
+Some inspiration on how to setup HAProxy for RGW came from here: [[https://gist.github.com/robbat2/ec0a66eed28e5f0e1ef7018e9c77910c][GitHub gist]]
 * Caveats
 +Your backups will not be handled by the Kubernetes cluster.+
 I figured out you can use ~VolumeSnapshots~ with an external cluster, description WIP.
