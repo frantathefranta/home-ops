@@ -28,7 +28,7 @@ spec:
   template:
     engineVersion: v2
     data:
-      tls.crt: '{{ index . "tls.crt" | b64enc }}'
+      tls.crt: '{{ index . "tls.crt" | regexFind "-----BEGIN CERTIFICATE-----[\\s\\S]*?-----END CERTIFICATE-----" | b64enc }}'
       tls.key: '{{ index . "tls.key" | b64enc }}'
   data:
     - match:
