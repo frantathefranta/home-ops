@@ -9,3 +9,14 @@ patches:
       - op: remove
         path: /spec/dataSource
 #+end_src
+
+* Migrating a previous cluster
+#+begin_src sh
+Temp pod:
+kubectl run pg-toolbox --rm -it --restart=Never --image=postgres:16 -- bash
+
+PGDUMP:
+PGPASSWORD="old-password" pg_dump -h postgres-primary.database.svc -U postgres -d radarr_main -F c -f /tmp/radarr.dump
+PGPASSWORD="new-password" pg_restore -h radarr-primary.downloads.svc -U postgres -d radarr -F c --clean /tmp/radarr.dump
+PGPASSWORD="new-password" psql -h radarr-primary.downloads.svc -U postgres -d postgres -c "ALTER DATABASE \"radarr\" OWNER TO \"radarr\";"
+#+end_src

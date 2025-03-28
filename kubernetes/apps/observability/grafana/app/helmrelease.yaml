@@ -19,7 +19,7 @@ spec:
       strategy: rollback
       retries: 3
   values:
-    replicas: 3
+    replicas: ${REPLICAS:=1}
     podAnnotations:
       reloader.stakater.com/auto: "true"
     deploymentStrategy:
@@ -39,6 +39,17 @@ spec:
       GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: natel-discrete-panel,pr0ps-trackmap-panel,panodata-map-panel
       GF_SERVER_ROOT_URL: https://grafana.franta.us
       GF_SECURITY_COOKIE_SAMESITE: *app
+      # Postgres
+      GF_DATABASE_USER: *app
+      GF_DATABASE_HOST: grafana-pgbouncer.observability.svc
+      GF_DATABASE_NAME: *app
+      GF_DATABASE_SSL_MODE: 'require'
+      GF_DATABASE_TYPE: postgres
+    envValueFrom:
+      GF_DATABASE_PASSWORD:
+        secretKeyRef:
+          name: grafana-pguser-grafana
+          key: password
     envFromSecrets:
       - name: grafana-secret
     grafana.ini:
@@ -360,7 +371,8 @@ spec:
           # renovate: depName="etcd"
           gnetId: 22236
           revision: 1
-          datasource: Prometheus
+          datasource:
+            - { name: DS_VICTORIAMETRICS, value: Prometheus }
         minio:
           # renovate: depName="MinIO Dashboard"
           gnetId: 13502
