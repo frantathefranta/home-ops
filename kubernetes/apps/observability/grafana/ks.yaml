@@ -10,10 +10,10 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../../components/gatus/external
+    - ../../../../components/gatus/guarded
     - ../../../../components/postgres
   dependsOn:
-    - name: crunchy-postgres-operator-cluster
+    - name: crunchy-postgres-operator
       namespace: database
   healthCheckExprs:
     - apiVersion: postgres-operator.crunchydata.com/v1beta1

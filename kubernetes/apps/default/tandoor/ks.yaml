@@ -15,7 +15,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: crunchy-postgres-operator-cluster
+    - name: crunchy-postgres-operator
       namespace: database
   path: ./kubernetes/apps/default/tandoor/app
   healthCheckExprs:
