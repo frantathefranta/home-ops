@@ -4,26 +4,23 @@ Thumbs.db
 # k8s
 kubeconfig
 talosconfig
-.decrypted~*.yaml
-.config.env
 *.agekey
 *.pub
 *.key
 # Private
 .private
 .bin
-# Ansible
-.venv*
 # Taskfile
 .task
 # Brew
 Brewfile.lock.json
-# intellij
-.idea
-# wiki
-wiki
-# Bootstrap
-/config.yaml
 
 # Emacs
 .projectile-cache.eld
+
+# Terraform
+.terraform
+.terraform.tfstate*
+.terraform.lock.hcl
+terraform.tfstate*
+*.tfvars
