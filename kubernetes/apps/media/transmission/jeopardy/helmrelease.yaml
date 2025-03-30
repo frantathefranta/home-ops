@@ -38,9 +38,10 @@ spec:
               TRANSMISSION__BLOCKLIST_URL: "https://mirror.codebucket.de/transmission/blocklist.p2p.gz"
               TRANSMISSION__DOWNLOAD_DIR: "/jeopardy/downloads"
               TRANSMISSION__INCOMPLETE_DIR_ENABLED: false
+              TRANSMISSION__RPC_BIND_ADDRESS: "::"
               TRANSMISSION__RPC_PORT: &port 9091
               TRANSMISSION__RPC_WHITELIST: "10.*.*.*"
-              TRANSMISSION__RPC_WHITELIST_ENABLED: true
+              TRANSMISSION__RPC_WHITELIST_ENABLED: "false"
               TRANSMISSION__RPC_HOST_WHITELIST_ENABLED: false
               TRANSMISSION__PEER_PORT: &peerport 51413
               TRANSMISSION__RATIO_LIMIT_ENABLED: false
