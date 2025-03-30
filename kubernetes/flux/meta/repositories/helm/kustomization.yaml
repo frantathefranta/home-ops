@@ -22,4 +22,3 @@ resources:
   - ./prometheus-community.yaml
   - ./postfinance.yaml
   - ./rook-ceph.yaml
-  - ./tofu-controller.yaml
