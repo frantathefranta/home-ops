@@ -1,0 +1,25 @@
+#+title: Proxmox Certs
+* Quirks
+- Proxmox only accepts the *leaf* certificate, not the whole certificate chain with the intermediate cert. That's why this (only getting the first certificate in the secret) is necessary:
+  #+begin_src terraform
+locals {
+  leaf_certificate = regexall("-----BEGIN CERTIFICATE-----[\\s\\S]*?-----END CERTIFICATE-----", local.base64decoded_cert)
+}
+
+resource "proxmox_virtual_environment_certificate" "thorium" {
+  certificate       = "${local.leaf_certificate[0]}\n"
+}
+  #+end_src
+- Proxmox also stores its certificates with a new-line, which seems to not be present when secrets are imported from Akeyless
+- ~cert-manager~ generates the secret like this:
+  #+begin_src yaml
+stringData:
+  tls.crt: |
+    -----BEGIN CERTIFICATE-----
+    (leaf)
+    -----END CERTIFICATE-----
+    -----BEGIN CERTIFICATE-----
+    (intermediate)
+    -----END CERTIFICATE-----
+  #+end_src
+  [[https://cert-manager.io/docs/usage/certificate/#inner-workings-diagram-for-developers][cert-manager docs]]
