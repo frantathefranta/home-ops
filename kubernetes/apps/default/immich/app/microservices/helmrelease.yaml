@@ -35,6 +35,11 @@ spec:
             env:
               TZ: America/Detroit
               IMMICH_WORKERS_EXCLUDE: api
+              DB_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-pguser-immich
+                    key: uri
             envFrom:
               - configMapRef:
                   name: immich-configmap

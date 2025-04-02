@@ -35,6 +35,12 @@ spec:
               TZ: America/Detroit
               IMMICH_WORKERS_INCLUDE: api
               IMMICH_METRICS_INCLUDE: all
+              # Postgres
+              DB_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-pguser-immich
+                    key: uri
             envFrom:
               - configMapRef:
                   name: immich-configmap
