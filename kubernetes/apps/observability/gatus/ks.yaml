@@ -33,9 +33,3 @@ spec:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: status
-  patches:
-    - target:
-        kind: PostgresCluster
-      patch: |-
-        - op: remove
-          path: /spec/dataSource
