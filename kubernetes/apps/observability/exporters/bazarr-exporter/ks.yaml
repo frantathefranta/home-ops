@@ -12,7 +12,7 @@ spec:
   dependsOn:
     - name: bazarr
       namespace: media
-    - name: external-secrets-stores
+    - name: external-secrets
       namespace: external-secrets
   path: ./kubernetes/apps/observability/exporters/bazarr-exporter/app
   prune: true

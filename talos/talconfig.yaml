@@ -227,7 +227,7 @@ controlPlane:
     # Cluster configuration
     - |-
       cluster:
-        allowSchedulingOnControlPlanes: false
+        allowSchedulingOnControlPlanes: true
         controllerManager:
           extraArgs:
             bind-address: "0.0.0.0"

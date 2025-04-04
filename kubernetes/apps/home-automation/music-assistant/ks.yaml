@@ -17,7 +17,7 @@ spec:
       namespace: network
     - name: rook-ceph-cluster
       namespace: rook-ceph-external
-    - name: external-secrets-stores
+    - name: external-secrets
       namespace: external-secrets
   path: "./kubernetes/apps/home-automation/music-assistant/app"
   prune: true

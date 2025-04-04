@@ -34,7 +34,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: external-secrets-stores
+    - name: external-secrets
       namespace: external-secrets
   path: ./kubernetes/apps/default/bar-assistant/meilisearch
   prune: false
@@ -63,7 +63,7 @@ spec:
   dependsOn:
     - name: dragonfly-cluster
       namespace: database
-    - name: external-secrets-stores
+    - name: external-secrets
       namespace: external-secrets
     - name: salt-rim
       namespace: default

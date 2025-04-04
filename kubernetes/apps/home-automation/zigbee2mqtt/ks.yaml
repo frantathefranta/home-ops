@@ -15,7 +15,7 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph-external
-    - name: external-secrets-stores
+    - name: external-secrets
       namespace: external-secrets
     - name: emqx-cluster
       namespace: database

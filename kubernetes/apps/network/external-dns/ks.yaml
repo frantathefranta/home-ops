@@ -10,7 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: external-secrets-stores
+    - name: external-secrets
       namespace: external-secrets
   path: ./kubernetes/apps/network/external-dns/internal
   prune: false
@@ -34,7 +34,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: external-secrets-stores
+    - name: external-secrets
       namespace: external-secrets
   path: ./kubernetes/apps/network/external-dns/bind
   prune: false
@@ -66,7 +66,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: external-secrets-stores
+    - name: external-secrets
       namespace: external-secrets
   path: ./kubernetes/apps/network/external-dns/external
   prune: true

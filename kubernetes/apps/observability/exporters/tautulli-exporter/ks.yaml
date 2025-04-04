@@ -8,7 +8,7 @@ spec:
   dependsOn:
     - name: tautulli
       namespace: media
-    - name: external-secrets-stores
+    - name: external-secrets
       namespace: external-secrets
   path: ./kubernetes/apps/observability/exporters/tautulli-exporter/app
   prune: true

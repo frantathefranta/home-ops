@@ -12,7 +12,7 @@ spec:
   dependsOn:
     - name: jellyseerr
       namespace: media
-    - name: external-secrets-stores
+    - name: external-secrets
       namespace: external-secrets
   path: ./kubernetes/apps/observability/exporters/jellyseerr-exporter/app
   prune: true

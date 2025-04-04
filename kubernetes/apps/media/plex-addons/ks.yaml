@@ -19,7 +19,7 @@ spec:
       namespace: media
     - name: sonarr
       namespace: media
-    - name: external-secrets-stores
+    - name: external-secrets
       namespace: external-secrets
   path: ./kubernetes/apps/media/plex-addons/kometa
   prune: true

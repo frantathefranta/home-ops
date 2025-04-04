@@ -16,7 +16,7 @@ spec:
     name: flux-system
     namespace: flux-system
   dependsOn:
-    - name: external-secrets-stores
+    - name: external-secrets
       namespace: external-secrets
   wait: false # no flux ks dependents
   interval: 30m
@@ -40,7 +40,7 @@ spec:
     name: flux-system
     namespace: flux-system
   dependsOn:
-    - name: external-secrets-stores
+    - name: external-secrets
       namespace: external-secrets
   wait: false # no flux ks dependents
   interval: 30m
@@ -64,7 +64,7 @@ spec:
     name: flux-system
     namespace: flux-system
   dependsOn:
-    - name: external-secrets-stores
+    - name: external-secrets
       namespace: external-secrets
   wait: false # no flux ks dependents
   interval: 30m
