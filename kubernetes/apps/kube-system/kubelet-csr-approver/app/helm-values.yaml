@@ -1,8 +1,0 @@
----
-replicas: 3
-providerRegex: ^(talos-actinium.*|talos-protactinium.*|talos-thorium.*|talos-g3-mini)$
-bypassDnsResolution: true
-metrics:
-  enable: true
-  serviceMonitor:
-    enabled: true

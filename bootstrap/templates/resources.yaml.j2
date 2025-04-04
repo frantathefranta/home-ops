@@ -1,0 +1,47 @@
+{% for namespace in ["external-secrets", "flux-system", "network"] %}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ namespace }}
+{% endfor %}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: akeyless-secret-creds
+  namespace: external-secrets
+stringData:
+    accessId: {{ ENV.AKEYLESS_ACCESS_ID }}
+    accessType: {{ ENV.AKEYLESS_ACCESS_TYPE }}
+    accessTypeParam: {{ ENV.AKEYLESS_ACCESS_TYPE_PARAM }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sops-age
+  namespace: flux-system
+stringData:
+  age.agekey: |
+    {{ ENV.FLUX_SOPS_PRIVATE_KEY | indent(4) }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: franta.us-production-tls
+  namespace: cert-manager
+  annotations:
+    cert-manager.io/alt-names: '*.franta.us,franta.us'
+    cert-manager.io/certificate-name: franta.us
+    cert-manager.io/common-name: franta.us
+    cert-manager.io/ip-sans: ""
+    cert-manager.io/issuer-group: ""
+    cert-manager.io/issuer-kind: ClusterIssuer
+    cert-manager.io/issuer-name: letsencrypt-production
+    cert-manager.io/uri-sans: ""
+  labels:
+    controller.cert-manager.io/fao: "true"
+type: kubernetes.io/tls
+data:
+  tls.crt: {{ ENV.TLS_CRT }}
+  tls.key: {{ ENV.TLS_KEY }}

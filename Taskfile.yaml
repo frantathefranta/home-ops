@@ -17,6 +17,7 @@ env:
   MINIJINJA_CONFIG_FILE: '{{.ROOT_DIR}}/.minijinja.toml'
 
 includes:
+  bootstrap: .taskfiles/bootstrap/Taskfile.yaml
   external-secrets:
     aliases: ["es"]
     taskfile: .taskfiles/ExternalSecrets/Taskfile.yaml
