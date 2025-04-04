@@ -51,7 +51,7 @@ releases:
     atomic: true
     chart: oci://quay.io/jetstack/charts/cert-manager
     version: v1.17.1
-    values: ["../kubernetes/apps/kube-system/cert-manager/app/helm-values.yaml"]
+    values: ["../kubernetes/apps/cert-manager/cert-manager/app/helm-values.yaml"]
     needs:
       - kube-system/coredns
 
@@ -76,7 +76,7 @@ releases:
           - --namespace=external-secrets
           - --server-side
           - --field-manager=kustomize-controller
-          - --filename="../kubernetes/apps/external-secrets/external-secrets/akeyless/clustersecretstore.yaml"
+          - --filename="../kubernetes/apps/external-secrets/external-secrets/app/clustersecretstore.yaml"
         showlogs: true
     needs:
       - cert-manager/cert-manager

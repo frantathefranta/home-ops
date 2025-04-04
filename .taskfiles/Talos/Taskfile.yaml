@@ -254,7 +254,7 @@ tasks:
   hard-nuke:
     desc: Resets nodes back completely and reboots them
     prompt: This will destroy your cluster and reset the nodes... continue?
-    dir: "{{.CLUSTER_DIR}}/bootstrap/talos/"
+    dir: "{{.ROOT_DIR}}/kubernetes/talos-maxi/bootstrap/talos/"
     cmd: talhelper gencommand reset --extra-flags "--reboot --graceful=false --wait=false" | bash
     preconditions:
       - { msg: "Argument (CLUSTER) is required", sh: "test -n {{.CLUSTER}}" }

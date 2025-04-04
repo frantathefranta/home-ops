@@ -28,8 +28,7 @@ spec:
               [{
                 "name":"multus-wireless",
                 "namespace": "network",
-                "ips": ["10.0.20.210/24"],
-                "mac": "10:62:e5:18:1a:2f"
+                "ips": ["10.0.20.210/24"]
               }]
             # k8s.v1.cni.cncf.io/networks: |
             #   [{

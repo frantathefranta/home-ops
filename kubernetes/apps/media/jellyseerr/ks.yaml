@@ -9,6 +9,7 @@ spec:
   components:
     - ../../../../components/gatus/external
     - ../../../../components/postgres
+    - ../../../../components/volsync
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
