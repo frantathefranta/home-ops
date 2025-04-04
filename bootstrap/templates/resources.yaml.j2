@@ -45,12 +45,3 @@ type: kubernetes.io/tls
 data:
   tls.crt: {{ ENV.TLS_CRT }}
   tls.key: {{ ENV.TLS_KEY }}
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: sops-age
-  namespace: flux-system
-stringData:
-  age.agekey: |
-    {{ ENV.FLUX_SOPS_PRIVATE_KEY | indent(4) }}

@@ -3,19 +3,6 @@
 version: "3"
 
 tasks:
-  generate-clusterconfig:
-    desc: Generate clusterconfig for Talos
-    preconditions:
-      - which test talhelper
-      - test -f {{.TALOS_DIR}}/talsecret.yaml
-      - test -f {{.TALOS_DIR}}/talconfig.yaml
-      - test -f {{.TALOS_DIR}}/talhelper-secrets.env
-      - test -f {{.TALOS_DIR}}/talenv.sops.yaml
-    cmds:
-      - talhelper --debug genconfig --env-file {{.TALOS_DIR}}/talenv.sops.yaml
-        --secret-file {{.TALOS_DIR}}/talsecret.sops.yaml
-        --config-file {{.TALOS_DIR}}/talconfig.yaml
-        --out-dir {{.TALOS_DIR}}/clusterconfig
   talos:
     desc: Bootstrap Talos
     vars:
@@ -44,6 +31,8 @@ tasks:
         sh: akeyless get-secret-value --name {{.CLUSTER}}-cluster-tls --jq-expression '."tls.crt"'
       TLS_KEY:
         sh: akeyless get-secret-value --name {{.CLUSTER}}-cluster-tls --jq-expression '."tls.key"'
+      FLUX_SOPS_PRIVATE_KEY:
+        sh: akeyless get-secret-value --name age-key
     desc: Bootstrap Apps
     prompt: Bootstrap apps into Talos cluster?
     preconditions:
