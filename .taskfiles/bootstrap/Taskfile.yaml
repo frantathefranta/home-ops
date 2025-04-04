@@ -1,0 +1,60 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+tasks:
+  generate-clusterconfig:
+    desc: Generate clusterconfig for Talos
+    preconditions:
+      - which test talhelper
+      - test -f {{.TALOS_DIR}}/talsecret.yaml
+      - test -f {{.TALOS_DIR}}/talconfig.yaml
+      - test -f {{.TALOS_DIR}}/talhelper-secrets.env
+      - test -f {{.TALOS_DIR}}/talenv.sops.yaml
+    cmds:
+      - talhelper --debug genconfig --env-file {{.TALOS_DIR}}/talenv.sops.yaml
+        --secret-file {{.TALOS_DIR}}/talsecret.sops.yaml
+        --config-file {{.TALOS_DIR}}/talconfig.yaml
+        --out-dir {{.TALOS_DIR}}/clusterconfig
+  talos:
+    desc: Bootstrap Talos
+    vars:
+      TALOS_CONTROLLER:
+        sh: talosctl config info --output json | jq --raw-output '.endpoints[]' | shuf -n 1
+    preconditions:
+      - which jq minijinja-cli sops talosctl
+      - test -f "${TALOSCONFIG}"
+      - talosctl config info
+    cmds:
+      - task: :talos:apply-clusterconfig
+        vars:
+          INSECURE: "true"
+      - until talosctl --nodes {{.TALOS_CONTROLLER}} bootstrap; do sleep 5; done
+      - talosctl kubeconfig --nodes {{.TALOS_CONTROLLER}} --force --force-context-name "talos-maxi" "${KUBECONFIG}"
+
+  apps:
+    env:
+      AKEYLESS_ACCESS_ID:
+        sh: akeyless get-secret-value --name bootstrap/external-secrets --jq-expression '.AKEYLESS_ACCESS_ID'
+      AKEYLESS_ACCESS_TYPE:
+        sh: akeyless get-secret-value --name bootstrap/external-secrets --jq-expression '.AKEYLESS_ACCESS_TYPE'
+      AKEYLESS_ACCESS_TYPE_PARAM:
+        sh: akeyless get-secret-value --name bootstrap/external-secrets --jq-expression '.AKEYLESS_ACCESS_TYPE_PARAM'
+      TLS_CRT:
+        sh: akeyless get-secret-value --name {{.CLUSTER}}-cluster-tls --jq-expression '."tls.crt"'
+      TLS_KEY:
+        sh: akeyless get-secret-value --name {{.CLUSTER}}-cluster-tls --jq-expression '."tls.key"'
+    desc: Bootstrap Apps
+    prompt: Bootstrap apps into Talos cluster?
+    preconditions:
+      - which akeyless helmfile kubectl
+      - test -f "${TALOSCONFIG}"
+      - test -f {{.BOOTSTRAP_DIR}}/helmfile.yaml
+      - test -f {{.BOOTSTRAP_DIR}}/bootstrap.env
+      - test -f {{.BOOTSTRAP_DIR}}/templates/resources.yaml.j2
+      - akeyless get-secret-value --name bootstrap/external-secrets
+      - talosctl config info
+    cmds:
+      - until kubectl wait nodes --for=condition=Ready=False --all --timeout=10m; do sleep 5; done
+      - minijinja-cli {{.BOOSTRAP_DIR}}/templates/resources.yaml.j2 | kubectl apply --server-side --filename -
+      - helmfile --quiet --file {{.BOOSTRAP_DIR}}/helmfile.yaml apply --skip-diff-on-install --suppress-diff

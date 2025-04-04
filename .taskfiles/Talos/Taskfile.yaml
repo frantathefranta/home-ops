@@ -325,3 +325,57 @@ tasks:
   .reset:
     internal: true
     cmd: rm -rf {{.TALOS_DIR}}
+
+# The new commands
+  generate-clusterconfig:
+    desc: Generate clusterconfig for Talos
+    preconditions:
+      - which test talhelper
+      - test -f {{.TALOS_DIR}}/talsecret.yaml
+      - test -f {{.TALOS_DIR}}/talconfig.yaml
+      - test -f {{.TALOS_DIR}}/talhelper-secrets.env
+      - test -f {{.TALOS_DIR}}/talenv.sops.yaml
+    cmds:
+      - talhelper genconfig --env-file {{.TALOS_DIR}}/talenv.sops.yaml
+        --secret-file {{.TALOS_DIR}}/talsecret.sops.yaml
+        --config-file {{.TALOS_DIR}}/talconfig.yaml
+        --out-dir {{.TALOS_DIR}}/clusterconfig
+
+  apply-clusterconfig:
+    desc: Apply clusterconfig for a Talos cluster
+    vars:
+      CLUSTERCONFIG_FILES:
+        sh: ls {{.TALOS_DIR}}/clusterconfig/*.yaml
+    preconditions:
+      - which ls
+      - test -f "${TALOSCONFIG}"
+    cmds:
+      - for:
+          var: CLUSTERCONFIG_FILES
+        task: _apply-machineconfig
+        vars:
+          FILENAME: "{{.ITEM}}"
+          HOSTNAME: |-
+            {{ trimPrefix (printf "talos-maxi-") (base .ITEM) | trimSuffix ".yaml" }}
+          DRY_RUN: "{{ .DRY_RUN }}"
+          INSECURE: "{{ .INSECURE }}"
+
+  _apply-machineconfig:
+    internal: true
+    desc: Apply a single Talos machineConfig to a Talos node
+    preconditions:
+      - which talosctl
+      - test -f "{{.FILENAME}}"
+    requires:
+      vars:
+        - HOSTNAME
+        - FILENAME
+    vars:
+      MODE: '{{.MODE | default "auto"}}'
+    cmds:
+      - talosctl apply-config
+        --nodes "{{.HOSTNAME}}"
+        --file "{{.FILENAME}}"
+        --mode="{{.MODE}}"
+        {{ if eq "true" .INSECURE }}--insecure{{ end }}
+        {{ if eq "true" .DRY_RUN }}--dry-run{{ end }}
