@@ -32,7 +32,11 @@ spec:
       annotations:
         reloader.stakater.com/auto: "true"
     spec:
-      replicas: 3
+      tolerations:
+        - key: special
+          operator: Exists
+          effect: NoSchedule
+      replicas: 2
       envFrom: &envFrom
         - secretRef:
             name: emqx-secret
@@ -47,7 +51,7 @@ spec:
             secretName: emqx-init-user-secret
       topologySpreadConstraints:
         - maxSkew: 1
-          topologyKey: topology.kubernetes.io/zone
+          topologyKey: kubernetes.io/hostname
           whenUnsatisfiable: DoNotSchedule
           labelSelector:
             matchLabels:
