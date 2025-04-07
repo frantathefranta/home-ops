@@ -10,11 +10,10 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: external-secrets
-      namespace: external-secrets
-    - name: openebs
-      namespace: openebs-system
-  interval: 10m
+    - name: rook-ceph-cluster
+      namespace: rook-ceph-external
+  interval: 1h
+  retryInterval: 2m
   path: "./kubernetes/apps/observability/loki/app"
   prune: true
   sourceRef:
@@ -22,3 +21,4 @@ spec:
     name: flux-system
     namespace: flux-system
   wait: false
+  timeout: 5m
