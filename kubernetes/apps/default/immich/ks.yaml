@@ -35,11 +35,11 @@ spec:
       GATUS_SUBDOMAIN: photos
       PG_HBA: '["hostssl all all all md5", "hostnossl all all 10.69.0.0/16 md5"]'
   patches:
-    - target:
-        kind: PostgresCluster
-      patch: |-
-        - op: remove
-          path: /spec/dataSource
+    # - target:
+    #     kind: PostgresCluster
+    #   patch: |-
+    #     - op: remove
+    #       path: /spec/dataSource
     - target:
         kind: PostgresCluster
       patch: |-
@@ -54,7 +54,7 @@ spec:
           name: immich
         spec:
           postgresVersion: 16
-          image: ghcr.io/budimanjojo/cdpgvecto.rs:16@sha256:ff3ef1c82ee60b45ad950809d2d0c3c33f90164135fdde966f230818953da992
+          image: ghcr.io/budimanjojo/cdpgvecto.rs:16-v0.3.0@sha256:81732e18125371bbbf965caa5cb367b45f43f6f8c60102675a821981987007b7
           patroni:
             dynamicConfiguration:
               synchronous_mode: true

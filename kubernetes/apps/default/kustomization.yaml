@@ -10,7 +10,7 @@ resources:
   - ./smtp-relay/ks.yaml
   - ./hugo/ks.yaml
   - ./lubelog/ks.yaml
-  - ./immich/ks.yaml
+  # - ./immich/ks.yaml # TODO: Not dealing with it until Immich changes to VectorChord
   - ./paperless/ks.yaml
   - ./miniflux/ks.yaml
   - ./syncthing/ks.yaml
