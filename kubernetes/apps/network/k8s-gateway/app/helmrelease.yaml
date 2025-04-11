@@ -23,7 +23,7 @@ spec:
   values:
     controllers:
       k8s-gateway:
-        replicas: 1
+        replicas: 2
         strategy: RollingUpdate
         annotations:
           configmap.reloader.stakater.com/reload: *app
