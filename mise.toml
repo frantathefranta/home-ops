@@ -5,5 +5,6 @@ SOPS_AGE_KEY_FILE = '{{config_root}}/age.key'
 ROOT_DIR = "{{config_root}}"
 
 [tools]
+"go:github.com/jkulzer/kubefetch" = "latest"
 shfmt = "latest"
 yamlfmt = "latest"
