@@ -14,6 +14,7 @@
     'github>frantathefranta/home-ops//.github/renovate/semanticCommits.json5',
     'github>frantathefranta/home-ops//.github/renovate/commitMessage.json5',
     'github>frantathefranta/home-ops//.github/renovate/allowedVersions.json5',
+    'github>frantathefranta/home-ops//.github/renovate/groups.json5'
   ],
   dependencyDashboard: true,
   dependencyDashboardTitle: 'Renovate Dashboard 🤖',
@@ -84,58 +85,6 @@
     },
     {
       description: [
-        'Flux Group',
-      ],
-      groupName: 'Flux',
-      matchDatasources: [
-        'docker',
-        'github-tags',
-      ],
-      versioning: 'semver',
-      group: {
-        commitMessageTopic: '{{{groupName}}} group',
-      },
-      separateMinorPatch: true,
-      matchPackageNames: [
-        '/flux/',
-        '/fluxcd/',
-      ],
-    },
-    {
-      description: [
-        'Intel Device Plugins Group',
-      ],
-      groupName: 'Intel-Device-Plugins',
-      matchDatasources: [
-        'helm',
-      ],
-      group: {
-        commitMessageTopic: '{{{groupName}}} group',
-      },
-      separateMinorPatch: true,
-      matchPackageNames: [
-        '/intel-device-plugins/',
-      ],
-    },
-    {
-      description: [
-        'System Upgrade Controller Group',
-      ],
-      groupName: 'System Upgrade Controller',
-      matchDatasources: [
-        'docker',
-        'github-releases',
-      ],
-      group: {
-        commitMessageTopic: '{{{groupName}}} group',
-      },
-      separateMinorPatch: true,
-      matchPackageNames: [
-        '/system-upgrade-controller/',
-      ],
-    },
-    {
-      description: [
         'Talos Group',
       ],
       groupName: 'Talos',
@@ -150,73 +99,6 @@
         '/siderolabs/talosctl/',
         '/siderolabs/installer/',
         '/factory.talos.dev/installer/',
-      ],
-    },
-    {
-      description: [
-        'Volsync Group',
-      ],
-      groupName: 'Volsync',
-      matchDatasources: [
-        'docker',
-        'helm',
-      ],
-      group: {
-        commitMessageTopic: '{{{groupName}}} group',
-      },
-      separateMinorPatch: true,
-      matchPackageNames: [
-        '/volsync/',
-      ],
-    },
-    {
-      description: [
-        'Dragonfly Operator Group',
-      ],
-      groupName: 'Dragonfly Operator',
-      matchDatasources: [
-        'docker',
-        'github-releases',
-      ],
-      group: {
-        commitMessageTopic: '{{{groupName}}} group',
-      },
-      separateMinorPatch: true,
-      matchPackageNames: [
-        '/dragonfly(?:db)?.operator/',
-      ],
-    },
-    {
-      description: [
-        'Rook-Ceph Group',
-      ],
-      groupName: 'Rook-Ceph',
-      matchDatasources: [
-        'helm',
-      ],
-      group: {
-        commitMessageTopic: '{{{groupName}}} group',
-      },
-      separateMinorPatch: true,
-      matchPackageNames: [
-        '/rook.ceph/',
-      ],
-    },
-    {
-      description: [
-        'Actions Runner Controller Group',
-      ],
-      groupName: 'Actions Runner Controller',
-      matchDatasources: [
-        'docker',
-        'helm',
-      ],
-      group: {
-        commitMessageTopic: '{{{groupName}}} group',
-      },
-      separateMinorPatch: true,
-      matchPackageNames: [
-        '/gha-runner-scale-set/',
       ],
     },
     {
