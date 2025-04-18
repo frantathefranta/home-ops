@@ -29,7 +29,7 @@ spec:
               repository: ghcr.io/jsclayton/prometheus-plex-exporter
               tag: latest@sha256:18ef1b2197efbcb75bd7276380955760995f10a9fbe55106809a6fcff91c2940
             env:
-              PLEX_SERVER: http://10.32.10.210:32400 # FIXME: Change this to FQDN
+              PLEX_SERVER: http://plex.franta.us:32400
             envFrom:
               - secretRef:
                   name: plex-exporter

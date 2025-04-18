@@ -8,13 +8,12 @@ spec:
   staticConfigs:
     - targets:
         - platinum.infra.franta.us:9100
-        - 10.32.10.210:9100 # FIXME: Change this to FQDN
         - opnsense.infra.franta.us:9100
         - bastion.infra.franta.us:9100
         - actinium.infra.franta.us:9100
         - thorium.infra.franta.us:9100
         - protactinium.infra.franta.us:9100
-        - 10.0.50.30:9100 # Home Assistant
+        - hass.franta.us:9100 # Home Assistant
   metricsPath: /metrics
   relabelings:
     - action: replace
