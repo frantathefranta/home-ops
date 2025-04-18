@@ -19,8 +19,8 @@ They'll be in a *ClusterSecretStore* called ~crunchy-pgo-secrets~ and formated a
 You can then use these secrets with *ExternalSecret* CRDs, just like this:
 #+begin_src yaml :noeval
 ---
-# yaml-language-server: $schema=https://lds-schemas.pages.dev/external-secrets.io/externalsecret_v1beta1.json
-apiVersion: external-secrets.io/v1beta1
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/external-secrets.io/externalsecret_v1.json
+apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
   name: &name gatus-db-secret
