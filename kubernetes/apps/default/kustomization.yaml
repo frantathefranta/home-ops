@@ -17,5 +17,6 @@ resources:
   - ./tandoor/ks.yaml
   - ./bar-assistant/ks.yaml
   - ./idrac-fan-control/ks.yaml
+  - ./webdav/ks.yaml
 components:
   - ../../components/common
