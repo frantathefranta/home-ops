@@ -45,7 +45,7 @@ spec:
               VIKUNJA_MAILER_ENABLED: true
               VIKUNJA_MAILER_HOST: smtp-relay.default.svc.cluster.local
               VIKUNJA_MAILER_PORT: 25
-              VIKUNJA_MAILER_FROMEMAIL: "vikunja@franta.us"
+              VIKUNJA_MAILER_FROMEMAIL: "vikunja@franta.dev"
               VIKUNJA_MAILER_SKIPTLSVERIFY: true
               VIKUNJA_REDIS_ENABLED: true
               VIKUNJA_REDIS_HOST: "dragonfly.database.svc.cluster.local:6379"

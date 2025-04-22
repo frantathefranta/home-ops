@@ -52,7 +52,7 @@ spec:
                   secretKeyRef:
                     name: tandoor-pguser-recipes
                     key: dbname
-              DEFAULT_FROM_EMAIL: recipes@franta.us
+              DEFAULT_FROM_EMAIL: recipes@franta.dev
               GUNICORN_MEDIA: 0
               REMOTE_USER_AUTH: 0
               FRACTION_PREF_DEFAULT: 0
