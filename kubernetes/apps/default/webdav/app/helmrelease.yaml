@@ -46,6 +46,10 @@ spec:
                 cpu: 10m
               limits:
                 memory: 128Mi
+          nginx:
+            image:
+              repository: ghcr.io/nginxinc/nginx-unprivileged
+              tag: 1.27.4
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -58,7 +62,7 @@ spec:
         ipFamilyPolicy: RequireDualStack
         ports:
           http:
-            port: &port 6065
+            port: &port 8080
     route:
       app:
         hostnames:
@@ -81,3 +85,12 @@ spec:
           - path: /config/config.yaml
             subPath: config.yaml
             readOnly: true
+      nginx-config:
+        type: configMap
+        name: webdav-nginx-configmap
+        advancedMounts:
+          webdav:
+            nginx:
+              - path: /etc/nginx/nginx.conf
+                subPath: nginx-config
+                readOnly: true
