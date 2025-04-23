@@ -35,7 +35,7 @@ jobs:
         run: brew install fluxcd/tap/flux
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@abd3abc99c62be8f17fda11fadefceaa006f6f9e
+        uses: docker/login-action@6d4b68b490aef8836e8fb5e50ee7b3bdfa5894f0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
