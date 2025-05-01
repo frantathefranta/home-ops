@@ -3,7 +3,7 @@
 # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
 talosVersion: v1.9.5
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-kubernetesVersion: v1.32.3
+kubernetesVersion: v1.32.4
 
 clusterName: &cluster talos-maxi
 endpoint: https://10.33.40.25:6443
@@ -119,15 +119,8 @@ patches:
       files:
         - op: create
           path: /etc/cri/conf.d/20-customization.part
-          content: |-
+          content: |
             [plugins."io.containerd.cri.v1.images"]
-              discard_unpacked_layers = false
-            [plugins."io.containerd.grpc.v1.cri"]
-              enable_unprivileged_ports = true
-              enable_unprivileged_icmp = true
-            [plugins."io.containerd.grpc.v1.cri".containerd]
-              discard_unpacked_layers = false
-            [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
               discard_unpacked_layers = false
 
   # Disable search domain everywhere
