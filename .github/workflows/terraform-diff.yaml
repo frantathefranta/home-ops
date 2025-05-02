@@ -115,7 +115,7 @@ jobs:
       - name: Post PR comment
         if: github.event_name == 'pull_request'
         continue-on-error: true
-        uses: borchero/terraform-plan-comment@434458316f8f24dd073cd2561c436cce41dc8f34
+        uses: borchero/terraform-plan-comment@df4bc127f698d4f9e3b14739c677f9c7a8f31ddc
         with:
           token: ${{ steps.app-token.outputs.token }}
           planfile: .planfile
