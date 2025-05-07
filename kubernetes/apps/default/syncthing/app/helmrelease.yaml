@@ -32,7 +32,7 @@ spec:
           app:
             image:
               repository: docker.io/syncthing/syncthing
-              tag: 1.29.5
+              tag: 1.29.6
             env:
               TZ: America/Detroit
               PGID: 1000
