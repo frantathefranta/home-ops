@@ -219,9 +219,6 @@ spec:
           gnetId: 19105
           revision: 7
           datasource: Prometheus
-        external-secrets:
-          url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
-          datasource: Prometheus
         emqx:
           # renovate: depName="EMQX"
           gnetId: 17446
