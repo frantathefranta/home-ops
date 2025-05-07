@@ -30,7 +30,7 @@ spec:
           main:
             image:
               repository: ghcr.io/frantathefranta/varroa
-              tag: v35@sha256:25844b07af903faf57f5e513446e1206867b7e654edda5ea76e42dee9dae52f8
+              tag: v35@sha256:19e6fc8f777601c9e1b3c0c90a9e401327c6e44f28da9fa310710ddc6efbd5ac
         pod:
           securityContext:
             runAsUser: 568
