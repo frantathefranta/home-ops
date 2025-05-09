@@ -18,21 +18,3 @@ parameters:
   imageFormat: "2"
   pool: talos-maxi-rbd
 reclaimPolicy: Delete
----
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: cephfs
-provisioner: rook-ceph-external.cephfs.csi.ceph.com # Has to match namespace
-parameters:
-  clusterID: rook-ceph-external
-  csi.storage.k8s.io/controller-expand-secret-name: rook-csi-cephfs-provisioner
-  csi.storage.k8s.io/controller-expand-secret-namespace: rook-ceph-external
-  csi.storage.k8s.io/node-stage-secret-name: rook-csi-cephfs-node
-  csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph-external
-  csi.storage.k8s.io/provisioner-secret-name: rook-csi-cephfs-provisioner
-  csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph-external
-  fsName: talos-maxi-fs
-  pool: talos-maxi-fs_data
-allowVolumeExpansion: true
-reclaimPolicy: Delete
