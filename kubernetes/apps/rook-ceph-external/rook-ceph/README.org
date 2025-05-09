@@ -40,6 +40,8 @@ $ curl haproxy-rados-gw.rook-ceph-external.svc.cluster.local:7480
 #+end_src
 ** HAProxy
 Some inspiration on how to setup HAProxy for RGW came from here: [[https://gist.github.com/robbat2/ec0a66eed28e5f0e1ef7018e9c77910c][GitHub gist]]
+* CephFS
+Initially I've had CephFS plugin deployed in the cluster (to enable ReadWriteMany services), but something kept tripping up the Ceph Metadata Server with too many inodes, which create too much metadata. After ~cross-seed~ added ability to get ~qBittorrent~ data without having access to the PVC, it became unnecessary to still have CephFS PVCs. If you are still interested in CephFS, look at this [[https://github.com/frantathefranta/home-ops/commit/2b4402c2178df88de96edc0096f1a5b143fc0415][commit]], where I've removed the essential parts.
 * Caveats
 +Your backups will not be handled by the Kubernetes cluster.+
 I figured out you can use ~VolumeSnapshots~ with an external cluster, description WIP.
