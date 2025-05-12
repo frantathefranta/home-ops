@@ -6,6 +6,5 @@ namespace: storage
 resources:
   - ./snapshot-controller/ks.yaml
   - ./volsync/ks.yaml
-  - ./minio/ks.yaml
 components:
   - ../../components/common
