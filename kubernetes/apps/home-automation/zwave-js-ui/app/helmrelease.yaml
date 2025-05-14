@@ -46,7 +46,7 @@ spec:
           app:
             image:
               repository: ghcr.io/zwave-js/zwave-js-ui
-              tag: 10.4.2
+              tag: 10.5.0
             env:
               TZ: America/Detroit
             securityContext:
