@@ -45,6 +45,7 @@ meilisearch --import-dump dumps/{dump_uid.dump} --master-key="YOUR_MASTER_KEY"
    #+begin_src sh
 kubectl scale statefulsets -n default meilisearch --replicas=1
    #+end_src
+6. (Optional) Bar Assistant needs a refresh when Meilisearch updates. To do that, run ~artisan bar:refresh-search~ after the update.
 ** Update Job
 Steps 3 and 4 should be possible to run in a Job, but I haven't gotten around to making it work yet. Rough outline:
 #+begin_src yaml
