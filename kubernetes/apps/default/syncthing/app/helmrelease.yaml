@@ -44,10 +44,18 @@ spec:
               limits:
                 memory: 250Mi
             probes:
-              liveness:
+              liveness: &probes
                 enabled: true
-              readiness:
-                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /rest/noauth/health
+                    port: &port 8384
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -65,14 +73,14 @@ spec:
         primary: true
         ports:
           http:
-            port: &port 8384
+            port: *port
       sync:
         controller: *app
         ipFamilyPolicy: PreferDualStack
         type: LoadBalancer
         annotations:
           lbipam.cilium.io/ips: 10.33.40.70,${CLUSTER_LBA_V6_PREFIX}:70
-        externalTrafficPolicy: Cluster
+        externalTrafficPolicy: Local
         ports:
           discovery:
             port: 21027
@@ -80,9 +88,6 @@ spec:
           listen:
             port: 22000
             protocol: TCP
-          listen-udp:
-            port: 22000
-            protocol: UDP
     serviceMonitor:
       app:
         serviceName: *app
