@@ -16,8 +16,8 @@ spec:
         name: intel
         namespace: flux-system
   values:
-    name: intel-gpu-plugin
-    sharedDevNum: 3
+    name: i915
+    # sharedDevNum: 3
     nodeFeatureRule: true
     tolerations:
       - key: special
