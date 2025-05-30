@@ -5,7 +5,7 @@ kind: Kustomization
 namespace: home-automation
 resources:
   - ./birdnet/ks.yaml
-  # - ./music-assistant/ks.yaml
+  - ./music-assistant/ks.yaml
   - ./scrypted/ks.yaml
   - ./zigbee2mqtt/ks.yaml
   - ./zwave-js-ui/ks.yaml

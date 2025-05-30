@@ -1,9 +1,9 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
 ---
 # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-talosVersion: v1.9.5
+talosVersion: v1.10.3
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-kubernetesVersion: v1.32.4
+kubernetesVersion: v1.33.1
 
 clusterName: &cluster talos-maxi
 endpoint: https://10.33.40.25:6443
@@ -32,6 +32,10 @@ nodes:
         mtu: 1500
         vip:
           ip: "10.33.40.25"
+      - interface: eth1
+        dhcp: false
+      - interface: eth2
+        dhcp: false
   - hostname: "talos-thorium"
     ipAddress: "10.33.35.2"
     installDisk: "/dev/sda"
@@ -46,6 +50,10 @@ nodes:
         mtu: 1500
         vip:
           ip: "10.33.40.25"
+      - interface: eth1
+        dhcp: false
+      - interface: eth2
+        dhcp: false
   - hostname: "talos-protactinium"
     ipAddress: "10.33.35.3"
     installDisk: "/dev/sda"
@@ -60,6 +68,10 @@ nodes:
         mtu: 1500
         vip:
           ip: "10.33.40.25"
+      - interface: eth1
+        dhcp: false
+      - interface: eth2
+        dhcp: false
   - hostname: "talos-g3-mini"
     ipAddress: "10.33.35.21"
     installDiskSelector:

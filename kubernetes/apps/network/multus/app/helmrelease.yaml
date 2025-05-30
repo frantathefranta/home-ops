@@ -21,8 +21,8 @@ spec:
   values:
     defaultPodOptions:
       hostNetwork: true
-      nodeSelector:
-        kubernetes.io/hostname: talos-g3-mini
+      # nodeSelector:
+      #   kubernetes.io/hostname: talos-g3-mini
       tolerations:
         - key: special
           operator: Exists
