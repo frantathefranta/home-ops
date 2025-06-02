@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -44,7 +44,6 @@ spec:
         ipFamilyPolicy: RequireDualStack
         annotations:
           lbipam.cilium.io/ips: 10.33.40.66,${CLUSTER_LBA_V6_PREFIX}:66
-        nameOverride: *app
         ports:
           http:
             port: &port 20346
