@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: smtp-relay
+  name: &app smtp-relay
 spec:
   interval: 30m
   chartRef:

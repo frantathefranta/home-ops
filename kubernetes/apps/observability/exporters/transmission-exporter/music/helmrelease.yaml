@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: transmission-music-exporter
+  name: &app transmission-music-exporter
 spec:
   interval: 30m
   chartRef:

@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: actinium-fan-control
+  name: &app actinium-fan-control
 spec:
   interval: 30m
   chartRef:

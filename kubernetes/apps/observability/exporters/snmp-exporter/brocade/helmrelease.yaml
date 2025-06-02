@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: snmp-exporter-brocade
+  name: &app snmp-exporter-brocade
 spec:
   interval: 30m
   chartRef:

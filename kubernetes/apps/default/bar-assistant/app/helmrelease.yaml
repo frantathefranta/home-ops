@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: bar-assistant
+  name: &app bar-assistant
 spec:
   interval: 30m
   chartRef:
@@ -101,7 +101,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - identifier: app
+              - name: *app
                 port: *nginx-port
 
     persistence:

@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: transmission-jeopardy
+  name: &app transmission-jeopardy
 spec:
   interval: 30m
   chartRef:
