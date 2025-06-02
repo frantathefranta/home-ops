@@ -51,6 +51,8 @@ spec:
                 memory: 512Mi
             securityContext:
               privileged: true
+          serviceAccount:
+            identifier: *app
     persistence:
       etc-cni-net-d:
         type: hostPath
@@ -63,5 +65,5 @@ spec:
         globalMounts:
           - path: /host/opt/cni/bin
     serviceAccount:
-      create: true
-      name: *app
+      multus:
+        enabled: true

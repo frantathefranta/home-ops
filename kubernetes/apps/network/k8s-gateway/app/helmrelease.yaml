@@ -52,6 +52,8 @@ spec:
               requests:
                 cpu: 50m
                 memory: 200Mi
+          serviceAccount:
+            identifier: *app
         pod:
           topologySpreadConstraints:
             - maxSkew: 1
@@ -97,8 +99,8 @@ spec:
             interval: 30s
             scrapeTimeout: 30s
     serviceAccount:
-      create: true
-      name: *app
+      k8s-gateway:
+        enabled: true
     persistence:
       config:
         enabled: true
