@@ -1,9 +1,9 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app music-assistant
+  name: music-assistant
 spec:
   interval: 30m
   chartRef:
@@ -41,12 +41,6 @@ spec:
               readiness:
                 enabled: true
     defaultPodOptions:
-      # nodeSelector:
-      #   kubernetes.io/hostname: talos-g3-mini
-      # tolerations:
-      #   - key: special
-      #     operator: Exists
-      #     effect: NoSchedule
       securityContext:
         runAsNonRoot: true
         runAsUser: 568
@@ -56,7 +50,7 @@ spec:
         seccompProfile: { type: RuntimeDefault }
     service:
       app:
-        controller: *app
+        controller: music-assistant
         ports:
           http:
             port: &port 8095
@@ -72,7 +66,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: *app
+              - identifier: app
                 port: *port
 
     persistence:
