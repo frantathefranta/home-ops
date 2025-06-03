@@ -46,8 +46,8 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-          serviceAccount:
-            name: system-upgrade
+        serviceAccount:
+          name: system-upgrade
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
