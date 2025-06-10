@@ -27,9 +27,6 @@ spec:
     envFrom:
       - secretRef:
           name: meilisearch-secret
-    image:
-      repository: &repo getmeili/meilisearch
-      tag: &tag v1.14.0
     auth:
       existingMasterKeySecret: meilisearch-secret
     persistence:
@@ -41,9 +38,3 @@ spec:
       enabled: true
     service:
       ipFamilyPolicy: PreferDualStack
-    initContainers:
-      - name: upgrade
-        image: getmeili/meilisearch:v1.14.0
-        command:
-          - /bin/meilisearch
-          - "--version"
