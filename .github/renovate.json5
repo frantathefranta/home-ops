@@ -48,6 +48,7 @@
   kubernetes: {
     managerFilePatterns: [
       '/(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$/',
+      '/(^|/)talos/.+\\.ya?ml(?:\\.j2)?$/',
     ],
   },
   kustomize: {
