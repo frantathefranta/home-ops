@@ -27,6 +27,7 @@ tasks:
       - test -f {{.TALOS_DIR}}/talconfig.yaml
       # - test -f {{.TALOS_DIR}}/talhelper-secrets.env
       - test -f {{.TALOS_DIR}}/talenv.sops.yaml
+    dir: "{{.TALOS_DIR}}"
     cmds:
       - talhelper genconfig --env-file {{.TALOS_DIR}}/talenv.sops.yaml
         --secret-file {{.TALOS_DIR}}/talsecret.sops.yaml

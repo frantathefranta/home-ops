@@ -26,6 +26,8 @@ nodes:
     nodeLabels:
       topology.kubernetes.io/region: *cluster
       topology.kubernetes.io/zone: actinium
+    # extraManifests:
+    #   - ./watchdog.yaml
     networkInterfaces:
       - interface: eth0
         dhcp: true
@@ -62,6 +64,8 @@ nodes:
     nodeLabels:
       topology.kubernetes.io/region: *cluster
       topology.kubernetes.io/zone: protactinium
+    extraManifests:
+      - ./watchdog.yaml
     networkInterfaces:
       - interface: eth0
         dhcp: true
@@ -83,6 +87,8 @@ nodes:
       # topology.kubernetes.io/zone: nonProxmox
     # nodeTaints:
     #   intel-gpu: true:NoSchedule
+    extraManifests:
+      - ./watchdog.yaml
     networkInterfaces:
       - interface: eno1
         # deviceSelector:
