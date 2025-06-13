@@ -4,18 +4,19 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: default
 resources:
-  - ./vikunja/ks.yaml
-  - ./glauth/ks.yaml
-  - ./authelia/ks.yaml
-  - ./smtp-relay/ks.yaml
-  - ./hugo/ks.yaml
-  - ./lubelog/ks.yaml
   # - ./immich/ks.yaml # TODO: Not dealing with it until Immich changes to VectorChord
-  - ./paperless/ks.yaml
+  - ./authelia/ks.yaml
+  - ./bar-assistant/ks.yaml
+  - ./glauth/ks.yaml
+  - ./hugo/ks.yaml
+  - ./idrac-fan-control/ks.yaml
+  - ./lubelog/ks.yaml
   - ./miniflux/ks.yaml
+  - ./oxidized/ks.yaml
+  - ./paperless/ks.yaml
+  - ./smtp-relay/ks.yaml
   - ./syncthing/ks.yaml
   - ./tandoor/ks.yaml
-  - ./bar-assistant/ks.yaml
-  - ./idrac-fan-control/ks.yaml
+  - ./vikunja/ks.yaml
 components:
   - ../../components/common
