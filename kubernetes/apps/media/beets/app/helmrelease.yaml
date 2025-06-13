@@ -70,7 +70,7 @@ spec:
               - /bin/sh
               - -c
               - |
-                restic backup /music/stereo
+                restic backup --verbose /music/stereo
                 # restic forget --keep-daily 1 --keep-weekly 1 --keep-monthly 1 --prune
 
     defaultPodOptions:
