@@ -1,0 +1,97 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app oxidized
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+    namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      oxidized:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: oxidized/oxidized
+              tag: 0.33.0@sha256:94b51ed816bf549126fa30ecafcdd51380db2c35b17e818588b08f3c0e80f076
+            env:
+              CONFIG_RELOAD_INTERVAL: 3600
+            resources:
+              requests:
+                cpu: 10m
+                memory: 100Mi
+              limits:
+                memory: 250Mi
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /nodes
+                    port: &port 8888
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: *port
+    route:
+      app:
+        hostnames:
+          - "{{ .Release.Name }}.franta.us"
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+    persistence:
+      data:
+        existingClaim: *app
+        globalMounts:
+          - path: /home/oxidized/.config/oxidized
+      # config:
+      #   type: configMap
+      #   name: oxidized-configmap
+      #   globalMounts:
+      #     - path: /home/oxidized/.config/oxidized/config
+      #       subPath: config
+      #       readOnly: true
+      #     - path: /home/oxidized/.config/oxidized/router.db
+      #       subPath: router.db
+      #       readOnly: true
+      # ssh-keys:
+      #   type: secret
+      #   name: oxidized-ssh-keys
+      #   globalMounts:
+      #     - path: /home/oxidized/.config/oxidized/brocade_2048
+      #       subPath: brocade_2048
+      #       readOnly: true
+      #     - path: /home/oxidized/.config/oxidized/git-private
+      #       subPath: git-private
+      #       readOnly: true
+      #     - path: /home/oxidized/.config/oxidized/git-public
+      #       subPath: git-public
+      #       readOnly: true

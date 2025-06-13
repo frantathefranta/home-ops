@@ -1,0 +1,64 @@
+---
+resolve_dns: true
+interval: 3600
+use_syslog: false
+debug: false
+run_once: false
+threads: 30
+use_max_threads: false
+timeout: 20
+retries: 3
+prompt: !ruby/regexp /^([\w.@-]+[#>]\s?)$/
+next_adds_job: false
+vars:
+  ssh_keys: ["/home/oxidized/.config/oxidized/brocade_2048"]
+  auth_methods: [ "publickey" ]
+groups: {}
+group_map: {}
+models: {}
+pid: "/home/oxidized/.config/oxidized/pid"
+extensions:
+  oxidized-web:
+    load: true
+    listen: 0.0.0.0
+    port: 8888
+    vhosts:
+      - oxidized.franta.us
+crash:
+  directory: "/home/oxidized/.config/oxidized/crashes"
+  hostnames: false
+stats:
+  history_size: 10
+input:
+  default: ssh
+  debug: false
+  ssh:
+    secure: false
+  ftp:
+    passive: true
+  utf8_encoded: true
+output:
+  git:
+    user: oxidized
+    email: oxidized@franta.us
+    repo: "/home/oxidized/.config/oxidized/output"
+
+hooks:
+  push_to_remote:
+    remote_repo: git@github.com:frantathefranta/oxidized.git
+    privatekey: "/home/oxidized/.config/oxidized/git-private"
+
+source:
+  default: csv
+  csv:
+    file: "/home/oxidized/.config/oxidized/router.db"
+    delimiter: !ruby/regexp /:/
+    map:
+      name: 0
+      ip: 1
+      model: 2
+      username: 3
+    vars_map:
+      enable: 4
+      ssh_kex: 6
+      ssh_host_key: 7
