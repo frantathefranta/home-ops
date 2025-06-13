@@ -119,3 +119,7 @@ spec:
         - path: /music
       tmp:
         type: emptyDir
+      cache:
+        existingClaim: beets-restic-cache
+        globalMounts:
+          - path: /.cache
