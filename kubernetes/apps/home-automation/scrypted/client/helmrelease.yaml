@@ -1,0 +1,109 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app scrypted-client
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+    namespace: flux-system
+
+  values:
+    defaultPodOptions:
+      tolerations:
+        - key: node.kubernetes.io/assignment
+          value: intel-gpu
+          operator: Equal
+          effect: NoSchedule
+    controllers:
+      scrypted-client:
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        pod:
+          annotations:
+            k8s.v1.cni.cncf.io/networks: |
+              [{
+                "name":"multus-wireless",
+                "namespace": "network",
+                "ips": ["10.0.20.213/24"]
+              }]
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: "OnRootMismatch"
+            supplementalGroups:
+              - 44
+              - 109
+
+        containers:
+          app:
+            image:
+              repository: ghcr.io/bjw-s-labs/scrypted
+              tag: 0.139.0@sha256:0a376e9166d51e0d0fae47b9234774338809fdbd317db614fdc95cef532f024e
+            env:
+              SCRYPTED_CLUSTER_MODE: client
+              SCRYPTED_CLUSTER_SERVER: 10.0.20.212
+              SCRYPTED_CLUSTER_LABELS: compute,transcode,@scrypted/openvino
+              SCRYPTED_CLUSTER_WORKER_NAME: *app
+            envFrom:
+              - secretRef:
+                  name: scrypted-secret
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              requests:
+                cpu: 136m
+                memory: 1024Mi
+              limits:
+                gpu.intel.com/i915: 1
+                memory: 12Gi
+
+    # service:
+    #   app:
+    #     controller: *app
+    #     primary: true
+    #     ports:
+    #       http:
+    #         port: &port 11080
+    #         primary: true
+    #       rebroadcast1:
+    #         port: 34135
+    #       rebroadcast2:
+    #         port: 34136
+
+    # route:
+    #   app:
+    #     hostnames:
+    #       - "{{ .Release.Name }}.franta.us"
+    #     parentRefs:
+    #       - name: internal
+    #         namespace: kube-system
+    #         sectionName: https
+    #     rules:
+    #       - backendRefs:
+    #           - name: *app
+    #             port: *port
+
+    persistence:
+      config:
+        existingClaim: *app
+        advancedMounts:
+          scrypted-client:
+            app:
+              - path: /server/volume
+      cache:
+        type: emptyDir
+        globalMounts:
+          - path: /.cache
+      cache-npm:
+        type: emptyDir
+        globalMounts:
+          - path: /.npm

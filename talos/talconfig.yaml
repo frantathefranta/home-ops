@@ -90,8 +90,17 @@ nodes:
     extraManifests:
       - ./watchdog.yaml
     networkInterfaces:
-      - interface: eno1
+      - interface: bond0
         dhcp: true
+        bond:
+          mode: 802.3ad
+          lacpRate: fast
+          xmitHashPolicy: layer3+4
+          miimon: 100
+          updelay: 200
+          downdelay: 200
+          interfaces:
+            - eno1
         vlans:
           - vlanId: 20
             mtu: 1500
@@ -126,8 +135,26 @@ nodes:
     extraManifests:
       - ./watchdog.yaml
     networkInterfaces:
-      - interface: enp1s0
+      - interface: bond0
         dhcp: true
+        bond:
+          mode: 802.3ad
+          lacpRate: fast
+          xmitHashPolicy: layer3+4
+          miimon: 100
+          updelay: 200
+          downdelay: 200
+          interfaces:
+            - enp1s0
+        vlans:
+          - vlanId: 20
+            mtu: 1500
+            dhcp: true
+            dhcpOptions:
+              routeMetric: 4096
+          - vlanId: 50
+            mtu: 1500
+            dhcp: false
 
     patches:
     # Configure udev rules
