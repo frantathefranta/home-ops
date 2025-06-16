@@ -23,3 +23,7 @@ spec:
       - key: special
         operator: Exists
         effect: NoSchedule
+      - key: node.kubernetes.io/assignment
+        value: intel-gpu
+        operator: Equal
+        effect: NoSchedule
