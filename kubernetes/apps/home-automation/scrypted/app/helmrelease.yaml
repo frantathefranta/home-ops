@@ -96,6 +96,10 @@ spec:
           scrypted:
             app:
               - path: /server/volume
+      fast:
+        existingClaim: scrypted-fast
+        globalMounts:
+          - path: /fast
       cache:
         type: emptyDir
         globalMounts:
