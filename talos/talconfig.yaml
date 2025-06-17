@@ -7,8 +7,12 @@ kubernetesVersion: v1.33.1
 
 clusterName: &cluster talos-maxi
 endpoint: https://10.33.40.25:6443
-clusterPodNets: ["10.69.0.0/16", "${CLUSTER_POD_V6_CIDR}"]
-clusterSvcNets: ["10.96.0.0/16", "${CLUSTER_SVC_V6_CIDR}"]
+clusterPodNets:
+  - "10.69.0.0/16"
+  - "${CLUSTER_POD_V6_CIDR}"
+clusterSvcNets:
+  - "10.96.0.0/16"
+  - "${CLUSTER_SVC_V6_CIDR}"
 additionalApiServerCertSans: &sans
   - "10.33.40.25"
   - "talos-maxi.franta.us"
@@ -97,23 +101,15 @@ nodes:
           lacpRate: fast
           xmitHashPolicy: layer3+4
           miimon: 100
-          updelay: 200
-          downdelay: 200
           interfaces:
             - eno1
         vlans:
           - vlanId: 20
             mtu: 1500
-            dhcp: true
-            dhcpOptions:
-              routeMetric: 4096
+            dhcp: false
           - vlanId: 50
             mtu: 1500
-            addresses:
-              - "10.0.50.21/24"
-            # dhcp: true
-            # dhcpOptions:
-            #   routeMetric: 4096
+            dhcp: false
     patches:
     # Configure udev rules
       - |-
@@ -128,7 +124,7 @@ nodes:
     ipAddress: "10.33.35.22"
     installDiskSelector:
       model: "TWSC*"
-    talosImageURL: factory.talos.dev/metal-installer/249d9135de54962744e917cfe654117000cba369f9152fbab9d055a00aa3664f
+    talosImageURL: factory.talos.dev/metal-installer/9ba0b24a91c2b56085dceb616daaf013f0453bcf2f2036814be062733e583806
     controlPlane: false
     nodeLabels:
       topology.kubernetes.io/region: *cluster
@@ -142,16 +138,12 @@ nodes:
           lacpRate: fast
           xmitHashPolicy: layer3+4
           miimon: 100
-          updelay: 200
-          downdelay: 200
           interfaces:
             - enp1s0
         vlans:
           - vlanId: 20
             mtu: 1500
-            dhcp: true
-            dhcpOptions:
-              routeMetric: 4096
+            dhcp: false
           - vlanId: 50
             mtu: 1500
             dhcp: false
@@ -272,6 +264,7 @@ patches:
         net.ipv4.tcp_congestion_control: bbr
         net.ipv4.tcp_fastopen: "3" # Send and accept data in the opening SYN packet
         # net.ipv4.tcp_mtu_probing: 1 # Jumbo frames
+        net.ipv6.conf.bond0.accept_ra: "2"
         net.ipv6.conf.all.accept_ra: "2"
         net.ipv6.conf.all.forwarding: "1"
         # net.ipv4.tcp_rmem: 4096 131072 33554432  # 1K, 128K, 32M; QUIC and 10 Gbps
