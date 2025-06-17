@@ -14,9 +14,14 @@ spec:
   values:
     defaultPodOptions:
       tolerations:
-        - key: special
-          operator: Exists
+        # - key: special
+        #   operator: Exists
+        #   effect: NoSchedule
+        - key: node.kubernetes.io/assignment
+          value: intel-gpu
+          operator: Equal
           effect: NoSchedule
+
     controllers:
       scrypted:
         annotations:
@@ -30,19 +35,6 @@ spec:
                 "namespace": "network",
                 "ips": ["10.0.20.210/24"]
               }]
-            # k8s.v1.cni.cncf.io/networks: |
-            #   [{
-            #     "name":"multus-wireless",
-            #     "namespace": "network",
-            #     "ips": ["10.0.20.210/24"],
-            #     "mac": "10:62:e5:18:1a:2f"
-            #   },
-            #   {
-            #     "name":"multus-iot",
-            #     "namespace": "network",
-            #     "ips": ["10.0.50.210/24"],
-            #     "mac": "10:62:e5:18:1a:2f"
-            #   }]
           securityContext:
             runAsUser: 568
             runAsGroup: 568
@@ -69,8 +61,8 @@ spec:
                 memory: 1024Mi
               limits:
                 gpu.intel.com/i915: 1
-                squat.ai/coral: 1
-                memory: 8192Mi
+                # squat.ai/coral: 1
+                memory: 12Gi
 
     service:
       app:
