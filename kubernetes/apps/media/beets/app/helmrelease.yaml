@@ -104,6 +104,11 @@ spec:
     persistence:
       config:
         existingClaim: *app
+        advancedMounts:
+          beets:
+            app:
+              - path: /config
+                subPath: config
       config-yaml:
         type: secret
         name: beets-secret
@@ -121,5 +126,8 @@ spec:
         type: emptyDir
       cache:
         existingClaim: beets-restic-cache
-        globalMounts:
-          - path: /.cache
+        advancedMounts:
+          restic-backup:
+            restic-backup:
+              - path: /.cache
+                subPath: .cache
