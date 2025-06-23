@@ -23,6 +23,9 @@
   "packageRules": [
     {
       "addLabels": ["renovate/grafana-dashboard"],
+      "automerge": true,
+      "automergeType": "branch",
+      "ignoreTests": true,
       "matchDatasources": ["custom.grafana-dashboards"],
       "matchUpdateTypes": ["major"],
       "semanticCommitType": "chore",
