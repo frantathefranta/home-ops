@@ -32,7 +32,7 @@ spec:
             image:
               repository: ghcr.io/frantathefranta/beets-custom
               tag: 2.3.1@sha256:c725bcb80e86063450dec4c22456f2961e7be6a673d302a0e533d714d6dd67e8
-            envFrom: &envFrom
+            envFrom:
             - secretRef:
                 name: beets-secret
             probes:
@@ -52,27 +52,6 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-      restic-backup:
-        type: cronjob
-        cronjob:
-          schedule: "@daily"
-          timeZone: America/Detroit
-          concurrencyPolicy: Forbid
-          successfulJobsHistory: 1
-          failedJobsHistory: 1
-        containers:
-          restic-backup:
-            image:
-              repository: ghcr.io/restic/restic
-              tag: 0.18.0@sha256:c34f8216c1536fc6a1677d088b195b9353e0f1615c842407efefb84ed761c435
-            envFrom: *envFrom
-            command:
-              - /bin/sh
-              - -c
-              - |
-                restic backup --verbose /music/stereo
-                # restic forget --keep-daily 1 --keep-weekly 1 --keep-monthly 1 --prune
-
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -104,11 +83,6 @@ spec:
     persistence:
       config:
         existingClaim: *app
-        advancedMounts:
-          beets:
-            app:
-              - path: /config
-                subPath: config
       config-yaml:
         type: secret
         name: beets-secret
@@ -124,10 +98,3 @@ spec:
         - path: /music
       tmp:
         type: emptyDir
-      cache:
-        existingClaim: beets-restic-cache
-        advancedMounts:
-          restic-backup:
-            restic-backup:
-              - path: /.cache
-                subPath: .cache
