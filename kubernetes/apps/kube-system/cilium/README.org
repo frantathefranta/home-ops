@@ -7,10 +7,18 @@ I use an Arista DCS-7050SX-64 L3 switch for routing in my homelab. The BGP setup
 #+begin_src sh :noeval
 router bgp 65033 # Sets up the local AS to be 65033
 router-id 10.33.0.1 # Naming the router
+
+# For automatic finding of peers, use the bgp listen command
+bgp listen range 10.33.35.0/27 peer-group talos-maxi remote-as 65069
+
+# Alternatively you can still specify peers manually
 neighbor 10.33.35.1 remote-as 65069 # Adding the talos nodes as neighbors in the Cilium AS (65069). Repeat this for all the nodes
 #+end_src
 If IPv6 is needed, the additional config looks like this:
 #+begin_src sh :noeval
+bgp listen range <prefix>::/64 peer-group talos-maxi remote-as 65069
+
+# Alternatively you can still specify peers manually
 neighbor fd30:6ff9:e40f:3333::351 remote-as 65069 # Adding a neighbor (talos node) with its IPv6 address
 address-family ipv6 # BGP on Aristas doesn't use IPv6 out-of-the-box, you'll need to go into a subsetting, then activate a neighbor
 neighbor fd30:6ff9:e40f:3333::351 activate
