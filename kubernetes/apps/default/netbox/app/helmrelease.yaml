@@ -93,6 +93,15 @@ spec:
       enabled: false
     plugins:
       - netbox_kea
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+              - key: topology.kubernetes.io/zone
+                operator: NotIn
+                values:
+                - protactinium # FIXME: BIND VM runs on the same Proxmox node and it doesn't allow traffic from VF to bridge
   valuesFrom:
     - targetPath: storages.default.OPTIONS.AWS_ACCESS_KEY_ID
       kind: Secret
