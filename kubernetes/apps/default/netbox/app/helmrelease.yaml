@@ -25,6 +25,10 @@ spec:
   values:
     commonAnnotations:
       reloader.stakater.com/auto: "true"
+    image:
+      repository: frantathefranta/netbox-custom
+      tag: v4.3.3 # TODO: Wait for https://github.com/netbox-community/netbox-chart/pull/760 to be merged, then remove tag key
+      # tag will follow {{ .Chart.AppVersion }}
     superuser:
       name: franta
       email: admin@franta.us
@@ -87,6 +91,8 @@ spec:
       enabled: false
     worker:
       enabled: false
+    plugins:
+      - netbox_kea
   valuesFrom:
     - targetPath: storages.default.OPTIONS.AWS_ACCESS_KEY_ID
       kind: Secret
