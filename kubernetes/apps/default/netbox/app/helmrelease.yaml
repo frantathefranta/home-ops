@@ -87,6 +87,8 @@ spec:
       enabled: false
     worker:
       enabled: false
+    plugins:
+      - netbox-kea
   valuesFrom:
     - targetPath: storages.default.OPTIONS.AWS_ACCESS_KEY_ID
       kind: Secret
