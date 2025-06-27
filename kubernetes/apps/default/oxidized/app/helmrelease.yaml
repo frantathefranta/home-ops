@@ -72,27 +72,5 @@ spec:
         existingClaim: *app
         globalMounts:
           - path: /home/oxidized/.config/oxidized
-      # TODO: Need to fix SSH keys to be able to commit from the pod: https://github.com/ytti/oxidized/blob/1f00d3609d228f894f484e4b2a1c8c7aa8f7cdc0/docs/Troubleshooting.md#oxidized-does-not-push-to-a-remote-git-repository-hook-githubrepo
-      # config:
-      #   type: configMap
-      #   name: oxidized-configmap
-      #   globalMounts:
-      #     - path: /home/oxidized/.config/oxidized/config
-      #       subPath: config
-      #       readOnly: true
-      #     - path: /home/oxidized/.config/oxidized/router.db
-      #       subPath: router.db
-      #       readOnly: true
-      # ssh-keys:
-      #   type: secret
-      #   name: oxidized-ssh-keys
-      #   globalMounts:
-      #     - path: /home/oxidized/.config/oxidized/brocade_2048
-      #       subPath: brocade_2048
-      #       readOnly: true
-      #     - path: /home/oxidized/.config/oxidized/git-private
-      #       subPath: git-private
-      #       readOnly: true
-      #     - path: /home/oxidized/.config/oxidized/git-public
-      #       subPath: git-public
-      #       readOnly: true
+      # FIXME: Fix SSH keys to be able to commit from the pod:
+      # Link to solution: https://github.com/ytti/oxidized/blob/1f00d3609d228f894f484e4b2a1c8c7aa8f7cdc0/docs/Troubleshooting.md#oxidized-does-not-push-to-a-remote-git-repository-hook-githubrepo
