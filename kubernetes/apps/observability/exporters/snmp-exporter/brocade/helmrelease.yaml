@@ -46,7 +46,7 @@ spec:
           auth: ["public_v2"]
         - name: brocade01-poe
           module: ["brocade"]
-          target: 10.32.10.202
+          target: 10.32.10.202 # TODO: Figure out why this switch doesn't get scraped
           auth: ["public_v2"]
         - name: brocade01-if
           module: ["if_mib"]
