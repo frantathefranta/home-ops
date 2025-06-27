@@ -1,0 +1,98 @@
+---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: netbox
+spec:
+  interval: 1h
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 6.0.44
+  url: oci://ghcr.io/netbox-community/netbox-chart/netbox
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app netbox
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: netbox
+  values:
+    commonAnnotations:
+      reloader.stakater.com/auto: "true"
+    superuser:
+      name: franta
+      email: admin@franta.us
+    admins:
+      - ["franta", "admin@franta.us"]
+    loginRequired: true
+    timeZone: America/Detroit
+    dateFormat: "j. F, Y"
+    shortDateFormat: "j.m.Y"
+    timeFormat: "G:i"
+    shortTimeFormat: "H:i:s"
+    dateTimeFormat: "j. F, Y g:i a"
+    shortDateTimeFormat: "j.m.Y H:i"
+    storages:
+      default:
+        BACKEND: "storages.backends.s3.S3Storage"
+        OPTIONS:
+          AWS_STORAGE_BUCKET_NAME: "netbox"
+          AWS_S3_ENDPOINT_URL: "https://rgw.franta.us"
+          AWS_S3_REGION_NAME: "us-east-1"
+    existingSecret: netbox-secret
+    metricsEnabled: true
+    postgresql:
+      enabled: false
+    valkey:
+      enabled: false
+    tasksDatabase:
+      host: netbox-dragonfly.default.svc.cluster.local
+      database: 0
+      # existingSecretName: "netbox-secret"
+      # existingSecretKey: "REDIS_PASSWORD"
+    cachingDatabase:
+      host: netbox-dragonfly.default.svc.cluster.local
+      database: 1
+      # existingSecretName: "netbox-secret"
+      # existingSecretKey: "REDIS_PASSWORD"
+    externalDatabase:
+      host: netbox-pgbouncer.default.svc.cluster.local
+      port: 5432
+      database: netbox
+      username: netbox
+      existingSecretName: "netbox-pguser-netbox"
+      existingSecretKey: "password"
+    email:
+      server: smtp-relay.default.svc.cluster.local
+      port: 25
+      from: netbox@franta.dev
+    persistence:
+      enabled: false
+    readinessProbe:
+      enabled: true
+      initialDelaySeconds: 60
+      timeoutSeconds: 1
+      periodSeconds: 10
+      successThreshold: 1
+    extraConfig:
+      - secret:
+          secretName: netbox-secret
+    housekeeping:
+      enabled: false
+    worker:
+      enabled: false
+  valuesFrom:
+    - targetPath: storages.default.OPTIONS.AWS_ACCESS_KEY_ID
+      kind: Secret
+      name: netbox-secret
+      valuesKey: AWS_ACCESS_KEY_ID
+    - targetPath: storages.default.OPTIONS.AWS_SECRET_ACCESS_KEY
+      kind: Secret
+      name: netbox-secret
+      valuesKey: AWS_SECRET_ACCESS_KEY

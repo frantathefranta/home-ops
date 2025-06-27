@@ -10,6 +10,24 @@ patches:
         path: /spec/dataSource
 #+end_src
 
+If running with a normal user (not ~SUPERUSER~), you'll need to change the ~OWNER~ of the ~DATABASE~ as well. You'll know it's necessary if deployment complains about /permissions denied for schema public/
+#+begin_src sh
+# Find superuser password of database (netbox here as example)
+$ kubectl view-secret netbox-pguser-postgres password -n default
+
+# In the pg-toolbox Pod:
+root@pg-toolbox:/# PGPASSWORD="<insert pass>" psql -h netbox-primary.default.svc -U postgres -d postgres -c "ALTER DATABASE \"netbox\" OWNER TO \"netbox\";"
+
+# Checking it's correct (Owner should say whatever you changed it to):
+root@pg-toolbox:/# PGPASSWORD="<insert pass>" psql -h netbox-primary.default.svc -U postgres -d postgres -c "\list"
+                                                     List of databases
+   Name    |  Owner   | Encoding | Locale Provider |   Collate   |    Ctype    | Locale | ICU Rules |   Access privileges
+-----------+----------+----------+-----------------+-------------+-------------+--------+-----------+-----------------------
+ netbox    | netbox   | UTF8     | libc            | en_US.utf-8 | en_US.utf-8 |        |           | =Tc/netbox           +
+           |          |          |                 |             |             |        |           | netbox=CTc/netbox
+
+#+end_src
+
 * Migrating a previous cluster
 #+begin_src sh
 Temp pod:
