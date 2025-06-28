@@ -27,8 +27,7 @@ spec:
       reloader.stakater.com/auto: "true"
     image:
       repository: frantathefranta/netbox-custom
-      tag: v4.3.3 # TODO: Wait for https://github.com/netbox-community/netbox-chart/pull/760 to be merged, then remove tag key
-      # tag will follow {{ .Chart.AppVersion }}
+      # tag follows {{ .Chart.AppVersion }}
     superuser:
       name: franta
       email: admin@franta.us
