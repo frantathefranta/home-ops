@@ -44,10 +44,21 @@ spec:
                     path: /stats
                     port: &port 8337
                   initialDelaySeconds: 0
-                  periodSeconds: 60
-                  timeoutSeconds: 5
+                  periodSeconds: 10
+                  timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /stats
+                    port: *port
+                  failureThreshold: 30
+                  periodSeconds: 10
+                  successThreshold: 1
+                  timeoutSeconds: 1
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
