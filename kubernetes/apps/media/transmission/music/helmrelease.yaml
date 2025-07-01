@@ -32,7 +32,7 @@ spec:
           app:
             image:
               repository: ghcr.io/frantathefranta/transmission
-              tag: 4.0.5@sha256:71f15acd5f2808b810ed8e26a4e199054bd51ec4cdff4547ab39cbe632fd9cae
+              tag: 4.0.6@sha256:e128b72d22f22c0eb65cb1319c8b10ff3d686214196c3e93fa2c1a4334cb5a91
             env:
               TZ: America/Detroit
               TRANSMISSION__BLOCKLIST_URL: "https://mirror.codebucket.de/transmission/blocklist.p2p.gz"
@@ -81,7 +81,7 @@ spec:
                     path: /transmission/web/
                     port: *port
                   failureThreshold: 30
-                  periodSeconds: 5
+                  periodSeconds: 10
                   successThreshold: 1
                   timeoutSeconds: 1
     defaultPodOptions:
