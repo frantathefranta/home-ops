@@ -28,6 +28,16 @@ stringData:
 apiVersion: v1
 kind: Secret
 metadata:
+  name: github-app
+  namespace: flux-system
+stringData:
+  githubAppID: "{{ ENV.GITHUB_APP_ID }}"
+  githubAppInstallationID: "{{ ENV.GITHUB_APP_INSTALLATION_ID }}"
+  githubAppPrivateKey: "{{ ENV.GITHUB_APP_PRIVATE_KEY }}"
+---
+apiVersion: v1
+kind: Secret
+metadata:
   name: franta.us-production-tls
   namespace: kube-system
   annotations:

@@ -33,6 +33,12 @@ tasks:
         sh: akeyless get-secret-value --name talos-maxi-cluster-tls --jq-expression '."tls.key"'
       FLUX_SOPS_PRIVATE_KEY:
         sh: akeyless get-secret-value --name age-key
+      GITHUB_APP_ID:
+        sh: akeyless get-secret-value --name github --jq-expression '."GITHUB_APP_ID"'
+      GITHUB_APP_INSTALLATION_ID:
+        sh: akeyless get-secret-value --name github --jq-expression '."GITHUB_APP_INSTALLATION_ID"'
+      GITHUB_APP_PRIVATE_KEY:
+        sh: akeyless get-secret-value --name github --jq-expression '."GITHUB_APP_PRIVATE_KEY"'
     desc: Bootstrap Apps
     prompt: Bootstrap apps into Talos cluster?
     preconditions:
