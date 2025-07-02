@@ -43,8 +43,7 @@ spec:
               - /bin/sh
               - -c
               - |
-                restic backup --verbose /music/stereo
-                # restic forget --keep-daily 1 --keep-weekly 1 --keep-monthly 1 --prune
+                restic backup --verbose /music/stereo --group-by 'paths' && restic forget --keep-daily 1 --keep-weekly 1 --keep-monthly 6 --prune --group-by 'paths'
 
     defaultPodOptions:
       securityContext:
