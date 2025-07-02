@@ -92,6 +92,8 @@ spec:
       enabled: false
     plugins:
       - netbox_kea
+      - netbox_bgp
+      - netbox_topology_views
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
