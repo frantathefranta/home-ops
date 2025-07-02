@@ -10,12 +10,16 @@ instance:
     - kustomize-controller
     - helm-controller
     - notification-controller
+    - image-reflector-controller
+    - image-automation-controller
   sync:
     kind: GitRepository
+    provider: github
     name: flux-system
     url: https://github.com/frantathefranta/home-ops.git
     ref: refs/heads/main
     path: kubernetes/flux/cluster
+    pullSecret: flux-system
   commonMetadata:
     labels:
       app.kubernetes.io/name: flux

@@ -28,6 +28,7 @@ spec:
     image:
       repository: frantathefranta/netbox-custom
       # tag follows {{ .Chart.AppVersion }}
+      digest: sha256:d66024b681ca483b42038448462331d7b611dfdbe6f1ee03c41a175a980bf3e5 # {"$imagepolicy": "default:netbox:digest"}
     superuser:
       name: franta
       email: admin@franta.us
