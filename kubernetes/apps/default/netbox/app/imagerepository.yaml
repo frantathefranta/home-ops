@@ -37,24 +37,24 @@ spec:
       author:
         email: 170540725+lord-of-lightning-bot[bot]@users.noreply.github.com
         name: lord-of-lightning-bot[bot]
-        messageTemplate: |
-          Automated image update
+      messageTemplate: |
+        Automated image update
 
-          Automation name: {{ .AutomationObject  }}
+        Automation name: {{ .AutomationObject  }}
 
-          Files:
-          {{ range $filename, $_ := .Changed.FileChanges - }}
-          - {{ $filename }}
-          {{ end -}}
+        Files:
+        {{ range $filename, $_ := .Changed.FileChanges - }}
+        - {{ $filename }}
+        {{ end -}}
 
-          Objects:
-          {{ range $resource, $changes := .Changed.Objects -}}
-          - {{ $resource.Kind }} {{ $resource.Name }}
-            Changes:
-          {{- range $_, $change := $changes }}
-            - {{ $change.OldValue }} -> {{ $change.NewValue }}
-          {{ end -}}
-          {{ end -}}
+        Objects:
+        {{ range $resource, $changes := .Changed.Objects -}}
+        - {{ $resource.Kind }} {{ $resource.Name }}
+          Changes:
+        {{- range $_, $change := $changes }}
+          - {{ $change.OldValue }} -> {{ $change.NewValue }}
+        {{ end -}}
+        {{ end -}}
     push:
       branch: main
   update:
