@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://kube-schemas.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1.json
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
@@ -28,7 +27,7 @@ spec:
     image:
       repository: frantathefranta/netbox-custom
       # tag follows {{ .Chart.AppVersion }}
-      digest: sha256:d66024b681ca483b42038448462331d7b611dfdbe6f1ee03c41a175a980bf3e5 # {"$imagepolicy": "default:netbox:digest"}
+      digest: sha256:505983ef6f5cfb2a59122b0533c2d8e245aad97be8a916a47793f0b8d400fc77 # {"$imagepolicy": "default:netbox:digest"}
     superuser:
       name: franta
       email: admin@franta.us
@@ -98,10 +97,10 @@ spec:
         requiredDuringSchedulingIgnoredDuringExecution:
           nodeSelectorTerms:
             - matchExpressions:
-              - key: topology.kubernetes.io/zone
-                operator: NotIn
-                values:
-                - protactinium # FIXME: BIND VM runs on the same Proxmox node and it doesn't allow traffic from VF to bridge
+                - key: topology.kubernetes.io/zone
+                  operator: NotIn
+                  values:
+                    - protactinium # FIXME: BIND VM runs on the same Proxmox node and it doesn't allow traffic from VF to bridge
   valuesFrom:
     - targetPath: storages.default.OPTIONS.AWS_ACCESS_KEY_ID
       kind: Secret
