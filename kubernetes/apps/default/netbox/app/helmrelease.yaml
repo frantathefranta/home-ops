@@ -92,7 +92,7 @@ spec:
     worker:
       enabled: false
     plugins:
-      # - netbox_kea # Not updated to 4.3 yet
+      - netbox_kea
       # - netbox_bgp # Not updated to 4.3 yet
       - netbox_topology_views
     affinity:
