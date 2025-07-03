@@ -18,7 +18,7 @@
     "packageRules": [
        {
    	 "matchPackageNames": ["/netbox-custom/"],
-         "matchManagers": ["docker"],
+         "matchDatasources": ["docker"],
          "enabled": false,
        },
     ],
