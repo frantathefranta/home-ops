@@ -25,6 +25,7 @@ spec:
     commonAnnotations:
       reloader.stakater.com/auto: "true"
     image:
+      # renovate: datasource=docker depName=ghcr.io/frantathefranta/netbox-custom
       repository: frantathefranta/netbox-custom
       tag: v4.3.3 # {"$imagepolicy": "default:netbox:tag"}
       digest: sha256:505983ef6f5cfb2a59122b0533c2d8e245aad97be8a916a47793f0b8d400fc77 # {"$imagepolicy": "default:netbox:digest"}
