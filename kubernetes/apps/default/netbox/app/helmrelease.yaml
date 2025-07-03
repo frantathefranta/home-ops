@@ -46,9 +46,9 @@ spec:
       default:
         BACKEND: "storages.backends.s3.S3Storage"
         OPTIONS:
-          AWS_STORAGE_BUCKET_NAME: "netbox"
-          AWS_S3_ENDPOINT_URL: "https://rgw.franta.us"
-          AWS_S3_REGION_NAME: "us-east-1"
+          bucket_name: "netbox"
+          endpoint_url: "https://rgw.franta.us"
+          region_name: "us-east-1"
     existingSecret: netbox-secret
     metricsEnabled: true
     postgresql:
@@ -105,11 +105,11 @@ spec:
                   values:
                     - protactinium # FIXME: BIND VM runs on the same Proxmox node and it doesn't allow traffic from VF to bridge
   valuesFrom:
-    - targetPath: storages.default.OPTIONS.AWS_ACCESS_KEY_ID
+    - targetPath: storages.default.OPTIONS.access_key
       kind: Secret
       name: netbox-secret
       valuesKey: AWS_ACCESS_KEY_ID
-    - targetPath: storages.default.OPTIONS.AWS_SECRET_ACCESS_KEY
+    - targetPath: storages.default.OPTIONS.secret_key
       kind: Secret
       name: netbox-secret
       valuesKey: AWS_SECRET_ACCESS_KEY
