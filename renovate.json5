@@ -15,5 +15,14 @@
   kubernetes: {
     managerFilePatterns: ["/^kubernetes/.+\\.ya?ml$/", "/^talos/.+\\.ya?ml$/"],
   },
+  {
+    "packageRules": [
+       {
+   	 "matchPackageNames": ["/netbox-custom/"],
+         "matchManagers": ["docker"],
+         "enabled": false,
+       },
+    ],
+  },
 
 }
