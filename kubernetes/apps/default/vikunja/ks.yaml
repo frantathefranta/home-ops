@@ -23,13 +23,17 @@ spec:
   dependsOn:
     - name: crunchy-postgres-operator
       namespace: database
-    - name: dragonfly-cluster
+    - name: dragonfly-operator
       namespace: database
   healthCheckExprs:
     - apiVersion: postgres-operator.crunchydata.com/v1beta1
       kind: PostgresCluster
       failed: status.conditions.filter(e, e.type == 'ProxyAvailable').all(e, e.status == 'False')
       current: status.conditions.filter(e, e.type == 'ProxyAvailable').all(e, e.status == 'True')
+    - apiVersion: dragonflydb.io/v1alpha1
+      kind: Dragonfly
+      failed: status.phase != 'ready'
+      current: status.phase == 'ready'
   wait: false
   interval: 30m
   retryInterval: 1m

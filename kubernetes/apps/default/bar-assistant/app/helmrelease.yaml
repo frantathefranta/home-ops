@@ -52,7 +52,7 @@ spec:
               BASE_URL: https://bar.franta.us
               APP_URL: https://bar.franta.us/bar
               MEILISEARCH_HOST: http://meilisearch:7700
-              REDIS_HOST: dragonfly.database.svc.cluster.local
+              REDIS_HOST: bar-assistant-dragonfly.default.svc.cluster.local
               CACHE_DRIVER: redis
               SESSION_DRIVER: redis
               ALLOW_REGISTRATION: false

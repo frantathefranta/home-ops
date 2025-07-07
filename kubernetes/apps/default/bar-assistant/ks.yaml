@@ -60,15 +60,19 @@ spec:
   components:
     - ../../../../components/gatus/external
     - ../../../../components/volsync
+    - ../../../../components/dragonfly
   dependsOn:
-    - name: dragonfly-cluster
+    - name: dragonfly-operator
       namespace: database
-    - name: external-secrets
-      namespace: external-secrets
     - name: salt-rim
       namespace: default
     - name: meilisearch
       namespace: default
+  healthCheckExprs:
+    - apiVersion: dragonflydb.io/v1alpha1
+      kind: Dragonfly
+      failed: status.phase != 'ready'
+      current: status.phase == 'ready'
   path: ./kubernetes/apps/default/bar-assistant/app
   prune: true
   sourceRef:

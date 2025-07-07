@@ -9,6 +9,7 @@ spec:
   components:
     - ../../../../components/gatus/external
     - ../../../../components/postgres
+    - ../../../../components/dragonfly
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
@@ -19,7 +20,7 @@ spec:
   dependsOn:
     - name: crunchy-postgres-operator
       namespace: database
-    - name: dragonfly-cluster
+    - name: dragonfly-operator
       namespace: database
     - name: smtp-relay
       namespace: default
@@ -28,6 +29,10 @@ spec:
       kind: PostgresCluster
       failed: status.conditions.filter(e, e.type == 'ProxyAvailable').all(e, e.status == 'False')
       current: status.conditions.filter(e, e.type == 'ProxyAvailable').all(e, e.status == 'True')
+    - apiVersion: dragonflydb.io/v1alpha1
+      kind: Dragonfly
+      failed: status.phase != 'ready'
+      current: status.phase == 'ready'
   path: ./kubernetes/apps/default/authelia/app
   prune: true
   sourceRef:
