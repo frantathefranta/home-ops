@@ -10,6 +10,7 @@ spec:
     - ../../../../components/gatus/external
     - ../../../../components/volsync
     - ../../../../components/postgres
+    - ../../../../components/dragonfly
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app

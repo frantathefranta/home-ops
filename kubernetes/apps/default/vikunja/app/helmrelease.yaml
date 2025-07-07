@@ -48,7 +48,7 @@ spec:
               VIKUNJA_MAILER_FROMEMAIL: "vikunja@franta.dev"
               VIKUNJA_MAILER_SKIPTLSVERIFY: true
               VIKUNJA_REDIS_ENABLED: true
-              VIKUNJA_REDIS_HOST: "dragonfly.database.svc.cluster.local:6379"
+              VIKUNJA_REDIS_HOST: "vikunja-dragonfly.default.svc.cluster.local:6379"
               VIKUNJA_REDIS_DB: 0
               VIKUNJA_KEYVALUE_TYPE: "redis"
               # Postgres

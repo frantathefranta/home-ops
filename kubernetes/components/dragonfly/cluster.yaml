@@ -3,9 +3,11 @@
 apiVersion: dragonflydb.io/v1alpha1
 kind: Dragonfly
 metadata:
-  name: ${APP}-dragonfly
+  name: &name ${APP}-dragonfly
 spec:
   image: ghcr.io/dragonflydb/dragonfly:v1.31.0
+  labels:
+    dragonflydb.io/cluster: *name
   replicas: 2
   env:
     - name: MAX_MEMORY
@@ -13,10 +15,24 @@ spec:
         resourceFieldRef:
           resource: limits.memory
           divisor: 1Mi
+    - name: AWS_ACCESS_KEY_ID
+      valueFrom:
+        secretKeyRef:
+          key: AWS_ACCESS_KEY_ID
+          name: "${APP}-dragonfly-cluster"
+    - name: AWS_SECRET_ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          key: AWS_SECRET_ACCESS_KEY
+          name: "${APP}-dragonfly-cluster"
   args:
     - --maxmemory=$(MAX_MEMORY)Mi
     - --proactor_threads=2
     - --cluster_mode=emulated
+    - --s3_endpoint=haproxy-rados-gw.rook-ceph-external.svc.cluster.local:7480
+    - --s3_use_https=false
+  snapshot:
+    dir: "s3://dragonfly/${APP}"
   resources:
     requests:
       cpu: 100m
@@ -28,4 +44,4 @@ spec:
       whenUnsatisfiable: "DoNotSchedule"
       labelSelector:
         matchLabels:
-          app.kubernetes.io/part-of: dragonfly
+          dragonflydb.io/cluster: *name
