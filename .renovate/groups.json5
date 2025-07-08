@@ -11,6 +11,12 @@
       },
     },
     {
+      description: "Netbox Ignore",
+      matchDatasources: ["docker"],
+      matchPackageNames: ["/netbox-custom/",],
+      enabled: false,
+    },
+    {
       description: "Cert-Manager Group",
       groupName: "Cert-Manager",
       matchDatasources: ["docker"],

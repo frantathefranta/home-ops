@@ -26,6 +26,7 @@ spec:
       reloader.stakater.com/auto: "true"
     image:
       # renovate: datasource=docker depName=ghcr.io/frantathefranta/netbox-custom
+      registry: ghcr.io
       repository: frantathefranta/netbox-custom
       tag: v4.3.3 # {"$imagepolicy": "default:netbox:tag"}
       digest: sha256:fce39ccd21501915c45bbe5c8be1fae1539cedb45b317baa0d4ed31c66b35f75 # {"$imagepolicy": "default:netbox:digest"}
