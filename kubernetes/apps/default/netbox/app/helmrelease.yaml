@@ -51,7 +51,11 @@ spec:
           endpoint_url: "https://rgw.franta.us"
           region_name: "us-east-1"
     existingSecret: netbox-secret
-    metricsEnabled: true
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+        interval: 1m
     postgresql:
       enabled: false
     valkey:
