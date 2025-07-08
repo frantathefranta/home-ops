@@ -51,6 +51,8 @@ spec:
           endpoint_url: "https://rgw.franta.us"
           region_name: "us-east-1"
     existingSecret: netbox-secret
+    replicaCount: 2
+    resourcesPreset: "large"
     metrics:
       enabled: true
       serviceMonitor:
