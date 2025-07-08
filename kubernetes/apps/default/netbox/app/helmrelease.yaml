@@ -95,6 +95,7 @@ spec:
       - netbox_kea
       # - netbox_bgp # Not updated to 4.3 yet
       - netbox_topology_views
+      - netbox_cable_labels
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
