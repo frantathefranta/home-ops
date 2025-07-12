@@ -10,12 +10,12 @@
       "automerge": true,
       "automergeType": "pr",
       "matchUpdateTypes": [
-        "minor",
         "patch"
       ],
       "matchPackageNames": [
         "/kube-prometheus-stack/",
-        "/grafana/"
+        "/grafana/",
+        "/netbox/"
       ],
       "ignoreTests": false
     },

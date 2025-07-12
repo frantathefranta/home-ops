@@ -24,3 +24,6 @@ Brewfile.lock.json
 .terraform.lock.hcl
 terraform.tfstate*
 *.tfvars
+
+# Random
+yaml-tests
