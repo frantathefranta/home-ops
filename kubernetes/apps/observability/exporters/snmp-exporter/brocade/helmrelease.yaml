@@ -36,10 +36,6 @@ spec:
     serviceMonitor:
       enabled: true
       params:
-        - name: brocade01
-          module: ["brocade"]
-          target: 10.33.0.200
-          auth: ["public_v2"]
         - name: brocade-garage
           module: ["brocade"]
           target: 10.32.10.205
@@ -47,10 +43,6 @@ spec:
         - name: brocade01-poe
           module: ["brocade"]
           target: 10.32.10.202 # TODO: Figure out why this switch doesn't get scraped
-          auth: ["public_v2"]
-        - name: brocade01-if
-          module: ["if_mib"]
-          target: 10.33.0.200
           auth: ["public_v2"]
         - name: brocade01-poe-if
           module: ["if_mib"]
