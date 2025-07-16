@@ -6,6 +6,9 @@
     "github>frantathefranta/home-ops//.renovate/autoMerge.json5",
     "github>frantathefranta/home-ops//.renovate/grafanaDashboards.json5",
   ],
+  "ignorePaths": [
+    "**/.archive/**",
+  ],
   flux: {
     managerFilePatterns: ["/^kubernetes/.+\\.ya?ml$/"],
   },
