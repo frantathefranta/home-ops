@@ -6,7 +6,7 @@
     "github>frantathefranta/home-ops//.renovate/autoMerge.json5",
     "github>frantathefranta/home-ops//.renovate/grafanaDashboards.json5",
   ],
-  "ignorePaths": [
+  ignorePaths: [
     "**/.archive/**",
   ],
   flux: {
