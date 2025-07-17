@@ -98,7 +98,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: *app
+              - name: syncthing-app
                 port: *port
     persistence:
       data:
