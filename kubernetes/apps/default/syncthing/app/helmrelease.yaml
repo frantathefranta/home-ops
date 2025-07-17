@@ -88,16 +88,6 @@ spec:
           listen:
             port: 22000
             protocol: TCP
-    serviceMonitor:
-      app:
-        serviceName: *app
-        endpoints:
-          - port: http
-            scheme: http
-            path: /metrics
-            bearerTokenSecret:
-              name: syncthing-secret
-              key: API_BEARER_TOKEN
     route:
       app:
         hostnames:
