@@ -7,6 +7,6 @@ ROOT_DIR = "{{config_root}}"
 
 [tools]
 "go:github.com/jkulzer/kubefetch" = "latest"
-kustomize = "5.7.0"
+kustomize = "5.7.1"
 shfmt = "latest"
 yamlfmt = "latest"
