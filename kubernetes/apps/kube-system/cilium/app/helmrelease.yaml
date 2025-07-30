@@ -70,8 +70,6 @@ spec:
     # socketLB:
     #   # this will fix issue with nginx's keeping persistent connections to dead CoreDNS'es.
     #   hostNamespaceOnly: true
-    operator:
-      tolerations: []
     prometheus:
       enabled: true
       serviceMonitor:
