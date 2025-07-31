@@ -22,7 +22,7 @@ x-env-vars: &env-vars
 vars:
   VOLSYNC_SCRIPTS_DIR: "{{.ROOT_DIR}}/.taskfiles/VolSync/scripts"
   VOLSYNC_TEMPLATES_DIR: "{{.ROOT_DIR}}/.taskfiles/VolSync/templates"
-  KUBECONFIG: "{{.CLUSTER_DIR}}/kubeconfig"
+  KUBECONFIG: "{{.KUBERNETES_DIR}}/kubeconfig"
   VOLSYNC_RESOURCES_DIR: '{{.ROOT_DIR}}/.taskfiles/VolSync/resources'
   ts: '{{now | date "150405"}}'
 
