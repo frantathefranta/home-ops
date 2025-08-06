@@ -8,6 +8,7 @@ ROOT_DIR = "{{config_root}}"
 [tools]
 cilium-cli = "latest"
 "go:github.com/jkulzer/kubefetch" = "latest"
+helm = "latest"
 kustomize = "5.7.1"
 shfmt = "latest"
 yamlfmt = "latest"
