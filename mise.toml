@@ -6,6 +6,7 @@ SOPS_AGE_KEY_FILE = '{{config_root}}/age.key'
 ROOT_DIR = "{{config_root}}"
 
 [tools]
+cilium-cli = "latest"
 "go:github.com/jkulzer/kubefetch" = "latest"
 kustomize = "5.7.1"
 shfmt = "latest"

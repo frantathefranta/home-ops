@@ -45,8 +45,7 @@ kubeProxyReplacement: true
 kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
 l2announcements:
   enabled: false
-l7proxy:
-  enabled: true
+l7Proxy: true
 loadBalancer:
   algorithm: maglev
   mode: dsr
@@ -66,19 +65,19 @@ routingMode: native
 securityContext:
   capabilities:
     ciliumAgent:
+      - BPF
       - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
+      - IPC_LOCK
       - KILL
       - NET_ADMIN
       - NET_RAW
-      - IPC_LOCK
-      - SYS_ADMIN
-      - SYS_RESOURCE
       - PERFMON
-      - BPF
-      - DAC_OVERRIDE
-      - FOWNER
       - SETGID
       - SETUID
+      - SYS_ADMIN
+      - SYS_RESOURCE
     cleanCiliumState:
       - NET_ADMIN
       - SYS_ADMIN
