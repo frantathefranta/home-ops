@@ -51,7 +51,7 @@ spec:
           endpoint_url: "https://rgw.franta.us"
           region_name: "us-east-1"
     existingSecret: netbox-secret
-    replicaCount: 2
+    replicaCount: 1
     resourcesPreset: "large"
     metrics:
       enabled: true
@@ -79,6 +79,9 @@ spec:
       username: netbox
       existingSecretName: "netbox-pguser-netbox"
       existingSecretKey: "password"
+      targetSessionAttrs: any
+      disableServerSideCursors: true
+      connMaxAge: 300
     email:
       server: smtp-relay.default.svc.cluster.local
       port: 25
