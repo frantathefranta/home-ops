@@ -28,22 +28,22 @@ spec:
       name: cilium-helm-values
   values:
     hubble:
-      enabled: true
-      metrics:
-        enabled:
-          - dns:query
-          - drop
-          - tcp
-          - flow
-          - port-distribution
-          - icmp
-          - http
-        serviceMonitor:
-          enabled: true
-        dashboards:
-          enabled: true
-          annotations:
-            grafana_folder: Cilium
+      enabled: false
+      # metrics:
+      #   enabled:
+      #     - dns:query
+      #     - drop
+      #     - tcp
+      #     - flow
+      #     - port-distribution
+      #     - icmp
+      #     - http
+      #   serviceMonitor:
+      #     enabled: true
+      #   dashboards:
+      #     enabled: true
+      #     annotations:
+      #       grafana_folder: Cilium
       # tls:
       #   auto:
       #     method: certmanager
@@ -70,6 +70,9 @@ spec:
     loadBalancer:
       l7:
         backend: envoy
+    # socketLB:
+    #   # this will fix issue with nginx's keeping persistent connections to dead CoreDNS'es.
+    #   hostNamespaceOnly: true
     prometheus:
       enabled: true
       serviceMonitor:
