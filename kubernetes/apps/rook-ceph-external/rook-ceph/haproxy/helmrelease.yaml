@@ -21,7 +21,7 @@ spec:
           app:
             image:
               repository: ghcr.io/haproxytech/haproxy-docker-alpine
-              tag: 3.2.2@sha256:8caaea0392ae76ebe42a8266ef3416d4b965a889702294c463989bf1794bfa4c
+              tag: 3.2.3@sha256:5d3cc21fef6875f0c9aa439a517b01a47cbd076c74e4546b89b3cf63511f20c8
             probes:
               liveness: &probes
                 enabled: true
