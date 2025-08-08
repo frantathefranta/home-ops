@@ -31,7 +31,7 @@ spec:
               tag: 2.0.0@sha256:46e6e85078b15f00405fb328aec40c10b4a18fd4066a46456962c3b7524a32a7
             env:
               TZ: America/Detroit
-              DEBUG: 1
+              # DEBUG: 1
               ALLOWED_HOSTS: "*"
               DB_ENGINE: django.db.backends.postgresql
               # Postgres
@@ -98,10 +98,10 @@ spec:
                 memory: 256M
               limits:
                 memory: 512M
-          nginx:
-            image:
-              repository: ghcr.io/nginxinc/nginx-unprivileged
-              tag: 1.27.4
+          # nginx:
+          #   image:
+          #     repository: ghcr.io/nginxinc/nginx-unprivileged
+          #     tag: 1.27.4
         pod:
           securityContext:
             runAsUser: 568
@@ -115,7 +115,7 @@ spec:
         ipFamilyPolicy: RequireDualStack
         ports:
           http:
-            port: &nginxPort 8080
+            port: &tandoorPort 8080
     route:
       app:
         hostnames:
@@ -127,7 +127,7 @@ spec:
         rules:
           - backendRefs:
               - name: *app
-                port: *nginxPort
+                port: *tandoorPort
 
     persistence:
       data:
@@ -139,25 +139,29 @@ spec:
                 subPath: mediafiles
               - path: /opt/recipes/staticfiles
                 subPath: staticfiles
-            nginx:
-              - path: /media
-                subPath: mediafiles
-              - path: /static
-                subPath: staticfiles
-      nginx-config:
-        type: configMap
-        name: tandoor-configmap
-        advancedMounts:
-          tandoor:
-            nginx:
-              - path: /etc/nginx/nginx.conf
-                subPath: nginx-config
-                readOnly: true
+            # nginx:
+            #   - path: /media
+            #     subPath: mediafiles
+            #   - path: /static
+            #     subPath: staticfiles
+      # nginx-config:
+      #   type: configMap
+      #   name: tandoor-configmap
+      #   advancedMounts:
+      #     tandoor:
+      #       nginx:
+      #         - path: /etc/nginx/nginx.conf
+      #           subPath: nginx-config
+      #           readOnly: true
       temp:
         type: emptyDir
         advancedMounts:
           tandoor:
             app:
+              - path: /var/lib/nginx/logs
+                subPath: nginx_logs
+              - path: /var/lib/nginx/tmp
+                subPath: nginx_tmp
               - path: /tmp
                 subPath: app-tmp
               - path: /opt/recipes/cookbook/static/django_js_reverse
