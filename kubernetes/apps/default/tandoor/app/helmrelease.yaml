@@ -66,32 +66,32 @@ spec:
             envFrom:
               - secretRef:
                   name: tandoor-secret
-            probes:
-              liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /accounts/login/
-                    port: *tandoorPort
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
-              startup:
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /accounts/login/
-                    port: *tandoorPort
-                  failureThreshold: 30
-                  periodSeconds: 10
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+            # probes:
+            #   liveness: &probes
+            #     enabled: true
+            #     custom: true
+            #     spec:
+            #       httpGet:
+            #         path: /accounts/login/
+            #         port: *tandoorPort
+            #       initialDelaySeconds: 0
+            #       periodSeconds: 10
+            #       timeoutSeconds: 1
+            #       failureThreshold: 3
+            #   readiness: *probes
+            #   startup:
+            #     enabled: true
+            #     custom: true
+            #     spec:
+            #       httpGet:
+            #         path: /accounts/login/
+            #         port: *tandoorPort
+            #       failureThreshold: 30
+            #       periodSeconds: 10
+            # securityContext:
+            #   allowPrivilegeEscalation: false
+            #   readOnlyRootFilesystem: true
+            #   capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 10m
@@ -106,7 +106,7 @@ spec:
           securityContext:
             runAsUser: 568
             runAsGroup: 568
-            runAsNonRoot: true
+            # runAsNonRoot: true
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
     service:
@@ -155,14 +155,12 @@ spec:
       #           readOnly: true
       temp:
         type: emptyDir
-        advancedMounts:
-          tandoor:
-            app:
-              - path: /var/lib/nginx/logs
-                subPath: nginx_logs
-              - path: /var/lib/nginx/tmp
-                subPath: nginx_tmp
-              - path: /tmp
-                subPath: app-tmp
-              - path: /opt/recipes/cookbook/static/django_js_reverse
-                subPath: django_js_reverse
+        globalMounts:
+          - path: /var/lib/nginx/logs
+            subPath: nginx_logs
+          - path: /var/lib/nginx/tmp
+            subPath: nginx_tmp
+          - path: /tmp
+            subPath: app-tmp
+          - path: /opt/recipes/cookbook/static/django_js_reverse
+            subPath: django_js_reverse
