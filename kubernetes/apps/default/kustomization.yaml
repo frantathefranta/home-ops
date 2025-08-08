@@ -17,6 +17,7 @@ resources:
   - ./smtp-relay/ks.yaml
   - ./syncthing/ks.yaml
   - ./tandoor/ks.yaml
+  - ./tandoor-test/ks.yaml
   - ./vikunja/ks.yaml
 components:
   - ../../components/common
