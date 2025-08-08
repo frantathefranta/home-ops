@@ -1,0 +1,154 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app tandoor-test
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+    namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      tandoor-test:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        # initContainers:
+        #   chown-app:
+        #     image:
+        #       repository: docker.io/library/alpine
+        #       tag: "3.22"
+        #     command:
+        #       - /bin/sh
+        #       - -c
+        #     args:
+        #       - |
+        #          chmod -R g+w /var/lib/nginx
+        containers:
+          app:
+            image:
+              repository: ghcr.io/tandoorrecipes/recipes
+              tag: 2.0.1@sha256:b95f7b3e3df000cd39a152be0ddff7139c6d7c5f59cd306f325da44c50a81d05
+            env:
+              TZ: America/Detroit
+              DEBUG: 1
+              LOG_LEVEL: "DEBUG"
+              GUNCORN_LOG_LEVEL: "debug"
+              ALLOWED_HOSTS: "*"
+              DB_ENGINE: django.db.backends.postgresql
+              # Postgres
+              POSTGRES_HOST: tandoor-test-pgbouncer.default.svc
+              POSTGRES_PORT: 5432
+              POSTGRES_USER:
+                valueFrom:
+                  secretKeyRef:
+                    name: tandoor-test-pguser-tandoor-test
+                    key: user
+              POSTGRES_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: tandoor-test-pguser-tandoor-test
+                    key: password
+              POSTGRES_DB:
+                valueFrom:
+                  secretKeyRef:
+                    name: tandoor-test-pguser-tandoor-test
+                    key: dbname
+              DEFAULT_FROM_EMAIL: recipes@franta.dev
+              GUNICORN_MEDIA: 0
+              REMOTE_USER_AUTH: 0
+              FRACTION_PREF_DEFAULT: 0
+              COMMENT_PREF_DEFAULT: 1
+              SHOPPING_MIN_AUTOSYNC_INTERVAL: 5
+              ENABLE_SIGNUP: 0
+              EMAIL_HOST: smtp-relay.default.svc.cluster.local
+              EMAIL_PORT: 25
+              SOCIAL_PROVIDERS: allauth.socialaccount.providers.openid_connect
+            envFrom:
+              - secretRef:
+                  name: tandoor-test-secret
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /accounts/login/
+                    port: &port 80
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /accounts/login/
+                    port: *port
+                  failureThreshold: 30
+                  periodSeconds: 10
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256M
+              limits:
+                memory: 1Gi
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            supplementalGroups: [101]
+            fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        controller: *app
+        ipFamilyPolicy: RequireDualStack
+        ports:
+          http:
+            port: *port
+    route:
+      app:
+        hostnames:
+          - tandoor-test.franta.us
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+
+    persistence:
+      data:
+        existingClaim: *app
+        globalMounts:
+          - path: /opt/recipes/mediafiles
+            subPath: mediafiles
+          - path: /opt/recipes/staticfiles
+            subPath: staticfiles
+      temp:
+        type: emptyDir
+        globalMounts:
+          # - path: /var/lib/nginx/tmp
+          #   subPath: nginx_tmp
+          # - path: /var/lib/nginx/logs
+          #   subPath: nginx_logs
+          - path: /tmp
+            subPath: app-tmp
+          - path: /opt/recipes/cookbook/static/django_js_reverse
+            subPath: django_js_reverse
