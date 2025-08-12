@@ -28,7 +28,7 @@ spec:
       name: cilium-helm-values
   values:
     hubble:
-      enabled: true
+      enabled: false
       # metrics:
       #   enabled:
       #     - dns:query
@@ -44,22 +44,22 @@ spec:
       #     enabled: true
       #     annotations:
       #       grafana_folder: Cilium
-      tls:
-        auto:
-          method: certmanager
-          certManagerIssuerRef:
-            name: cluster-ca
-            kind: ClusterIssuer
-            group: cert-manager.io
-      relay:
-        enabled: true
-        rollOutPods: true
-        tls:
-          server:
-            enabled: true
-        prometheus:
-          serviceMonitor:
-            enabled: true
+      # tls:
+      #   auto:
+      #     method: certmanager
+      #     certManagerIssuerRef:
+      #       name: cluster-ca
+      #       kind: ClusterIssuer
+      #       group: cert-manager.io
+      # relay:
+      #   enabled: true
+      #   rollOutPods: true
+      #   # tls:
+      #   #   server:
+      #   #     enabled: true
+      #   prometheus:
+      #     serviceMonitor:
+      #       enabled: true
       # ui:
       #   enabled: true
       #   rollOutPods: true
