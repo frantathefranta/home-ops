@@ -30,7 +30,8 @@ spec:
     hubble:
       enabled: true
       networkPolicyCorrelation:
-        enabled: false # Cilium pods won't start otherwise, github.com/cilium/cilium/issues/40804
+        enabled: false # Cilium pods won't start otherwise, github.com/cilium/cilium/issues/40804.
+        # TODO: Remove when Cilium 1.18.1 is released
       metrics:
         enabled:
           - dns:query
