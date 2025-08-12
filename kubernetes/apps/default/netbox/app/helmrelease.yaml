@@ -28,8 +28,8 @@ spec:
       # renovate: datasource=docker depName=ghcr.io/frantathefranta/netbox-custom
       registry: ghcr.io
       repository: frantathefranta/netbox-custom
-      tag: v4.3.5 # {"$imagepolicy": "default:netbox:tag"}
-      digest: sha256:e57728622c0183beeb969682c0a268b1d61adc0c6a507693e644f9f5ec2d216c # {"$imagepolicy": "default:netbox:digest"}
+      tag: v4.3.6 # {"$imagepolicy": "default:netbox:tag"}
+      digest: sha256:fb7bf6eef4177e50195fd160900852bdb9e3e3b5b594ef16edb4c4eec21cba19 # {"$imagepolicy": "default:netbox:digest"}
     superuser:
       name: franta
       email: admin@franta.us
