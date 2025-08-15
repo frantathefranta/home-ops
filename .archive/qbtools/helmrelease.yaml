@@ -36,9 +36,7 @@ spec:
         initContainers:
           tagging: &image
             image:
-              repository: ghcr.io/buroa/qbtools # TODO: Migrate to tqm
-              # https://github.com/autobrr/tqm
-              # https://github.com/buroa/k8s-gitops/tree/main/kubernetes/apps/media/tqm
+              repository: ghcr.io/buroa/qbtools
               tag: v0.21.2@sha256:33da584c9d71bb2d8b9931995c41599bef1fdebf52cf5408cdd09175069f299a
             env: &env
               TZ: *timeZone
