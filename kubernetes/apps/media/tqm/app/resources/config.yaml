@@ -1,0 +1,46 @@
+---
+clients:
+  qb:
+    create_tags_upfront: false
+    download_path: /media/downloads
+    enabled: true
+    filter: default
+    type: qbittorrent
+    url: http://qbittorrent.media.svc.cluster.local:8080
+
+filters:
+  default:
+    MapHardlinksFor:
+      - retag
+
+    ignore:
+      - IsTrackerDown()
+      - Downloaded == false && !IsUnregistered()
+      - SeedingHours < 26 && !IsUnregistered()
+
+    remove:
+      - IsUnregistered()
+      - HasAnyTag("site:TL") && SeedingDays > 24
+      - HasAnyTag("not-linked") && SeedingDays > 24
+
+    tag:
+      - { name: added:1d,     update: ['AddedDays < 7'] }
+      - { name: added:7d,     update: ['AddedDays >= 7 && AddedDays < 14'] }
+      - { name: added:14d,    update: ['AddedDays >= 14 && AddedDays < 30'] }
+      - { name: added:30d,    update: ['AddedDays >= 30 && AddedDays < 180'] }
+      - { name: added:180d,   update: ['AddedDays >= 180'] }
+      - { name: not-linked,   update: ['HardlinkedOutsideClient == false && Label in ["tv-sonarr", "radarr", "cross-seed"]'] }
+      - { name: site:AB,      update: ['TrackerName == "animebytes.tv"'] }
+      - { name: site:BIB,     update: ['TrackerName == "bibliotik.me"'] }
+      - { name: site:BHD,     update: ['TrackerName == "beyond-hd.me"'] }
+      - { name: site:BLU,     update: ['TrackerName in ["blutopia.cc", "blutopia.xyz"]'] }
+      - { name: site:BTN,     update: ['TrackerName == "landof.tv"'] }
+      - { name: site:FL,      update: ['TrackerName in ["filelist.io", "thefl.org"]'] }
+      - { name: site:GGN,     update: ['TrackerName == "gazellegames.net"'] }
+      - { name: site:HDB,     update: ['TrackerName == "hdbits.org"'] }
+      - { name: site:MTV,     update: ['TrackerName == "morethantv.me"'] }
+      - { name: site:PTP,     update: ['TrackerName == "passthepopcorn.me"'] }
+      - { name: site:TL,      update: ['TrackerName in ["tleechreload.org", "torrentleech.org"]'] }
+      - { name: site:UHD,     update: ['TrackerName == "uhdbits.org"'] }
+      - { name: tracker-down, update: ['IsTrackerDown()'] }
+      - { name: unregistered, update: ['IsUnregistered()'] }
