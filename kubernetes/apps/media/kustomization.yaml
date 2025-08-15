@@ -22,6 +22,5 @@ resources:
   - ./tautulli/ks.yaml
   - ./transmission/ks.yaml
   - ./varroa/ks.yaml
-  - ./wizarr/ks.yaml
 components:
   - ../../components/common
