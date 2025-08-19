@@ -4,12 +4,12 @@
     {
       "description": "Auto-merge Helm Releases",
       "matchDatasources": [
-        "helm",
         "docker"
       ],
       "automerge": true,
       "automergeType": "pr",
       "matchUpdateTypes": [
+        "minor",
         "patch"
       ],
       "matchPackageNames": [
