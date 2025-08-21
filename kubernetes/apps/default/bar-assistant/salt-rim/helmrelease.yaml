@@ -29,7 +29,7 @@ spec:
           app:
             image:
               repository: barassistant/salt-rim
-              tag: 4.8.0
+              tag: 4.9.0
             env:
               BASE_URL: https://bar.franta.us
               API_URL: https://bar.franta.us/bar
