@@ -1,0 +1,12 @@
+---
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: "smtp-relay-allow-ingress"
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/instance: smtp-relay
+  ingress:
+  - fromEntities:
+    - "world"
