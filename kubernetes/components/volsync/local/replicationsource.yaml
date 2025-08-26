@@ -9,7 +9,7 @@ spec:
   trigger:
     schedule: "0 * * * *"
   restic:
-    copyMethod: "${VOLSYNC_COPYMETHOD:=Snapshot}"
+    copyMethod: "${VOLSYNC_COPYMETHOD:=Direct}"
     pruneIntervalDays: 14
     repository: "${APP}-volsync"
     volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:=ceph-rbd-snapshot}"
