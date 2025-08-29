@@ -80,14 +80,16 @@ spec:
         type: LoadBalancer
         annotations:
           lbipam.cilium.io/ips: 10.33.40.70,${CLUSTER_LBA_V6_PREFIX}:70
-        externalTrafficPolicy: Local
         ports:
           discovery:
             port: 21027
             protocol: UDP
-          listen:
+          listen-tcp:
             port: 22000
             protocol: TCP
+          listen-udp:
+            port: 22000
+            protocol: UDP
     route:
       app:
         hostnames:
