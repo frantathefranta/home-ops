@@ -12,7 +12,7 @@ vars:
   # renovate: datasource=github-releases depName=getsops/sops
   SOPS_VERSION: v3.10.2
   # renovate: datasource=github-releases depName=jkroepke/helm-secrets
-  HELM_SECRETS_VERSION: v4.6.7
+  HELM_SECRETS_VERSION: v4.6.9
 
 tasks:
 
