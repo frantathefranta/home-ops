@@ -33,7 +33,9 @@ metadata:
 stringData:
   githubAppID: "{{ ENV.GITHUB_APP_ID }}"
   githubAppInstallationID: "{{ ENV.GITHUB_APP_INSTALLATION_ID }}"
-  githubAppPrivateKey: "{{ ENV.GITHUB_APP_PRIVATE_KEY }}"
+data:
+  githubAppPrivateKey: |
+    {{ ENV.GITHUB_APP_PRIVATE_KEY | indent(4) }}
 ---
 apiVersion: v1
 kind: Secret
@@ -53,5 +55,7 @@ metadata:
     controller.cert-manager.io/fao: "true"
 type: kubernetes.io/tls
 data:
-  tls.crt: {{ ENV.TLS_CRT }}
-  tls.key: {{ ENV.TLS_KEY }}
+  tls.crt: |
+    {{ ENV.TLS_CRT | indent(4) }}
+  tls.key: |
+    {{ ENV.TLS_KEY | indent(4) }}
