@@ -38,7 +38,7 @@ tasks:
       GITHUB_APP_INSTALLATION_ID:
         sh: akeyless get-secret-value --name github --jq-expression '."GITHUB_APP_INSTALLATION_ID"'
       GITHUB_APP_PRIVATE_KEY:
-        sh: akeyless get-secret-value --name github --jq-expression '."GITHUB_APP_PRIVATE_KEY"'
+        sh: akeyless get-secret-value --name github --jq-expression '."GITHUB_APP_PRIVATE_KEY_B64"'
     desc: Bootstrap Apps
     prompt: Bootstrap apps into Talos cluster?
     preconditions:
