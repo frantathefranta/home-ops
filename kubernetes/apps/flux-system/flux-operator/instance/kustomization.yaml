@@ -7,7 +7,7 @@ resources:
   - ./helmrepository.yaml
   - ./helmrelease.yaml
   - ./prometheusrule.yaml
-  - ./externalsecret.yaml
+  # - ./externalsecret.yaml
   # - ./podmonitor.yaml # TODO: Decide whether this should be here
 configMapGenerator:
   - name: flux-instance-helm-values
