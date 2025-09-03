@@ -20,9 +20,6 @@ spec:
         operator: In
         values: ["linux"]
   tolerations:
-    - key: node-role.kubernetes.io/control-plane
-      operator: Exists
-      effect: NoSchedule
     - key: special
       operator: Exists
       effect: NoSchedule
@@ -35,3 +32,4 @@ spec:
     args:
       - --node=$(SYSTEM_UPGRADE_NODE_NAME)
       - --tag=$(SYSTEM_UPGRADE_PLAN_LATEST_VERSION)
+      - --powercycle
