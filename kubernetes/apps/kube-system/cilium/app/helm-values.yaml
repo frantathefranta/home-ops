@@ -11,6 +11,7 @@ bpf:
   masquerade: true
   # tproxy: true
   preAllocateMaps: true
+  hostLegacyRouting: false
 cgroup:
   automount:
     enabled: false
