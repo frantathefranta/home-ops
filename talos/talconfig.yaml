@@ -25,7 +25,7 @@ nodes:
   - hostname: "talos-actinium"
     ipAddress: "10.33.35.1"
     installDisk: "/dev/sda"
-    talosImageURL: factory.talos.dev/installer/88d1f7a5c4f1d3aba7df787c448c1d3d008ed29cfb34af53fa0df4336a56040b
+    talosImageURL: factory.talos.dev/nocloud-installer/88d1f7a5c4f1d3aba7df787c448c1d3d008ed29cfb34af53fa0df4336a56040b
     controlPlane: true
     nodeLabels:
       topology.kubernetes.io/region: *cluster
@@ -45,7 +45,7 @@ nodes:
   - hostname: "talos-thorium"
     ipAddress: "10.33.35.2"
     installDisk: "/dev/sda"
-    talosImageURL: factory.talos.dev/installer/88d1f7a5c4f1d3aba7df787c448c1d3d008ed29cfb34af53fa0df4336a56040b
+    talosImageURL: factory.talos.dev/nocloud-installer/88d1f7a5c4f1d3aba7df787c448c1d3d008ed29cfb34af53fa0df4336a56040b
     controlPlane: true
     nodeLabels:
       topology.kubernetes.io/region: *cluster
@@ -63,7 +63,7 @@ nodes:
   - hostname: "talos-protactinium"
     ipAddress: "10.33.35.3"
     installDisk: "/dev/sda"
-    talosImageURL: factory.talos.dev/installer/88d1f7a5c4f1d3aba7df787c448c1d3d008ed29cfb34af53fa0df4336a56040b
+    talosImageURL: factory.talos.dev/nocloud-installer/88d1f7a5c4f1d3aba7df787c448c1d3d008ed29cfb34af53fa0df4336a56040b
     controlPlane: true
     nodeLabels:
       topology.kubernetes.io/region: *cluster
