@@ -29,7 +29,7 @@ spec:
       registry: ghcr.io
       repository: frantathefranta/netbox-custom
       tag: v4.4.0 # {"$imagepolicy": "default:netbox:tag"}
-      digest: sha256:db878213a6d2d91fdf03b1cbf1a3aa0ad3733b64ce0bb0250e17b06d5a44727e # {"$imagepolicy": "default:netbox:digest"}
+      digest: sha256:8b36efa22c14d1f4ef2f89b205e27df22ab70e2621363786fbb23612ab243c91 # {"$imagepolicy": "default:netbox:digest"}
     superuser:
       name: franta
       email: admin@franta.us
