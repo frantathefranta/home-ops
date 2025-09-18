@@ -5,7 +5,7 @@ kind: Dragonfly
 metadata:
   name: &name ${APP}-dragonfly
 spec:
-  image: ghcr.io/dragonflydb/dragonfly:v1.34.0
+  image: ghcr.io/dragonflydb/dragonfly:v1.34.1
   labels:
     dragonflydb.io/cluster: *name
   replicas: 2
