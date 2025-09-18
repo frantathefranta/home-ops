@@ -36,7 +36,7 @@ spec:
           app:
             image:
               repository: docker.io/cloudflare/cloudflared
-              tag: 2025.8.1
+              tag: 2025.9.0
             env: # TODO: Tweak according to this: https://github.com/onedr0p/home-ops/commit/4d678d531983c7662481fb1dc7c1c7afc83308bc
               NO_AUTOUPDATE: true
               TUNNEL_CRED_FILE: /etc/cloudflared/creds/credentials.json
