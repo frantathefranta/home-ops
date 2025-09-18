@@ -24,27 +24,16 @@ spec:
       tandoor-test:
         annotations:
           reloader.stakater.com/auto: "true"
-        # initContainers:
-        #   chown-app:
-        #     image:
-        #       repository: docker.io/library/alpine
-        #       tag: "3.22"
-        #     command:
-        #       - /bin/sh
-        #       - -c
-        #     args:
-        #       - |
-        #          chmod -R g+w /var/lib/nginx
         containers:
           app:
             image:
               repository: ghcr.io/tandoorrecipes/recipes
-              tag: 2.0.1@sha256:b95f7b3e3df000cd39a152be0ddff7139c6d7c5f59cd306f325da44c50a81d05
+              tag: 2.2.0
             env:
               TZ: America/Detroit
-              DEBUG: 1
-              LOG_LEVEL: "DEBUG"
-              GUNCORN_LOG_LEVEL: "debug"
+              DEBUG: 0
+              # LOG_LEVEL: "DEBUG"
+              # GUNCORN_LOG_LEVEL: "debug"
               ALLOWED_HOSTS: "*"
               DB_ENGINE: django.db.backends.postgresql
               # Postgres
@@ -106,13 +95,13 @@ spec:
                 memory: 256M
               limits:
                 memory: 1Gi
-        pod:
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            fsGroup: 1000
-            supplementalGroups: [101]
-            fsGroupChangePolicy: OnRootMismatch
+        # pod:
+        #   securityContext:
+        #     runAsUser: 1000
+        #     runAsGroup: 1000
+        #     fsGroup: 1000
+        #     supplementalGroups: [101]
+        #     fsGroupChangePolicy: OnRootMismatch
     service:
       app:
         controller: *app
