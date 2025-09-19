@@ -46,6 +46,7 @@ spec:
                     key: pgbouncer-uri
               PORT: &port 80
               RUN_MIGRATIONS: "1"
+              WEBAUTHN: "1" # Passkey support
             envFrom:
               - secretRef:
                   name: miniflux-secret
