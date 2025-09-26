@@ -10,10 +10,8 @@ spec:
   restic:
     repository: ${app}-volsync
     destinationPVC: ${claim}
-    copyMethod: Direct
-    storageClassName: cephfs
-    # storageClassName: ceph-filesystem
-    # accessModes: ["ReadWriteMany"]
+    copyMethod: Snapshot
+    storageClassName: ceph-rbd
     # IMPORTANT NOTE:
     #   Set to the last X number of snapshots to restore from
     previous: ${previous}
