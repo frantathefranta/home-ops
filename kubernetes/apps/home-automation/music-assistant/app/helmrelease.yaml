@@ -23,7 +23,7 @@ spec:
           annotations:
             k8s.v1.cni.cncf.io/networks: |
               [{
-                "name":"multus-vf-iot",
+                "name":"multus-iot",
                 "namespace": "network",
                 "ips": ["10.0.50.212/24"],
                 "mac": "10:62:e5:18:1a:31"
@@ -41,12 +41,13 @@ spec:
               readiness:
                 enabled: true
     defaultPodOptions:
-      # nodeSelector:
-      #   kubernetes.io/hostname: talos-g3-mini
-      # tolerations:
-      #   - key: special
-      #     operator: Exists
-      #     effect: NoSchedule
+      nodeSelector:
+        kubernetes.io/hostname: talos-n150-01
+      tolerations:
+        - key: node.kubernetes.io/assignment
+          value: intel-gpu
+          operator: Equal
+          effect: NoSchedule
       securityContext:
         runAsNonRoot: true
         runAsUser: 568
