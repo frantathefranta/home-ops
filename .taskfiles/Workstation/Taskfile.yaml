@@ -10,7 +10,7 @@ vars:
   BREWFILE: "{{.ROOT_DIR}}/.taskfiles/Workstation/Brewfile"
   GENERIC_BIN_DIR: "{{.ROOT_DIR}}/.bin"
   # renovate: datasource=github-releases depName=getsops/sops
-  SOPS_VERSION: v3.10.2
+  SOPS_VERSION: v3.11.0
   # renovate: datasource=github-releases depName=jkroepke/helm-secrets
   HELM_SECRETS_VERSION: v4.6.10
 
