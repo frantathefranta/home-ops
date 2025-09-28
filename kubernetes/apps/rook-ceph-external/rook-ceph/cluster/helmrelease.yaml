@@ -57,6 +57,7 @@ spec:
       # externalMgrPrometheusPort: 9283 # IP doesn't need to be specified, operator will find it itself
       externalMgrEndpoints:
         - ip: 10.40.1.50
+          externalMgrPrometheusPort: 9283
         - ip: 10.40.1.60
         - ip: 10.40.1.70
       # interval: 15s
