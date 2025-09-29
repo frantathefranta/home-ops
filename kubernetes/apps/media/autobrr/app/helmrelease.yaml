@@ -30,7 +30,7 @@ spec:
               tag: v1.67.0@sha256:af3fbcfa5f12b4bea8dc3338571071ed98e4caebb204cd50a31d5eff0a08152f
             env:
               AUTOBRR__CHECK_FOR_UPDATES: "false"
-              AUTOBRR__HOST: 0.0.0.0
+              AUTOBRR__HOST: 0.0.0.0 # Includes IPv6
               AUTOBRR__PORT: &port 80
               AUTOBRR__LOG_LEVEL: INFO
               AUTOBRR__DATABASE_TYPE: "postgres"
@@ -88,6 +88,7 @@ spec:
         seccompProfile: { type: RuntimeDefault }
     service:
       app:
+        ipFamilyPolicy: RequireDualStack
         controller: *app
         ports:
           http:
