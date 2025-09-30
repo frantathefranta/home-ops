@@ -25,7 +25,7 @@ spec:
       GATUS_SUBDOMAIN: www
 # ---
 # # yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/imagerepository-image-v1beta2.json
-# apiVersion: image.toolkit.fluxcd.io/v1beta2
+# apiVersion: image.toolkit.fluxcd.io/v1
 # kind: ImageRepository
 # metadata:
 #   name: hugoblog
@@ -35,7 +35,7 @@ spec:
 #   interval: 5m
 # ---
 # # yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/imagepolicy-image-v1beta2.json
-# apiVersion: image.toolkit.fluxcd.io/v1beta2
+# apiVersion: image.toolkit.fluxcd.io/v1
 # kind: ImagePolicy
 # metadata:
 #   name: hugoblog-repo-policy
