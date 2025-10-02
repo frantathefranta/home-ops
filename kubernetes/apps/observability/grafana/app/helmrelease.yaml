@@ -336,6 +336,10 @@ spec:
         cert-manager:
           url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/overview.json
           datasource: Prometheus
+        frr-bgp-external:
+          url: https://raw.githubusercontent.com/tynany/frr_exporter/refs/heads/master/dashboards/grafana-bgp.json
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
         cloudflared:
           # renovate: depName="Cloudflare Tunnels (cloudflared)"
           gnetId: 17457
