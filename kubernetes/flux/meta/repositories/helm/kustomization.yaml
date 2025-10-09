@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
   - ./backube.yaml
   - ./cilium.yaml
-  - ./csi-driver-nfs.yaml
   - ./descheduler.yaml
   - ./emqx.yaml
   - ./external-dns.yaml

@@ -5,7 +5,6 @@ namespace: kube-system
 resources:
   - ./cilium/ks.yaml
   - ./coredns/ks.yaml
-  - ./csi-driver-nfs/ks.yaml
   - ./descheduler/ks.yaml
   - ./fstrim/ks.yaml
   - ./metrics-server/ks.yaml
