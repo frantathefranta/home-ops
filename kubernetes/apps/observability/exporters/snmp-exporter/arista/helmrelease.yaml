@@ -38,15 +38,15 @@ spec:
       params:
         - name: arista01
           module: ["arista_sw"]
-          target: 10.40.0.1
+          target: 10.0.0.2
           auth: ["public_v2"]
         - name: arista01-if
           module: ["if_mib"]
-          target: 10.40.0.1
+          target: 10.0.0.2
           auth: ["public_v2"]
         - name: arista01-ip
           module: ["ip_mib"]
-          target: 10.40.0.1
+          target: 10.0.0.2
           auth: ["public_v2"]
       path: /snmp
       scrapeTimeout: 10s
