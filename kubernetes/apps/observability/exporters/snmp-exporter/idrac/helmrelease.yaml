@@ -49,6 +49,6 @@ spec:
           target: bmc-protactinium.infra.franta.us
           auth: ["public_v2"]
       path: /snmp
-      scrapeTimeout: 30s
+      scrapeTimeout: 45s
       relabelings:
         - { sourceLabels: ["__param_target"], targetLabel: instance }

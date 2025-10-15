@@ -49,6 +49,6 @@ spec:
           target: 10.0.0.2
           auth: ["public_v2"]
       path: /snmp
-      scrapeTimeout: 10s
+      scrapeTimeout: 15s
       relabelings:
         - { sourceLabels: ["__param_target"], targetLabel: instance }
