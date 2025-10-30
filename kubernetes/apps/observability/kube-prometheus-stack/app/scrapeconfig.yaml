@@ -9,7 +9,6 @@ spec:
     - targets:
         - platinum.infra.franta.us:9100
         - opnsense.infra.franta.us:9100
-        - bastion.infra.franta.us:9100
         - actinium.infra.franta.us:9100
         - thorium.infra.franta.us:9100
         - protactinium.infra.franta.us:9100
