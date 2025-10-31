@@ -10,7 +10,7 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: v1.18.4
+    tag: v1.18.6
   url: oci://ghcr.io/rook/rook-ceph-cluster
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
@@ -54,12 +54,12 @@ spec:
       enabled: true
       # metricsDisabled: true
       createPrometheusRules: true
-      # externalMgrPrometheusPort: 9283 # IP doesn't need to be specified, operator will find it itself
+      externalMgrPrometheusPort: 9283 # IP doesn't need to be specified, operator will find it itself
       externalMgrEndpoints:
         - ip: 10.40.1.50
-          externalMgrPrometheusPort: 9283
-        - ip: 10.40.1.60
-        - ip: 10.40.1.70
+        #   externalMgrPrometheusPort: 9283
+        # - ip: 10.40.1.60
+        # - ip: 10.40.1.70
       # interval: 15s
 
     # -- Settings for the block pool snapshot class

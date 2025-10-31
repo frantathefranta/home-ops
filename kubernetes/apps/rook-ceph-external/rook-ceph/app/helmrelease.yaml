@@ -43,6 +43,8 @@ spec:
       repository: ghcr.io/rook/ceph
     csi:
       enableCephfsDriver: false
+      serviceMonitor:
+        enabled: true
       csiAddons:
         enabled: false
       enableCSIEncryption: false
