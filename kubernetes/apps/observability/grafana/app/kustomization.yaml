@@ -6,3 +6,4 @@ resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
   - ./dashboards/apt-monitoring.yaml
+  - ./dashboards/bird-bgp.yaml
