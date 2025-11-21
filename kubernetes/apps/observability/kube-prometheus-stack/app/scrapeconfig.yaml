@@ -13,7 +13,7 @@ spec:
         - thorium.infra.franta.us:9100
         - protactinium.infra.franta.us:9100
         - hass.franta.us:9100 # Home Assistant
-        - nix-bastion.franta.us:9100
+        - nix-bastion.infra.franta.us:9100
   metricsPath: /metrics
   relabelings:
     - action: replace
