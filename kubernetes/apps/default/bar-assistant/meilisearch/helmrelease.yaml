@@ -22,8 +22,6 @@ spec:
       strategy: rollback
       retries: 3
   values:
-    image:
-      tag: v1.15.2
     environment:
       MEILI_ENV: production
     envFrom:
