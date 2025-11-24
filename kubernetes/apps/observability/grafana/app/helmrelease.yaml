@@ -340,6 +340,12 @@ spec:
           url: https://raw.githubusercontent.com/tynany/frr_exporter/refs/heads/master/dashboards/grafana-bgp.json
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
+        bind-exporter:
+          # renovate: depName="Bind9 Exporter DNS"
+          gnetId: 12309
+          revision: 5
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
         bird-exporter:
           # renovate: depName="BIRD RS"
           gnetId: 5259
