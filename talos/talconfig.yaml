@@ -230,8 +230,8 @@ patches:
   - |-
     machine:
       network:
-        nameservers: ["10.33.10.0", "${DNS_IPV6_0}"]
-        # nameservers: ["10.33.10.0", "10.33.10.1", "${DNS_IPV6_0}", "${DNS_IPV6_1}"]
+        # nameservers: ["10.33.10.0", "${DNS_IPV6_0}"]
+        nameservers: ["10.33.10.0", "10.33.10.1", "${DNS_IPV6_0}", "${DNS_IPV6_1}"]
         # nameservers: ["10.33.10.0", "10.33.10.1"]
 
   # Enable Host DNS: https://www.talos.dev/v1.7/talos-guides/network/host-dns/
