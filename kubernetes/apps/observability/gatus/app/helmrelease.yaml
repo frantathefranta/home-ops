@@ -78,7 +78,7 @@ spec:
         statefulset:
           volumeClaimTemplates:
             - name: config
-              storageClass: ceph-block
+              storageClass: ceph-rbd
               accessMode: ReadWriteOnce
               size: 10Mi
         pod:
@@ -156,17 +156,3 @@ spec:
           - backendRefs:
               - name: *app
                 port: *port
-
-    serviceAccount:
-      gatus:
-        enabled: true
-    persistence:
-      config:
-        type: emptyDir
-      config-file:
-        type: configMap
-        name: gatus-configmap
-        globalMounts:
-          - path: /config/config.yaml
-            subPath: config.yaml
-            readOnly: true
