@@ -7,11 +7,21 @@ resources:
   - ./helmrepository.yaml
   - ./helmrelease.yaml
   - ./prometheusrule.yaml
+  - ./grafanadashboard.yaml
   # - ./externalsecret.yaml
   # - ./podmonitor.yaml # TODO: Decide whether this should be here
 configMapGenerator:
   - name: flux-instance-helm-values
     files:
       - values.yaml=./helm-values.yaml
+  - name: flux-dashboards
+    files:
+      - ./configmaps/flux-control-plane.json
+      - ./configmaps/flux-instance-stats.json
+    options:
+      annotations:
+        kustomize.toolkit.fluxcd.io/substitute: disabled
+      labels:
+        grafana_dashboard: "1"
 configurations:
   - kustomizeconfig.yaml

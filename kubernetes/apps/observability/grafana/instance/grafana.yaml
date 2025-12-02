@@ -1,0 +1,85 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafana_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: Grafana
+metadata:
+  name: grafana
+  labels:
+    grafana.internal/instance: grafana
+spec:
+  config:
+    analytics:
+      check_for_updates: "false"
+      check_for_plugin_updates: "false"
+      feedback_links_enabled: "false"
+      reporting_enabled: "false"
+    auth:
+      disable_login_form: "true"
+    auth.generic_oauth:
+      allow_assign_grafana_admin: "true"
+      api_url: https://auth.franta.us/api/oidc/userinfo
+      auth_url: https://auth.franta.us/api/oidc/authorization
+      auto_login: "true"
+      client_id: $__env{OIDC_CLIENT_ID}
+      client_secret: $__env{OIDC_CLIENT_SECRET}
+      enabled: "true"
+      name: Authelia
+      role_attribute_path: grafanaRole
+      scopes: openid profile email groups
+      signout_redirect_url: https://auth.franta.us/logout
+      token_url: https://auth.franta.us/api/oidc/token
+      use_pkce: "true"
+    date_formats:
+      full_date: "YYYY-MM-DD HH:mm:ss"
+      interval_second: "HH:mm:ss"
+      interval_minute: "HH:mm"
+      interval_hour: "MMM DD HH:mm"
+      interval_day: "MMM DD"
+      interval_month: "YYYY-MM"
+      interval_year: "YYYY"
+    log:
+      mode: console
+    metrics:
+      enabled: "true"
+    news:
+      news_feed_enabled: "false"
+    plugins:
+      plugin_admin_enabled: "false"
+      preinstall_sync: "fetzerch-sunandmoon-datasource,victoriametrics-logs-datasource,victoriametrics-metrics-datasource"
+    security:
+      angular_support_enabled: "true"
+    server:
+      enable_gzip: "true"
+      root_url: https://grafana.franta.us
+    users:
+      allow_sign_up: "false"
+      auto_assign_org: "true"
+      auto_assign_org_role: Admin
+  deployment:
+    spec:
+      strategy:
+        type: Recreate
+      template:
+        spec:
+          containers:
+            - name: grafana
+              envFrom:
+                - secretRef:
+                    name: grafana-secret
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities: {drop: ["ALL"]}
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+          volumes:
+            - name: grafana-data
+              persistentVolumeClaim:
+                claimName: grafana-data
+            - name: tmpfs
+              emptyDir: {}
+  disableDefaultSecurityContext: All
