@@ -58,7 +58,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../../components/gatus/external
+
     - ../../../../components/volsync
     - ../../../../components/dragonfly
   dependsOn:
