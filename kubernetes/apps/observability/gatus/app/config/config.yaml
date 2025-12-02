@@ -30,14 +30,6 @@ endpoints:
       dns-resolver: tcp://1.1.1.1:53
     conditions: ["[STATUS] == 200"]
     alerts: [{ type: pushover }]
-  - name: flux-webhook
-    group: talos-maxi-external
-    url: https://flux-webhook.franta.us
-    interval: 1m
-    client:
-      dns-resolver: tcp://1.1.1.1:53
-    conditions: ["[STATUS] == 404"]
-    alerts: [{ type: pushover }]
 connectivity:
   checker:
     target: 1.1.1.1:53

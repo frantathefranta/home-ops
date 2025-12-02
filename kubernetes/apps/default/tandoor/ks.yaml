@@ -8,7 +8,7 @@ metadata:
 spec:
   targetNamespace: default
   components:
-    - ../../../../components/gatus/external
+
     - ../../../../components/volsync
     - ../../../../components/postgres
   commonMetadata:
