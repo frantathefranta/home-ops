@@ -13,4 +13,3 @@ resources:
   - ./gateway-internal.yaml
   - ./gateway-external.yaml
   - ./pushsecret.yaml
-  - ./services
