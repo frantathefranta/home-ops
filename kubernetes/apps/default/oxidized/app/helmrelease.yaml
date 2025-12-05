@@ -27,7 +27,7 @@ spec:
           app:
             image:
               repository: oxidized/oxidized
-              tag: 0.34.3@sha256:234a983dd6d50fc025d2be7350bd502073240e613164f2f649a6fb2577e4bfb5
+              tag: 0.35.0@sha256:06942809359036612282ccd6d75a8e05553b7f650cd8b545670fdcaea370a148
             env:
               CONFIG_RELOAD_INTERVAL: 3600
             resources:
