@@ -60,30 +60,30 @@ spec:
                 cpu: 100m
               limits:
                 memory: 2Gi
-            probes:
-              liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /transmission/web/
-                    port: *port
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
-              startup:
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /transmission/web/
-                    port: *port
-                  failureThreshold: 30
-                  periodSeconds: 10
-                  successThreshold: 1
-                  timeoutSeconds: 1
+            # probes:
+            #   liveness: &probes
+            #     enabled: true
+            #     custom: true
+            #     spec:
+            #       httpGet:
+            #         path: /transmission/web/
+            #         port: *port
+            #       initialDelaySeconds: 30
+            #       periodSeconds: 10
+            #       timeoutSeconds: 1
+            #       failureThreshold: 30
+            #   readiness: *probes
+            #   startup:
+            #     enabled: true
+            #     custom: true
+            #     spec:
+            #       httpGet:
+            #         path: /transmission/web/
+            #         port: *port
+            #       failureThreshold: 30
+            #       periodSeconds: 10
+            #       successThreshold: 1
+            #       timeoutSeconds: 1
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
