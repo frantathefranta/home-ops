@@ -26,19 +26,13 @@ jobs:
           app-id: ${{ secrets.BOT_APP_ID }}
           private-key: ${{ secrets.BOT_APP_PRIVATE_KEY }}
 
-      - name: Checkout
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
-        with:
-          token: ${{ steps.app-token.outputs.token }}
-
       - name: Get Changed Terraform
         id: changed-terraform
         uses: bjw-s-labs/action-changed-files@1a5aeab1bfa64d0c4e786f501d5a3f1fad4a24da # v0.4.1
         with:
-          files: terraform/**
-          dir_names: true
-          dir_names_max_depth: 2
-          matrix: true
+          patterns: terraform/**/*
+          include_only_directories: true
+          max_depth: 2
 
       - name: List All Changed Terraform
         run: echo ${{ steps.changed-terraform.outputs.all_changed_and_modified_files }}
