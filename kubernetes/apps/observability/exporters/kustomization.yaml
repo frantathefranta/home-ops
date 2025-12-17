@@ -15,4 +15,4 @@ resources:
   - ./sonarr-exporter/ks.yaml
   - ./speedtest-exporter/ks.yaml
   - ./tautulli-exporter/ks.yaml
-  - ./transmission-exporter/ks.yaml
+  # - ./transmission-exporter/ks.yaml
