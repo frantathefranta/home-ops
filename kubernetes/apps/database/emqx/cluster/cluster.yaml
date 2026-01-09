@@ -32,10 +32,6 @@ spec:
       annotations:
         reloader.stakater.com/auto: "true"
     spec:
-      tolerations:
-        - key: special
-          operator: Exists
-          effect: NoSchedule
       replicas: 2
       envFrom: &envFrom
         - secretRef:
