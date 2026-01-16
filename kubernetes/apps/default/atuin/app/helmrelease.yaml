@@ -30,7 +30,7 @@ spec:
               ATUIN_METRICS__ENABLE: true
               ATUIN_METRICS__HOST: 0.0.0.0
               ATUIN_METRICS__PORT: &metricsPort 8081
-              ATUIN_OPEN_REGISTRATION: true
+              ATUIN_OPEN_REGISTRATION: false
               ATUIN_PORT: &port 80
               TZ: America/Detroit
             args:
