@@ -73,7 +73,7 @@ spec:
         hostnames:
           - "{{ .Release.Name }}.franta.us"
         parentRefs:
-          - name: internal
+          - name: external
             namespace: kube-system
             sectionName: https
         rules:
