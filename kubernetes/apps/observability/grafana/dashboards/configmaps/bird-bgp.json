@@ -414,7 +414,7 @@
       "targets": [
         {
           "editorMode": "code",
-          "expr": "(sum(bird_protocol_prefix_preferred_count{proto=\"BGP\", instance=\"$instance:9324\", ip_version=\"$version\", name=~\"iBGP.*_v$version\"})\n/ \nsum(bird_protocol_prefix_preferred_count{proto=\"BGP\", instance=\"$instance:9324\", ip_version=\"$version\", name!~\"iBGP.*_v$version\"})\n) * 100",
+          "expr": "(sum(bird_protocol_prefix_preferred_count{proto=\"BGP\", instance=\"$instance:9324\", ip_version=\"$version\", name=~\"iBGP.*\"})\n/ \nsum(bird_protocol_prefix_preferred_count{proto=\"BGP\", instance=\"$instance:9324\", ip_version=\"$version\", name!~\"iBGP.*\"})\n) * 100",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
