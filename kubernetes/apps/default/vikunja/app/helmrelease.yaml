@@ -38,7 +38,7 @@ spec:
             env:
               VIKUNJA_SERVICE_ENABLEREGISTRATION: false
               VIKUNJA_SERVICE_TIMEZONE: "America/Detroit"
-              VIKUNJA_SERVICE_PUBLICURL: &host "vikunja.franta.us"
+              VIKUNJA_SERVICE_PUBLICURL: "https://vikunja.franta.us"
               VIKUNJA_SERVICE_ENABLEPUBLICTEAMS: true
               VIKUNJA_AUTH_LOCAL: false
               VIKUNJA_METRICS_ENABLED: true
