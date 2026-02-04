@@ -12,7 +12,7 @@ resources:
   - ./idrac-fan-control/ks.yaml
   - ./lubelog/ks.yaml
   - ./miniflux/ks.yaml
-  - ./netbox/ks.yaml
+  # - ./netbox/ks.yaml
   - ./oxidized/ks.yaml
   - ./paperless/ks.yaml
   - ./smtp-relay/ks.yaml
