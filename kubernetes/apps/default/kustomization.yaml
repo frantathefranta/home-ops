@@ -18,6 +18,6 @@ resources:
   - ./smtp-relay/ks.yaml
   - ./syncthing/ks.yaml
   - ./tandoor/ks.yaml
-  - ./vikunja/ks.yaml
+  # - ./vikunja/ks.yaml
 components:
   - ../../components/common
