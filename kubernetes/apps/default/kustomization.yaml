@@ -8,7 +8,6 @@ resources:
   - ./authelia/ks.yaml
   - ./bar-assistant/ks.yaml
   - ./glauth/ks.yaml
-  - ./hugo/ks.yaml
   - ./idrac-fan-control/ks.yaml
   - ./lubelog/ks.yaml
   - ./miniflux/ks.yaml
