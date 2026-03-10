@@ -126,22 +126,27 @@ spec:
         replicas: 2
         replicaExternalLabelName: __replica__
         scrapeInterval: 1m # Must match interval in Grafana Helm chart
-        ruleSelector:
-          matchLabels: ~ # Null means that everything is scraped
-        serviceMonitorSelector:
-          matchLabels: ~
-        podMonitorSelector:
-          matchLabels: ~
-        scrapeConfigSelector:
-          matchLabels: ~
-        probeSelector:
-          matchLabels: ~
+        ruleSelectorNilUsesHelmValues: false
+        serviceMonitorSelectorNilUsesHelmValues: false
+        podMonitorSelectorNilUsesHelmValues: false
+        probeSelectorNilUsesHelmValues: false
+        scrapeConfigSelectorNilUsesHelmValues: false
+        # ruleSelector:
+        #   matchLabels: ~ # Null means that everything is scraped
+        # serviceMonitorSelector:
+        #   matchLabels: ~
+        # podMonitorSelector:
+        #   matchLabels: ~
+        # scrapeConfigSelector:
+        #   matchLabels: ~
+        # probeSelector:
+        #   matchLabels: ~
         enableAdminAPI: true
         walCompression: true
-        enableFeatures:
-          - auto-gomemlimit
-          - memory-snapshot-on-shutdown
-          - new-service-discovery-manager
+        # enableFeatures:
+        #   - auto-gomemlimit
+        #   - memory-snapshot-on-shutdown
+        #   - new-service-discovery-manager
         retention: 14d
         retentionSize: 15GB
         resources:
