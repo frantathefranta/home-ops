@@ -14,7 +14,7 @@ spec:
         key    = "tls/tls.tfstate"
         region   = "main"
         endpoints = {
-          s3 = "http://haproxy-rados-gw.rook-ceph-external.svc.cluster.local:7480"
+          s3 = "http://haproxy.rook-ceph-external.svc.cluster.local:7480"
         }
 
         skip_credentials_validation = true

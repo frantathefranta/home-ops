@@ -37,10 +37,7 @@ spec:
         ports:
           http:
             port: &port 7480
-      metrics:
-        controller: haproxy
-        ports:
-          http:
+          metrics:
             port: 8405
     serviceMonitor:
       app:
@@ -61,7 +58,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: haproxy-rados-gw
+              - name: haproxy
                 port: *port
     persistence:
       config:
