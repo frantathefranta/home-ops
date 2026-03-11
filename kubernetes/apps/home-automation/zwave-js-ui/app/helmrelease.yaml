@@ -83,7 +83,7 @@ spec:
             port: 3000
     serviceMonitor:
       app:
-        serviceName: *app
+        serviceName: zwave-js-ui-app
         enabled: true # requires https://github.com/kvaster/zwavejs-prom
         endpoints:
           - port: http
