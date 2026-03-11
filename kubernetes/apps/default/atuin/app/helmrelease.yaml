@@ -34,7 +34,6 @@ spec:
               ATUIN_PORT: &port 80
               TZ: America/Detroit
             args:
-              - server
               - start
             probes:
               liveness: &probes
