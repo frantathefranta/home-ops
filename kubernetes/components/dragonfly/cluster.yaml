@@ -5,7 +5,7 @@ kind: Dragonfly
 metadata:
   name: &name ${APP}-dragonfly
 spec:
-  image: ghcr.io/dragonflydb/dragonfly:v1.35.1
+  image: ghcr.io/dragonflydb/dragonfly:v1.37.0
   labels:
     dragonflydb.io/cluster: *name
   replicas: 2
@@ -31,7 +31,7 @@ spec:
     - --cluster_mode=emulated
     - --s3_endpoint=rgw.franta.us
     - --s3_use_https=true
-    - --s3_sign_payload=false
+    - --s3_sign_payload=true
   snapshot:
     dir: "s3://dragonfly/${APP}"
   resources:
