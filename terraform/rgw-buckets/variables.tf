@@ -15,5 +15,5 @@ variable "access_key" {
 variable "rgw_endpoint" {
   type        = string
   description = "Rados GW Server URL"
-  default     = "http://haproxy.rook-ceph-external.svc.cluster.local:7480"
+  default     = "https://rgw.franta.us"
 }

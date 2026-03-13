@@ -13,7 +13,7 @@ spec:
         key    = "rgw/rgw-buckets.tfstate"
         region   = "main"
         endpoints = {
-          s3 = "http://haproxy.rook-ceph-external.svc.cluster.local:7480"
+          s3 = "https://rgw.franta.us"
         }
 
         skip_credentials_validation = true
