@@ -27,15 +27,15 @@ Alternatively, if you don't want to run ~import-external-cluster.sh~ on each clu
 
 You can select how these secrets get populated with values, I chose to add them in ~<cluster>/flux/vars/cluster-secrets.sops.yaml~ and ~shared/settings/cluster-secrets.sops.yaml~ (flux will populate the ~${VALUE}~ fields then).
 * Ceph Object Store
-It's possible to also connect to the Rados GW from the *Kubernetes* cluster. I've chosen to use *HAProxy* to load balance the 3 endpoints of my nodes. An important thing there is to set the ~rgw_dns_name~ to the hostname that you set for the ~rook-ceph-cluster~ deployment. In my case, I just set it to ~haproxy-rados-gw.rook-ceph-external.svc.cluster.local~. If you don't do this, you'll get this kind of error:
+It's possible to also connect to the Rados GW from the *Kubernetes* cluster. I've chosen to use *HAProxy* to load balance the 3 endpoints of my nodes. An important thing there is to set the ~rgw_dns_name~ to the hostname that you set for the ~rook-ceph-cluster~ deployment. In my case, I just set it to ~haproxy.rook-ceph-external.svc.cluster.local~. If you don't do this, you'll get this kind of error:
 #+begin_src shell
-$ curl haproxy-rados-gw.rook-ceph-external.svc.cluster.local:7480
-<?xml version="1.0" encoding="UTF-8"?><Error><Code>NoSuchBucket</Code><Message></Message><BucketName>haproxy-rados-gw.rook-ceph-external.svc.cluster.local</BucketName><RequestId>tx000000b62ae3c49af5eab-0067474692-28035997-default</RequestId><HostId>280359
+$ curl haproxy.rook-ceph-external.svc.cluster.local:7480
+<?xml version="1.0" encoding="UTF-8"?><Error><Code>NoSuchBucket</Code><Message></Message><BucketName>haproxy.rook-ceph-external.svc.cluster.local</BucketName><RequestId>tx000000b62ae3c49af5eab-0067474692-28035997-default</RequestId><HostId>280359
 #+end_src
 
 What you want to see is this:
 #+begin_src shell
-$ curl haproxy-rados-gw.rook-ceph-external.svc.cluster.local:7480
+$ curl haproxy.rook-ceph-external.svc.cluster.local:7480
 <?xml version="1.0" encoding="UTF-8"?><ListAllMyBucketsResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/"><Owner><ID>anonymous</ID></Owner><Buckets></Buckets></ListAllMyBucketsResult>
 #+end_src
 ** HAProxy

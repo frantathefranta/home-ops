@@ -5,7 +5,7 @@ kind: Dragonfly
 metadata:
   name: &name ${APP}-dragonfly
 spec:
-  image: ghcr.io/dragonflydb/dragonfly:v1.37.0
+  image: ghcr.io/dragonflydb/dragonfly:v1.35.1
   labels:
     dragonflydb.io/cluster: *name
   replicas: 2
@@ -29,8 +29,9 @@ spec:
     - --maxmemory=$(MAX_MEMORY)Mi
     - --proactor_threads=2
     - --cluster_mode=emulated
-    - --s3_endpoint=haproxy-rados-gw.rook-ceph-external.svc.cluster.local:7480
-    - --s3_use_https=false
+    - --s3_endpoint=rgw.franta.us
+    - --s3_use_https=true
+    - --s3_sign_payload=false
   snapshot:
     dir: "s3://dragonfly/${APP}"
   resources:
