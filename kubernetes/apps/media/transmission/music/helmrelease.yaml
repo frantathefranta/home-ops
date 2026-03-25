@@ -53,6 +53,9 @@ spec:
               TRANSMISSION__WATCH_FORCE_GENERIC: true
               TRANSMISSION__SCRIPT_TORRENT_DONE_ENABLED: true
               TRANSMISSION__SCRIPT_TORRENT_DONE_FILENAME: /scripts/transmission-complete.sh
+            envFrom:
+              - secretRef:
+                  name: transmission-music-secret
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
