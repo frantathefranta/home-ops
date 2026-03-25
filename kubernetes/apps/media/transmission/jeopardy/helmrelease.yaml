@@ -67,10 +67,9 @@ spec:
                   httpGet:
                     path: /transmission/web/
                     port: *port
-                  initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
-                  failureThreshold: 3
+                  failureThreshold: 30
               readiness: *probes
               startup:
                 enabled: true
@@ -79,7 +78,7 @@ spec:
                   httpGet:
                     path: /transmission/web/
                     port: *port
-                  failureThreshold: 30
+                  failureThreshold: 50
                   periodSeconds: 5
                   successThreshold: 1
                   timeoutSeconds: 1
