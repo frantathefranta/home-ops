@@ -51,6 +51,8 @@ spec:
               TRANSMISSION__WATCH_DIR_ENABLED: true
               TRANSMISSION__WATCH_DIR: "/music/downloads/watch"
               TRANSMISSION__WATCH_FORCE_GENERIC: true
+              TRANSMISSION__SCRIPT_TORRENT_DONE_ENABLED: true
+              TRANSMISSION__SCRIPT_TORRENT_DONE_FILENAME: /scripts/transmission-complete.sh
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -132,3 +134,9 @@ spec:
         path: /emc1/music
         globalMounts:
           - path: /music
+      scripts:
+        type: configMap
+        name: transmission-music-scripts
+        defaultMode: 0755
+        globalMounts:
+          - path: /scripts

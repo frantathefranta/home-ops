@@ -14,5 +14,8 @@ configMapGenerator:
     options:
       labels:
         loki_rule: "true"
+  - name: transmission-music-scripts
+    files:
+      - transmission-complete.sh=./resources/transmission-complete.sh
 generatorOptions:
   disableNameSuffixHash: true
