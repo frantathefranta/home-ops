@@ -13,7 +13,6 @@ echo "[transmission-complete] Generating gazelle-origin file for $${TR_TORRENT_N
 
 echo "[transmission-complete] Copying '$${SOURCE}' → '$${DEST}'"
 cp -rp "$${SOURCE}" "$${DEST}"
-chown -R 1000:media "$${DEST}"
 
 # echo "[transmission-complete] Notifying wrtag: ${DEST}"
 # curl \
