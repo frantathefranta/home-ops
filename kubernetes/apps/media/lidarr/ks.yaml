@@ -33,9 +33,3 @@ spec:
     substitute:
       APP: *app
       PG_VERSION: "18"
-  patches:
-    - target:
-        kind: PostgresCluster
-      patch: |-
-        - op: remove
-          path: /spec/dataSource
