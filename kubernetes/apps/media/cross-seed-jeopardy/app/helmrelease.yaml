@@ -21,9 +21,9 @@ spec:
         pod:
           securityContext:
             runAsUser: 568
-            runAsGroup: 568
+            runAsGroup: 1003
             runAsNonRoot: true
-            fsGroup: 568
+            fsGroup: 1003
             fsGroupChangePolicy: "OnRootMismatch"
 
         containers:
