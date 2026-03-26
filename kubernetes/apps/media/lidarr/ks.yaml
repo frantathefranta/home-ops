@@ -32,9 +32,9 @@ spec:
   postBuild:
     substitute:
       APP: *app
-  patches:
-    - target:
-        kind: PostgresCluster
-      patch: |-
-        - op: remove
-            path: /spec/dataSource
+patches:
+  - target:
+      kind: PostgresCluster
+    patch: |-
+      - op: remove
+          path: /spec/dataSource
