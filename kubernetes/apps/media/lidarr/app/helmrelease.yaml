@@ -111,8 +111,6 @@ spec:
         type: nfs
         server: ${NAS_IP}
         path: /emc1/music
-        advancedMounts:
-          lidarr:
-            app: 
-              - path: /music
-                readOnly: true
+        globalMounts:
+          - path: /music
+            readOnly: true
