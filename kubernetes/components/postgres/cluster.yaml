@@ -5,7 +5,7 @@ kind: PostgresCluster
 metadata:
   name: &name ${APP}
 spec:
-  postgresVersion: 17
+  postgresVersion: "${PG_VERSION:=17}"
   monitoring:
     pgmonitor:
       exporter:
