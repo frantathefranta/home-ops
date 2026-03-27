@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [[ "$${lidarr_eventtype}" == "Test" ]]; then
+printenv | grep -i lidarr | sort
+
+if [[ "$${lidarr_eventtype:-}" == "Test" ]]; then
     echo "[lidarr-wrtag] Test event received"
     exit 0
 fi
 
-if [[ "$${lidarr_eventtype}" != "AlbumDownload" ]]; then
+if [[ "$${lidarr_eventtype:-}" != "AlbumDownload" ]]; then
     exit 0
 fi
 
