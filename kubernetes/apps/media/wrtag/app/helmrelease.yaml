@@ -48,7 +48,7 @@ spec:
           app:
             image:
               repository: ghcr.io/frantathefranta/wrtag
-              tag: master@sha256:aaf2ccfbbd09df419a368594a636c09a66e964f6e8891ad97a1b180b1c29ee85
+              tag: master@sha256:3925dce0b3539199c5ee2dd58ff8d551d56e520682c97308775bb38513868b91
             env:
               WRTAG_WEB_API_KEY:
                 valueFrom:
