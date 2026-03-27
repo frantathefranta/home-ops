@@ -53,8 +53,8 @@ spec:
               WRTAG_WEB_API_KEY:
                 valueFrom:
                   secretKeyRef:
-                    name: wrtag
-                    key: api_key
+                    name: wrtag-secret
+                    key: WRTAG_API_KEY
               WRTAG_WEB_LISTEN_ADDR: ":80"
               WRTAG_WEB_PUBLIC_URL: https://wrtag.franta.us
               WRTAG_WEB_DB_PATH: /data/wrtag.db
