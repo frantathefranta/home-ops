@@ -48,9 +48,9 @@ spec:
               LIDARR__POSTGRES__PORT: "5432"
               LIDARR__POSTGRES__USER: *app
               LIDARR__SERVER__PORT: &port 80
-            # envFrom:
-            #   - secretRef:
-            #       name: lidarr-secret
+            envFrom:
+              - secretRef:
+                  name: lidarr-secret
             probes:
               liveness: &probes
                 enabled: true
@@ -107,10 +107,15 @@ spec:
         existingClaim: *app
       tmp:
         type: emptyDir
+      scripts:
+        type: configMap
+        name: lidarr-scripts
+        defaultMode: 0755
+        globalMounts:
+          - path: /scripts
       data:
         type: nfs
         server: ${NAS_IP}
         path: /emc1/music
         globalMounts:
           - path: /music
-            # readOnly: true
