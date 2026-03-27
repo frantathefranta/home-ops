@@ -1,0 +1,7 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wrtag-config
+data:
+  path_format: '/music/stereo/{{ artists .Release.Artists | sort | join "; " | safepath }}/{{ .Release.Title | safepath }}{{ if not (eq .ReleaseDisambiguation "") }} ({{ .ReleaseDisambiguation | safepath }}){{ end }} ({{ .Release.ReleaseGroup.FirstReleaseDate.Year }}) [{{ .Media.Format}}]/{{ if gt (len .Release.Media) 1 }}{{ .Media.Position }}{{ end }}{{ pad0 2 .Track.Position }} {{ if .IsCompilation }}{{ artistsString .Track.Artists | safepath }} - {{ end }}{{ .Track.Title | safepath }}{{ .Ext }}'
