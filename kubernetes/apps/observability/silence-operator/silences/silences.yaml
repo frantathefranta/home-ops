@@ -1,0 +1,24 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/observability.giantswarm.io/silence_v1alpha2.json
+apiVersion: observability.giantswarm.io/v1alpha2
+kind: Silence
+metadata:
+  name: scrypted-fast-pvc-usage-critical
+spec:
+  matchers:
+    - name: alertname
+      value: PersistentVolumeUsageCritical
+    - name: persistentvolumeclaim
+      value: scrypted-fast
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/observability.giantswarm.io/silence_v1alpha2.json
+apiVersion: observability.giantswarm.io/v1alpha2
+kind: Silence
+metadata:
+  name: scrypted-fast-pvc-usage-nearfull
+spec:
+  matchers:
+    - name: alertname
+      value: PersistentVolumeUsageNearFull
+    - name: persistentvolumeclaim
+      value: scrypted-fast
