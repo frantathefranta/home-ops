@@ -59,6 +59,7 @@ spec:
               WRTAG_WEB_PUBLIC_URL: https://wrtag.franta.us
               WRTAG_WEB_DB_PATH: /data/wrtag.db
               WRTAG_LOG_LEVEL: debug
+              WRTAG_KEEP_FILE: "origin.yaml"
               WRTAG_PATH_FORMAT:
                 valueFrom:
                   configMapKeyRef:
