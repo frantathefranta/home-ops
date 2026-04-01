@@ -29,7 +29,7 @@ spec:
           app:
             image:
               repository: ghcr.io/home-operations/lidarr
-              tag: 3.1.2.4938@sha256:9df1e14c8e09745f23a36c0cc6adcf69665b379aae60e5a7cb9bda27961ef4e7 
+              tag: 3.1.2.4938@sha256:9df1e14c8e09745f23a36c0cc6adcf69665b379aae60e5a7cb9bda27961ef4e7
             env:
               TZ: America/Detroit
               LIDARR__APP__INSTANCENAME: Lidarr
@@ -76,7 +76,7 @@ spec:
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
-        runAsUser: 568
+        runAsUser: 1000
         runAsGroup: 1003
         fsGroup: 1003
         fsGroupChangePolicy: OnRootMismatch
