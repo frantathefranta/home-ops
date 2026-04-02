@@ -28,7 +28,7 @@ spec:
           app:
             image:
               repository: ghcr.io/tandoorrecipes/recipes
-              tag: 2.6.0@sha256:972b59023b8aa72ed653d99057b93efe235e8b116296604e43c8d843a38c06a7
+              tag: 2.6.2@sha256:96708d9df195457b3194fcfde2aa4a814f3fe28cbb90d0045789555d0d1e8da6
             env:
               TZ: America/Detroit
               DEBUG: 0
