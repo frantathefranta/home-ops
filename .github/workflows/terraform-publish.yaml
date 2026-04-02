@@ -29,7 +29,7 @@ jobs:
           token: ${{ steps.app-token.outputs.token }}
 
       - name: Setup Homebrew
-        uses: Homebrew/actions/setup-homebrew@3c86c261e23eecec568767d3a246cee6b3d8b460 # master
+        uses: Homebrew/actions/setup-homebrew@83bdac2a10b90af5036d2905fd5c2831fefd42bd # master
 
       - name: Setup Workflow Tools
         run: brew install fluxcd/tap/flux
