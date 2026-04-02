@@ -12,7 +12,7 @@
         "minor",
         "patch"
       ],
-      "matchPackagePatterns": [
+      "matchPackageNames": [
         "/kube-prometheus-stack/",
         "/grafana/",
         "/netbox/"
