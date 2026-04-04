@@ -46,7 +46,7 @@ jobs:
       fail-fast: false
     steps:
       - name: Get Secrets
-        uses: akeyless-community/akeyless-github-action@0ac7f752544b2bfc0c60e415bafc2ecf6aa45971 # v1.1.4
+        uses: akeyless-community/akeyless-github-action@b47c5a3fa0898adf2be212a671aa334106fd8d67 # v1.1.5
         with:
           access-id: ${{ secrets.AKEYLESS_ACCESS_ID }}
           access-key: ${{ secrets.AKEYLESS_ACCESS_KEY }}
