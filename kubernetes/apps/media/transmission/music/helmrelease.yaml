@@ -149,7 +149,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: *app
+              - name: transmission-music-app
                 port: *port
       nemorosa:
         hostnames:
@@ -160,7 +160,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: nemorosa
+              - name: transmission-music-nemorosa
                 port: *nemorosaPort
     persistence:
       config:
