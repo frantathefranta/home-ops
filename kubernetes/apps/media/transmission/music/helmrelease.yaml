@@ -161,7 +161,7 @@ spec:
         rules:
           - backendRefs:
               - name: nemorosa
-                port: &nemorosaPort
+                port: *nemorosaPort
     persistence:
       config:
         existingClaim: *app
