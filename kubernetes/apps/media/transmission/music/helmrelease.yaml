@@ -88,6 +88,26 @@ spec:
                   periodSeconds: 10
                   successThreshold: 1
                   timeoutSeconds: 1
+          nemorosa:
+            image:
+              repository: ghcr.io/kyokomiki/nemorosa
+              tag: 0.5.0@sha256:98c9044c5b26844d6cff4b5ab7899cc127b051c38c10746b9d729b20679f0600
+            args:
+              - --server
+            env:
+              TZ: America/Detroit
+            resources:
+              requests:
+                cpu: 50m
+                memory: 100Mi
+              limits:
+                memory: 512Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -111,6 +131,13 @@ spec:
             enabled: true
             port: *peerport
             protocol: TCP
+      nemorosa:
+        controller: transmission
+        ipFamilyPolicy: RequireDualStack
+        ports:
+          http:
+            port: &nemorosaPort 80
+
     route:
       app:
         hostnames:
@@ -124,10 +151,20 @@ spec:
           - backendRefs:
               - name: *app
                 port: *port
-
+      nemorosa:
+        hostnames:
+          - nemorosa.franta.us
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: nemorosa
+                port: *nemorosaPort
     persistence:
       config:
-        existingClaim: transmission-music
+        existingClaim: *app
       tmp:
         type: emptyDir
       media:
@@ -136,6 +173,21 @@ spec:
         path: /emc1/music
         globalMounts:
           - path: /music
+      nemorosa:
+        existingClaim: nemorosa
+        advancedMounts:
+          transmission:
+            nemorosa:
+              - path: /app/data
+      nemorosa-config-file:
+        type: secret
+        name: nemorosa-secret
+        advancedMounts:
+          transmission:
+            nemorosa:
+              - path: /app/data/nemorosa/config.yml
+                subPath: config.yml
+                readOnly: true
       scripts:
         type: configMap
         name: transmission-music-scripts
