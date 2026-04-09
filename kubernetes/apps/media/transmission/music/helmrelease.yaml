@@ -136,7 +136,7 @@ spec:
         ipFamilyPolicy: RequireDualStack
         ports:
           http:
-            port: &nemorosaPort 80
+            port: *nemorosaPort
 
     route:
       app:
