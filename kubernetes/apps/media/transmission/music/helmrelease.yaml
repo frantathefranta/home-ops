@@ -102,12 +102,18 @@ spec:
                 memory: 100Mi
               limits:
                 memory: 512Mi
-            # securityContext:
-            #   allowPrivilegeEscalation: false
-            #   readOnlyRootFilesystem: true
-            #   capabilities:
-            #     drop:
-            #       - ALL
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: &nemorosaPort 80
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 30
+              readiness: *probes
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -133,14 +139,7 @@ spec:
             port: *peerport
             protocol: TCP
           nemorosa:
-            port: &nemorosaPort 8256
-
-      # nemorosa:
-      #   controller: transmission
-      #   ports:
-      #     http:
-      #       port: &nemorosaPort 8256
-
+            port: *nemorosaPort
     route:
       app:
         hostnames:
