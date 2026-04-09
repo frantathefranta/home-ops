@@ -127,15 +127,19 @@ spec:
         ports:
           http:
             port: *port
+            primary: true
           bittorrent:
             enabled: true
             port: *peerport
             protocol: TCP
-      nemorosa:
-        controller: transmission
-        ports:
-          http:
+          nemorosa:
             port: &nemorosaPort 8256
+
+      # nemorosa:
+      #   controller: transmission
+      #   ports:
+      #     http:
+      #       port: &nemorosaPort 8256
 
     route:
       app:
@@ -148,7 +152,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: transmission-music-app
+              - name: transmission-music
                 port: *port
       nemorosa:
         hostnames:
@@ -159,7 +163,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: transmission-music-nemorosa
+              - name: transmission-music
                 port: *nemorosaPort
     persistence:
       config:
