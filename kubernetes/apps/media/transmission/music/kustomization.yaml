@@ -6,6 +6,7 @@ resources:
   - ./helmrelease.yaml
   - ./networkpolicy.yaml
   - ./externalsecret.yaml
+  - ./pvc.yaml
 configMapGenerator:
   - name: transmission-loki-rules
     files:
