@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+echo "[transmission-complete] Contacting nemorosa for $${TR_TORRENT_NAME}"
+curl -XPOST http://localhost:8256/api/webhook?infohash=$$TR_TORRENT_HASH -H "Authorization: Bearer $${NEMOROSA_API_KEY}"
+
 if echo "$${TR_TORRENT_TRACKERS}" | grep -q "flacsfor.me"; then
     TRACKER="red"
 elif echo "$${TR_TORRENT_TRACKERS}" | grep -q "home.opsfet.ch"; then
