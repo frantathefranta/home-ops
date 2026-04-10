@@ -43,18 +43,14 @@ spec:
             readOnlyRootFilesystem: true
             capabilities:
               drop: [ALL]
-
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
           app:
             image:
-              repository: ghcr.io/frantathefranta/wrtag
-              tag: master@sha256:3925dce0b3539199c5ee2dd58ff8d551d56e520682c97308775bb38513868b91
+              repository: ghcr.io/sentriz/wrtag
+              tag: v0.30.0@sha256:71829ef1ebec03e012343bc02036d3c566acf1c3f34de3fc552675c4525046f4
             env:
-              WRTAG_WEB_API_KEY:
-                valueFrom:
-                  secretKeyRef:
-                    name: wrtag-secret
-                    key: WRTAG_API_KEY
               WRTAG_WEB_LISTEN_ADDR: ":80"
               WRTAG_WEB_PUBLIC_URL: https://wrtag.franta.us
               WRTAG_WEB_DB_PATH: /data/wrtag.db
@@ -65,23 +61,9 @@ spec:
                   configMapKeyRef:
                     name: wrtag-config
                     key: path_format
-
-            # probes:
-            #   liveness: &probes
-            #     enabled: true
-            #     custom: true
-            #     spec:
-            #       httpGet:
-            #         path: /
-            #         port: 80
-            #       initialDelaySeconds: 0
-            #       periodSeconds: 10
-            #       timeoutSeconds: 1
-            #       failureThreshold: 3
-            #   readiness: *probes
-            #   startup:
-            #     enabled: false
-
+            envFrom:
+              - secretRef:
+                  name: wrtag-secret
             resources:
               requests:
                 cpu: 10m
