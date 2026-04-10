@@ -21,7 +21,8 @@ fi
 
 # Lidarr's "Import Extra Files" functionality doesn't work currently: https://github.com/lidarr/Lidarr/issues/484
 # This is a workaround for origin.yaml file that gets generated in transmission-music
-ORIGIN_SRC="$(grep -rl "$${lidarr_download_id:-}" /music/downloads/lidarr/*/origin.yaml 2>/dev/null | head -1 || true)"
+echo "[lidarr-wrtag] Searching for origin.yaml with hash $${lidarr_download_id:-}"
+ORIGIN_SRC="$(grep -irl "$${lidarr_download_id:-}" /music/downloads/lidarr/*/origin.yaml 2>/dev/null | head -1 || true)"
 if [[ -n "$${ORIGIN_SRC}" ]]; then
     echo "[lidarr-wrtag] Copying origin.yaml from $${ORIGIN_SRC} to $${ALBUM_DIR}"
     cp "$${ORIGIN_SRC}" "$${ALBUM_DIR}/origin.yaml"
