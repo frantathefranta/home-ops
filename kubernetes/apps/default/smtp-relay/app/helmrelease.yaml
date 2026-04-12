@@ -29,7 +29,7 @@ spec:
           app:
             image:
               repository: ghcr.io/foxcpp/maddy
-              tag: 0.7.1@sha256:6ab538e2f28baf2324f7cb418c7f9476fd9c7e9fa9b14bc3aecf51a9f6962064 # FIXME: This needs to be included in next release: https://github.com/foxcpp/maddy/pull/760
+              tag: 0.9.3@sha256:2ce7ce6343816c8c96056776dd06660987d97ada96d31163cdd968d62e496a12 # FIXME: This needs to be included in next release: https://github.com/foxcpp/maddy/pull/760
             env:
               SMTP_RELAY_SMTP_PORT: &port 25
               SMTP_RELAY_METRICS_PORT: &metricsPort 8080
