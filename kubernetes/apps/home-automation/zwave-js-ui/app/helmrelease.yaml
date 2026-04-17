@@ -37,7 +37,8 @@ spec:
               [{
                 "name":"multus-iot",
                 "namespace": "network",
-                "ips": ["10.0.50.211/24"]
+                "ips": ["10.0.50.211/24"],
+                "mac": "10:62:e5:18:1a:30"
               }]
         annotations:
           reloader.stakater.com/auto: "true"
