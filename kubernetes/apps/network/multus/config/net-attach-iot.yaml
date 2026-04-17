@@ -25,6 +25,9 @@ spec:
           }
         },
         {
+          "type": "sbr"
+        },
+        {
           "capabilities": { "mac": true },
           "type": "tuning",
           "sysctl": {
