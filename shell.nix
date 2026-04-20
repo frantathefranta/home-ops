@@ -6,7 +6,7 @@ mkShell {
   buildInputs = [
     git
     yaml-language-server
-    helm
+    kubernetes-helm
     helm-ls
   ];
   KUBECONFIG = toString ./. + "/kubernetes/kubeconfig";
