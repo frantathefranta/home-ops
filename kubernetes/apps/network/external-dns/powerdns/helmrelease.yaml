@@ -43,7 +43,7 @@ spec:
       - --pdns-api-key=$(PDNS_API_KEY)
     triggerLoopOnEvent: true
     policy: sync
-    sources: ["gateway-httproute"]
+    sources: ["gateway-httproute", "service"]
     txtPrefix: k8s.talos-maxi.
     txtOwnerId: default
     domainFilters: ["franta.us"]
