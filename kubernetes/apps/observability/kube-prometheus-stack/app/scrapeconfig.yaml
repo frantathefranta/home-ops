@@ -8,7 +8,6 @@ spec:
   staticConfigs:
     - targets:
         - platinum.infra.franta.us:9100
-        - opnsense.infra.franta.us:9100
         - actinium.infra.franta.us:9100
         - thorium.infra.franta.us:9100
         - protactinium.infra.franta.us:9100
@@ -47,6 +46,21 @@ spec:
     - targets:
         - 10.32.10.242:9324
   metricsPath: /metrics
+  relabelings:
+    - action: replace
+      targetLabel: job
+      replacement: *name
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/scrapeconfig_v1alpha1.json
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ScrapeConfig
+metadata:
+  name: &name nut-exporter
+spec:
+  staticConfigs:
+    - targets:
+        - nut.infra.franta.us:9199
+  metricsPath: /ups_metrics
   relabelings:
     - action: replace
       targetLabel: job
