@@ -38,7 +38,6 @@ spec:
     extraArgs:
       - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
       - --crd-source-kind=DNSEndpoint
-      - --gateway-name=internal
       - --pdns-server=http://10.0.10.1:8081
       - --pdns-api-key=$(PDNS_API_KEY)
     triggerLoopOnEvent: true
