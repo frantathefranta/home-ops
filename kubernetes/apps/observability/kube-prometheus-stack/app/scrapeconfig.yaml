@@ -60,8 +60,18 @@ spec:
   staticConfigs:
     - targets:
         - nut.infra.franta.us:9199
+      labels:
+        ups: "apc-rack-pdu01"
+    - targets:
+        - nut.infra.franta.us:9199
+      labels:
+        ups: "apc-usb"
   metricsPath: /ups_metrics
   relabelings:
     - action: replace
       targetLabel: job
       replacement: *name
+    - sourceLabels: [ups]
+      targetLabel: __param_ups
+    - sourceLabels: [ups]
+      targetLabel: instance
