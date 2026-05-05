@@ -10,7 +10,7 @@ spec:
     - advertisementType: "Service"
       service:
         aggregationLengthIPv4: 24
-        aggregationLengthIPv6: 112
+        # aggregationLengthIPv6: 112
         addresses:
           - ExternalIP
           - LoadBalancerIP
