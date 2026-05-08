@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: democratic-csi
-      version: 0.14.7
+      version: 0.15.1
       sourceRef:
         kind: HelmRepository
         name: democratic-csi-charts
@@ -27,14 +27,18 @@ spec:
 
     controller:
       driver:
-        image: ghcr.io/democratic-csi/democratic-csi:v1.9.5
+        image:
+          registry: ghcr.io/democratic-csi/democratic-csi
+          tag: v1.9.5@sha256:fc3b7d7ed3a616714139525075312758e23a5d425ffb539ad12c9bd20fb6001f
       annotations:
         reloader.stakater.com/auto: "true"
 
     node:
       hostPID: true
       driver:
-        image: ghcr.io/democratic-csi/democratic-csi:v1.9.5
+        image:
+          registry: ghcr.io/democratic-csi/democratic-csi
+          tag: v1.9.5@sha256:fc3b7d7ed3a616714139525075312758e23a5d425ffb539ad12c9bd20fb6001f
         extraEnv:
           - name: ISCSIADM_HOST_STRATEGY
             value: nsenter
@@ -44,7 +48,9 @@ spec:
         iscsiDirHostPathType: ""
 
     csiProxy:
-      image: ghcr.io/democratic-csi/csi-grpc-proxy:v0.5.7
+      image:
+        registry: ghcr.io/democratic-csi/csi-grpc-proxy
+        tag: v0.5.7@sha256:0240d0fba3cedd598036766b1865e88aa2eac9c16822df03d5d912a81128ebb6
 
     storageClasses:
       - name: zfs-iscsi
