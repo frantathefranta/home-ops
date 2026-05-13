@@ -21,6 +21,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    defaultPodOptions:
+      automountServiceAccountToken: true
     controllers:
       k8s-gateway:
         replicas: 2
