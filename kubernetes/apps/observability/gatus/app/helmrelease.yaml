@@ -18,6 +18,8 @@ spec:
     remediation:
       retries: 3
   values:
+    defaultPodOptions:
+      automountServiceAccountToken: true
     controllers:
       gatus:
         type: statefulset
