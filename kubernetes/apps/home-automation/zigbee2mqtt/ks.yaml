@@ -17,8 +17,8 @@ spec:
       namespace: rook-ceph-external
     - name: external-secrets
       namespace: external-secrets
-    - name: emqx-cluster
-      namespace: database
+    - name: mosquitto
+      namespace: home-automation
   path: "./kubernetes/apps/home-automation/zigbee2mqtt/app"
   prune: true
   sourceRef:
