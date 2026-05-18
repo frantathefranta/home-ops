@@ -52,7 +52,7 @@ sonarr:
           - 82d40da2bc6923f41e14394075dd4b03 # No-RlsGroup
           - e1a997ddb54e3ecbfe06341ad323c458 # Obfuscated
           - 06d66ab109d4d2eddb2794d21526d140 # Retags
-          - 6f808933a71bd9666531610cb8c059cc # BR-DISK (BTN)
+          # - 6f808933a71bd9666531610cb8c059cc # BR-DISK (BTN)
         assign_scores_to:
           - name: WEB-2160p
           - name: WEB-1080p
