@@ -39,7 +39,7 @@ spec:
               QBT_TORRENTING_PORT: &bittorrentPort 18903
             probes:
               liveness: &probes
-                enabled: false
+                enabled: true
                 custom: true
                 spec:
                   httpGet:
