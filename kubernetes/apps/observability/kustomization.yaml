@@ -11,6 +11,8 @@ resources:
   - ./prometheus-operator-crds/ks.yaml
   - ./kromgo/ks.yaml
   - ./silence-operator/ks.yaml
+  - ./prometheus-adapter/ks.yaml
+  - ./blackbox-exporter/ks.yaml
   - ./exporters
 components:
   - ../../components/common
