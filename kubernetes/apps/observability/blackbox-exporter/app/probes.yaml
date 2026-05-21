@@ -12,10 +12,6 @@ spec:
     staticConfig:
       static:
         - actinium.infra.franta.us
-  metricRelabelings:
-    - targetLabel: service
-      replacement: blackbox-exporter
-      action: replace
 ---
 # yaml-language-server: $schema=https://k8s-schemas.home-operations.com/monitoring.coreos.com/probe_v1.json
 apiVersion: monitoring.coreos.com/v1
@@ -31,10 +27,6 @@ spec:
     staticConfig:
       static:
         - actinium-nfs.infra.franta.us:2049
-  # metricRelabelings:
-  #   - targetLabel: service
-  #     replacement: blackbox-exporter
-  #     action: replace
 ---
 # yaml-language-server: $schema=https://k8s-schemas.home-operations.com/monitoring.coreos.com/probe_v1.json
 apiVersion: monitoring.coreos.com/v1
@@ -50,7 +42,3 @@ spec:
     staticConfig:
       static:
         - 10.0.50.40
-  metricRelabelings:
-    - targetLabel: service
-      replacement: blackbox-exporter
-      action: replace
