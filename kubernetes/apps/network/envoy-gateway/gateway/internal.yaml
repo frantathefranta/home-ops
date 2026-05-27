@@ -1,0 +1,49 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/gateway.networking.k8s.io/gateway_v1.json
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: envoy-internal
+  annotations:
+    external-dns.alpha.kubernetes.io/target: &hostname ingress-internal.franta.us
+    gatus.home-operations.com/endpoint: |-
+      group: internal
+      guarded: true
+      ui:
+        hide-hostname: true
+        hide-url: true
+spec:
+  gatewayClassName: envoy
+  infrastructure:
+    annotations:
+      external-dns.alpha.kubernetes.io/hostname: *hostname
+      lbipam.cilium.io/ips: 10.33.40.13,${CLUSTER_LBA_V6_PREFIX}:13
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
+      allowedRoutes:
+        namespaces:
+          from: Same
+    - name: https
+      protocol: HTTPS
+      port: 443
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        certificateRefs:
+          - kind: Secret
+            name: franta.us-production-tls
+            namespace: kube-system
+    - name: ssh
+      protocol: TCP
+      port: 22
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              kubernetes.io/metadata.name: default
+        kinds:
+          - kind: TCPRoute
