@@ -34,8 +34,7 @@ spec:
       tls:
         certificateRefs:
           - kind: Secret
-            name: franta.us-production-tls
-            namespace: kube-system
+            name: envoy-certificate-franta.us
     - name: ssh
       protocol: TCP
       port: 22
