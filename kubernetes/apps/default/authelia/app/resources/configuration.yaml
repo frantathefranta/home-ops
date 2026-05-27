@@ -123,6 +123,15 @@ identity_providers:
         redirect_uris:
           ["https://recipes.franta.us/accounts/oidc/authelia/login/callback/"]
         userinfo_signed_response_alg: none
+      - client_name: Forgejo
+        client_id: "forgejo"
+        client_secret: '{{ secret "/config/oidc-secret/oidc-client-forgejo" }}'
+        public: false
+        pre_configured_consent_duration: 1y
+        scopes: ["openid", "profile", "groups", "email"]
+        redirect_uris:
+          ["https://git.franta.us/accounts/oidc/authelia/login/callback/"]
+        userinfo_signed_response_alg: none
       - client_name: Lubelog
         client_id: lubelog
         client_secret: '{{ secret "/config/oidc-secret/oidc-client-lubelog" }}'
