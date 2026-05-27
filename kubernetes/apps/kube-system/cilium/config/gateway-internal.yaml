@@ -33,14 +33,3 @@ spec:
         certificateRefs:
           - kind: Secret
             name: franta.us-production-tls
-    - name: ssh
-      protocol: TCP
-      port: 22
-      allowedRoutes:
-        namespaces:
-          from: Selector
-          selector:
-            matchLabels:
-              kubernetes.io/metadata.name: default
-        kinds:
-          - kind: TCPRoute
