@@ -3,7 +3,8 @@ locals {
     "postgresql",
     "volsync",
     "dragonfly",
-    "netbox"
+    "netbox",
+    "forgejo"
   ]
 }
 
