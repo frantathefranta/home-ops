@@ -71,6 +71,8 @@ spec:
                   cpu: 75
                   memory: 75
                   pods: 80
+                metricsUtilization:
+                  metricsServer: true
           plugins:
             balance:
               enabled:
