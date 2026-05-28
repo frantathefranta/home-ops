@@ -102,8 +102,8 @@ spec:
       hostnames:
         - "git.franta.us"
       parentRefs:
-        - name: internal
-          namespace: kube-system
+        - name: envoy-internal
+          namespace: network
     image:
       rootless: true
       registry: code.forgejo.org
@@ -118,6 +118,6 @@ spec:
     tcpRoute:
       enabled: true
       parentRefs:
-        - name: internal
-          namespace: kube-system
+        - name: envoy-internal
+          namespace: network
           sectionName: ssh
