@@ -7,8 +7,8 @@ metadata:
 spec:
   targetNamespace: media
   components:
-
     - ../../../../components/volsync
+    - ../../../../components/zeroscaler
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
