@@ -1,0 +1,12 @@
+---
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: "envoy-gateway-allow-ingress"
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: envoy
+  ingress:
+  - fromEntities:
+    - "world"

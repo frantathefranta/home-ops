@@ -22,6 +22,7 @@ spec:
               memory: 2Gi
       envoyService:
         externalTrafficPolicy: Local
+  ipFamily: DualStack
   shutdown:
     drainTimeout: 180s
   telemetry:

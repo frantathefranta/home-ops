@@ -14,6 +14,8 @@ spec:
       admin:
         username: ""
       config:
+        ui:
+          DEFAULT_THEME: forgejo-dark-deuteranopia-protanopia
         cache:
           ENABLED: true
           ADAPTER: redis
@@ -79,7 +81,7 @@ spec:
       oauth:
         - name: authelia
           # adminGroup: forgejo_admins@auth.franta.us
-          autoDiscoverUrl: https://auth.franta.us/forgejo/.well-known/openid-configuration
+          autoDiscoverUrl: https://auth.franta.us/.well-known/openid-configuration
           existingSecret: forgejo-auth-oidc
           groupClaimName: groups
           provider: openidConnect
@@ -102,8 +104,9 @@ spec:
       hostnames:
         - "git.franta.us"
       parentRefs:
-        - name: internal
-          namespace: kube-system
+        - name: envoy-internal
+          namespace: network
+          sectionName: https
     image:
       rootless: true
       registry: code.forgejo.org
@@ -118,6 +121,6 @@ spec:
     tcpRoute:
       enabled: true
       parentRefs:
-        - name: internal
-          namespace: kube-system
+        - name: envoy-internal
+          namespace: network
           sectionName: ssh
