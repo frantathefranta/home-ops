@@ -44,6 +44,13 @@ spec:
               - -c
               - |
                 restic backup --verbose /music/stereo --group-by 'paths' && restic forget --keep-daily 1 --keep-weekly 1 --keep-monthly 6 --prune --group-by 'paths'
+            resources:
+              requests:
+                cpu: 10m
+                memory: 250Mi
+              limits:
+                cpu: 1000m
+                memory: 1Gi
 
     defaultPodOptions:
       securityContext:
