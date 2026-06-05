@@ -1,0 +1,13 @@
+---
+machine:
+  type: worker
+---
+apiVersion: v1alpha1
+kind: HostnameConfig
+hostname: talos-g3-mini
+---
+apiVersion: v1alpha1
+kind: LinkAliasConfig
+name: net0
+selector:
+  match: link.driver == "e1000e"

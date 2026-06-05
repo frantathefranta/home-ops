@@ -1,0 +1,13 @@
+---
+machine:
+  type: worker
+---
+apiVersion: v1alpha1
+kind: HostnameConfig
+hostname: talos-n150-01
+---
+apiVersion: v1alpha1
+kind: LinkAliasConfig
+name: net0
+selector:
+  match: link.driver == "r8169" && mac(link.permanent_addr).endsWith(":26")

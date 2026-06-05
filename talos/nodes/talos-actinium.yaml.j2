@@ -1,0 +1,15 @@
+---
+machine:
+  type: controlplane
+  nodeLabels:
+    topology.kubernetes.io/zone: actinium
+---
+apiVersion: v1alpha1
+kind: HostnameConfig
+hostname: talos-actinium
+---
+apiVersion: v1alpha1
+kind: LinkAliasConfig
+name: net0
+selector:
+  match: link.driver == "mlx5_core"

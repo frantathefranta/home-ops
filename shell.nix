@@ -11,6 +11,8 @@ mkShell {
     just
     gum
     talosctl
+    yq
+    vals
   ];
   KUBECONFIG = toString ./. + "/kubernetes/kubeconfig";
 }
