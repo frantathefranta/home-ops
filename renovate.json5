@@ -5,6 +5,7 @@
     "github>frantathefranta/home-ops//.renovate/groups.json5",
     "github>frantathefranta/home-ops//.renovate/autoMerge.json5",
     "github>frantathefranta/home-ops//.renovate/grafanaDashboards.json5",
+    "github>frantathefranta/home-ops//.renovate/talosFactory.json5",
   ],
   ignorePaths: [
     "**/.archive/**",
