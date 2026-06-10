@@ -12,6 +12,8 @@ spec:
     staticConfig:
       static:
         - actinium.infra.franta.us
+        - thorium.infra.franta.us
+        - protactinium.infra.franta.us
         - amcrest-garage.internal
         - camera-sunroom.internal
         - camera-yard.internal
