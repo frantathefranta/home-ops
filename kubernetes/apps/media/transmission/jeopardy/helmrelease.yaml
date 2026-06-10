@@ -32,7 +32,7 @@ spec:
           app:
             image:
               repository: ghcr.io/frantathefranta/transmission
-              tag: 4.1.1@sha256:c982dd821c0539b2a36d000e129bfa5aa02521fa5b078120bc2a9ec64704de06
+              tag: 4.1.2@sha256:c67b7d3efd10678a3441245b71bf3dec8f2b174d4d47fafaa00965da2f4d3bce
             env:
               TZ: America/Detroit
               TRANSMISSION__BLOCKLIST_URL: "https://mirror.codebucket.de/transmission/blocklist.p2p.gz"
