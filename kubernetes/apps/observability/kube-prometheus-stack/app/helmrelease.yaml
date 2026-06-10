@@ -152,7 +152,7 @@ spec:
         #   - memory-snapshot-on-shutdown
         #   - new-service-discovery-manager
         retention: 14d
-        retentionSize: 15GB
+        retentionSize: 50GB
         resources:
           requests:
             cpu: 100m
