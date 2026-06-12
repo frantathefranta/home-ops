@@ -13,6 +13,8 @@ spec:
     gitea:
       admin:
         username: ""
+      ssh:
+        logLevel: DEBUG
       config:
         ui:
           DEFAULT_THEME: forgejo-dark-deuteranopia-protanopia
