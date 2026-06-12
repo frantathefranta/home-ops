@@ -40,9 +40,9 @@ spec:
       port: 22
       allowedRoutes:
         namespaces:
-          from: Selector
-          selector:
-            matchLabels:
-              kubernetes.io/metadata.name: default
+          from: All
+          # selector:
+          #   matchLabels:
+          #     kubernetes.io/metadata.name: default
         kinds:
           - kind: TCPRoute
