@@ -120,6 +120,7 @@ spec:
     service:
       ssh:
         port: *sshPort
+        ipFamilyPolicy: RequireDualStack
     tcpRoute:
       enabled: true
       parentRefs:
