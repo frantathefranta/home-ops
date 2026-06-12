@@ -16,6 +16,7 @@ spec:
       ssh:
         logLevel: DEBUG
       config:
+        # https://forgejo.org/docs/latest/admin/config-cheat-sheet
         ui:
           DEFAULT_THEME: forgejo-dark-deuteranopia-protanopia
         cache:
@@ -33,7 +34,11 @@ spec:
         lfs:
           PATH: /data/git/lfs
         mailer:
-          ENABLED: false
+          ENABLED: true
+          FROM: "Franta Forgejo <forgejo@franta.dev>"
+          PROTOCOL: smtp
+          SMTP_ADDR: smtp-relay
+          SMTP_PORT: 25
         openid:
           ENABLE_OPENID_SIGNIN: false
           ENABLE_OPENID_SIGNUP: false
@@ -69,6 +74,7 @@ spec:
           ENABLE_INTERNAL_SIGNIN: false
           ENABLE_PASSWORD_SIGNIN_FORM: false
           SHOW_REGISTRATION_BUTTON: false
+          ENABLE_NOTIFY_MAIL: true
         service.explore:
           DISABLE_CODE_PAGE: false
           DISABLE_ORGANIZATIONS_PAGE: true
