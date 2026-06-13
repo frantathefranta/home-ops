@@ -21,7 +21,7 @@ spec:
       tqm:
         type: cronjob
         cronjob:
-          schedule: "@hourly"
+          schedule: "25 * * * *"
           timeZone: America/Detroit
           concurrencyPolicy: Forbid
           successfulJobsHistory: 1
