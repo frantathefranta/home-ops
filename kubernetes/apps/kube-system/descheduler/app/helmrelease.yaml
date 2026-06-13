@@ -58,7 +58,7 @@ spec:
                 targetThresholds:
                   cpu: 75
                   memory: 75
-                  pods: 80
+                  # pods: 80
                 metricsUtilization:
                   source: KubernetesMetrics
           plugins:
