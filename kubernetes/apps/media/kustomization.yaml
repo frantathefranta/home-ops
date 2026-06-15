@@ -5,7 +5,7 @@ kind: Kustomization
 namespace: media
 resources:
   - ./autobrr/ks.yaml
-  # - ./bazarr/ks.yaml
+  - ./bazarr/ks.yaml
   - ./beets/ks.yaml
   - ./cross-seed-jeopardy/ks.yaml
   - ./cross-seed/ks.yaml
