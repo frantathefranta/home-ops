@@ -4,7 +4,6 @@ kind: Kustomization
 namespace: network
 resources:
   - ./cloudflared/ks.yaml
-  - ./echo-server/ks.yaml
   - ./external-dns/ks.yaml
   - ./k8s-gateway/ks.yaml
   - ./multus/ks.yaml
