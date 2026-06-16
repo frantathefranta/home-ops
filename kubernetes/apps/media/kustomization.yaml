@@ -19,7 +19,7 @@ resources:
   - ./recyclarr/ks.yaml
   - ./sonarr/ks.yaml
   - ./tautulli/ks.yaml
-  # - ./tqm/ks.yaml
+  - ./tqm/ks.yaml
   - ./transmission/ks.yaml
   - ./wrtag/ks.yaml
 components:
