@@ -13,6 +13,7 @@ resources:
   - ./silence-operator/ks.yaml
   - ./prometheus-adapter/ks.yaml
   - ./blackbox-exporter/ks.yaml
+  - ./victoria-logs/ks.yaml
   # - ./exporters
 components:
   - ../../components/common
