@@ -13,6 +13,9 @@ spec:
         - protactinium.infra.franta.us:9100
         - hass.franta.us:9100 # Home Assistant
         - nix-bastion.infra.franta.us:9100
+        - hydrogen.infra.franta.us:9100
+        - nixos-firewall.infra.franta.us:9100
+        - qotom.infra.franta.us:9100
   metricsPath: /metrics
   relabelings:
     - action: replace
