@@ -84,6 +84,8 @@ spec:
         - 2600:1702:6630:3fef:4040:1::/96
   http2:
     onInvalidMessage: TerminateStream
+  path:
+    escapedSlashesAction: KeepUnchanged
   http3: {}
   proxyProtocol:
     optional: true
