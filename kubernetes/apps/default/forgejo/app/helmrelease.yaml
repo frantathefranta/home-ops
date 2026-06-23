@@ -112,7 +112,7 @@ spec:
       hostnames:
         - "git.franta.us"
       parentRefs:
-        - name: envoy-internal
+        - name: envoy-external
           namespace: network
           sectionName: https
     image:
@@ -130,6 +130,6 @@ spec:
     tcpRoute:
       enabled: true
       parentRefs:
-        - name: envoy-internal
+        - name: envoy-external
           namespace: network
           sectionName: ssh
