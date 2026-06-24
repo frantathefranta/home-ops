@@ -11,6 +11,7 @@ resources:
   - ./podmonitor.yaml
   - ./externalsecret.yaml # TODO: Only here because I don't want to deal with reflecting secrets
   - ./networkpolicy.yaml
+  - ./grafanadashboard.yaml
 configMapGenerator:
   - name: envoy-external-extensions
     files:
