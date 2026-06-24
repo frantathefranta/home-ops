@@ -84,8 +84,9 @@ spec:
         - 2600:1702:6630:3fef:4040:1::/96
   http2:
     onInvalidMessage: TerminateStream
+  # This is necessary because of renovate checks
   path:
-    escapedSlashesAction: KeepUnchanged
+    escapedSlashesAction: KeepUnchanged # ref: https://github.com/envoyproxy/gateway/issues/4848
   http3: {}
   proxyProtocol:
     optional: true
