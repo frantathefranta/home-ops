@@ -249,7 +249,7 @@ patches:
     machine:
       time:
         disabled: false
-        servers: ["192.168.247.254", "10.33.0.1"]
+        servers: ["time.cloudflare.com", "192.168.247.254", "10.33.0.1"]
 
   # Custom sysctl settings
   - |-
@@ -266,7 +266,7 @@ patches:
         net.ipv4.tcp_fastopen: "3" # Send and accept data in the opening SYN packet
         # net.ipv4.tcp_mtu_probing: 1 # Jumbo frames
         net.ipv6.conf.bond0.accept_ra: "2"
-        net.ipv6.conf.all.accept_ra: "2"
+        net.ipv6.conf.all.accept_ra: "0"
         net.ipv6.conf.all.forwarding: "1"
         # net.ipv4.tcp_rmem: 4096 131072 33554432  # 1K, 128K, 32M; QUIC and 10 Gbps
         # net.ipv4.tcp_wmem: 4096 131072 33554432  # 1K, 128K, 32M; QUIC and 10 Gbps

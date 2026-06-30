@@ -1,4 +1,4 @@
-{ pkgs ? import <nixpkgs> {} }:
+{ pkgs ? import <nixpkgs-unstable> {} }:
 
 with pkgs;
 
@@ -13,6 +13,9 @@ mkShell {
     talosctl
     yq
     vals
+    talhelper
+    cilium-cli
   ];
   KUBECONFIG = toString ./. + "/kubernetes/kubeconfig";
+  TALOSCONFIG = toString ./. + "/talos/clusterconfig/talosconfig";
 }
