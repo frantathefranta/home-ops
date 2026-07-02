@@ -60,6 +60,23 @@ spec:
 apiVersion: monitoring.coreos.com/v1alpha1
 kind: ScrapeConfig
 metadata:
+  name: &name wireguard-exporter
+spec:
+  staticConfigs:
+    - targets:
+        - molybdenum.infra.franta.us:9586
+        - nix-vultr.cloud.franta.us:9586
+        - nix-hetzner.cloud.franta.us:9586
+  metricsPath: /metrics
+  relabelings:
+    - action: replace
+      targetLabel: job
+      replacement: *name
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/scrapeconfig_v1alpha1.json
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ScrapeConfig
+metadata:
   name: &name nut-exporter
 spec:
   staticConfigs:
