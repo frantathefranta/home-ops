@@ -972,6 +972,21 @@
                 "value": 119
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Prefixes Preferred"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "basic",
+                  "type": "gauge"
+                }
+              }
+            ]
           }
         ]
       },
@@ -1039,6 +1054,21 @@
           "legendFormat": "__auto",
           "range": false,
           "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "bird_protocol_prefix_preferred_count{ip_version=\"$ip_version\", instance=\"$instance:9324\", proto=\"BGP\", name=~\".*bgp.*\"}",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "{{label_name}}",
+          "range": false,
+          "refId": "E"
         },
         {
           "datasource": {
@@ -1126,16 +1156,16 @@
             },
             "includeByName": {},
             "indexByName": {
-              "Time 1": 3,
-              "Time 2": 7,
+              "Time 1": 2,
+              "Time 2": 6,
               "Time 3": 12,
               "Time 4": 17,
               "Value #A": 1,
-              "Value #B": 11,
+              "Value #B": 10,
               "Value #C": 16,
-              "Value #D": 2,
-              "__name__ 1": 4,
-              "__name__ 2": 8,
+              "Value #E": 11,
+              "__name__ 1": 3,
+              "__name__ 2": 7,
               "__name__ 3": 13,
               "__name__ 4": 18,
               "export_filter 1": 21,
@@ -1146,16 +1176,16 @@
               "import_filter 2": 27,
               "import_filter 3": 31,
               "import_filter 4": 35,
-              "instance 1": 5,
-              "instance 2": 9,
+              "instance 1": 4,
+              "instance 2": 8,
               "instance 3": 14,
               "instance 4": 19,
               "ip_version 1": 23,
               "ip_version 2": 28,
               "ip_version 3": 32,
               "ip_version 4": 36,
-              "job 1": 6,
-              "job 2": 10,
+              "job 1": 5,
+              "job 2": 9,
               "job 3": 15,
               "job 4": 20,
               "name": 0,
@@ -1171,6 +1201,7 @@
               "Value #B": "Prefixes Received",
               "Value #C": "Prefixes Advertised",
               "Value #D": "State Duration",
+              "Value #E": "Prefixes Preferred",
               "name": "Peer",
               "peer": "Peer IP",
               "peer_as 1": "Peer AS",
