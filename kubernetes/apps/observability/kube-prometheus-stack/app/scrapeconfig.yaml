@@ -47,7 +47,7 @@ metadata:
 spec:
   staticConfigs:
     - targets:
-        - 10.32.10.242:9324
+        - molybdenum.infra.franta.us:9324
   metricsPath: /metrics
   relabelings:
     - action: replace
