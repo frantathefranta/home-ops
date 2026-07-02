@@ -48,6 +48,8 @@ spec:
   staticConfigs:
     - targets:
         - molybdenum.infra.franta.us:9324
+        - nix-vultr.cloud.franta.us:9324
+        - nix-hetzner.cloud.franta.us:9324
   metricsPath: /metrics
   relabelings:
     - action: replace
