@@ -91,7 +91,7 @@ spec:
           nemorosa:
             image:
               repository: ghcr.io/kyokomiki/nemorosa
-              tag: 0.5.0@sha256:98c9044c5b26844d6cff4b5ab7899cc127b051c38c10746b9d729b20679f0600
+              tag: 0.5.1@sha256:cc0f7be1dd92277d2f6c82d96e8d772bb73ead75b79590fc51f32430ddeae9d4
             args:
               - --server
             env:
