@@ -119,7 +119,7 @@ spec:
       rootless: true
       registry: code.forgejo.org
       repository: forgejo/forgejo
-      tag: 16.0.0-rootless
+      tag: 16.0.1-rootless
     persistence:
       create: false
       claimName: forgejo
