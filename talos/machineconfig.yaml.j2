@@ -48,9 +48,9 @@ machine:
   install:
     disk: /dev/sda
     {% if ENV.CONTROLPLANE %}
-    image: factory.talos.dev/nocloud/{{ ENV.SCHEMATIC }}:v1.13.6
+    image: factory.talos.dev/nocloud/{{ ENV.SCHEMATIC }}:v1.13.7
     {% else %}
-    image: factory.talos.dev/metal-installer/{{ ENV.SCHEMATIC }}:v1.13.6
+    image: factory.talos.dev/metal-installer/{{ ENV.SCHEMATIC }}:v1.13.7
     {% endif %}
     wipe: false
   kernel:
