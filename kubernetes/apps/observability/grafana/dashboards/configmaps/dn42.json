@@ -1507,128 +1507,7 @@
           },
           "unit": "bps"
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "wg1 In"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Tech9 In"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "wg1 Out"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Tech9 Out"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "wg2 In"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Kioubit In"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "wg2 Out"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Kioubit Out"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "wg3 In"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "RoutedBits - In"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "wg3 Out"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "RoutedBits - Out"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "wg4 In"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "iEdon - In"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "wg4 Out"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "iEdon - Out"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "wg5 In"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "9PFS - In"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "wg5 Out"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "9PFS - Out"
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 7,
@@ -1668,12 +1547,13 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "irate(ifHCInOctets{job=~\"snmp.*\",instance=\"$instance\",ifName=~\"wg.*\",ifAlias!~\"Home\"}[$__rate_interval])*8",
+          "expr": "irate(wireguard_received_bytes_total{instance=\"$instance:9586\"}[$__rate_interval])*8",
           "format": "time_series",
+          "hide": false,
           "intervalFactor": 1,
-          "legendFormat": "{{ifAlias}} In",
+          "legendFormat": "{{interface}} In",
           "range": true,
-          "refId": "A",
+          "refId": "C",
           "step": 240
         },
         {
@@ -1682,12 +1562,13 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "-irate(ifHCOutOctets{job=~\"snmp.*\",instance=\"$instance\",ifName=~\"wg.*\",ifAlias!~\"Home\"}[$__rate_interval])*8",
+          "expr": "-irate(wireguard_sent_bytes_total{instance=\"$instance:9586\"}[$__rate_interval])*8",
           "format": "time_series",
+          "hide": false,
           "intervalFactor": 1,
-          "legendFormat": "{{ifAlias}} Out",
+          "legendFormat": "{{interface}} Out",
           "range": true,
-          "refId": "B",
+          "refId": "D",
           "step": 240
         }
       ],
@@ -1859,5 +1740,5 @@
   "timezone": "browser",
   "title": "BGP Core",
   "uid": "febdct8udhywwf",
-  "version": 1
+  "version": 2
 }
