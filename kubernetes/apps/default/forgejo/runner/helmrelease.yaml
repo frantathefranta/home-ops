@@ -1,0 +1,136 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: forgejo-runner
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: forgejo-runner
+  interval: 30m
+  values:
+    forgejo:
+      url: http://forgejo-http.default.svc.cluster.local:3000
+      existingSecret: forgejo-runner-secret
+    image:
+      repository: registry.erwanleboucher.dev/eleboucher/runner
+      tag: 12.13.0
+    plugin:
+      image:
+        repository: registry.erwanleboucher.dev/eleboucher/runner-k8s-plugin
+    podLabels:
+      app.kubernetes.io/component: forgejo-runner
+    runnerConfig: |
+      cache:
+        enabled: true
+        dir: /data/cache
+        port: 8088
+        proxy_port: 8089
+      container:
+        docker_host: "-"
+        workdir_parent: shared/workdir
+      host:
+        workdir_parent: /data/act
+      kubernetes:
+        namespace: forgejo
+        poll_timeout: 10m
+      log:
+        level: info
+      plugins:
+        k8s:
+          address: "unix:///plugin/forgejo-runner-k8s.sock"
+          options:
+            namespace: default
+            poll_timeout: 10m
+            labels: "app.kubernetes.io/name=forgejo-runner-instance,app.kubernetes.io/instance=env-prod"
+            resources: |
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                memory: 1Gi
+      runner:
+        capacity: 4
+        labels:
+          - ubuntu-latest:k8s:/config/podspec-default.yaml
+          - ubuntu-24.04:k8spod:/config/podspec-default.yaml
+          - default:k8s:/config/podspec-default.yaml
+          - docker:k8s:/config/podspec-dind.yaml
+        timeout: 3h
+        shutdown_timeout: 3m
+    podSpecs:
+      podspec-default.yaml: |-
+        containers:
+          - env:
+              - name: DEBIAN_FRONTEND
+                value: noninteractive
+            image: ghcr.io/bjw-s-labs/forgejo-runner:ubuntu-24.04@sha256:175bb41fcb7d53a1316bc1288aa20f07d68f3394650177bdc88462bf87054036
+            imagePullPolicy: IfNotPresent
+            name: main
+            resources:
+              limits:
+                memory: 2Gi
+              requests:
+                cpu: 100m
+                memory: 256Mi
+        restartPolicy: Never
+      podspec-dind.yaml: |-
+        initContainers:
+          - name: dind
+            image: docker:29-dind
+            securityContext:
+              privileged: true
+            restartPolicy: Always
+            env:
+              - name: DOCKER_TLS_CERTDIR
+                value: /certs
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                memory: 4Gi
+            volumeMounts:
+              - name: docker-storage
+                mountPath: /var/lib/docker
+              - name: docker-certs
+                mountPath: /certs
+            startupProbe:
+              exec:
+                command:
+                  - sh
+                  - -c
+                  - docker --tlsverify --tlscacert=/certs/client/ca.pem --tlscert=/certs/client/cert.pem --tlskey=/certs/client/key.pem -H tcp://localhost:2376 info
+              initialDelaySeconds: 5
+              periodSeconds: 1
+              failureThreshold: 30
+        containers:
+          - env:
+              - name: DEBIAN_FRONTEND
+                value: noninteractive
+              - name: DOCKER_HOST
+                value: tcp://localhost:2376
+              - name: DOCKER_TLS_VERIFY
+                value: "1"
+              - name: DOCKER_CERT_PATH
+                value: /certs/client
+            image: ghcr.io/bjw-s-labs/forgejo-runner:ubuntu-24.04@sha256:175bb41fcb7d53a1316bc1288aa20f07d68f3394650177bdc88462bf87054036
+            imagePullPolicy: IfNotPresent
+            name: main
+            resources:
+              limits:
+                memory: 2Gi
+              requests:
+                cpu: 100m
+                memory: 256Mi
+            volumeMounts:
+              - name: docker-certs
+                mountPath: /certs
+                readOnly: true
+        volumes:
+          - name: docker-storage
+            emptyDir: {}
+          - name: docker-certs
+            emptyDir: {}
+        restartPolicy: Never
