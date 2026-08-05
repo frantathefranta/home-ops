@@ -108,13 +108,7 @@ spec:
           secretName: forgejo-signing-key
           defaultMode: 0400
     httpRoute:
-      enabled: true
-      hostnames:
-        - "git.franta.us"
-      parentRefs:
-        - name: envoy-external
-          namespace: network
-          sectionName: https
+      enabled: false
     image:
       rootless: true
       registry: code.forgejo.org

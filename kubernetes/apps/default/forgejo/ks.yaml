@@ -9,6 +9,7 @@ spec:
     labels:
       app.kubernetes.io/name: forgejo
   components:
+    - ../../../../components/anubis
     - ../../../../components/dragonfly
     - ../../../../components/volsync
   dependsOn:
@@ -29,6 +30,8 @@ spec:
       APP_UID: "1000"
       APP_GID: "1000"
       VOLSYNC_CAPACITY: 10Gi
+      ANUBIS_TARGET: http://forgejo-http.default.svc.cluster.local:3000
+      ANUBIS_MEM_LIMIT: 384Mi
   prune: true
   sourceRef:
     kind: GitRepository
