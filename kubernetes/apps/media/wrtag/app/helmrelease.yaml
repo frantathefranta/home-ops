@@ -9,8 +9,7 @@ spec:
   maxHistory: 3
   chartRef:
     kind: OCIRepository
-    name: app-template
-    namespace: flux-system
+    name: wrtag
   install:
     remediation:
       retries: -1
