@@ -12,6 +12,7 @@ resources:
   - ./jellyseerr/ks.yaml
   - ./lidarr/ks.yaml
   # - ./pinchflat/ks.yaml
+  - ./maintainerr/ks.yaml
   - ./plex-addons/ks.yaml
   - ./prowlarr/ks.yaml
   - ./qbittorrent/ks.yaml
