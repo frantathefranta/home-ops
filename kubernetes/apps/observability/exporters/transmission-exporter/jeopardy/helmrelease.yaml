@@ -9,14 +9,6 @@ spec:
   chartRef:
     kind: OCIRepository
     name: transmission-jeopardy-exporter
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
   values:
     controllers:
       transmission-jeopardy-exporter:

@@ -10,14 +10,6 @@ spec:
   chartRef:
     kind: OCIRepository
     name: wrtag
-  install:
-    remediation:
-      retries: -1
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: -1
   uninstall:
     keepHistory: false
   driftDetection:

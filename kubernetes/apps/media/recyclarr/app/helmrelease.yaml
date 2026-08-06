@@ -8,14 +8,6 @@ spec:
   chartRef:
     kind: OCIRepository
     name: recyclarr
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
   dependsOn:
   - name: rook-ceph-cluster
     namespace: rook-ceph-external
