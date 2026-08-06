@@ -24,11 +24,24 @@ spec:
             image:
               repository: ghcr.io/maintainerr/maintainerr
               tag: 3.21.1@sha256:811a580fdf479e8582d3c97047b1aa8930fc5523f63143498020864ad6a7cd80
+            env:
+              UI_PORT: &port 80
             probes:
-              liveness:
+              liveness: &probes
                 enabled: true
+                custom: true
+                spec: &probeSpec
+                  httpGet:
+                    path: /api/health
+                    port: *port
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 5
               readiness:
-                enabled: true
+                <<: *probes
+                spec:
+                  <<: *probeSpec
+                  periodSeconds: 10
               startup:
                 enabled: true
                 spec:
@@ -42,7 +55,6 @@ spec:
                 memory: 512Mi
             securityContext:
               allowPrivilegeEscalation: false
-              # readOnlyRootFilesystem: true
               capabilities:
                 drop:
                   - ALL
@@ -65,4 +77,4 @@ spec:
       app:
         ports:
           http:
-            port: 6246
+            port: *port
