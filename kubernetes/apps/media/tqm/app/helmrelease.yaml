@@ -41,6 +41,7 @@ spec:
             args:
               - clean
               - qb
+              - --verbose=1
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
