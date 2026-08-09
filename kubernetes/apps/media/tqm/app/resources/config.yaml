@@ -14,7 +14,7 @@ filters:
       - retag
 
     ignore:
-      - IsTrackerDown()
+      - IsTrackerDown() && !HasAnyTag("site:MTV")
       - Downloaded == false && !IsUnregistered()
       - SeedingHours < 26 && !IsUnregistered()
 
