@@ -20,8 +20,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/kieraneglin/pinchflat
-              tag: latest@sha256:01b4f98aabaf3f5fe394213f7a32578c9e84e42080f52e2f8334021a4473b202
+              repository: ghcr.io/philmichel/pinchflat
+              tag: 1.4.3@sha256:e0e0661e7b4248244e9b98d840ec5a0aa302d15636e28530feb2554322da47a3
             env:
               TZ: America/Detroit
               TZ_DATA_DIR: /tmp/elixir_tz_data
