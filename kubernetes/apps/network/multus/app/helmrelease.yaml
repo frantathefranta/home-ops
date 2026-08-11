@@ -37,7 +37,7 @@ spec:
           multus:
             image:
               repository: ghcr.io/k8snetworkplumbingwg/multus-cni
-              tag: latest@sha256:455da03fc13e19a35f3bf50c6ab0a12c691667faa457d27bfc10f4cd4b7111a2
+              tag: latest@sha256:ebef0f2e4e9ed1e67924bf2ec7894ed7b70e9aaeb396d97c5cc0413cac042e95
             args:
               - --cleanup-config-on-exit
             resources:
