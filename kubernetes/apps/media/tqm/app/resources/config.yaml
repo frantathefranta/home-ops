@@ -14,7 +14,7 @@ filters:
       - retag
 
     ignore:
-      - IsTrackerDown() && !HasAnyTag("site:MTV")
+      - IsTrackerDown()
       - Downloaded == false && !IsUnregistered()
       - SeedingHours < 26 && !IsUnregistered()
 
@@ -38,7 +38,6 @@ filters:
       - { name: site:FL,      update: ['TrackerName in ["filelist.io", "thefl.org"]'] }
       - { name: site:GGN,     update: ['TrackerName == "gazellegames.net"'] }
       - { name: site:HDB,     update: ['TrackerName == "hdbits.org"'] }
-      - { name: site:MTV,     update: ['TrackerName == "morethantv.me"'] }
       - { name: site:PTP,     update: ['TrackerName == "passthepopcorn.me"'] }
       - { name: site:TL,      update: ['TrackerName in ["tleechreload.org", "torrentleech.org"]'] }
       - { name: site:UHD,     update: ['TrackerName == "uhdbits.org"'] }
