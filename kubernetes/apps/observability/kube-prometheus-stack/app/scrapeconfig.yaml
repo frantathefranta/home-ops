@@ -16,6 +16,7 @@ spec:
         - hydrogen.infra.franta.us:9100
         - nixos-firewall.infra.franta.us:9100
         - qotom.infra.franta.us:9100
+        - ytterbium.infra.franta.us:9100
   metricsPath: /metrics
   relabelings:
     - action: replace
