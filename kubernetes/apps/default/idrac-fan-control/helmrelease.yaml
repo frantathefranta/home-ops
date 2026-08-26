@@ -38,6 +38,7 @@ spec:
                 cpu: 10m
                 memory: 50Mi
               limits:
+                cpu: 20m
                 memory: 100Mi
         pod:
           affinity:
@@ -48,7 +49,7 @@ spec:
                   - key: topology.kubernetes.io/zone
                     operator: NotIn
                     values:
-                    - talos-actinium
+                    - actinium
       thorium:
         annotations:
           reloader.stakater.com/auto: "true"
@@ -70,7 +71,7 @@ spec:
                   - key: topology.kubernetes.io/zone
                     operator: NotIn
                     values:
-                    - talos-thorium
+                    - thorium
       protactinium:
         annotations:
           reloader.stakater.com/auto: "true"
@@ -92,4 +93,4 @@ spec:
                   - key: topology.kubernetes.io/zone
                     operator: NotIn
                     values:
-                    - talos-protactinium
+                    - protactinium
