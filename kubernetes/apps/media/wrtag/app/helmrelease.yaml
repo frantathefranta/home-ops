@@ -40,7 +40,7 @@ spec:
           app:
             image:
               repository: ghcr.io/sentriz/wrtag
-              tag: v0.33.0@sha256:7799a133564122886a5b808999c103c1aa46f9ae5d00c840d1e6cbc333b762da
+              tag: v0.34.0@sha256:69df2e15e13cb314a78c4c6b5c2246eab6f902c7d0515310c608aa3ba0820b72
             env:
               WRTAG_WEB_LISTEN_ADDR: ":80"
               WRTAG_WEB_PUBLIC_URL: https://wrtag.franta.us
