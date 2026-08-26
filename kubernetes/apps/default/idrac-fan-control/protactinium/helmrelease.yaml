@@ -23,7 +23,7 @@ spec:
           app:
             image:
               repository: ghcr.io/tigerblue77/dell_idrac_fan_controller
-              tag: v1.12@sha256:d308284e30302d4b8dc8ad2ba15e93576db48275339b394ea390f4d86a698d41
+              tag: v1.104@sha256:e92cb1d6ef1a54ecf56d588d6eefe9b3c947fcc1e07cd34a66aaf9805d4757a2
             env:
               FAN_SPEED: 15
               CPU_TEMPERATURE_THRESHOLD: 85
