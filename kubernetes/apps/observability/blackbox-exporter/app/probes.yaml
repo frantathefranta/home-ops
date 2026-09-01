@@ -31,7 +31,7 @@ spec:
   targets:
     staticConfig:
       static:
-        - actinium-nfs.infra.franta.us:2049
+        - nfs.infra.franta.us:2049
 ---
 # yaml-language-server: $schema=https://k8s-schemas.home-operations.com/monitoring.coreos.com/probe_v1.json
 apiVersion: monitoring.coreos.com/v1
