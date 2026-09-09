@@ -12,7 +12,10 @@ spec:
   backend:
     s3:
       bucket: kopiur
-      endpoint: s3.infra.franta.us
+      endpoint: s3.infra.franta.us:3900
+      tls:
+        disableTls: true
+      region: garage
       auth:
         secretRef:
           name: kopiur-repository-secret
