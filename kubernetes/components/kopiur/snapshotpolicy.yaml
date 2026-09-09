@@ -1,0 +1,28 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/kopiur.home-operations.com/snapshotpolicy_v1alpha1.json
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotPolicy
+metadata:
+  name: ${APP}
+spec:
+  repository:
+    kind: ClusterRepository
+    name: garage
+  credentialProjection:
+    enabled: true
+  sources:
+    - pvc:
+        name: ${APP}
+  retention:
+    keepDaily: 14
+    keepWeekly: 4
+  volumeSnapshotClassName: ${KOPIUR_SNAPSHOTCLASS:=ceph-rbd-snapshot}
+  mover:
+    cache:
+      capacity: ${KOPIUR_CACHE_CAPACITY:=4Gi}
+      mode: Persistent
+      storageClassName: ${KOPIUR_CACHE_STORAGECLASS:=ceph-rbd}
+    podSecurityContext:
+      runAsUser: ${VOLSYNC_PUID:=568}
+      runAsGroup: ${VOLSYNC_PGID:=568}
+      fsGroup: ${VOLSYNC_PGID:=568}
