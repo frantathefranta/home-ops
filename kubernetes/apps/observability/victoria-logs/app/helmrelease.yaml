@@ -17,6 +17,8 @@ spec:
       enabled: true
       grafanaOperator:
         enabled: true
+        matchLabels:
+          grafana.internal/instance: grafana
     server:
       fullnameOverride: victoria-logs
       persistentVolume:
