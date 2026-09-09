@@ -12,7 +12,7 @@ spec:
   backend:
     s3:
       bucket: kopiur
-      endpoint: ytterbium-40g.infra.franta.us:3900
+      endpoint: s3.infra.franta.us:3900
       tls:
         disableTls: true
       region: garage
