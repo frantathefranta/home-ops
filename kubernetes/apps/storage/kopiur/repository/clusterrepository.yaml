@@ -1,0 +1,39 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/kopiur.home-operations.com/clusterrepository_v1alpha1.json
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: ClusterRepository
+metadata:
+  name: garage
+spec:
+  allowedNamespaces:
+    all: true
+  credentialProjection:
+    allowed: true
+  backend:
+    s3:
+      bucket: kopiur
+      endpoint: s3.infra.franta.us
+      auth:
+        secretRef:
+          name: kopiur-repository-secret
+          namespace: storage
+  encryption:
+    passwordSecretRef:
+      name: kopiur-repository-secret
+      namespace: storage
+      key: KOPIA_PASSWORD
+  # health:
+  #   # Steady state is ~1800 blobs: ~104 index blobs/hour across ~3 trailing
+  #   # uncompacted epochs of ~5.5h each. The 1000 default does not fit this
+  #   # fleet's write rate; connect is 1m39s and the backend probe is stable.
+  #   indexBlobWarnThreshold: 2500
+  # parameters:
+  #   epoch:
+  #     # kopia's 24h default let epochs hold ~2600 index blobs at this cluster's
+  #     # write rate, so the repo carried ~5k uncompacted blobs and
+  #     # `repository connect` took over 4 minutes. Epochs only advance during a
+  #     # maintenance run, so the 6h quick cadence -- not this floor -- is what
+  #     # actually bounds epoch length today.
+  #     minDuration: 4h
+  scheduleDefaults:
+    timezone: America/Detroit
