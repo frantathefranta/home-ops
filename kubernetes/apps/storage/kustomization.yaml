@@ -5,7 +5,6 @@ kind: Kustomization
 namespace: storage
 resources:
   - ./snapshot-controller/ks.yaml
-  - ./volsync/ks.yaml
   - ./kopiur/ks.yaml
   # - ./democratic-csi/ks.yaml
 components:

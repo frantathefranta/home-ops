@@ -37,4 +37,3 @@ spec:
       KOPIUR_CAPACITY: 2Gi
       GATUS_SUBDOMAIN: requests
       GATUS_PATH: /api/v1/status
-      VOLSYNC_CAPACITY: 2Gi

@@ -27,4 +27,3 @@ spec:
       APP: *app
       KOPIUR_CAPACITY: 2Gi
       GATUS_SUBDOMAIN: qb
-      VOLSYNC_CAPACITY: 2Gi

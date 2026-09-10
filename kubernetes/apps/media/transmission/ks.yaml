@@ -26,7 +26,6 @@ spec:
     substitute:
       APP: *app
       KOPIUR_CAPACITY: 2Gi
-      VOLSYNC_CAPACITY: 2Gi
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -60,6 +59,3 @@ spec:
       KOPIUR_CAPACITY: 2Gi
       KOPIUR_MOVER_UID: "1000"
       KOPIUR_MOVER_GID: "1003"
-      VOLSYNC_CAPACITY: 2Gi
-      VOLSYNC_PUID: "1000"
-      VOLSYNC_PGID: "1003"

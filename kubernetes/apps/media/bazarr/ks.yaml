@@ -36,5 +36,3 @@ spec:
       APP: *app
       KOPIUR_CAPACITY: 2Gi
       KOPIUR_MOVER_GID: "1003"
-      VOLSYNC_CAPACITY: 2Gi
-      VOLSYNC_PGID: "1003"

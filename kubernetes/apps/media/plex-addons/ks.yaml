@@ -33,7 +33,3 @@ spec:
     substitute:
       APP: *app
       KOPIUR_CAPACITY: 10Gi
-      VOLSYNC_CAPACITY: 10Gi
-      VOLSYNC_ACCESSMODES: ReadWriteOnce
-      VOLSYNC_STORAGECLASS: ceph-rbd
-      VOLSYNC_SNAPSHOTCLASS: ceph-rbd-snapshot

@@ -38,4 +38,3 @@ spec:
       GATUS_SUBDOMAIN: recipes
       USERNAME: recipes
       DATABASES: '["recipes_db"]'
-      VOLSYNC_CAPACITY: 1Gi

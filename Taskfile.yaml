@@ -31,7 +31,6 @@ includes:
   talos: .taskfiles/Talos/Taskfile.yaml
   sops: .taskfiles/Sops/Taskfile.yaml
   postgres: .taskfiles/Postgresql
-  volsync: .taskfiles/VolSync/Taskfile.yaml
 
 tasks:
   default: task -l
