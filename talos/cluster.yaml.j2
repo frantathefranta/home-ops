@@ -15,46 +15,6 @@ machine:
       port: 7445
     rbac: true
   token: op://kubernetes/talos/MACHINE_TOKEN
-  network:
-    disableSearchDomain: true
-  time:
-    disabled: false
-    servers:
-      - time.cloudflare.com
-      - 192.168.247.254
-      - 10.33.0.1
-  kubelet:
-    defaultRuntimeSeccompProfileEnabled: true
-    disableManifestsDirectory: true
-    extraConfig:
-      maxParallelImagePulls: 10
-      maxPods: 400
-      serializeImagePulls: false
-    nodeIP:
-      validSubnets:
-        - 10.33.35.0/27
-        - "${CLUSTER_NODE_V6_CIDR}"
-  files:
-    - op: overwrite
-      path: /etc/nfsmount.conf
-      permissions: 0o644
-      content: |
-        [ NFSMount_Global_Options ]
-        nfsvers=4.2
-        hard=True
-        nconnect=8
-        noatime=True
-        rsize=1048576
-        wsize=1048576
-  kubelet:
-    extraMounts:
-      - destination: /var/openebs/local
-        type: bind
-        source: /var/openebs/local
-        options:
-          - bind
-          - rshared
-          - rw
 cluster:
   ca:
     crt: op://kubernetes/talos/CLUSTER_CA_CRT
@@ -80,14 +40,6 @@ cluster:
       - "${CLUSTER_SVC_V6_CIDR}"
   secret: op://kubernetes/talos/CLUSTER_SECRET
   token: op://kubernetes/talos/CLUSTER_TOKEN
-  additionalMachineCertSans:
-    - 10.33.40.25
-    - talos-maxi.franta.us
-    - 127.0.0.1
-  additionalApiServerCertSans:
-    - 10.33.40.25
-    - talos-maxi.franta.us
-    - 127.0.0.1
 ---
 apiVersion: v1alpha1
 kind: ResolverConfig
@@ -97,16 +49,6 @@ hostDNS:
   enabled: true
   forwardKubeDNSToHost: false
   resolveMemberNames: true
----
-apiVersion: v1alpha1
-kind: DiscoveryServiceConfig
-name: default
-endpoint: https://discovery.talos.dev/
----
-apiVersion: v1alpha1
-kind: DiscoveryIdentityConfig
-clusterID: op://kubernetes/talos/CLUSTER_ID
-clusterSecret: op://kubernetes/talos/CLUSTER_SECRET
 ---
 apiVersion: v1alpha1
 kind: UnattendedInstallConfig
@@ -121,8 +63,11 @@ device: /dev/watchdog0
 timeout: 5m
 ---
 apiVersion: v1alpha1
-kind: KernelModuleConfig
-name: nbd
+kind: CRICustomizationConfig
+name: containerd
+content: |
+  [plugins."io.containerd.cri.v1.images"]
+    discard_unpacked_layers = false
 ---
 apiVersion: v1alpha1
 kind: KubeNetworkConfig
@@ -154,3 +99,36 @@ params:
   net.ipv6.conf.all.forwarding: "1"
   net.ipv6.conf.bond0.accept_ra: "2"
   vm.nr_hugepages: "1024"
+---
+apiVersion: v1alpha1
+kind: EtcFileConfig
+name: nfsmount.conf
+mode: 0o644
+contents: |
+  [ NFSMount_Global_Options ]
+  nfsvers=4.2
+  hard=True
+  nconnect=8
+  noatime=True
+  rsize=1048576
+  wsize=1048576
+---
+apiVersion: v1alpha1
+kind: KubeletConfig
+config:
+  maxParallelImagePulls: 10
+  maxPods: 400
+  serializeImagePulls: false
+defaultRuntimeSeccompProfileEnabled: true
+extraMounts:
+  - destination: /var/openebs/local
+    type: bind
+    source: /var/openebs/local
+    options:
+      - bind
+      - rshared
+      - rw
+---
+apiVersion: v1alpha1
+kind: KernelModuleConfig
+name: nbd
