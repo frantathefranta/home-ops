@@ -58,6 +58,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
+    - ../../../../components/volsync
     - ../../../../components/kopiur
     - ../../../../components/dragonfly
   dependsOn:
@@ -85,7 +86,9 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      KOPIUR_CLAIM: bar-assistant-migrated
       KOPIUR_CAPACITY: 1Gi
       KOPIUR_MOVER_GID: "33"
       KOPIUR_MOVER_UID: "33"
       GATUS_SUBDOMAIN: bar
+      VOLSYNC_CAPACITY: 1Gi
