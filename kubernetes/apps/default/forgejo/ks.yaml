@@ -11,10 +11,9 @@ spec:
   components:
     - ../../../../components/anubis
     - ../../../../components/dragonfly
-    - ../../../../components/volsync
     - ../../../../components/kopiur
   dependsOn:
-    - name: volsync
+    - name: kopiur
       namespace: storage
     - name: dragonfly-operator
       namespace: database
@@ -28,12 +27,9 @@ spec:
   postBuild:
     substitute:
       APP: forgejo
-      KOPIUR_CLAIM: forgejo-migrated
       KOPIUR_CAPACITY: 10Gi
       KOPIUR_MOVER_UID: "1000"
       KOPIUR_MOVER_GID: "1000"
-      KOPIUR_COPY_METHOD: Direct
-      VOLSYNC_CAPACITY: 10Gi
       ANUBIS_TARGET: http://forgejo-http.default.svc.cluster.local:3000
       ANUBIS_MEM_LIMIT: 384Mi
   prune: true
