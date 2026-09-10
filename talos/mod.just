@@ -12,6 +12,7 @@ apply-node node *args:
     just talos render-config "{{ node }}" | talosctl -n "{{ node }}" apply-config -f /dev/stdin {{ args }}
 
 [doc('Download Talos machine image')]
+[script]
 download-image version node="":
     export SCHEMATIC="$(just talos schematic-id "{{ node }}")"
     curl -fL --remove-on-error --retry 5 --retry-delay 5 --retry-all-errors --progress-bar \
@@ -25,8 +26,20 @@ reboot-node node:
     talosctl -n {{ node }} reboot -m powercycle
 
 [doc('Render Talos config for a node')]
+[script]
 render-config node:
-    schematic="$(just talos schematic-id "{{ node }}")"; role="controlplane"; install_type="nocloud-installer"; if [[ -f "{{ source_directory() }}/nodes/workers/{{ node }}.yaml.j2" ]]; then role="workers"; install_type="metal-installer"; fi; talosctl machineconfig patch <(just template "{{ source_directory() }}/cluster.yaml.j2" -D "schematic=${schematic}" -D "install_type=${install_type}" -D "role=${role}") -p @<(just template "{{ source_directory() }}/${role}.yaml.j2" -D "role=${role}") -p @<(just template "{{ source_directory() }}/nodes/${role}/{{ node }}.yaml.j2")
+    # Load ${CLUSTER_*_V6_CIDR} from the sops-encrypted env (talconfig source of truth)
+    while IFS= read -r line; do
+        [[ "$line" =~ ^([A-Z0-9_]+):[[:space:]]+(.*)$ ]] && export "${BASH_REMATCH[1]}=${BASH_REMATCH[2]}"
+    done < <(sops -d "{{ source_directory() }}/talenv.sops.yaml" | grep -E '^[A-Z0-9_]+: ')
+    schematic="$(just talos schematic-id "{{ node }}")"
+    role="controlplane"
+    install_type="nocloud-installer"
+    if [[ -f "{{ source_directory() }}/nodes/workers/{{ node }}.yaml.j2" ]]; then role="workers"; install_type="metal-installer"; fi
+    talosctl machineconfig patch \
+        <(just template "{{ source_directory() }}/cluster.yaml.j2" -D "schematic=${schematic}" -D "install_type=${install_type}" -D "role=${role}" | envsubst '${CLUSTER_POD_V6_CIDR} ${CLUSTER_SVC_V6_CIDR} ${CLUSTER_NODE_V6_CIDR}') \
+        -p @<(just template "{{ source_directory() }}/${role}.yaml.j2" -D "role=${role}") \
+        -p @<(just template "{{ source_directory() }}/nodes/${role}/{{ node }}.yaml.j2")
 
 [confirm('Reset node ' + node + ' [y|N] ?')]
 [doc('Reset a node')]
@@ -57,6 +70,7 @@ schematic-id node="":
     role="controlplane"; if [[ -f "{{ source_directory() }}/nodes/workers/{{ node }}.yaml.j2" ]]; then role="workers"; fi; curl -sX POST --data-binary @<(just template "$(just talos schematic-file "{{ node }}")" -D "role=${role}") "https://factory.talos.dev/schematics" | jq -r '.id'
 
 [private]
+[script]
 machine-image node="":
     export SCHEMATIC="$(just talos schematic-id "{{ node }}")"
     install_type="nocloud-installer"
