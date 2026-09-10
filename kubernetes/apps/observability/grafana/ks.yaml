@@ -51,7 +51,6 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../../components/volsync
     - ../../../../components/kopiur
   dependsOn:
     - name: grafana-operator
@@ -67,7 +66,6 @@ spec:
   postBuild:
     substitute:
       APP: grafana-data
-      KOPIUR_CLAIM: grafana-data-migrated
       KOPIUR_MOVER_GID: "1000"
       KOPIUR_MOVER_UID: "1000"
       KOPIUR_CAPACITY: 10Gi
