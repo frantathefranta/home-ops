@@ -24,15 +24,6 @@ spec:
           effect: NoSchedule
     controllers:
       zwave-js-ui:
-        # pod:
-        #   annotations:
-        #     k8s.v1.cni.cncf.io/networks: |
-        #       [{
-        #         "name":"multus-iot",
-        #         "namespace": "network",
-        #         "ips": ["10.0.50.211/24"],
-        #         "mac": "10:62:e5:18:1a:30"
-        #       }]
         annotations:
           reloader.stakater.com/auto: "true"
 
@@ -43,6 +34,9 @@ spec:
               tag: 11.23.0
             env:
               TZ: America/Detroit
+            envFrom:
+              - secretRef:
+                  name: "{{ .Release.Name }}-secret"
             securityContext:
               privileged: true
             probes:
