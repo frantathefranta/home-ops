@@ -1,15 +1,12 @@
 ---
-machine:
-  nodeLabels:
-    topology.kubernetes.io/zone: g3-mini
-  udev:
-    rules:
-      - SUBSYSTEM=="drm", KERNEL=="renderD*", GROUP="44", MODE="0660"
-      - SUBSYSTEM=="apex", KERNEL=="apex*", GROUP="44", MODE="0660"
----
 apiVersion: v1alpha1
 kind: HostnameConfig
 hostname: talos-g3-mini
+---
+apiVersion: v1alpha1
+kind: KubeNodeConfig
+labels:
+  topology.kubernetes.io/zone: g3-mini
 ---
 apiVersion: v1alpha1
 kind: LinkAliasConfig
@@ -50,10 +47,14 @@ mtu: 1500
 dhcp: false
 ---
 apiVersion: v1alpha1
+kind: UdevConfig
+rules:
+  - SUBSYSTEM=="drm", KERNEL=="renderD*", GROUP="44", MODE="0660"
+  - SUBSYSTEM=="apex", KERNEL=="apex*", GROUP="44", MODE="0660"
+---
+apiVersion: v1alpha1
 kind: UnattendedInstallConfig
 provisioning:
   diskSelector:
     match: disk.model == "SK hynix*"
   wipe: false
-install:
-  image: factory.talos.dev/installer/0b13754612577000b1d6a89683e002ba41efbc0a57c91d29be8da96a0dfd8a6f

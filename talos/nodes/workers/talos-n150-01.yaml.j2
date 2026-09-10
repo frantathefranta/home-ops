@@ -1,21 +1,13 @@
 ---
-machine:
-  nodeLabels:
-    topology.kubernetes.io/zone: n150-01
-  kubelet:
-    extraConfig:
-      registerNode: true
-      registerWithTaints:
-        - effect: NoSchedule
-          key: node.kubernetes.io/assignment
-          value: intel-gpu
-  udev:
-    rules:
-      - SUBSYSTEM=="drm", KERNEL=="renderD*", GROUP="44", MODE="0660"
----
 apiVersion: v1alpha1
 kind: HostnameConfig
 hostname: talos-n150-01
+---
+apiVersion: v1alpha1
+kind: KubeNodeConfig
+labels:
+  topology.kubernetes.io/zone: n150-01
+  node.kubernetes.io/assignment: intel-gpu
 ---
 apiVersion: v1alpha1
 kind: BondConfig
@@ -50,10 +42,22 @@ mtu: 1500
 dhcp: false
 ---
 apiVersion: v1alpha1
+kind: UdevConfig
+rules:
+  - SUBSYSTEM=="drm", KERNEL=="renderD*", GROUP="44", MODE="0660"
+---
+apiVersion: v1alpha1
+kind: KubeletConfig
+config:
+  registerNode: true
+  registerWithTaints:
+    - effect: NoSchedule
+      key: node.kubernetes.io/assignment
+      value: intel-gpu
+---
+apiVersion: v1alpha1
 kind: UnattendedInstallConfig
 provisioning:
   diskSelector:
     match: disk.model == "TWSC*"
   wipe: false
-install:
-  image: factory.talos.dev/metal-installer/9ba0b24a91c2b56085dceb616daaf013f0453bcf2f2036814be062733e583806

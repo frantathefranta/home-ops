@@ -2,8 +2,12 @@
 customization:
   systemExtensions:
     officialExtensions:
-      - siderolabs/iscsi-tools
-      - siderolabs/util-linux-tools
+      {% if role == "controlplane" %}
+      - siderolabs/qemu-guest-agent
+      {% else %}
       - siderolabs/i915
       - siderolabs/intel-ucode
       - siderolabs/mei
+      {% endif %}
+      - siderolabs/iscsi-tools
+      - siderolabs/util-linux-tools
