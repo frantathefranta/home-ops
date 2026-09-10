@@ -31,7 +31,3 @@ spec:
     substitute:
       APP: *app
       KOPIUR_CAPACITY: 500Mi
-      VOLSYNC_CAPACITY: 500Mi
-      VOLSYNC_ACCESSMODES: ReadWriteOnce
-      VOLSYNC_STORAGECLASS: ceph-rbd
-      VOLSYNC_SNAPSHOTCLASS: ceph-rbd-snapshot

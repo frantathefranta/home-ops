@@ -41,4 +41,3 @@ spec:
     substitute:
       APP: *app
       KOPIUR_CAPACITY: 1Gi
-      VOLSYNC_CAPACITY: 1Gi

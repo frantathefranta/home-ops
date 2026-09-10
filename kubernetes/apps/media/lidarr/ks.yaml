@@ -36,5 +36,3 @@ spec:
     substitute:
       APP: *app
       PG_VERSION: "18"
-      VOLSYNC_PUID: "1000"
-      VOLSYNC_PGID: "1003"
