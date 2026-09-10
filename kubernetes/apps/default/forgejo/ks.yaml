@@ -12,7 +12,7 @@ spec:
     - ../../../../components/anubis
     - ../../../../components/dragonfly
     - ../../../../components/volsync
-    # - ../../../../components/kopiur
+    - ../../../../components/kopiur
   dependsOn:
     - name: volsync
       namespace: storage
