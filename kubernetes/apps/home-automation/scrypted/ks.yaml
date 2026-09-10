@@ -7,7 +7,6 @@ metadata:
 spec:
   targetNamespace: home-automation
   components:
-    - ../../../../components/volsync
     - ../../../../components/kopiur
     - ../../../../components/zeroscaler
   commonMetadata:
@@ -30,7 +29,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      KOPIUR_CLAIM: scrypted-migrated
       KOPIUR_CAPACITY: 10Gi
       VOLSYNC_CAPACITY: 10Gi
       VOLSYNC_CACHE_CAPACITY: 8Gi

@@ -7,8 +7,6 @@ metadata:
 spec:
   targetNamespace: media
   components:
-
-    - ../../../../components/volsync
     - ../../../../components/kopiur
   commonMetadata:
     labels:
@@ -26,7 +24,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      KOPIUR_CLAIM: tautulli-migrated
       VOLSYNC_CAPACITY: 5Gi
       VOLSYNC_ACCESSMODES: ReadWriteOnce
       VOLSYNC_STORAGECLASS: ceph-rbd

@@ -7,7 +7,6 @@ metadata:
 spec:
   targetNamespace: home-automation
   components:
-    - ../../../../components/volsync
     - ../../../../components/kopiur
     - ../../../../components/zeroscaler
   commonMetadata:
@@ -32,7 +31,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      KOPIUR_CLAIM: music-assistant-migrated
       KOPIUR_CAPACITY: 500Mi
       VOLSYNC_CAPACITY: 500Mi
       VOLSYNC_ACCESSMODES: ReadWriteOnce

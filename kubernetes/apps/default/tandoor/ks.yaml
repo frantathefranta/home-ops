@@ -8,8 +8,6 @@ metadata:
 spec:
   targetNamespace: default
   components:
-
-    - ../../../../components/volsync
     - ../../../../components/kopiur
     - ../../../../components/postgres
   commonMetadata:
@@ -36,7 +34,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      KOPIUR_CLAIM: tandoor-migrated
       KOPIUR_CAPACITY: 1Gi
       GATUS_SUBDOMAIN: recipes
       USERNAME: recipes

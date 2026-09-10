@@ -7,8 +7,6 @@ metadata:
 spec:
   targetNamespace: default
   components:
-
-    - ../../../../components/volsync
     - ../../../../components/kopiur
   commonMetadata:
     labels:
@@ -30,7 +28,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      KOPIUR_CLAIM: oxidized-migrated
       KOPIUR_CAPACITY: 1Gi
       KOPIUR_MOVER_UID: "30000"
       KOPIUR_MOVER_GID: "30000"

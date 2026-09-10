@@ -7,7 +7,6 @@ metadata:
 spec:
   targetNamespace: media
   components:
-    - ../../../../components/volsync
     - ../../../../components/kopiur
     - ../../../../components/postgres
     - ../../../../components/zeroscaler
@@ -35,7 +34,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      KOPIUR_CLAIM: bazarr-migrated
       KOPIUR_CAPACITY: 2Gi
       KOPIUR_MOVER_GID: "1003"
       VOLSYNC_CAPACITY: 2Gi

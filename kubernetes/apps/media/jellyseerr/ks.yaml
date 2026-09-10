@@ -9,7 +9,6 @@ spec:
   components:
 
     - ../../../../components/postgres
-    - ../../../../components/volsync
     - ../../../../components/kopiur
   commonMetadata:
     labels:
@@ -35,7 +34,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      KOPIUR_CLAIM: jellyseerr-migrated
       KOPIUR_CAPACITY: 2Gi
       GATUS_SUBDOMAIN: requests
       GATUS_PATH: /api/v1/status
