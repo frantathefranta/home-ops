@@ -5,6 +5,8 @@ kind: Restore
 metadata:
   name: ${APP}
 spec:
+  credentialProjection:
+    enabled: true
   mover:
     securityContext:
       runAsUser: ${KOPIUR_MOVER_UID:=568}
