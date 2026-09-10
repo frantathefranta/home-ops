@@ -43,6 +43,6 @@ spec:
       APP: *app
       KOPIUR_CLAIM: paperless-migrated
       KOPIUR_CAPACITY: 15Gi
-      KOPIUR_MOVER_GID: "0"
-      KOPIUR_MOVER_UID: "0"
+      KOPIUR_MOVER_UID: "1000"
+      KOPIUR_MOVER_GID: "65542"
       VOLSYNC_CAPACITY: 15Gi
