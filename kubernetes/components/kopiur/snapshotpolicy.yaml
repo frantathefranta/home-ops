@@ -14,8 +14,8 @@ spec:
     - pvc:
         name: ${APP}
   retention:
-    keepDaily: 14
-    keepWeekly: 4
+    keepHourly: 24
+    keepDaily: 7
   volumeSnapshotClassName: ${KOPIUR_SNAPSHOTCLASS:=ceph-rbd-snapshot}
   copyMethod: ${KOPIUR_COPY_METHOD:=Snapshot}
   mover:
@@ -27,3 +27,10 @@ spec:
       runAsUser: ${KOPIUR_MOVER_UID:=568}
       runAsGroup: ${KOPIUR_MOVER_GID:=568}
       fsGroup: ${KOPIUR_MOVER_GID:=568}
+  verification:
+    deep:
+      schedule:
+        cron: H 5 1 * *
+    quick:
+      schedule:
+        cron: H 3 * * *
