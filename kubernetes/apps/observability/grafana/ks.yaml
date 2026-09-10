@@ -68,5 +68,7 @@ spec:
     substitute:
       APP: grafana-data
       KOPIUR_CLAIM: grafana-data-migrated
+      KOPIUR_MOVER_GID: "1000"
+      KOPIUR_MOVER_UID: "1000"
       KOPIUR_CAPACITY: 10Gi
       VOLSYNC_CAPACITY: 10Gi
