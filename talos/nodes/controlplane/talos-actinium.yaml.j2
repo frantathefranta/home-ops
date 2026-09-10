@@ -1,0 +1,41 @@
+---
+machine:
+  nodeLabels:
+    topology.kubernetes.io/zone: actinium
+---
+apiVersion: v1alpha1
+kind: HostnameConfig
+hostname: talos-actinium
+---
+apiVersion: v1alpha1
+kind: LinkAliasConfig
+name: net0
+selector:
+  match: link.driver == "mlx5_core"
+---
+apiVersion: v1alpha1
+kind: NetworkDeviceConfig
+device: eth0
+dhcp: true
+mtu: 1500
+vip:
+  ip: 10.33.40.25
+---
+apiVersion: v1alpha1
+kind: NetworkDeviceConfig
+device: eth1
+dhcp: false
+---
+apiVersion: v1alpha1
+kind: NetworkDeviceConfig
+device: eth2
+dhcp: false
+---
+apiVersion: v1alpha1
+kind: UnattendedInstallConfig
+provisioning:
+  diskSelector:
+    match: disk.model == "WD Blue SA510 2.5"
+  wipe: false
+install:
+  disk: /dev/sda
