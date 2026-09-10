@@ -1,33 +1,17 @@
 ---
+machine:
+  nodeLabels:
+    topology.kubernetes.io/zone: protactinium
+---
 apiVersion: v1alpha1
 kind: HostnameConfig
 hostname: talos-protactinium
 ---
 apiVersion: v1alpha1
-kind: KubeNodeConfig
-labels:
-  topology.kubernetes.io/zone: protactinium
+kind: DHCPv4Config
+name: eth0
 ---
 apiVersion: v1alpha1
-kind: LinkAliasConfig
-name: net0
-selector:
-  match: link.driver == "mlx5_core"
----
-apiVersion: v1alpha1
-kind: NetworkDeviceConfig
-device: eth0
-dhcp: true
-mtu: 1500
-vip:
-  ip: 10.33.40.25
----
-apiVersion: v1alpha1
-kind: NetworkDeviceConfig
-device: eth1
-dhcp: false
----
-apiVersion: v1alpha1
-kind: NetworkDeviceConfig
-device: eth2
-dhcp: false
+kind: Layer2VIPConfig
+name: 10.33.40.25
+link: eth0

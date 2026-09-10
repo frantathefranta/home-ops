@@ -27,4 +27,5 @@ log lvl msg *args:
 
 [private]
 template file *args:
-    minijinja-cli "{{ file }}" {{ args }} | op inject
+    # cat to stdin: minijinja-cli 2.24.0 quotes -D define values when read from a file path in some environments; stdin is clean.
+    cat "{{ file }}" | minijinja-cli {{ args }} | op inject

@@ -3,18 +3,56 @@ version: v1alpha1
 machine:
   ca:
     crt: op://kubernetes/talos/MACHINE_CA_CRT
+  # talconfig: additionalMachineCertSans
+  certSANs:
+    - 10.33.40.25
+    - talos-maxi.franta.us
+    - 127.0.0.1
   features:
     apidCheckExtKeyUsage: true
     diskQuotaSupport: true
-    hostDNS:
-      enabled: true
-      forwardKubeDNSToHost: false
-      resolveMemberNames: true
     kubePrism:
       enabled: true
       port: 7445
     rbac: true
   token: op://kubernetes/talos/MACHINE_TOKEN
+  # v1alpha1 kubelet block: typed KubeletConfig conflicts with this, but only
+  # the v1alpha1 form carries extraMounts + nodeIP (both required by talconfig).
+  kubelet:
+    image: ghcr.io/siderolabs/kubelet:v1.36.4
+    defaultRuntimeSeccompProfileEnabled: true
+    disableManifestsDirectory: true
+    extraConfig:
+      maxParallelImagePulls: 10
+      maxPods: 400
+      serializeImagePulls: false
+    nodeIP:
+      validSubnets:
+        - 10.33.35.0/27
+        - "${CLUSTER_NODE_V6_CIDR}"
+    extraMounts:
+      - destination: /var/openebs/local
+        type: bind
+        source: /var/openebs/local
+        options:
+          - bind
+          - rshared
+          - rw
+  # talconfig: topology.kubernetes.io/region (all nodes)
+  nodeLabels:
+    topology.kubernetes.io/region: talos-maxi
+  files:
+    - op: overwrite
+      path: /etc/nfsmount.conf
+      permissions: 0o644
+      content: |
+        [ NFSMount_Global_Options ]
+        nfsvers=4.2
+        hard=True
+        nconnect=8
+        noatime=True
+        rsize=1048576
+        wsize=1048576
 cluster:
   ca:
     crt: op://kubernetes/talos/CLUSTER_CA_CRT
@@ -55,6 +93,9 @@ kind: UnattendedInstallConfig
 installer:
   image: factory.talos.dev/{{ install_type }}/{{ schematic }}:v1.13.10
 provisioning:
+  # CP default (talconfig installDisk: /dev/sda); workers override per-node.
+  diskSelector:
+    match: disk.name == "sda"
   wipe: false
 ---
 apiVersion: v1alpha1
@@ -68,20 +109,8 @@ name: containerd
 content: |
   [plugins."io.containerd.cri.v1.images"]
     discard_unpacked_layers = false
----
-apiVersion: v1alpha1
-kind: KubeNetworkConfig
-dnsDomain: cluster.local
-podSubnets:
-  - 10.69.0.0/16
-  - "${CLUSTER_POD_V6_CIDR}"
-serviceSubnets:
-  - 10.96.0.0/16
-  - "${CLUSTER_SVC_V6_CIDR}"
----
-apiVersion: v1alpha1
-kind: KubePrismConfig
-port: 7445
+  [plugins."io.containerd.cri.v1.runtime"]
+    device_ownership_from_security_context = true
 ---
 apiVersion: v1alpha1
 kind: SysctlConfig
@@ -99,35 +128,6 @@ params:
   net.ipv6.conf.all.forwarding: "1"
   net.ipv6.conf.bond0.accept_ra: "2"
   vm.nr_hugepages: "1024"
----
-apiVersion: v1alpha1
-kind: EtcFileConfig
-name: nfsmount.conf
-mode: 0o644
-contents: |
-  [ NFSMount_Global_Options ]
-  nfsvers=4.2
-  hard=True
-  nconnect=8
-  noatime=True
-  rsize=1048576
-  wsize=1048576
----
-apiVersion: v1alpha1
-kind: KubeletConfig
-config:
-  maxParallelImagePulls: 10
-  maxPods: 400
-  serializeImagePulls: false
-defaultRuntimeSeccompProfileEnabled: true
-extraMounts:
-  - destination: /var/openebs/local
-    type: bind
-    source: /var/openebs/local
-    options:
-      - bind
-      - rshared
-      - rw
 ---
 apiVersion: v1alpha1
 kind: KernelModuleConfig
