@@ -60,6 +60,7 @@ spec:
   components:
 
     - ../../../../components/volsync
+    - ../../../../components/kopiur
     - ../../../../components/dragonfly
   dependsOn:
     - name: dragonfly-operator
@@ -86,5 +87,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      KOPIUR_CLAIM: bar-assistant-migrated
+      KOPIUR_CAPACITY: 1Gi
       GATUS_SUBDOMAIN: bar
       VOLSYNC_CAPACITY: 1Gi

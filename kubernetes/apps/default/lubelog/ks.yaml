@@ -9,6 +9,7 @@ spec:
   components:
 
     - ../../../../components/volsync
+    - ../../../../components/kopiur
     - ../../../../components/postgres
   commonMetadata:
     labels:
@@ -34,4 +35,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      KOPIUR_CLAIM: lubelog-migrated
+      KOPIUR_CAPACITY: 1Gi
       VOLSYNC_CAPACITY: 1Gi

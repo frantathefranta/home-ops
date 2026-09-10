@@ -23,6 +23,6 @@ spec:
       mode: Persistent
       storageClassName: ${KOPIUR_CACHE_STORAGECLASS:=ceph-rbd}
     podSecurityContext:
-      runAsUser: ${VOLSYNC_PUID:=568}
-      runAsGroup: ${VOLSYNC_PGID:=568}
-      fsGroup: ${VOLSYNC_PGID:=568}
+      runAsUser: ${KOPIUR_MOVER_UID:=568}
+      runAsGroup: ${KOPIUR_MOVER_GID:=568}
+      fsGroup: ${KOPIUR_MOVER_GID:=568}

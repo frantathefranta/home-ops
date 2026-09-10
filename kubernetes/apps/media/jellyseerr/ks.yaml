@@ -10,6 +10,7 @@ spec:
 
     - ../../../../components/postgres
     - ../../../../components/volsync
+    - ../../../../components/kopiur
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
@@ -34,6 +35,8 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      KOPIUR_CLAIM: jellyseerr-migrated
+      KOPIUR_CAPACITY: 2Gi
       GATUS_SUBDOMAIN: requests
       GATUS_PATH: /api/v1/status
       VOLSYNC_CAPACITY: 2Gi

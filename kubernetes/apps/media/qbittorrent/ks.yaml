@@ -8,6 +8,7 @@ spec:
   targetNamespace: media
   components:
     - ../../../../components/volsync
+    - ../../../../components/kopiur
     - ../../../../components/zeroscaler
   commonMetadata:
     labels:
@@ -25,5 +26,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      KOPIUR_CLAIM: qbittorrent-migrated
+      KOPIUR_CAPACITY: 2Gi
       GATUS_SUBDOMAIN: qb
       VOLSYNC_CAPACITY: 2Gi

@@ -8,6 +8,7 @@ spec:
   components:
 
     - ../../../../components/volsync
+    - ../../../../components/kopiur
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
@@ -31,6 +32,8 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      KOPIUR_CLAIM: zwave-js-ui-migrated
+      KOPIUR_CAPACITY: 500Mi
       VOLSYNC_CAPACITY: 500Mi
       VOLSYNC_ACCESSMODES: ReadWriteOnce
       VOLSYNC_STORAGECLASS: ceph-rbd
