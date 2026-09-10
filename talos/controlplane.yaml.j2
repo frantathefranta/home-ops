@@ -11,6 +11,9 @@ cluster:
   aggregatorCA:
     crt: op://kubernetes/talos/CLUSTER_AGGREGATORCA_CRT
     key: op://kubernetes/talos/CLUSTER_AGGREGATORCA_KEY
+  # talconfig: allowSchedulingOnControlPlanes. Conflicts with KubeNodeConfig,
+  # so control-plane nodes must not carry a KubeNodeConfig document.
+  allowSchedulingOnControlPlanes: true
   etcd:
     advertisedSubnets:
       - 10.33.35.0/27
@@ -24,20 +27,19 @@ cluster:
   secretboxEncryptionSecret: op://kubernetes/talos/CLUSTER_SECRETBOXENCRYPTIONSECRET
 ---
 apiVersion: v1alpha1
-kind: KubeNodeConfig
-labels:
-  node-role.kubernetes.io/control-plane: ""
-allowScheduling: true
----
-apiVersion: v1alpha1
 kind: KubeAPIServerConfig
+image: registry.k8s.io/kube-apiserver:v1.36.4
+# talconfig: additionalApiServerCertSans
 certExtraSANs:
   - 10.33.40.25
   - talos-maxi.franta.us
   - 127.0.0.1
 extraArgs:
   enable-aggregator-routing: "true"
-auditPolicy:
+---
+apiVersion: v1alpha1
+kind: KubeAuditPolicyConfig
+configuration:
   apiVersion: audit.k8s.io/v1
   kind: Policy
   rules:
@@ -45,6 +47,7 @@ auditPolicy:
 ---
 apiVersion: v1alpha1
 kind: KubeControllerManagerConfig
+image: registry.k8s.io/kube-controller-manager:v1.36.4
 extraArgs:
   bind-address: 0.0.0.0
   node-cidr-mask-size-ipv6: "112"
@@ -55,10 +58,12 @@ enabled: false
 ---
 apiVersion: v1alpha1
 kind: KubeProxyConfig
+image: registry.k8s.io/kube-proxy:v1.36.4
 enabled: false
 ---
 apiVersion: v1alpha1
 kind: KubeSchedulerConfig
+image: registry.k8s.io/kube-scheduler:v1.36.4
 config:
   profiles:
     - schedulerName: default-scheduler
