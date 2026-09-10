@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "siderolabs-docs": {
+      "url": "https://docs.siderolabs.com/mcp",
+      "type": "http",
+      "protocolVersion": "auto"
+    }
+  }
+}
