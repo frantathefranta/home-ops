@@ -17,6 +17,7 @@ spec:
     keepDaily: 14
     keepWeekly: 4
   volumeSnapshotClassName: ${KOPIUR_SNAPSHOTCLASS:=ceph-rbd-snapshot}
+  copyMethod: ${KOPIUR_COPY_METHOD:=Snapshot}
   mover:
     cache:
       capacity: ${KOPIUR_CACHE_CAPACITY:=4Gi}
