@@ -2,7 +2,29 @@
 Audit of all 41 apps under =kubernetes/apps/= that deploy the
 =bjw-s-labs/helm/app-template= chart (v5.1.0, uniform — no chart version
 drift) against the conventions in =.agents/skills/add-app/SKILL.md=.
-Baseline apps: media/maintainerr, default/vikunja, default/bar-assistant.
+35 are enabled; 6 are disabled (commented out in their namespace
+kustomization — see Not fixed). Baseline apps: media/maintainerr,
+default/vikunja, default/bar-assistant.
+
+* Status
+All violations below were found in the initial audit and then fixed in
+follow-up commits on this branch (digest pinning, lean =ks.yaml=,
+reloader annotations). Re-running the same checks reports zero
+violations.
+
+** Not fixed (out of scope)
+6 apps are disabled — commented out in their namespace
+=kustomization.yaml=: =default/oxidized=, =default/vikunja=,
+=home-automation/birdnet=, =home-automation/music-assistant=,
+=observability/gatus=, =observability/kromgo=. =flate build= only
+discovers Kustomizations registered in the tree, so these fail to
+build locally with "no Kustomization named ..." — the same reason
+explains the "pre-existing" build failures. Uncommenting them to
+re-enable is a user decision, not a convention fix. All fixes in
+this branch were still applied to their files so they conform if
+re-enabled. (Also: =default/oxidized= still declares its own
+=decryption: provider: sops= block instead of relying on
+=components/common=.)
 
 * Conforming
 Conformance checks that pass across all 41 apps:
@@ -12,11 +34,13 @@ Conformance checks that pass across all 41 apps:
 - all app-template routes reference =internal=/=external= gateways in
   =kube-system= (the two =envoy-*= parentRefs live in the forgejo and
   victoria-logs charts, which are not app-template)
-- every app is registered in its namespace =kustomization.yaml=
+- all 35 enabled apps are registered in their namespace
+  =kustomization.yaml=; the 6 disabled ones are commented out
 
 * Non-conforming
-** Image tags without digest (10 apps, 11 images)
-Repo convention: =<tag>@sha256:<digest>=, managed by Renovate.
+** Image tags without digest (10 apps, 11 images) — fixed
+Repo convention: =<tag>@sha256:<digest>=, managed by Renovate. Digests
+resolved with =crane digest= at audit time.
 
 | App                            | Image                              | Tag |
 | ------------------------------ | ---------------------------------- | --- |
@@ -32,10 +56,12 @@ Repo convention: =<tag>@sha256:<digest>=, managed by Renovate.
 | =kube-system/generic-device-plugin= | =ghcr.io/squat/generic-device-plugin= | =36bfc606…= (commit-sha tag, not =@sha256:= form) |
 | =network/cloudflared=          | =docker.io/cloudflare/cloudflared= | =2026.9.1= |
 
-** Non-lean ks.yaml (38 of 41 apps)
+** Non-lean ks.yaml (38 of 41 apps) — fixed
 Lean style (maintainerr): no =commonMetadata=, no =timeout=, no
-=retryInterval=. Only fully conforming: =media/maintainerr=,
-=home-automation/go2rtc=, =home-automation/mosquitto=.
+=retryInterval=. Only fully conforming at audit time:
+=media/maintainerr=, =home-automation/go2rtc=,
+=home-automation/mosquitto=. The =commonMetadata= blocks all carried
+only the redundant =app.kubernetes.io/name= label.
 
 | App | commonMetadata | timeout: 5m | retryInterval |
 | --- | -------------- | ----------- | ------------- |
@@ -78,11 +104,11 @@ Lean style (maintainerr): no =commonMetadata=, no =timeout=, no
 | =observability/gatus= | x | x | x |
 | =observability/kromgo= | x | x | x |
 
-** Missing =reloader.stakater.com/auto= annotation (2 apps)
+** Missing =reloader.stakater.com/auto= annotation (2 apps) — fixed
 Required when the app consumes a secret or mounted config, otherwise
 changes don't restart pods:
 
 - =media/jellyseerr= — has =externalsecret.yaml= and =envFrom=
   =secretRef=, no annotation
-- =media/tqm= — has =configMapGenerator= with a mounted
-  =persistence.config=, no annotation
+- =media/tqm= — has a =configMapGenerator= with the configMap mounted
+  at =/.config/tqm/config.yaml=, no annotation
