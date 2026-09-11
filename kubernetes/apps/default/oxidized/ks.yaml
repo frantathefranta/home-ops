@@ -8,9 +8,6 @@ spec:
   targetNamespace: default
   components:
     - ../../../../components/kopiur
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   path: ./kubernetes/apps/default/oxidized/app
   prune: true
   sourceRef:
@@ -19,8 +16,6 @@ spec:
     namespace: flux-system
   wait: false
   interval: 30m
-  retryInterval: 1m
-  timeout: 5m
   decryption:
     provider: sops
     secretRef:

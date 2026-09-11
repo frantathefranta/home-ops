@@ -10,9 +10,6 @@ spec:
     - ../../../../components/kopiur
     - ../../../../components/postgres
     - ../../../../components/dragonfly
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   path: ./kubernetes/apps/default/vikunja/app
   prune: true
   sourceRef:
@@ -35,8 +32,6 @@ spec:
       current: status.phase == 'ready'
   wait: false
   interval: 30m
-  retryInterval: 1m
-  timeout: 5m
   postBuild:
     substitute:
       APP: *app

@@ -6,11 +6,7 @@ metadata:
   name: &app multus
 spec:
   targetNamespace: network
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   interval: 30m
-  timeout: 5m
   path: "./kubernetes/apps/network/multus/app"
   prune: true
   sourceRef:
@@ -26,11 +22,7 @@ metadata:
   name: &app multus-config
 spec:
   targetNamespace: network
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   interval: 30m
-  timeout: 5m
   path: "./kubernetes/apps/network/multus/config"
   prune: true
   sourceRef:

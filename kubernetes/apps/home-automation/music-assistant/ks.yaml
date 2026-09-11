@@ -9,9 +9,6 @@ spec:
   components:
     - ../../../../components/kopiur
     - ../../../../components/zeroscaler
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   dependsOn:
     - name: multus-config
       namespace: network
@@ -27,7 +24,6 @@ spec:
     namespace: flux-system
   wait: false
   interval: 30m
-  timeout: 5m
   postBuild:
     substitute:
       APP: *app
