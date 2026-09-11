@@ -11,4 +11,4 @@ spec:
     operation: copy
   ref:
     tag: 1.20.1
-  url: oci://ghcr.io/cilium/cilium
+  url: oci://quay.io/cilium/charts/cilium
