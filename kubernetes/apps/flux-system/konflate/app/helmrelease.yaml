@@ -27,3 +27,11 @@ spec:
           sectionName: https
     secret:
       existingSecret: konflate-secret
+    monitoring:
+      serviceMonitor:
+        enabled: true
+    resources:
+      requests:
+        cpu: 50m
+      limits:
+        memory: 1Gi
