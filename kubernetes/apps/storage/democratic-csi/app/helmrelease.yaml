@@ -7,14 +7,10 @@ metadata:
   namespace: storage
 spec:
   interval: 1h
-  chart:
-    spec:
-      chart: democratic-csi
-      version: 0.15.1
-      sourceRef:
-        kind: HelmRepository
-        name: democratic-csi-charts
-        namespace: storage
+  chartRef:
+    kind: OCIRepository
+    name: democratic-csi
+    namespace: storage
   values:
     csiDriver:
       name: "org.democratic-csi.zfs-iscsi"
