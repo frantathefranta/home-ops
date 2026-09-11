@@ -7,9 +7,6 @@ spec:
   targetNamespace: home-automation
   components:
     - ../../../../components/kopiur
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   dependsOn:
     - name: multus-config
       namespace: network
@@ -24,8 +21,6 @@ spec:
     name: flux-system
     namespace: flux-system
   interval: 30m
-  retryInterval: 1m
-  timeout: 5m
   wait: false
   postBuild:
     substitute:

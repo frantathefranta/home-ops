@@ -9,9 +9,6 @@ spec:
   components:
 
     - ../../../../components/postgres
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   dependsOn:
     - name: crunchy-postgres-operator
       namespace: database
@@ -28,8 +25,6 @@ spec:
     namespace: flux-system
   wait: false
   interval: 30m
-  retryInterval: 1m
-  timeout: 5m
   postBuild:
     substitute:
       APP: *app

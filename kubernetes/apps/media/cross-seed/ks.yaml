@@ -5,9 +5,6 @@ kind: Kustomization
 metadata:
   name: &app cross-seed
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   targetNamespace: media
   dependsOn:
     - name: rook-ceph-cluster
@@ -23,8 +20,6 @@ spec:
     namespace: flux-system
   wait: false
   interval: 30m
-  retryInterval: 1m
-  timeout: 5m
   postBuild:
     substitute:
       APP: *app

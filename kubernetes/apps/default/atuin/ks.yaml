@@ -5,9 +5,6 @@ metadata:
   name: &app atuin
   namespace: &namespace default
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   components:
     - ../../../../components/kopiur
   dependsOn:
@@ -20,10 +17,8 @@ spec:
       APP: *app
       KOPIUR_CAPACITY: 5Gi
   prune: true
-  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
   targetNamespace: *namespace
-  timeout: 5m

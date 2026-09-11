@@ -8,9 +8,6 @@ spec:
   targetNamespace: home-automation
   components:
     - ../../../../components/kopiur
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph-external
@@ -26,7 +23,6 @@ spec:
     namespace: flux-system
   wait: false
   interval: 30m
-  timeout: 5m
   postBuild:
     substitute:
       APP: *app

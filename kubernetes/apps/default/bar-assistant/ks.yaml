@@ -6,9 +6,6 @@ metadata:
   name: &app salt-rim
 spec:
   targetNamespace: default
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   path: ./kubernetes/apps/default/bar-assistant/salt-rim
   prune: false
   sourceRef:
@@ -17,8 +14,6 @@ spec:
     namespace: flux-system
   wait: false # no flux ks dependents
   interval: 30m
-  retryInterval: 1m
-  timeout: 5m
   postBuild:
     substitute:
       APP: *app
@@ -30,9 +25,6 @@ metadata:
   name: &app meilisearch
 spec:
   targetNamespace: default
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   dependsOn:
     - name: external-secrets
       namespace: external-secrets
@@ -44,8 +36,6 @@ spec:
     namespace: flux-system
   wait: true # no flux ks dependents
   interval: 30m
-  retryInterval: 1m
-  timeout: 5m
 ---
 # yaml-language-server: $schema=https://kube-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -54,9 +44,6 @@ metadata:
   name: &app bar-assistant
 spec:
   targetNamespace: default
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   components:
     - ../../../../components/kopiur
     - ../../../../components/dragonfly
@@ -80,8 +67,6 @@ spec:
     namespace: flux-system
   wait: true # no flux ks dependents
   interval: 30m
-  retryInterval: 1m
-  timeout: 5m
   postBuild:
     substitute:
       APP: *app

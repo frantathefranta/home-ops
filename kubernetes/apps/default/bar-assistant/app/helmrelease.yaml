@@ -25,7 +25,7 @@ spec:
           chown-app:
             image:
               repository: docker.io/library/alpine
-              tag: "3.24"
+              tag: "3.24@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b"
             command:
               - /bin/sh
               - -c
@@ -36,7 +36,7 @@ spec:
           bar-assistant:
             image:
               repository: barassistant/server
-              tag: 6.6.0
+              tag: 6.6.0@sha256:eb946b9910c2f050b1dab993521e51328b2e8f6922248aa4368c72757fbe0498
             env:
               BASE_URL: https://bar.franta.us
               APP_URL: https://bar.franta.us/bar
