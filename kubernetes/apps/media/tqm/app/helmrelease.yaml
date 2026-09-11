@@ -12,6 +12,8 @@ spec:
   values:
     controllers:
       tqm:
+        annotations:
+          reloader.stakater.com/auto: "true"
         type: cronjob
         cronjob:
           schedule: "25 * * * *"
