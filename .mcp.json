@@ -4,6 +4,11 @@
       "url": "https://docs.siderolabs.com/mcp",
       "type": "http",
       "protocolVersion": "auto"
+    },
+    "konflate": {
+      "url": "https://konflate.franta.us/mcp",
+      "type": "http",
+      "protocolVersion": "auto"
     }
   }
 }
