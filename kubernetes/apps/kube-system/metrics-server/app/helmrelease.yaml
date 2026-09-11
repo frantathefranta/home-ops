@@ -5,15 +5,11 @@ kind: HelmRelease
 metadata:
   name: metrics-server
 spec:
+  chartRef:
+    kind: OCIRepository
+    name: metrics-server
+    namespace: kube-system
   interval: 30m
-  chart:
-    spec:
-      chart: metrics-server
-      version: 3.14.0
-      sourceRef:
-        kind: HelmRepository
-        name: metrics-server
-        namespace: flux-system
   install:
     remediation:
       retries: 3
