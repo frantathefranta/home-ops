@@ -307,9 +307,6 @@ That's it — `components/common` supplies the Namespace object (its `name: not-
 ```bash
 # Render the app locally (must succeed; ${APP} vars staying literal is expected)
 flate build ks --namespace <namespace> --output yaml <app>
-
-# Apply to the cluster (server-side, as kustomize-controller would)
-just kube apply-ks <namespace> <app>
 ```
 
 Show the user the created files and get confirmation before committing. Commit style: `Add <app>`.
