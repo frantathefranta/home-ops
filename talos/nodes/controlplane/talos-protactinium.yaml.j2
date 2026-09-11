@@ -1,6 +1,5 @@
 ---
 machine:
-  type: controlplane
   nodeLabels:
     topology.kubernetes.io/zone: protactinium
 ---
@@ -9,7 +8,10 @@ kind: HostnameConfig
 hostname: talos-protactinium
 ---
 apiVersion: v1alpha1
-kind: LinkAliasConfig
-name: net0
-selector:
-  match: link.driver == "ixgbevf"
+kind: DHCPv4Config
+name: eth0
+---
+apiVersion: v1alpha1
+kind: Layer2VIPConfig
+name: 10.33.40.25
+link: eth0
