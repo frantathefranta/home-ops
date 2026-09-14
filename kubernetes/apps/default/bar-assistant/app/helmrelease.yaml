@@ -12,8 +12,6 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph-external
-    - name: salt-rim
-      namespace: default
     - name: meilisearch
       namespace: default
   values:
@@ -21,17 +19,13 @@ spec:
       bar-assistant:
         annotations:
           reloader.stakater.com/auto: "true"
-        initContainers:
-          chown-app:
-            image:
-              repository: docker.io/library/alpine
-              tag: "3.24@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b"
-            command:
-              - /bin/sh
-              - -c
-            args:
-              - |
-                 chown -R 33:33 /var/www/cocktails/storage/bar-assistant
+        pod:
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 33
+            runAsGroup: 33
+            fsGroup: 33
+            fsGroupChangePolicy: OnRootMismatch
         containers:
           bar-assistant:
             image:
@@ -48,8 +42,6 @@ spec:
             envFrom:
               - secretRef:
                   name: bar-assistant-secret
-            securityContext:
-              privileged: true
             resources:
               requests:
                 cpu: 10m
@@ -73,6 +65,40 @@ spec:
             image:
               repository: ghcr.io/nginx/nginx-unprivileged
               tag: 1.31.5-alpine@sha256:19c132c9ab02d3b783f478743dafc7a7f42e27aa7d2bdcbec1bb1128ca8f2a07
+      salt-rim:
+        replicas: 2
+        strategy: RollingUpdate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: barassistant/salt-rim
+              tag: 5.6.0
+            env:
+              BASE_URL: https://bar.franta.us
+              API_URL: https://bar.franta.us/bar
+              MEILISEARCH_URL: https://bar.franta.us/search
+              DEFAULT_LOCALE: en-US
+              MAILS_ENABLED: true
+            probes:
+              liveness: &salt-rim-probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: &salt-rim-port 8080
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *salt-rim-probes
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 128Mi
     service:
       app:
         ipFamilyPolicy: PreferDualStack
@@ -80,6 +106,12 @@ spec:
         ports:
           nginx:
             port: &nginx-port 3000
+      salt-rim:
+        ipFamilyPolicy: PreferDualStack
+        controller: salt-rim
+        ports:
+          http:
+            port: *salt-rim-port
     route:
       app:
         hostnames:
@@ -90,15 +122,17 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: *app
+              - name: bar-assistant-app
                 port: *nginx-port
 
     persistence:
       app:
         existingClaim: *app
-        globalMounts:
-          - path: /var/www/cocktails/storage/bar-assistant
-            subPath: bar-assistant
+        advancedMounts:
+          bar-assistant:
+            bar-assistant:
+              - path: /var/www/cocktails/storage/bar-assistant
+                subPath: bar-assistant
       nginx-config:
         type: configMap
         name: bar-assistant-configmap
