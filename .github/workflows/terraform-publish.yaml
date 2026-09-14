@@ -29,9 +29,9 @@ jobs:
           token: ${{ steps.app-token.outputs.token }}
 
       - name: Setup Flux CLI
-        uses: fluxcd/flux2/action@31bdd6e9983cf7f4c870e5a85b25447f161a78d5 # 2026-07-24
+        uses: fluxcd/flux2/action@main
         with:
-          version: '2.9.5'
+          version: 'latest'
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
