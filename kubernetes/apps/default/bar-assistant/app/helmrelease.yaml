@@ -19,17 +19,6 @@ spec:
       bar-assistant:
         annotations:
           reloader.stakater.com/auto: "true"
-        initContainers:
-          chown-app:
-            image:
-              repository: docker.io/library/alpine
-              tag: "3.24@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b"
-            command:
-              - /bin/sh
-              - -c
-            args:
-              - |
-                 chown -R 33:33 /var/www/cocktails/storage/bar-assistant
         containers:
           bar-assistant:
             image:
@@ -137,9 +126,6 @@ spec:
         advancedMounts:
           bar-assistant:
             bar-assistant:
-              - path: /var/www/cocktails/storage/bar-assistant
-                subPath: bar-assistant
-            chown-app:
               - path: /var/www/cocktails/storage/bar-assistant
                 subPath: bar-assistant
       nginx-config:
