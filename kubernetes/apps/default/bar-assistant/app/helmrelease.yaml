@@ -12,8 +12,6 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph-external
-    - name: salt-rim
-      namespace: default
     - name: meilisearch
       namespace: default
   values:
@@ -73,6 +71,40 @@ spec:
             image:
               repository: ghcr.io/nginx/nginx-unprivileged
               tag: 1.31.5-alpine@sha256:19c132c9ab02d3b783f478743dafc7a7f42e27aa7d2bdcbec1bb1128ca8f2a07
+      salt-rim:
+        replicas: 2
+        strategy: RollingUpdate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: barassistant/salt-rim
+              tag: 5.6.0
+            env:
+              BASE_URL: https://bar.franta.us
+              API_URL: https://bar.franta.us/bar
+              MEILISEARCH_URL: https://bar.franta.us/search
+              DEFAULT_LOCALE: en-US
+              MAILS_ENABLED: true
+            probes:
+              liveness: &salt-rim-probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: &salt-rim-port 8080
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *salt-rim-probes
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 128Mi
     service:
       app:
         ipFamilyPolicy: PreferDualStack
@@ -80,6 +112,12 @@ spec:
         ports:
           nginx:
             port: &nginx-port 3000
+      salt-rim:
+        ipFamilyPolicy: PreferDualStack
+        controller: salt-rim
+        ports:
+          http:
+            port: *salt-rim-port
     route:
       app:
         hostnames:
