@@ -19,7 +19,7 @@ spec:
       bar-assistant:
         annotations:
           reloader.stakater.com/auto: "true"
-        defaultPodOptions:
+        pod:
           securityContext:
             runAsNonRoot: true
             runAsUser: 33
