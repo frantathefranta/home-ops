@@ -139,6 +139,9 @@ spec:
             bar-assistant:
               - path: /var/www/cocktails/storage/bar-assistant
                 subPath: bar-assistant
+            chown-app:
+              - path: /var/www/cocktails/storage/bar-assistant
+                subPath: bar-assistant
       nginx-config:
         type: configMap
         name: bar-assistant-configmap
