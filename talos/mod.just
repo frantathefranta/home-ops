@@ -28,16 +28,12 @@ reboot-node node:
 [doc('Render Talos config for a node')]
 [script]
 render-config node:
-    # Load ${CLUSTER_*_V6_CIDR} from the sops-encrypted env (talconfig source of truth)
-    while IFS= read -r line; do
-        [[ "$line" =~ ^([A-Z0-9_]+):[[:space:]]+(.*)$ ]] && export "${BASH_REMATCH[1]}=${BASH_REMATCH[2]}"
-    done < <(sops -d "{{ source_directory() }}/talenv.sops.yaml" | grep -E '^[A-Z0-9_]+: ')
     schematic="$(just talos schematic-id "{{ node }}")"
     role="controlplane"
     install_type="nocloud-installer"
     if [[ -f "{{ source_directory() }}/nodes/workers/{{ node }}.yaml.j2" ]]; then role="workers"; install_type="metal-installer"; fi
     talosctl machineconfig patch \
-        <(just template "{{ source_directory() }}/cluster.yaml.j2" -D "schematic=${schematic}" -D "install_type=${install_type}" -D "role=${role}" | envsubst '${CLUSTER_POD_V6_CIDR} ${CLUSTER_SVC_V6_CIDR} ${CLUSTER_NODE_V6_CIDR}') \
+        <(just template "{{ source_directory() }}/cluster.yaml.j2" -D "schematic=${schematic}" -D "install_type=${install_type}" -D "role=${role}") \
         -p @<(just template "{{ source_directory() }}/${role}.yaml.j2" -D "role=${role}") \
         -p @<(just template "{{ source_directory() }}/nodes/${role}/{{ node }}.yaml.j2")
 
