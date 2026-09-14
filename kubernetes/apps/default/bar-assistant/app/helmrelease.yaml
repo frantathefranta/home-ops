@@ -19,6 +19,13 @@ spec:
       bar-assistant:
         annotations:
           reloader.stakater.com/auto: "true"
+        defaultPodOptions:
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 33
+            runAsGroup: 33
+            fsGroup: 33
+            fsGroupChangePolicy: OnRootMismatch
         containers:
           bar-assistant:
             image:
@@ -35,8 +42,6 @@ spec:
             envFrom:
               - secretRef:
                   name: bar-assistant-secret
-            securityContext:
-              privileged: true
             resources:
               requests:
                 cpu: 10m
