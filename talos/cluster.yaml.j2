@@ -18,10 +18,12 @@ machine:
   # their replacement documents — so no KubeletConfig/KubeNodeConfig docs can
   # coexist with this block. nodeIP (and nodeLabels below) ride along with it.
   kubelet:
-    image: ghcr.io/siderolabs/kubelet:v1.36.4
+    image: ghcr.io/siderolabs/kubelet:v1.37.0
     defaultRuntimeSeccompProfileEnabled: true
     disableManifestsDirectory: true
     extraConfig:
+      crashLoopBackOff:
+        maxContainerRestartPeriod: 60s
       imageMaximumGCAge: 168h
       maxParallelImagePulls: 10
       maxPods: 400
@@ -31,7 +33,7 @@ machine:
     nodeIP:
       validSubnets:
         - 10.33.35.0/27
-        - "${CLUSTER_NODE_V6_CIDR}"
+        - op://kubernetes/talos/CLUSTER_NODE_V6_CIDR
     extraMounts:
       - destination: /var/openebs/local
         type: bind
@@ -84,10 +86,10 @@ kind: KubeNetworkConfig
 dnsDomain: cluster.local
 podSubnets:
   - 10.69.0.0/16
-  - "${CLUSTER_POD_V6_CIDR}"
+  - op://kubernetes/talos/CLUSTER_POD_V6_CIDR
 serviceSubnets:
   - 10.96.0.0/16
-  - "${CLUSTER_SVC_V6_CIDR}"
+  - op://kubernetes/talos/CLUSTER_SVC_V6_CIDR
 # was: KubeControllerManagerConfig extraArgs node-cidr-mask-size-ipv6
 nodeCIDRMaskSizeIPv6: 112
 ---

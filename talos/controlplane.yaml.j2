@@ -68,7 +68,7 @@ configuration:
 ---
 apiVersion: v1alpha1
 kind: KubeAPIServerConfig
-image: registry.k8s.io/kube-apiserver:v1.36.4
+image: registry.k8s.io/kube-apiserver:v1.37.0
 # talconfig: additionalApiServerCertSans
 certExtraSANs:
   - 10.33.40.25
@@ -87,7 +87,7 @@ configuration:
 ---
 apiVersion: v1alpha1
 kind: KubeControllerManagerConfig
-image: registry.k8s.io/kube-controller-manager:v1.36.4
+image: registry.k8s.io/kube-controller-manager:v1.37.0
 extraArgs:
   bind-address: 0.0.0.0
 # node-cidr-mask-size-ipv6 moved to KubeNetworkConfig (cluster.yaml.j2)
@@ -98,12 +98,12 @@ enabled: false
 ---
 apiVersion: v1alpha1
 kind: KubeProxyConfig
-image: registry.k8s.io/kube-proxy:v1.36.4
+image: registry.k8s.io/kube-proxy:v1.37.0
 enabled: false
 ---
 apiVersion: v1alpha1
 kind: KubeSchedulerConfig
-image: registry.k8s.io/kube-scheduler:v1.36.4
+image: registry.k8s.io/kube-scheduler:v1.37.0
 config:
   profiles:
     - schedulerName: default-scheduler
