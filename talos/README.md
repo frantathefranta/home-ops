@@ -71,9 +71,15 @@ document equivalent (or none we can use yet):
 
 ## Verifying a template change
 
-1. Render before/after and diff, for one CP and one worker:
-   `just talos render-config <node> > /tmp/after.yaml`
-2. On each node (or the affected role), confirm the apply would be a no-op where expected:
-   `just talos render-config <node> | talosctl -n <node> machineconfig diff -f /dev/stdin`
+1. Snapshot the node's live config (also the rollback reference):
+   `talosctl -n <node> get machineconfig v1alpha1 -o jsonpath='{.spec}' > /tmp/<node>-current.yaml`
+2. Render the new config and diff locally (expect normalization noise):
+   `just talos render-config <node> > /tmp/<node>-new.yaml && diff /tmp/<node>-current.yaml /tmp/<node>-new.yaml`
+3. Dry-run the apply — the node validates the full config and reports how the
+   change would be applied, without applying anything:
+   `talosctl -n <node> apply-config --dry-run -f /tmp/<node>-new.yaml`
 
 Then apply one worker first, then one control-plane node, before rolling the rest.
+1.14 applies without a reboot by default (`--mode=reboot` is gone); if the dry-run
+says a change needs a reboot, use `--mode=staged` or reboot explicitly after
+cordoning/draining.
