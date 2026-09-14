@@ -28,11 +28,10 @@ jobs:
         with:
           token: ${{ steps.app-token.outputs.token }}
 
-      - name: Setup Homebrew
-        uses: Homebrew/actions/setup-homebrew@3cdb78d0f62ad29dd32de765782654f4eedea607 # master
-
-      - name: Setup Workflow Tools
-        run: brew install fluxcd/tap/flux
+      - name: Setup Flux CLI
+        uses: fluxcd/flux2/action@31bdd6e9983cf7f4c870e5a85b25447f161a78d5 # 2026-07-24
+        with:
+          version: '2.9.5'
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
