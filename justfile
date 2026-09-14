@@ -27,4 +27,5 @@ log lvl msg *args:
 
 [private]
 template file *args:
-    minijinja-cli --env "{{ file }}" {{ args }} | vals eval -f -
+    # cat to stdin: minijinja-cli 2.24.0 quotes -D define values when read from a file path in some environments; stdin is clean.
+    cat "{{ file }}" | minijinja-cli {{ args }} | op inject
