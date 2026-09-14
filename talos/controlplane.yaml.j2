@@ -1,18 +1,15 @@
 ---
+version: v1alpha1
 machine:
   type: controlplane
   ca:
     crt: op://kubernetes/talos/MACHINE_CA_CRT
     key: op://kubernetes/talos/MACHINE_CA_KEY
 cluster:
-  ca:
-    crt: op://kubernetes/talos/CLUSTER_CA_CRT
-    key: op://kubernetes/talos/CLUSTER_CA_KEY
-  aggregatorCA:
-    crt: op://kubernetes/talos/CLUSTER_AGGREGATORCA_CRT
-    key: op://kubernetes/talos/CLUSTER_AGGREGATORCA_KEY
-  # talconfig: allowSchedulingOnControlPlanes. Conflicts with KubeNodeConfig,
-  # so control-plane nodes must not carry a KubeNodeConfig document.
+  # talconfig: allowSchedulingOnControlPlanes. Still v1alpha1 in 1.14: the
+  # KubeNodeConfig replacement expresses CP scheduling through the node's
+  # taints instead of a flag. This cluster carries no KubeNodeConfig docs
+  # (see kubelet block in cluster.yaml.j2), so the flag stays as-is.
   allowSchedulingOnControlPlanes: true
   etcd:
     advertisedSubnets:
@@ -22,9 +19,52 @@ cluster:
       key: op://kubernetes/talos/CLUSTER_ETCD_CA_KEY
     extraArgs:
       listen-metrics-urls: http://0.0.0.0:2381
-  serviceAccount:
-    key: op://kubernetes/talos/CLUSTER_SERVICEACCOUNT_KEY
-  secretboxEncryptionSecret: op://kubernetes/talos/CLUSTER_SECRETBOXENCRYPTIONSECRET
+---
+apiVersion: v1alpha1
+kind: KubeAPIServerCAConfig
+# Patches the base doc from cluster.yaml.j2 with the issuing key.
+issuingCA:
+  key: op://kubernetes/talos/CLUSTER_CA_KEY
+---
+apiVersion: v1alpha1
+kind: KubeAggregatorCAConfig
+issuingCA:
+  cert: op://kubernetes/talos/CLUSTER_AGGREGATORCA_CRT
+  key: op://kubernetes/talos/CLUSTER_AGGREGATORCA_KEY
+---
+apiVersion: v1alpha1
+kind: KubeServiceAccountConfig
+issuer:
+  privateKey: op://kubernetes/talos/CLUSTER_SERVICEACCOUNT_KEY
+  # was derived implicitly from the controlPlane endpoint; must keep matching it
+  issuerURL: https://10.33.40.25:6443
+---
+apiVersion: v1alpha1
+# was: cluster.secretboxEncryptionSecret
+kind: KubeEtcdEncryptionConfig
+config:
+  resources:
+    - providers:
+        - secretbox:
+            keys:
+              - name: key1
+                secret: op://kubernetes/talos/CLUSTER_SECRETBOXENCRYPTIONSECRET
+        - identity: {}
+      resources:
+        - secrets
+---
+apiVersion: v1alpha1
+# Restrict anonymous API access to the health endpoints (1.14 doc's canonical
+# example; replaces the implicit k8s default of anonymous everywhere).
+kind: KubeAuthenticationConfig
+configuration:
+  anonymous:
+    conditions:
+      - path: /livez
+      - path: /readyz
+      - path: /healthz
+    enabled: true
+  jwt: []
 ---
 apiVersion: v1alpha1
 kind: KubeAPIServerConfig
@@ -50,7 +90,7 @@ kind: KubeControllerManagerConfig
 image: registry.k8s.io/kube-controller-manager:v1.36.4
 extraArgs:
   bind-address: 0.0.0.0
-  node-cidr-mask-size-ipv6: "112"
+# node-cidr-mask-size-ipv6 moved to KubeNetworkConfig (cluster.yaml.j2)
 ---
 apiVersion: v1alpha1
 kind: KubeCoreDNSConfig
