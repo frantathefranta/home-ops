@@ -128,15 +128,17 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: *app
+              - name: bar-assistant-app
                 port: *nginx-port
 
     persistence:
       app:
         existingClaim: *app
-        globalMounts:
-          - path: /var/www/cocktails/storage/bar-assistant
-            subPath: bar-assistant
+        advancedMounts:
+          bar-assistant:
+            bar-assistant:
+              - path: /var/www/cocktails/storage/bar-assistant
+                subPath: bar-assistant
       nginx-config:
         type: configMap
         name: bar-assistant-configmap

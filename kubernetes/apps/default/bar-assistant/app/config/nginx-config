@@ -29,7 +29,7 @@ http {
     }
 
     location / {
-        proxy_pass http://salt-rim:8080/;
+        proxy_pass http://bar-assistant-salt-rim:8080/;
     }
   }
 }
