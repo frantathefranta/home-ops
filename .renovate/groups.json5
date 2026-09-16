@@ -28,8 +28,11 @@
     {
       description: "Cilium Group",
       groupName: "Cilium",
-      matchDatasources: ["docker"],
-      matchPackageNames: ["/cilium/"],
+      matchDatasources: ["docker", "helm", "github-releases"],
+      matchPackageNames: [
+        "/cilium/",
+        "/cilium-cilium/",
+      ],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },
