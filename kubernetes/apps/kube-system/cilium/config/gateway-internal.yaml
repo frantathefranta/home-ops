@@ -5,7 +5,8 @@ kind: Gateway
 metadata:
   name: internal
   annotations:
-    external-dns.alpha.kubernetes.io/target: &hostname internal.franta.us
+    external-dns.kubernetes.io/target: &hostname internal.franta.us
+    external-dns.alpha.kubernetes.io/target: *hostname
   labels:
     gateway: internal
 spec:

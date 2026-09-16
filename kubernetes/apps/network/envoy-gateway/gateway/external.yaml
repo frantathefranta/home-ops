@@ -5,7 +5,8 @@ kind: Gateway
 metadata:
   name: envoy-external
   annotations:
-    external-dns.alpha.kubernetes.io/target: &hostname ingress-external.franta.us
+    external-dns.kubernetes.io/target: &hostname ingress-external.franta.us
+    external-dns.alpha.kubernetes.io/target: *hostname
 spec:
   gatewayClassName: envoy
   infrastructure:
