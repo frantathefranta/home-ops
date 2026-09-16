@@ -38,7 +38,6 @@ spec:
       - --pdns-api-key=$(PDNS_API_KEY)
     triggerLoopOnEvent: true
     policy: sync
-    annotationPrefix: external-dns.alpha.kubernetes.io/
     sources: ["gateway-httproute", "service"]
     txtPrefix: k8s.talos-maxi.
     txtOwnerId: default
