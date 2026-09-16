@@ -6,7 +6,6 @@ metadata:
   name: internal
   annotations:
     external-dns.kubernetes.io/target: &hostname internal.franta.us
-    external-dns.alpha.kubernetes.io/target: *hostname
   labels:
     gateway: internal
 spec:
@@ -15,7 +14,6 @@ spec:
     annotations:
       io.cilium/lb-ipam-ips: 10.33.40.11,${CLUSTER_LBA_V6_PREFIX}:11
       external-dns.kubernetes.io/hostname: *hostname
-      external-dns.alpha.kubernetes.io/hostname: *hostname
   listeners:
     - name: http
       protocol: HTTP
