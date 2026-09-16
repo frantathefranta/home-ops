@@ -28,6 +28,7 @@ spec:
       - --gateway-name=external
     triggerLoopOnEvent: true
     policy: sync
+    annotationPrefix: external-dns.alpha.kubernetes.io/
     sources: ["crd", "gateway-httproute"]
     txtPrefix: k8s.
     txtOwnerId: talos-maxi
