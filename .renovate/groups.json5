@@ -34,7 +34,8 @@
         "/cilium-cilium/",
       ],
       group: {
-        commitMessageTopic: "{{{groupName}}} group",
+        commitMessagePrefix: "fix(Cilium):",
+        commitMessageTopic: "upgrade to {{{newVersion}}}",
       },
     },
     {
