@@ -10,18 +10,6 @@ spec:
     name: cloudflare-dns
     namespace: network
   interval: 30m
-  install:
-    disableSchemaValidation: true # Ref: https://github.com/kubernetes-sigs/external-dns/issues/5206
-    crds: CreateReplace
-    remediation:
-      retries: 3
-  upgrade:
-    disableSchemaValidation: true # Ref: https://github.com/kubernetes-sigs/external-dns/issues/5206
-    cleanupOnFail: true
-    crds: CreateReplace
-    remediation:
-      strategy: rollback
-      retries: 3
   values:
     fullnameOverride: *app
     service:
@@ -37,7 +25,7 @@ spec:
       - --cloudflare-proxied
       - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
       - --crd-source-kind=DNSEndpoint
-      - --gateway-label-filter=gateway==external
+      - --gateway-name=external
     triggerLoopOnEvent: true
     policy: sync
     sources: ["crd", "gateway-httproute"]
