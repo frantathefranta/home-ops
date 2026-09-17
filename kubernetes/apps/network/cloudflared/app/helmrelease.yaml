@@ -10,6 +10,25 @@ spec:
     kind: OCIRepository
     name: cloudflared
   values:
+    externalSecrets:
+      main:
+        forceRename: cloudflared-tunnel
+        secretStoreRef:
+          kind: ClusterSecretStore
+          name: akeyless-secret-store
+        target:
+          name: cloudflared-tunnel
+          template:
+            data:
+              credentials.json: |
+                {
+                  "AccountTag": "{{ .CLOUDFLARE_ACCOUNT_TAG }}",
+                  "TunnelSecret": "{{ .TALOS_MAXI_CLOUDFLARE_TUNNEL_SECRET }}",
+                  "TunnelID": "f38c7795-d069-4708-bd78-f88f0d3f8171"
+                }
+        dataFrom:
+        - extract:
+            key: /cloudflare
     controllers:
       cloudflared:
         replicas: 2

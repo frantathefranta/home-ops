@@ -10,6 +10,23 @@ spec:
     kind: OCIRepository
     name: jellyseerr
   values:
+    externalSecrets:
+      main:
+        forceRename: jellyseerr-secret
+        secretStoreRef:
+          name: akeyless-secret-store
+          kind: ClusterSecretStore
+        refreshInterval: 15m
+        target:
+          name: jellyseerr-secret
+          creationPolicy: Owner
+          template:
+            engineVersion: v2
+            data:
+              API_KEY: '{{ .JELLYSEERR_API_KEY }}'
+        dataFrom:
+        - extract:
+            key: /jellyseerr
     controllers:
       jellyseerr:
         annotations:

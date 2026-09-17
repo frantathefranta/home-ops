@@ -10,6 +10,23 @@ spec:
     kind: OCIRepository
     name: sonarr
   values:
+    externalSecrets:
+      main:
+        forceRename: sonarr-secret
+        refreshInterval: 15m
+        target:
+          name: sonarr-secret
+          template:
+            engineVersion: v2
+            data:
+              SONARR__AUTH__APIKEY: '{{ .SONARR_API_KEY }}'
+        dataFrom:
+        - extract:
+            key: /sonarr
+          sourceRef:
+            storeRef:
+              kind: ClusterSecretStore
+              name: akeyless-secret-store
     controllers:
       sonarr:
         labels:

@@ -12,6 +12,24 @@ spec:
   - name: rook-ceph-cluster
     namespace: rook-ceph-external
   values:
+    externalSecrets:
+      main:
+        forceRename: recyclarr-secret
+        secretStoreRef:
+          kind: ClusterSecretStore
+          name: akeyless-secret-store
+        target:
+          name: recyclarr-secret
+          template:
+            engineVersion: v2
+            data:
+              RADARR_API_KEY: '{{ .RADARR_API_KEY }}'
+              SONARR_API_KEY: '{{ .SONARR_API_KEY }}'
+        dataFrom:
+        - extract:
+            key: /radarr
+        - extract:
+            key: /sonarr
     controllers:
       recyclarr:
         annotations:

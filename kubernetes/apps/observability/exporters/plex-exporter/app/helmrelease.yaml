@@ -10,6 +10,21 @@ spec:
     kind: OCIRepository
     name: plex-exporter
   values:
+    externalSecrets:
+      main:
+        secretStoreRef:
+          name: akeyless-secret-store
+          kind: ClusterSecretStore
+        target:
+          name: plex-exporter
+          creationPolicy: Owner
+          template:
+            engineVersion: v2
+            data:
+              PLEX_TOKEN: '{{ .PLEX_TOKEN }}'
+        dataFrom:
+        - extract:
+            key: /plex
     controllers:
       plex-exporter:
         annotations:

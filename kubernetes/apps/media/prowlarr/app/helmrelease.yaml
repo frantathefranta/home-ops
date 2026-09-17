@@ -9,6 +9,23 @@ spec:
     kind: OCIRepository
     name: prowlarr
   values:
+    externalSecrets:
+      main:
+        forceRename: prowlarr-secret
+        refreshInterval: 15m
+        target:
+          name: prowlarr-secret
+          template:
+            engineVersion: v2
+            data:
+              PROWLARR__AUTH__APIKEY: '{{ .PROWLARR_API_KEY }}'
+        dataFrom:
+        - extract:
+            key: /prowlarr
+          sourceRef:
+            storeRef:
+              kind: ClusterSecretStore
+              name: akeyless-secret-store
     controllers:
       prowlarr:
         annotations:

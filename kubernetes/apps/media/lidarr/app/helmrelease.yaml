@@ -10,6 +10,30 @@ spec:
     kind: OCIRepository
     name: lidarr
   values:
+    externalSecrets:
+      main:
+        forceRename: lidarr-secret
+        refreshInterval: 15m
+        target:
+          name: lidarr-secret
+          template:
+            engineVersion: v2
+            data:
+              LIDARR__AUTH__APIKEY: '{{ .LIDARR_API_KEY }}'
+              WRTAG_API_KEY: '{{ .WRTAG_API_KEY }}'
+        dataFrom:
+        - extract:
+            key: /wrtag
+          sourceRef:
+            storeRef:
+              kind: ClusterSecretStore
+              name: akeyless-secret-store
+        - extract:
+            key: /lidarr
+          sourceRef:
+            storeRef:
+              kind: ClusterSecretStore
+              name: akeyless-secret-store
     controllers:
       lidarr:
         labels:

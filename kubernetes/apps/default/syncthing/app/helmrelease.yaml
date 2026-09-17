@@ -14,6 +14,30 @@ spec:
     - name: rook-ceph-cluster
       namespace: rook-ceph-external
   values:
+    externalSecrets:
+      main:
+        forceRename: syncthing-secret
+        secretStoreRef:
+          name: akeyless-secret-store
+          kind: ClusterSecretStore
+        refreshInterval: 15m
+        target:
+          name: syncthing-secret
+          template:
+            engineVersion: v2
+            data:
+              API_BEARER_TOKEN: '{{ .API_BEARER_TOKEN }}'
+        dataFrom:
+        - extract:
+            key: /syncthing
+    networkpolicies:
+      allow-ingress:
+        forceRename: syncthing-allow-ingress
+        type: cilium
+        controller: syncthing
+        ingress:
+        - fromEntities:
+          - world
     controllers:
       syncthing:
         annotations:

@@ -12,6 +12,41 @@ spec:
     - name: rook-ceph-cluster
       namespace: rook-ceph-external
   values:
+    externalSecrets:
+      main:
+        forceRename: paperless-secret
+        refreshInterval: 15m
+        target:
+          name: paperless-secret
+          template:
+            engineVersion: v2
+            data:
+              PAPERLESS_ADMIN_USER: '{{ .PAPERLESS_ADMIN_USER }}'
+              PAPERLESS_ADMIN_PASSWORD: '{{ .PAPERLESS_ADMIN_PASSWORD }}'
+              PAPERLESS_SECRET_KEY: '{{ .PAPERLESS_SECRET_KEY }}'
+              PAPERLESS_SOCIALACCOUNT_PROVIDERS: |-
+                {
+                  "openid_connect": {
+                      "APPS": [
+                          {
+                              "provider_id": "authelia",
+                              "name": "Authelia",
+                              "client_id": "{{ .PAPERLESS_OAUTH_CLIENT_ID }}",
+                              "secret": "{{ .PAPERLESS_OAUTH_CLIENT_SECRET }}",
+                              "settings": {
+                                  "server_url": "https://auth.franta.us/"
+                              }
+                          }
+                      ]
+                  }
+                }
+        dataFrom:
+        - extract:
+            key: /paperless
+          sourceRef:
+            storeRef:
+              kind: ClusterSecretStore
+              name: akeyless-secret-store
     controllers:
       paperless:
         annotations:

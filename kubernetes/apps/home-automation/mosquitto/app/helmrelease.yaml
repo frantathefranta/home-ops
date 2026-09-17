@@ -10,6 +10,14 @@ spec:
     name: mosquitto
   interval: 1h
   values:
+    networkpolicies:
+      allow-ingress:
+        forceRename: mosquitto-allow-ingress
+        type: cilium
+        controller: mosquitto
+        ingress:
+        - fromEntities:
+          - world
     controllers:
       mosquitto:
         type: statefulset

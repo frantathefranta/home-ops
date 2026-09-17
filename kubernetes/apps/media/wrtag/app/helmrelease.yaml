@@ -15,6 +15,25 @@ spec:
   driftDetection:
     mode: warn
   values:
+    externalSecrets:
+      main:
+        forceRename: wrtag-secret
+        secretStoreRef:
+          name: akeyless-secret-store
+          kind: ClusterSecretStore
+        refreshInterval: 15m
+        target:
+          name: wrtag-secret
+          template:
+            engineVersion: v2
+            data:
+              WRTAG_WEB_API_KEY: '{{ .WRTAG_API_KEY }}'
+              WRTAG_NOTIFICATION_URI: complete smtp://:@smtp-relay.default.svc.cluster.local:25/?from=auto@franta.dev&to=fb@franta.us&Auth=None&ClientHost=wrtag&Subject=[wrtag]-complete,needs-input smtp://:@smtp-relay.default.svc.cluster.local:25/?from=auto@franta.dev&to=fb@franta.us&Auth=None&ClientHost=wrtag&Subject=[wrtag]-needs-input,complete generic://plex.franta.us/library/sections/2/refresh?X-Plex-Token={{ .PLEX_TOKEN }}
+        dataFrom:
+        - extract:
+            key: /wrtag
+        - extract:
+            key: /plex
     defaultPodOptions:
       automountServiceAccountToken: false
       securityContext:

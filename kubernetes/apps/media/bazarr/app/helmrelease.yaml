@@ -9,6 +9,23 @@ spec:
     kind: OCIRepository
     name: bazarr
   values:
+    externalSecrets:
+      main:
+        forceRename: bazarr-secret
+        refreshInterval: 15m
+        target:
+          name: bazarr-secret
+          template:
+            engineVersion: v2
+            data:
+              BAZARR__API_KEY: '{{ .BAZARR_API_KEY }}'
+        dataFrom:
+        - extract:
+            key: /bazarr
+          sourceRef:
+            storeRef:
+              kind: ClusterSecretStore
+              name: akeyless-secret-store
     controllers:
       bazarr:
         labels:

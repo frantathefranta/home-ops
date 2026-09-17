@@ -10,6 +10,24 @@ spec:
     kind: OCIRepository
     name: miniflux
   values:
+    externalSecrets:
+      main:
+        forceRename: miniflux-secret
+        refreshInterval: 15m
+        target:
+          name: miniflux-secret
+          template:
+            engineVersion: v2
+            data:
+              ADMIN_USERNAME: '{{ .MINIFLUX_ADMIN_USERNAME }}'
+              ADMIN_PASSWORD: '{{ .MINIFLUX_ADMIN_PASSWORD }}'
+        dataFrom:
+        - extract:
+            key: /miniflux
+          sourceRef:
+            storeRef:
+              kind: ClusterSecretStore
+              name: akeyless-secret-store
     controllers:
       miniflux:
         replicas: 2
