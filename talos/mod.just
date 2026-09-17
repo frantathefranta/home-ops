@@ -35,7 +35,8 @@ render-config node:
     talosctl machineconfig patch \
         <(just template "{{ source_directory() }}/cluster.yaml.j2" -D "schematic=${schematic}" -D "install_type=${install_type}" -D "role=${role}") \
         -p @<(just template "{{ source_directory() }}/${role}.yaml.j2" -D "role=${role}") \
-        -p @<(just template "{{ source_directory() }}/nodes/${role}/{{ node }}.yaml.j2")
+        -p @<(just template "{{ source_directory() }}/nodes/${role}/{{ node }}.yaml.j2") \
+        | yq -y 'if .kind == "KubeServiceAccountConfig" then .issuer.privateKey |= @base64d else . end'
 
 [confirm('Reset node ' + node + ' [y|N] ?')]
 [doc('Reset a node')]
