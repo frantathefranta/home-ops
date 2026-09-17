@@ -1,0 +1,149 @@
+---
+version: v1alpha1
+machine:
+  ca:
+    crt: op://kubernetes/talos/MACHINE_CA_CRT
+  # talconfig: additionalMachineCertSans
+  certSANs:
+    - 10.33.40.25
+    - talos-maxi.franta.us
+    - 127.0.0.1
+  features:
+    apidCheckExtKeyUsage: true
+    diskQuotaSupport: true
+    rbac: true
+  token: op://kubernetes/talos/MACHINE_TOKEN
+  # Stays v1alpha1: `extraMounts` has no 1.14 document equivalent (required by
+  # the OpenEBS local PV), and v1alpha1 fields are mutually exclusive with
+  # their replacement documents — so no KubeletConfig/KubeNodeConfig docs can
+  # coexist with this block. nodeIP (and nodeLabels below) ride along with it.
+  kubelet:
+    image: ghcr.io/siderolabs/kubelet:v1.37.0
+    defaultRuntimeSeccompProfileEnabled: true
+    disableManifestsDirectory: true
+    extraConfig:
+      crashLoopBackOff:
+        maxContainerRestartPeriod: 60s
+      imageMaximumGCAge: 168h
+      maxParallelImagePulls: 10
+      maxPods: 400
+      serializeImagePulls: false
+      shutdownGracePeriod: 90s
+      shutdownGracePeriodCriticalPods: 60s
+    nodeIP:
+      validSubnets:
+        - 10.33.35.0/27
+        - op://kubernetes/talos/CLUSTER_NODE_V6_CIDR
+    extraMounts:
+      - destination: /var/openebs/local
+        type: bind
+        source: /var/openebs/local
+        options:
+          - bind
+          - rshared
+          - rw
+  # talconfig: topology.kubernetes.io/region (all nodes)
+  nodeLabels:
+    topology.kubernetes.io/region: talos-maxi
+cluster:
+  # Kept v1alpha1 so the existing base64-encoded PEM secret remains compatible.
+  ca:
+    crt: op://kubernetes/talos/CLUSTER_CA_CRT
+  token: op://kubernetes/talos/CLUSTER_TOKEN
+# Explicit instead of relying on the default: the service registry is what
+# ResolverConfig.resolveMemberNames depends on.
+---
+apiVersion: v1alpha1
+kind: DiscoveryServiceConfig
+name: default
+endpoint: https://discovery.talos.dev/
+---
+apiVersion: v1alpha1
+kind: ResolverConfig
+searchDomains:
+  domains: []
+hostDNS:
+  enabled: true
+  forwardKubeDNSToHost: false
+  resolveMemberNames: true
+---
+apiVersion: v1alpha1
+kind: KubeClusterConfig
+clusterName: talos-maxi
+endpoint: https://10.33.40.25:6443
+---
+apiVersion: v1alpha1
+kind: DiscoveryIdentityConfig
+clusterID: op://kubernetes/talos/CLUSTER_ID
+clusterSecret: op://kubernetes/talos/CLUSTER_SECRET
+---
+apiVersion: v1alpha1
+# No KubeFlannelCNIConfig doc on purpose: no CNI is deployed (was cni: none).
+kind: KubeNetworkConfig
+dnsDomain: cluster.local
+podSubnets:
+  - 10.69.0.0/16
+  - op://kubernetes/talos/CLUSTER_POD_V6_CIDR
+serviceSubnets:
+  - 10.96.0.0/16
+  - op://kubernetes/talos/CLUSTER_SVC_V6_CIDR
+# was: KubeControllerManagerConfig extraArgs node-cidr-mask-size-ipv6
+nodeCIDRMaskSizeIPv6: 112
+---
+apiVersion: v1alpha1
+# Presence enables KubePrism.
+kind: KubePrismConfig
+port: 7445
+---
+apiVersion: v1alpha1
+# 1.14 generates this for new clusters only; upgraded ones need it added.
+kind: FilesystemTrimConfig
+interval: 168h0m0s
+---
+apiVersion: v1alpha1
+kind: EtcFileConfig
+name: nfsmount.conf
+mode: 0o644
+contents: |
+  [ NFSMount_Global_Options ]
+  nfsvers=4.2
+  hard=True
+  nconnect=8
+  noatime=True
+  rsize=1048576
+  wsize=1048576
+---
+apiVersion: v1alpha1
+kind: UnattendedInstallConfig
+installer:
+  image: factory.talos.dev/{{ install_type }}/{{ schematic }}:v1.14.1
+provisioning:
+  # CP default (talconfig installDisk: /dev/sda); workers override per-node.
+  diskSelector:
+    match: disk.dev_path == "/dev/sda"
+  wipe: false
+---
+apiVersion: v1alpha1
+kind: WatchdogTimerConfig
+device: /dev/watchdog0
+timeout: 5m
+---
+apiVersion: v1alpha1
+kind: CRICustomizationConfig
+name: containerd
+content: |
+  [plugins."io.containerd.cri.v1.images"]
+    discard_unpacked_layers = false
+  [plugins."io.containerd.cri.v1.runtime"]
+    device_ownership_from_security_context = true
+---
+apiVersion: v1alpha1
+kind: SysctlConfig
+params:
+  net.ipv6.conf.all.accept_ra: "2"
+  net.ipv6.conf.all.forwarding: "1"
+  net.ipv6.conf.bond0.accept_ra: "2"
+---
+apiVersion: v1alpha1
+kind: KernelModuleConfig
+name: nbd
