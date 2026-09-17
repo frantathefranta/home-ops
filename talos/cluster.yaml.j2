@@ -119,7 +119,7 @@ contents: |
 apiVersion: v1alpha1
 kind: UnattendedInstallConfig
 installer:
-  image: factory.talos.dev/{{ install_type }}/{{ schematic }}:v1.14.0
+  image: factory.talos.dev/{{ install_type }}/{{ schematic }}:v1.14.1
 provisioning:
   # CP default (talconfig installDisk: /dev/sda); workers override per-node.
   diskSelector:
@@ -143,19 +143,9 @@ content: |
 apiVersion: v1alpha1
 kind: SysctlConfig
 params:
-  fs.inotify.max_queued_events: "65536"
-  fs.inotify.max_user_instances: "8192"
-  fs.inotify.max_user_watches: "524288"
-  net.core.bpf_jit_harden: "1"
-  net.core.default_qdisc: fq
-  net.core.rmem_max: "67108864"
-  net.core.wmem_max: "67108864"
-  net.ipv4.tcp_congestion_control: bbr
-  net.ipv4.tcp_fastopen: "3"
-  net.ipv6.conf.all.accept_ra: "0"
+  net.ipv6.conf.all.accept_ra: "2"
   net.ipv6.conf.all.forwarding: "1"
   net.ipv6.conf.bond0.accept_ra: "2"
-  vm.nr_hugepages: "1024"
 ---
 apiVersion: v1alpha1
 kind: KernelModuleConfig
