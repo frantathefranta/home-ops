@@ -6,6 +6,15 @@ machine:
     crt: op://kubernetes/talos/MACHINE_CA_CRT
     key: op://kubernetes/talos/MACHINE_CA_KEY
 cluster:
+  # Keep the CA material in v1alpha1 form: these 1Password fields are
+  # base64-encoded PEM, while the 1.14 CA documents require literal PEM.
+  # ca merges as a cert+key unit, so repeat crt alongside key.
+  ca:
+    crt: op://kubernetes/talos/CLUSTER_CA_CRT
+    key: op://kubernetes/talos/CLUSTER_CA_KEY
+  aggregatorCA:
+    crt: op://kubernetes/talos/CLUSTER_AGGREGATORCA_CRT
+    key: op://kubernetes/talos/CLUSTER_AGGREGATORCA_KEY
   # talconfig: allowSchedulingOnControlPlanes. Still v1alpha1 in 1.14: the
   # KubeNodeConfig replacement expresses CP scheduling through the node's
   # taints instead of a flag. This cluster carries no KubeNodeConfig docs
@@ -21,22 +30,10 @@ cluster:
       listen-metrics-urls: http://0.0.0.0:2381
 ---
 apiVersion: v1alpha1
-kind: KubeAPIServerCAConfig
-# Patches the base doc from cluster.yaml.j2 with the issuing key.
-issuingCA:
-  key: op://kubernetes/talos/CLUSTER_CA_KEY
----
-apiVersion: v1alpha1
-kind: KubeAggregatorCAConfig
-issuingCA:
-  cert: op://kubernetes/talos/CLUSTER_AGGREGATORCA_CRT
-  key: op://kubernetes/talos/CLUSTER_AGGREGATORCA_KEY
----
-apiVersion: v1alpha1
 kind: KubeServiceAccountConfig
 issuer:
+  # The render pipeline decodes this base64-encoded PEM value for the document.
   privateKey: op://kubernetes/talos/CLUSTER_SERVICEACCOUNT_KEY
-  # was derived implicitly from the controlPlane endpoint; must keep matching it
   issuerURL: https://10.33.40.25:6443
 ---
 apiVersion: v1alpha1

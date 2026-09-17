@@ -46,6 +46,9 @@ document equivalent (or none we can use yet):
 
 - `machine.ca`, `machine.certSANs`, `machine.token`, `machine.features`, `cluster.token` —
   still `v1alpha1` by design, no replacement document.
+- `cluster.ca`, `cluster.aggregatorCA` (CP) — kept in `v1alpha1` to match onedr0p's
+  pattern and preserve the existing base64-encoded PEM 1Password values. Their 1.14
+  document replacements require literal PEM.
 - `machine.kubelet` (incl. `nodeIP`) + `machine.nodeLabels` — pinned to `v1alpha1` by
   `kubelet.extraMounts`, which has no 1.14 document equivalent (OpenEBS local PV). v1alpha1
   fields are mutually exclusive with their replacement documents, so no `KubeletConfig` /
@@ -61,13 +64,12 @@ document equivalent (or none we can use yet):
 
 - `machine.ca` / `cluster.ca` (v1alpha1) merge as a cert+key **unit**: a patch supplying only
   `key` blanks `crt`. `controlplane.yaml.j2` therefore repeats the `crt` references alongside
-  the keys. (The 1.14 `KubeAPIServerCAConfig` document does *not* have this quirk — the base
-  doc carries `issuingCA.cert` and the CP patch adds `issuingCA.key`; the merged result is
-  verified by the render diff.)
+  the keys.
 - `KubeNetworkConfig` has no CNI selector: "no CNI" is expressed by the *absence* of a
   `KubeFlannelCNIConfig` document.
-- The `KubeServiceAccountConfig` `issuerURL` must keep matching the control plane endpoint
-  (`https://10.33.40.25:6443`); in the old v1alpha1 form it was derived implicitly.
+- `KubeServiceAccountConfig.issuerURL` must keep matching the control-plane endpoint
+  (`https://10.33.40.25:6443`). Its legacy base64-encoded PEM key is decoded by
+  `render-config` because the document requires literal PEM.
 
 ## Verifying a template change
 

@@ -46,6 +46,9 @@ machine:
   nodeLabels:
     topology.kubernetes.io/region: talos-maxi
 cluster:
+  # Kept v1alpha1 so the existing base64-encoded PEM secret remains compatible.
+  ca:
+    crt: op://kubernetes/talos/CLUSTER_CA_CRT
   token: op://kubernetes/talos/CLUSTER_TOKEN
 # Explicit instead of relying on the default: the service registry is what
 # ResolverConfig.resolveMemberNames depends on.
@@ -68,12 +71,6 @@ apiVersion: v1alpha1
 kind: KubeClusterConfig
 clusterName: talos-maxi
 endpoint: https://10.33.40.25:6443
----
-apiVersion: v1alpha1
-kind: KubeAPIServerCAConfig
-# Cluster CA cert for all nodes; controlplane nodes patch the key in.
-issuingCA:
-  cert: op://kubernetes/talos/CLUSTER_CA_CRT
 ---
 apiVersion: v1alpha1
 kind: DiscoveryIdentityConfig
@@ -123,7 +120,7 @@ installer:
 provisioning:
   # CP default (talconfig installDisk: /dev/sda); workers override per-node.
   diskSelector:
-    match: disk.name == "sda"
+    match: disk.dev_path == "/dev/sda"
   wipe: false
 ---
 apiVersion: v1alpha1
