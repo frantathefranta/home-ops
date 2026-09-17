@@ -10,6 +10,21 @@ spec:
     kind: OCIRepository
     name: tautulli-exporter
   values:
+    externalSecrets:
+      main:
+        secretStoreRef:
+          name: akeyless-secret-store
+          kind: ClusterSecretStore
+        target:
+          name: tautulli-exporter-secret
+          creationPolicy: Owner
+          template:
+            engineVersion: v2
+            data:
+              TAUTULLI_API_KEY: '{{ .TAUTULLI_API_KEY }}'
+        dataFrom:
+        - extract:
+            key: /tautulli
     controllers:
       tautulli-exporter:
         annotations:

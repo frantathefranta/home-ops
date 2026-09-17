@@ -15,6 +15,23 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    externalSecrets:
+      main:
+        forceRename: idrac-fan-control-secret
+        secretStoreRef:
+          name: akeyless-secret-store
+          kind: ClusterSecretStore
+        refreshInterval: 15m
+        target:
+          name: idrac-fan-control-secret
+          template:
+            engineVersion: v2
+            data:
+              IDRAC_USERNAME: '{{.IDRAC_USERNAME}}'
+              IDRAC_PASSWORD: '{{.IDRAC_PASSWORD}}'
+        dataFrom:
+        - extract:
+            key: /idrac-fan-control
     controllers:
       actinium:
         annotations:

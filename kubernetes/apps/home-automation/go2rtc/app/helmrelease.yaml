@@ -10,6 +10,46 @@ spec:
     name: go2rtc
   interval: 1h
   values:
+    externalSecrets:
+      main:
+        forceRename: go2rtc-secret
+        secretStoreRef:
+          name: akeyless-secret-store
+          kind: ClusterSecretStore
+        refreshInterval: 15m
+        target:
+          name: go2rtc-secret
+          template:
+            engineVersion: v2
+            data:
+              go2rtc.yaml: |-
+                log:
+                  streams: info
+                api:
+                  listen: :80
+                  origin: "*"
+                rtsp:
+                  listen: :554
+                webrtc:
+                  listen: :8555
+                  candidates:
+                    - 10.33.40.67:8555
+                    - stun:8555
+                  ice_servers:
+                    - urls:
+                        - stun:stun.cloudflare.com:3478
+                streams:
+                  sunroom:
+                    - "rtmp://10.0.50.201/bcs/channel0_main.bcs?channel=0&stream=0&user=admin&password={{ .REOLINK_PASSWORD }}"
+                    - "rtmp://10.0.50.201/bcs/channel0_ext.bcs?channel=0&stream=1&user=admin&password={{ .REOLINK_PASSWORD }}"
+                    - "rtmp://10.0.50.201/bcs/channel0_sub.bcs?channel=0&stream=1&user=admin&password={{ .REOLINK_PASSWORD }}"
+                  yard:
+                    - "rtmp://10.0.50.202/bcs/channel0_main.bcs?channel=0&stream=0&user=admin&password={{ .REOLINK_PASSWORD }}"
+                    - "rtmp://10.0.50.202/bcs/channel0_ext.bcs?channel=0&stream=1&user=admin&password={{ .REOLINK_PASSWORD }}"
+                    - "rtmp://10.0.50.202/bcs/channel0_sub.bcs?channel=0&stream=1&user=admin&password={{ .REOLINK_PASSWORD }}"
+        dataFrom:
+        - extract:
+            key: /go2rtc
     controllers:
       go2rtc:
         annotations:

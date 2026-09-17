@@ -13,6 +13,37 @@ spec:
     - name: rook-ceph-cluster
       namespace: rook-ceph-external
   values:
+    externalSecrets:
+      main:
+        forceRename: lubelog-secret
+        refreshInterval: 15m
+        target:
+          name: lubelog-secret
+          template:
+            engineVersion: v2
+            data:
+              OpenIDConfig__Name: Authelia
+              OpenIDConfig__ClientId: lubelog
+              OpenIDConfig__ClientSecret: '{{ .LUBELOG_OAUTH_CLIENT_SECRET }}'
+              OpenIDConfig__AuthURL: https://auth.franta.us/api/oidc/authorization
+              OpenIDConfig__TokenURL: https://auth.franta.us/api/oidc/token
+              OpenIDConfig__RedirectURL: https://lubelog.franta.us/Login/RemoteAuth
+              OpenIDConfig__Scope: email
+              OpenIDConfig__ValidateState: 'true'
+              POSTGRES_CONNECTION: Host={{ index . "pgbouncer-host" }}:{{ .port }};Username={{ .user }};Password={{ .password }};Database={{ .dbname }}
+        dataFrom:
+        - extract:
+            key: /lubelog
+          sourceRef:
+            storeRef:
+              kind: ClusterSecretStore
+              name: akeyless-secret-store
+        - extract:
+            key: lubelog-pguser-lubelog
+          sourceRef:
+            storeRef:
+              kind: SecretStore
+              name: lubelog-postgres
     controllers:
       lubelog:
         labels:

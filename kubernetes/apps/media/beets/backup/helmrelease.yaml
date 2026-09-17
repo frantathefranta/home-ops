@@ -13,6 +13,25 @@ spec:
   - name: rook-ceph-cluster
     namespace: rook-ceph-external
   values:
+    externalSecrets:
+      main:
+        forceRename: beets-secret
+        secretStoreRef:
+          name: akeyless-secret-store
+          kind: ClusterSecretStore
+        refreshInterval: 15m
+        target:
+          name: beets-secret
+          template:
+            engineVersion: v2
+            data:
+              B2_ACCOUNT_ID: '{{ .B2_ACCOUNT_ID }}'
+              B2_ACCOUNT_KEY: '{{ .B2_ACCOUNT_KEY }}'
+              RESTIC_REPOSITORY: '{{ .MUSIC_BUCKET }}'
+              RESTIC_PASSWORD: '{{ .MUSIC_BUCKET_PASSWORD }}'
+        dataFrom:
+        - extract:
+            key: /beets
     controllers:
       beets-backup:
         type: cronjob

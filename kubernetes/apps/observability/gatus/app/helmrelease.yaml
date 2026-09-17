@@ -10,6 +10,31 @@ spec:
     kind: OCIRepository
     name: gatus
   values:
+    externalSecrets:
+      main:
+        forceRename: gatus-secret
+        refreshInterval: 15m
+        target:
+          name: gatus-secret
+          template:
+            engineVersion: v2
+            data:
+              PUSHOVER_USER_KEY: '{{ .PUSHOVER_USER_KEY }}'
+              GATUS_PUSHOVER_TOKEN: '{{ .GATUS_MAXI_PUSHOVER_TOKEN }}'
+              SECRET_DOMAIN: franta.us
+        dataFrom:
+        - extract:
+            key: /pushover
+          sourceRef:
+            storeRef:
+              kind: ClusterSecretStore
+              name: akeyless-secret-store
+        - extract:
+            key: /gatus
+          sourceRef:
+            storeRef:
+              kind: ClusterSecretStore
+              name: akeyless-secret-store
     defaultPodOptions:
       automountServiceAccountToken: true
     controllers:

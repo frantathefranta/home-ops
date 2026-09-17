@@ -15,6 +15,25 @@ spec:
     - name: meilisearch
       namespace: default
   values:
+    externalSecrets:
+      main:
+        forceRename: bar-assistant-secret
+        secretStoreRef:
+          name: akeyless-secret-store
+          kind: ClusterSecretStore
+        refreshInterval: 15m
+        target:
+          name: bar-assistant-secret
+          template:
+            engineVersion: v2
+            data:
+              MEILI_MASTER_KEY: '{{.MEILI_MASTER_KEY}}'
+              MEILISEARCH_KEY: '{{.MEILI_MASTER_KEY}}'
+              MEILISEARCH_API_KEY: '{{.MEILISEARCH_API_KEY}}'
+              MEILISEARCH_API_KEY_UID: '{{.MEILISEARCH_API_KEY_UID}}'
+        dataFrom:
+        - extract:
+            key: /bar-assistant
     controllers:
       bar-assistant:
         annotations:

@@ -10,6 +10,21 @@ spec:
     kind: OCIRepository
     name: sonarr-exporter
   values:
+    externalSecrets:
+      main:
+        secretStoreRef:
+          name: akeyless-secret-store
+          kind: ClusterSecretStore
+        target:
+          name: sonarr-exporter-secret
+          creationPolicy: Owner
+          template:
+            engineVersion: v2
+            data:
+              APIKEY: '{{ .SONARR_API_KEY }}'
+        dataFrom:
+        - extract:
+            key: /sonarr
     controllers:
       sonarr-exporter:
         annotations:

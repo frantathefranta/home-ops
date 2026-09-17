@@ -13,6 +13,14 @@ spec:
     - name: rook-ceph-cluster
       namespace: rook-ceph-external
   values:
+    networkpolicies:
+      allow-ingress:
+        forceRename: qbittorrent-allow-ingress
+        type: cilium
+        controller: qbittorrent
+        ingress:
+        - fromEntities:
+          - world
     controllers:
       qbittorrent:
         annotations:
