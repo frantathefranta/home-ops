@@ -7,19 +7,19 @@ sonarr:
 
     # Custom Format Configuration
     delete_old_custom_formats: true
-    replace_existing_custom_formats: true
 
-    include:
-      - template: sonarr-quality-definition-series
-      - template: sonarr-v4-quality-profile-web-1080p
-      - template: sonarr-v4-custom-formats-web-1080p
-      - template: sonarr-v4-quality-profile-web-2160p
-      - template: sonarr-v4-custom-formats-web-2160p
-      - template: sonarr-v4-quality-profile-anime
-      - template: sonarr-v4-custom-formats-anime
+    quality_definition:
+      type: series
 
     quality_profiles:
-      - name: WEB-1080p
+      # Guide-backed anime profile (v8). The `name` override keeps the
+      # current Sonarr profile name so v8 adopts it instead of creating
+      # a duplicate.
+      - trash_id: 20e0fc959f1f1704bed501f23bdae76f  # [Anime] Remux-1080p
+        name: Remux-1080p - Anime
+        reset_unmatched_scores:
+          enabled: true
+
       - name: BR > WEB > DVD
         reset_unmatched_scores:
           enabled: true
@@ -54,15 +54,11 @@ sonarr:
           - 06d66ab109d4d2eddb2794d21526d140 # Retags
           - 6f808933a71bd9666531610cb8c059cc # BR-DISK (BTN)
         assign_scores_to:
-          - name: WEB-2160p
-          - name: WEB-1080p
           - name: BR > WEB > DVD
 
       - trash_ids:
           - 1b3994c551cbb92a2c781af061f4ab44 # Scene
         assign_scores_to:
-          - name: WEB-2160p
-          - name: WEB-1080p
           - name: BR > WEB > DVD
             score: 0
 
@@ -84,7 +80,6 @@ sonarr:
           - 2a7e3be05d3861d6df7171ec74cad727 # PQ
 
         assign_scores_to:
-          - name: WEB-2160p
           - name: BR > WEB > DVD
 
      # Good Release Groups
@@ -159,7 +154,6 @@ radarr:
 
     # Custom Format Configuration
     delete_old_custom_formats: true
-    replace_existing_custom_formats: true
 
     quality_definition:
       type: movie
@@ -194,15 +188,6 @@ radarr:
             qualities: ["WEBDL-480p", "WEBRip-480p"]
           - name: DVD
           - name: SDTV
-
-    # include:
-    #   - template: radarr-quality-definition-sqp-streaming
-    #   - template: radarr-quality-profile-sqp-1-1080p
-    #   - template: radarr-custom-formats-sqp-1-1080p
-    #   - template: radarr-quality-profile-sqp-1-2160p-default
-    #   - template: radarr-custom-formats-sqp-1-2160p
-    #   - template: radarr-custom-formats-sqp-2
-    #   - template: radarr-quality-profile-sqp-2
 
     custom_formats: # Copied from radarr-custom-formats-sqp-2
       - trash_ids:
