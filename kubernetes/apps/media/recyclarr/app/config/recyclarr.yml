@@ -62,22 +62,14 @@ sonarr:
           - name: BR > WEB > DVD
             score: 0
 
-     # HDR Formats
+     # HDR Formats (ids refreshed for the 2026-04 TRaSH Guides refactor;
+     # the per-variant DV/HDR10/PQ CFs no longer exist in the guides)
       - trash_ids:
-          - 9b27ab6498ec0f31a3353992e19434ca # DV (WEBDL)
-          - 0dad0a507451acddd754fe6dc3a7f5e7 # HDR10+ Boost
-          - 385e9e8581d33133c3961bdcdeffb7b4 # DV HDR10+ Boost
-          - 6d0d8de7b57e35518ac0308b0ddf404e # DV
-          - 7878c33f1963fefb3d6c8657d46c2f0a # DV HDR10
-          - 2b239ed870daba8126a53bd5dc8dc1c8 # DV HDR10+
-          - 1f733af03141f068a540eec352589a89 # DV HLG
-          - 27954b0a80aab882522a88a4d9eae1cd # DV SDR
-          - 3e2c4e748b64a1a1118e0ea3f4cf6875 # HDR
-          - bb019e1cd00f304f80971c965de064dc # HDR (undefined)
-          - 3497799d29a085e2ac2df9d468413c94 # HDR10
-          - a3d82cbef5039f8d295478d28a887159 # HDR10+
+          - 9b27ab6498ec0f31a3353992e19434ca # DV (w/o HDR fallback)
+          - 0c4b99df9206d2cfac3c05ab897dd62a # HDR10+ Boost
+          - 7c3a61a9c6cb04f52f1544be6d44a026 # DV Boost
+          - 505d871304820ba7106b693be6fe4a9e # HDR
           - 17e889ce13117940092308f48b48b45b # HLG
-          - 2a7e3be05d3861d6df7171ec74cad727 # PQ
 
         assign_scores_to:
           - name: BR > WEB > DVD
@@ -207,18 +199,13 @@ radarr:
           - 240770601cc226190c367ef59aba7463 # AAC
           - c2998bd0d90ed5621d8df281e839436e # DD
 
-          # HDR Formats
+          # HDR Formats (ids refreshed for the 2026-04 TRaSH Guides refactor;
+          # the per-variant DV/HDR10/PQ CFs no longer exist in the guides)
           - f700d29429c023a5734505e77daeaea7 # DV (Disk)
-          - c53085ddbd027d9624b320627748612f # DV HDR10Plus
-          - e23edd2482476e595fb990b12e7c609c # DV HDR10
-          - 58d6a88f13e2db7f5059c41047876f00 # DV
-          - 55d53828b9d81cbe20b02efd00aa0efd # DV HLG
-          - a3e19f8f627608af0211acd02bf89735 # DV SDR
-          - b974a6cd08c1066250f1f177d7aa1225 # HDR10+
-          - dfb86d5941bc9075d6af23b09c2aeecd # HDR10
-          - e61e28db95d22bedcadf030b8f156d96 # HDR
-          - 2a4d9069cc1fe3242ff9bdaebed239bb # HDR (undefined)
-          - 08d6d8834ad9ec87b1dc7ec8148e7a1f # PQ
+          - 923b6abef9b17f937fab56cfcf89e1f1 # DV (w/o HDR fallback)
+          - b337d6812e06c200ec9a2d3cfa9d20a7 # DV Boost
+          - caa37d0df9c348912df1fb1d88f9273a # HDR10+ Boost
+          - 493b6d1dbec3c3364c59d7607f7e3405 # HDR
           - 9364dd386c9b4a1100dde8264690add7 # HLG
 
           # HQ Release Groups
@@ -283,7 +270,6 @@ radarr:
 
       - trash_ids:
           - b6832f586342ef70d9c128d40c07b872 # Bad Dual Groups
-          - 90cedc1fea7ea5d11298bebd3d1d3223 # EVO (no WEBDL)
           - ae9b7c9ebde1f3bd336a8cbd1ec4c5e5 # No-RlsGroup
           - 7357cf5161efbf8c4d5d0c30b4815ee2 # Obfuscated
           - 5c44f52a8714fdd79bb4d98e2673be1f # Retags
