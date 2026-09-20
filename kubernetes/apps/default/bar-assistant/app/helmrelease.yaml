@@ -49,7 +49,7 @@ spec:
           bar-assistant:
             image:
               repository: barassistant/server
-              tag: 6.7.0@sha256:286d2f7d52bef72307471deb19d2daf7e0f639ad438693b022f7ebe900065184
+              tag: 6.8.0@sha256:12eeb64f0ede69839cc7ef87c614cecaa8200b3a43ee14cc21e885f3337bd978
             env:
               BASE_URL: https://bar.franta.us
               APP_URL: https://bar.franta.us/bar
