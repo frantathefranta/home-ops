@@ -45,7 +45,9 @@ config:
     - providers:
         - secretbox:
             keys:
-              - name: key1
+              # The legacy cluster.secretboxEncryptionSecret uses key2 in Talos.
+              # Preserve that name to decrypt Secrets already stored in etcd.
+              - name: key2
                 secret: op://kubernetes/talos/CLUSTER_SECRETBOXENCRYPTIONSECRET
         - identity: {}
       resources:
@@ -63,6 +65,16 @@ configuration:
       - path: /healthz
     enabled: true
   jwt: []
+---
+apiVersion: v1alpha1
+kind: KubeAuthorizerConfig
+name: node
+type: Node
+---
+apiVersion: v1alpha1
+kind: KubeAuthorizerConfig
+name: rbac
+type: RBAC
 ---
 apiVersion: v1alpha1
 kind: KubeAPIServerConfig
