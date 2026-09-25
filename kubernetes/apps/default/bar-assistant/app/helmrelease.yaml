@@ -49,7 +49,7 @@ spec:
           bar-assistant:
             image:
               repository: barassistant/server
-              tag: 6.8.0@sha256:12eeb64f0ede69839cc7ef87c614cecaa8200b3a43ee14cc21e885f3337bd978
+              tag: 6.8.1@sha256:480e8e42d189653761c0d33c7496989e355af1273d6bfaad239ff4a3368a0fa5
             env:
               BASE_URL: https://bar.franta.us
               APP_URL: https://bar.franta.us/bar
@@ -83,7 +83,7 @@ spec:
           nginx:
             image:
               repository: ghcr.io/nginx/nginx-unprivileged
-              tag: 1.31.6-alpine@sha256:e75f89810bf5bfbcf58a1cfb32a1a11de55b7623d732e67735d513b720d7436a
+              tag: 1.31.6-alpine@sha256:6a23acdfca2b9cfbcec61419e3f1426bcbedb91362f2f19306a8567423bb4612
       salt-rim:
         replicas: 2
         strategy: RollingUpdate
