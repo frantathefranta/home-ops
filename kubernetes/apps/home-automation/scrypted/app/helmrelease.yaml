@@ -65,11 +65,12 @@ spec:
               readiness:
                 enabled: true
             resources:
+              claims:
+                - name: gpu
               requests:
                 cpu: 136m
                 memory: 1024Mi
               limits:
-                gpu.intel.com/i915: 1
                 # squat.ai/coral: 1
                 memory: 12Gi
 
@@ -123,3 +124,17 @@ spec:
         path: /emc1/scrypted
         globalMounts:
           - path: /recs
+  postRenderers:
+    - kustomize:
+        patches:
+          - patch: |-
+              - op: add
+                path: /spec/template/spec/resourceClaims
+                value:
+                  - name: gpu
+                    resourceClaimTemplateName: scrypted-gpu
+            target:
+              group: apps
+              version: v1
+              kind: Deployment
+              name: scrypted

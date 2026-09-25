@@ -16,6 +16,7 @@ spec:
     keepHistory: false
   values:
     defaultPodOptions:
+      hostPID: true
       nodeSelector:
         intel.feature.node.kubernetes.io/gpu: "true"
       tolerations:
@@ -36,14 +37,18 @@ spec:
               tag: rolling@sha256:90a95483bf5d3752f4db2ab2e1663f19bba307fd832bf53557cbdc38c3701f84
             resources:
               requests:
-                gpu.intel.com/i915_monitoring: 1
                 cpu: 100m
                 memory: 100Mi
               limits:
-                gpu.intel.com/i915_monitoring: 1
                 memory: 500Mi
             securityContext:
               privileged: true
+    persistence:
+      dri:
+        type: hostPath
+        hostPath: /dev/dri
+        globalMounts:
+          - path: /dev/dri
     service:
       app:
         controller: *app
