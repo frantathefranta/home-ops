@@ -52,3 +52,9 @@ provisioning:
   diskSelector:
     match: disk.model == "TWSC*"
   wipe: false
+---
+apiVersion: v1alpha1
+kind: SysctlConfig
+params:
+  net.ipv6.conf.bond0/20.accept_ra: "0"
+  net.ipv6.conf.bond0/50.accept_ra: "0"
