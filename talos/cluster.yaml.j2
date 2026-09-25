@@ -1,3 +1,4 @@
+# -*- mode: yaml -*-
 ---
 version: v1alpha1
 machine:
@@ -18,7 +19,7 @@ machine:
   # their replacement documents — so no KubeletConfig/KubeNodeConfig docs can
   # coexist with this block. nodeIP (and nodeLabels below) ride along with it.
   kubelet:
-    image: ghcr.io/siderolabs/kubelet:v1.37.0
+    image: ghcr.io/siderolabs/kubelet:v1.37.1
     defaultRuntimeSeccompProfileEnabled: true
     disableManifestsDirectory: true
     extraConfig:
