@@ -8,6 +8,12 @@ kind: HostnameConfig
 hostname: talos-protactinium
 ---
 apiVersion: v1alpha1
+kind: LinkAliasConfig
+name: net0
+selector:
+  match: link.driver == "ixgbevf" && mac(link.permanent_addr).startsWith("9a:b2:f3:00:c6:a9")
+---
+apiVersion: v1alpha1
 kind: DHCPv4Config
 name: eth0
 ---
