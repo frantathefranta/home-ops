@@ -10,51 +10,26 @@ spec:
     kind: OCIRepository
     name: multus
   values:
-    defaultPodOptions:
-      hostNetwork: true
-      automountServiceAccountToken: true
-      # nodeSelector:
-      #   kubernetes.io/hostname: talos-g3-mini
-      tolerations:
-        - key: special
-          operator: Exists
-          effect: NoSchedule
-        - key: node.kubernetes.io/assignment
-          value: intel-gpu
-          operator: Equal
-          effect: NoSchedule
-    controllers:
-      multus:
-        type: daemonset
-        initContainers:
-          cni-plugins:
-            image:
-              repository: ghcr.io/home-operations/cni-plugins
-              tag: 1.9.1@sha256:e17cc64a81579a163646425d25d2e48065cfb0dc449d2de447b1fd29e9c2ca0f
-        annotations:
-          reloader.stakater.com/auto: "true"
-        containers:
-          multus:
-            image:
-              repository: ghcr.io/k8snetworkplumbingwg/multus-cni
-              tag: latest@sha256:d3bd7e99a9cb44c152d6a9b9444ff1e3618b17405447db2e97014cfa9fc14df3
-            args:
-              - --cleanup-config-on-exit
-            resources:
-              requests:
-                cpu: 10m
-              limits:
-                memory: 512Mi
-            securityContext:
-              privileged: true
-    persistence:
-      etc-cni-net-d:
-        type: hostPath
-        hostPath: /etc/cni/net.d
-        globalMounts:
-          - path: /host/etc/cni/net.d
-      opt-cni-bin:
-        type: hostPath
-        hostPath: /opt/cni/bin
-        globalMounts:
-          - path: /host/opt/cni/bin
+    # Keep the existing Flux-managed ServiceAccount and RBAC during the chart switch.
+    serviceAccount:
+      create: false
+      name: multus
+    rbac:
+      create: false
+    podAnnotations:
+      reloader.stakater.com/auto: "true"
+    tolerations:
+      - key: CriticalAddonsOnly
+        operator: Exists
+      - key: special
+        operator: Exists
+        effect: NoSchedule
+      - key: node.kubernetes.io/assignment
+        value: intel-gpu
+        operator: Equal
+        effect: NoSchedule
+    resources:
+      requests:
+        cpu: 10m
+      limits:
+        memory: 512Mi
