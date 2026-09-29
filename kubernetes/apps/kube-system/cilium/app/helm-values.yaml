@@ -21,6 +21,7 @@ cluster:
   name: talos-maxi
 cni:
   exclusive: false
+devices: "bond+,eth0"
 endpointRoutes:
   enabled: true
 envoy:
