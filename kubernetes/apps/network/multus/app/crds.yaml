@@ -21,7 +21,10 @@ kind: Kustomization
 metadata:
   name: multus-crd
 spec:
-  prune: true
+  # Orphan the installed CRD before removing this Kustomization in a later change.
+  # Deleting the CRD would also delete every NetworkAttachmentDefinition.
+  prune: false
+  deletionPolicy: Orphan
   sourceRef:
     kind: GitRepository
     name: multus-crd
