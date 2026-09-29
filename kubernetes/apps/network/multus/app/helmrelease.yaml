@@ -10,14 +10,6 @@ spec:
     kind: OCIRepository
     name: multus
   values:
-    # Keep the existing Flux-managed ServiceAccount and RBAC during the chart switch.
-    serviceAccount:
-      create: false
-      name: multus
-    rbac:
-      create: false
-    podAnnotations:
-      reloader.stakater.com/auto: "true"
     tolerations:
       - key: CriticalAddonsOnly
         operator: Exists
