@@ -18,6 +18,8 @@ spec:
     namespace: flux-system
   wait: false
   dependsOn:
+    - name: intel-gpu-resource-driver
+      namespace: kube-system
     - name: multus-config
       namespace: network
     - name: rook-ceph-cluster

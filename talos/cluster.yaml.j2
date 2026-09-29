@@ -136,6 +136,7 @@ content: |
   [plugins."io.containerd.cri.v1.images"]
     discard_unpacked_layers = false
   [plugins."io.containerd.cri.v1.runtime"]
+    cdi_spec_dirs = ["/run/cdi"]
     device_ownership_from_security_context = true
 ---
 apiVersion: v1alpha1

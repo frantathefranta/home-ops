@@ -12,6 +12,9 @@ spec:
 
   values:
     defaultPodOptions:
+      resourceClaims:
+        - name: gpu
+          resourceClaimTemplateName: scrypted-gpu
       tolerations:
         # - key: special
         #   operator: Exists
@@ -65,11 +68,12 @@ spec:
               readiness:
                 enabled: true
             resources:
+              claims:
+                - name: gpu
               requests:
                 cpu: 136m
                 memory: 1024Mi
               limits:
-                gpu.intel.com/i915: 1
                 # squat.ai/coral: 1
                 memory: 12Gi
 
