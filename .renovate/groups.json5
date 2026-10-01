@@ -57,10 +57,10 @@
       },
     },
     {
-      description: "Keep Flux CLI and cluster distribution versions in lockstep",
+      description: "Group Flux action, CLI, and cluster distribution updates",
       groupName: "Flux Distribution",
-      matchDatasources: ["github-releases"],
-      matchPackageNames: ["controlplaneio-fluxcd/distribution"],
+      matchDatasources: ["github-releases", "github-tags"],
+      matchPackageNames: ["controlplaneio-fluxcd/distribution", "fluxcd/flux2"],
       separateMajorMinor: false,
       separateMinorPatch: false,
       group: {
