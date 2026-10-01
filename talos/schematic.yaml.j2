@@ -1,13 +1,12 @@
+{% set extensions = ["siderolabs/iscsi-tools", "siderolabs/util-linux-tools"] -%}
+{% if role == "controlplane" -%}
+{% set extensions = extensions + ["siderolabs/qemu-guest-agent"] -%}
+{% else -%}
+{% set extensions = extensions + ["siderolabs/i915", "siderolabs/intel-ucode", "siderolabs/mei", "siderolabs/realtek-firmware"] -%}
+{% endif -%}
 ---
 customization:
   systemExtensions:
     officialExtensions:
-      {% if role == "controlplane" %}
-      - siderolabs/qemu-guest-agent
-      {% else %}
-      - siderolabs/i915
-      - siderolabs/intel-ucode
-      - siderolabs/mei
-      {% endif %}
-      - siderolabs/iscsi-tools
-      - siderolabs/util-linux-tools
+{% for extension in extensions | sort %}      - {{ extension }}
+{% endfor -%}

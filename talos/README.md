@@ -62,6 +62,10 @@ document equivalent (or none we can use yet):
 
 ## Gotchas
 
+- Keep system extensions alphabetically ordered in rendered schematics, including per-node
+  overrides. `schematic.yaml.j2` does this automatically with Jinja's `sort` filter. Extension
+  order changes the schematic ID even when the extension set is identical; a mismatch between
+  the configured installer schematic and the running node's schematic can block tuppr upgrades.
 - `machine.ca` / `cluster.ca` (v1alpha1) merge as a cert+key **unit**: a patch supplying only
   `key` blanks `crt`. `controlplane.yaml.j2` therefore repeats the `crt` references alongside
   the keys.
