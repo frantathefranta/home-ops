@@ -61,6 +61,9 @@
       groupName: "Flux Distribution",
       matchDatasources: ["github-releases", "github-tags"],
       matchPackageNames: ["controlplaneio-fluxcd/distribution", "fluxcd/flux2"],
+      minimumReleaseAge: "3 days",
+      // Wait for the action, CLI input, and cluster distribution updates.
+      minimumGroupSize: 3,
       separateMajorMinor: false,
       separateMinorPatch: false,
       group: {
