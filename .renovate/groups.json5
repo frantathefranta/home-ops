@@ -57,6 +57,17 @@
       },
     },
     {
+      description: "Keep Flux CLI and cluster distribution versions in lockstep",
+      groupName: "Flux Distribution",
+      matchDatasources: ["github-releases"],
+      matchPackageNames: ["controlplaneio-fluxcd/distribution"],
+      separateMajorMinor: false,
+      separateMinorPatch: false,
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+    },
+    {
       description: "Flux Operator Group",
       groupName: "Flux Operator",
       matchDatasources: ["docker"],
