@@ -75,14 +75,4 @@ spec:
 
     # # -- A list of CephObjectStore configurations to deploy
     # # @default -- See [below](#ceph-object-stores)
-    cephObjectStores:
-      - name: ceph-objectstore
-        spec:
-          gateway:
-            port: 7480
-            externalRgwEndpoints:
-              - ip: haproxy.rook-ceph-external.svc.cluster.local # HAproxy endpoint
-          allowUsersInNamespaces: ["storage"]
-        storageClass:
-          enabled: true
-          name: ceph-bucket
+    cephObjectStores: {}
