@@ -7,7 +7,8 @@ Before completing enrollment for both users:
 1. Verify DNS and TLS from both a browser and TREK.
 2. Take a recoverable TREK backup and verify that the Akeyless email values match
    the existing TREK users. Matching usernames alone does not preserve accounts.
-3. Securely escrow the bootstrap administrator Secret outside the cluster.
+3. Confirm credential PushSecrets have synchronized before completing enrollment.
+   Keep independent access to Akeyless and the SOPS age key for disaster recovery.
    Treat enrollment links as credentials; do not publish them in logs or Git.
 4. Retrieve each user's enrollment link from the ~TokenCreated~ event:
 
@@ -25,6 +26,12 @@ Before completing enrollment for both users:
 Choose the permanent Kanidm origin before enrolling users. Changing it afterward
 breaks their WebAuthn credentials.
 
+* Identity administration
+
+Make person and membership changes in the [[https://github.com/frantathefranta/kanidm-provision][private provisioning repository]].
+Treat write access to that repository as identity-administration access. Review
+removals carefully: reconciliation can delete accounts and revoke memberships.
+
 * Existing TREK accounts
 
 TREK 4.3.3 first matches ~(oidc_sub, oidc_issuer)~, then case-insensitive email.
@@ -36,10 +43,15 @@ See [[https://github.com/liketrek/TREK/blob/1c05ee4b3ac9523c41ccdd3baad989ba48a7
 
 * Recovery
 
-Verify an off-cluster Kopiur restore into an isolated target before relying on
-production recovery. Preserve repository credentials and encryption/recovery
-material outside the cluster. Git declarations do not reconstruct enrolled
-credentials or the identity database.
+Kaniop's backup/restore subsystem is experimental and not production-supported.
+File-stability checks do not prove that an online backup finished writing. Verify
+an off-cluster restore into an isolated target before relying on this mechanism;
+a healthy Schedule alone is not proof of recoverability.
+
+Preserve the original backup encryption key for as long as its backups are needed.
+Do not regenerate it during recovery: a new key cannot decrypt existing backups.
+Keep independent access to Akeyless and the SOPS age key outside the cluster.
+Git declarations do not reconstruct enrolled credentials or the identity database.
 
 Native manual backup and restore require a stopped server and the same Kanidm
 version that created the backup. In 1.11.2 the default manual backup is gzip,

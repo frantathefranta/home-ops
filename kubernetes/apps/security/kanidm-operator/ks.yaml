@@ -18,7 +18,6 @@ spec:
     name: flux-system
     namespace: flux-system
   targetNamespace: security
-  timeout: 15m
 ---
 # yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -37,8 +36,6 @@ spec:
       namespace: external-secrets
     - name: rook-ceph-cluster
       namespace: rook-ceph-external
-    - name: kopiur-repository
-      namespace: storage
   healthChecks:
     - apiVersion: cert-manager.io/v1
       kind: Certificate
@@ -47,6 +44,10 @@ spec:
     - apiVersion: external-secrets.io/v1
       kind: ExternalSecret
       name: kanidm-identity-settings
+      namespace: security
+    - apiVersion: external-secrets.io/v1
+      kind: ExternalSecret
+      name: kanidm-backup
       namespace: security
     - apiVersion: kaniop.rs/v1beta1
       kind: Kanidm

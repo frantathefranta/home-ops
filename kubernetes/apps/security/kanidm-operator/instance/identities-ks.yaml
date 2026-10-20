@@ -29,7 +29,7 @@ spec:
       kind: KanidmGroup
       current: status.ready
   interval: 1h
-  path: ./kubernetes/apps/security/kanidm-operator/identities
+  path: ./
   postBuild:
     substituteFrom:
       - kind: Secret
@@ -37,6 +37,6 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: flux-system
-    namespace: flux-system
+    name: kanidm-provision
+    namespace: security
   targetNamespace: security

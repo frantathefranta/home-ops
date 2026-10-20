@@ -1,0 +1,14 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/source.toolkit.fluxcd.io/gitrepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: kanidm-provision
+  namespace: security
+spec:
+  interval: 1h
+  ref:
+    branch: main
+  secretRef:
+    name: kanidm-provision-git
+  url: ssh://git@github.com/frantathefranta/kanidm-provision.git

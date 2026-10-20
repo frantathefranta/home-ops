@@ -9,16 +9,3 @@ spec:
     kind: OCIRepository
     name: kaniop
   interval: 30m
-  timeout: 15m
-  install:
-    crds: CreateReplace
-  upgrade:
-    crds: CreateReplace
-  values:
-    # The released chart's pre-install/pre-upgrade hook applies every CRD and
-    # waits for Established before Helm can report the operator ready.
-    crdApply:
-      enabled: true
-    crdMigration:
-      personAccountPlural:
-        enabled: true
