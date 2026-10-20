@@ -28,7 +28,7 @@ breaks their WebAuthn credentials.
 
 * Identity administration
 
-Make person and membership changes in the [[https://github.com/frantathefranta/kanidm-provision][private provisioning repository]].
+Make person and membership changes in the [[https://git.franta.us/franta/kanidm-provision][private provisioning repository]].
 Treat write access to that repository as identity-administration access. Review
 removals carefully: reconciliation can delete accounts and revoke memberships.
 
