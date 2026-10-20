@@ -8,7 +8,7 @@ Before switching TREK to Kanidm:
 2. Take a recoverable TREK backup and verify that the Akeyless email values match
    the existing TREK users. Matching usernames alone does not preserve accounts.
 3. Confirm credential PushSecrets have synchronized before completing enrollment.
-   Keep independent access to Akeyless and the SOPS age key for disaster recovery.
+   Keep independent access to Akeyless for disaster recovery.
    Treat enrollment links as credentials; do not publish them in logs or Git.
 4. Retrieve each user's enrollment link from the ~TokenCreated~ event:
 
@@ -53,7 +53,7 @@ a healthy Schedule alone is not proof of recoverability.
 
 Preserve the original backup encryption key for as long as its backups are needed.
 Do not regenerate it during recovery: a new key cannot decrypt existing backups.
-Keep independent access to Akeyless and the SOPS age key outside the cluster.
+Keep independent access to Akeyless outside the cluster.
 Git declarations do not reconstruct enrolled credentials or the identity database.
 
 Native manual backup and restore require a stopped server and the same Kanidm

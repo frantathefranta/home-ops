@@ -7,8 +7,6 @@ resources:
   - ./kanidm.yaml
   - ./backup-repository.yaml
   - ./backup-schedule.yaml
-  - ./backup-secret.sops.yaml
   - ./gitrepo-provision.yaml
-  - ./provision-secret.sops.yaml
   - ./pushsecret.yaml
   - ./identity-settings.yaml

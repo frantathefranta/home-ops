@@ -11,7 +11,7 @@ spec:
     name: akeyless-secret-store
   target:
     name: kanidm-backup-secret
-    creationPolicy: Merge
+    creationPolicy: Owner
   data:
     - secretKey: AWS_ACCESS_KEY_ID
       remoteRef:
@@ -21,6 +21,10 @@ spec:
       remoteRef:
         key: /kopiur
         property: AWS_SECRET_ACCESS_KEY
+    - secretKey: encryption-key
+      remoteRef:
+        key: /kanidm
+        property: encryptionKey
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/kaniop.rs/kanidmbackuprepository_v1alpha1.json
 apiVersion: kaniop.rs/v1alpha1
