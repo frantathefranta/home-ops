@@ -131,8 +131,10 @@ spec:
             resources:
               requests:
                 cpu: 10m
-              limits:
                 memory: 128Mi
+              # Default Argon2 client-secret checks allocate 64Mi per concurrent request.
+              limits:
+                memory: 512Mi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
