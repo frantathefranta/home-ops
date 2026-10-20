@@ -64,32 +64,3 @@ spec:
     targetPort: 53
   type: ClusterIP
 #+end_src
-
-* Applications
-** TREK
-
-TREK is reconciled from =kubernetes/apps/default/trek= and is available at
-https://trek.franta.us through the internal Gateway. It uses its built-in
-authentication; no OIDC provider or external API keys are required.
-
-On first boot, TREK creates =admin@trek.local= with a random password printed
-to the application log:
-
-#+begin_src sh
-kubectl -n default logs deployment/trek
-#+end_src
-
-Sign in and change the initial credentials before inviting other users.
-
-The 10Gi =trek= Ceph PVC holds both =/app/data= and =/app/uploads= in separate
-subdirectories. Kopiur snapshots and backs up the entire claim, including the
-SQLite database, uploads, =data/.jwt_secret=, and =data/.encryption_key=.
-Keep the encryption key with the database when restoring; losing it makes
-stored credentials unreadable. The single-replica deployment uses =Recreate=
-to avoid overlapping SQLite writers during upgrades.
-
-The image entrypoint starts as root to fix volume ownership, then drops to
-the =node= user (UID/GID 1000). Only =CHOWN=, =SETUID=, and =SETGID= are retained
-for that startup step; the root filesystem is read-only with a writable =/tmp=.
-
-Upstream: https://github.com/liketrek/TREK
