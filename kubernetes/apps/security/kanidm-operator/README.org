@@ -5,8 +5,9 @@
 Before switching TREK to Kanidm:
 
 1. Verify DNS and TLS from both a browser and TREK.
-2. Take a recoverable TREK backup and verify that the Akeyless email values match
-   the existing TREK users. Matching usernames alone does not preserve accounts.
+2. Take a recoverable TREK backup and verify that email addresses in the private
+   provisioning repository match the existing TREK users. Matching usernames alone
+   does not preserve accounts.
 3. Confirm credential PushSecrets have synchronized before completing enrollment.
    Keep independent access to Akeyless for disaster recovery.
    Treat enrollment links as credentials; do not publish them in logs or Git.

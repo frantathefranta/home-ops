@@ -44,10 +44,6 @@ metadata:
   name: kanidm-provision
 spec:
   interval: 1h
-  postBuild:
-    substituteFrom:
-      - kind: Secret
-        name: kanidm-identity-settings
   prune: true
   sourceRef:
     kind: GitRepository

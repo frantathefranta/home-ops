@@ -9,4 +9,3 @@ resources:
   - ./backup-schedule.yaml
   - ./gitrepo-provision.yaml
   - ./pushsecret.yaml
-  - ./identity-settings.yaml
