@@ -64,7 +64,3 @@ spec:
     targetPort: 53
   type: ClusterIP
 #+end_src
-
-** Kanidm and TREK migration
-
-See [[file:../../kubernetes/apps/security/kanidm-operator/README.org][the Kanidm README]] for deployment, enrollment, recovery, and rollback.
