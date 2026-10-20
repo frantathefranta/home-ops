@@ -1,0 +1,58 @@
+#+title: Kanidm
+
+* First rollout
+
+Before completing enrollment for both users:
+
+1. Verify DNS and TLS from both a browser and TREK.
+2. Take a recoverable TREK backup and verify that the Akeyless email values match
+   the existing TREK users. Matching usernames alone does not preserve accounts.
+3. Securely escrow the bootstrap administrator Secret outside the cluster.
+   Treat enrollment links as credentials; do not publish them in logs or Git.
+4. Retrieve each user's enrollment link from the ~TokenCreated~ event:
+
+   #+begin_src sh
+   kubectl -n security describe kanidmpersonaccount franta
+   kubectl -n security describe kanidmpersonaccount cara
+   #+end_src
+
+5. Give each link only to its intended user and enroll a passkey. Completing both
+   enrollments opens the automatic TREK cutover gate.
+6. Log in as the existing TREK users. Confirm their user IDs, roles, trips, and
+   sharing are preserved. Confirm a person outside the access group cannot start
+   a new login.
+
+Choose the permanent Kanidm origin before enrolling users. Changing it afterward
+breaks their WebAuthn credentials.
+
+* Existing TREK accounts
+
+TREK 4.3.3 first matches ~(oidc_sub, oidc_issuer)~, then case-insensitive email.
+For an already OIDC-bound account it replaces the old binding on the same user
+row. That replacement branch does not require ~email_verified~. Keep primary
+emails administratively controlled; do not grant application users
+~idm_people_self_mail_write~ or broad identity-administration rights.
+See [[https://github.com/liketrek/TREK/blob/1c05ee4b3ac9523c41ccdd3baad989ba48a7409a/server/src/nest/oidc/oidc.service.ts#L624-L648][the pinned TREK account-linking implementation]].
+
+* Recovery
+
+Verify an off-cluster Kopiur restore into an isolated target before relying on
+production recovery. Preserve repository credentials and encryption/recovery
+material outside the cluster. Git declarations do not reconstruct enrolled
+credentials or the identity database.
+
+Native manual backup and restore require a stopped server and the same Kanidm
+version that created the backup. In 1.11.2 the default manual backup is gzip,
+even if the supplied filename ends in ~.json~. Preserve the ~.json.gz~ suffix so
+restore selects the correct decoder. For a stopped instance with its config and
+volumes mounted:
+
+#+begin_src sh
+kanidmd database backup -c /data/server.toml /backup/kanidm.backup.json.gz
+kanidmd database restore -c /data/server.toml /backup/kanidm.backup.json.gz
+#+end_src
+
+To roll TREK back, restore only its previous ~ks.yaml~ and ~app/~ manifests from
+before this migration. Leave Kanidm and its data intact. TREK rebinds the existing
+accounts on their next Authelia login through the same email lookup; do not delete
+users or rewrite trip ownership.
