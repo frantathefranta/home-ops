@@ -14,21 +14,11 @@ spec:
       resources:
         requests:
           cpu: 10m
-          memory: 256Mi
         limits:
           memory: 512Mi
-  groupNamespaceSelector:
-    matchLabels:
-      kubernetes.io/metadata.name: security
-  personNamespaceSelector:
-    matchLabels:
-      kubernetes.io/metadata.name: security
-  serviceAccountNamespaceSelector:
-    matchLabels:
-      kubernetes.io/metadata.name: security
-  oauth2ClientNamespaceSelector:
-    matchLabels:
-      kubernetes.io/metadata.name: default
+  groupNamespaceSelector: {}
+  oauth2ClientNamespaceSelector: {}
+  serviceAccountNamespaceSelector: {}
   storage:
     volumeClaimTemplate:
       spec:
@@ -38,34 +28,11 @@ spec:
           requests:
             storage: 5Gi
         storageClassName: ceph-rbd
-  securityContext:
-    runAsNonRoot: true
-    runAsUser: 389
-    runAsGroup: 389
-    fsGroup: 389
-    fsGroupChangePolicy: OnRootMismatch
-    seccompProfile:
-      type: RuntimeDefault
-  containers:
-    - name: kanidm
-      securityContext:
-        allowPrivilegeEscalation: false
-        capabilities:
-          drop:
-            - ALL
-  initContainers:
-    - name: kanidm-generate-replication-config
-      securityContext:
-        allowPrivilegeEscalation: false
-        capabilities:
-          drop:
-            - ALL
   tlsSecretName: sso-franta-us-tls
   gateway:
     parentRefs:
       - name: envoy-external
         namespace: network
-        sectionName: https
     hostnames:
       - sso.franta.us
     backendTlsPolicy:

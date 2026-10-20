@@ -2,7 +2,7 @@
 
 * First rollout
 
-Before completing enrollment for both users:
+Before switching TREK to Kanidm:
 
 1. Verify DNS and TLS from both a browser and TREK.
 2. Take a recoverable TREK backup and verify that the Akeyless email values match
@@ -13,18 +13,21 @@ Before completing enrollment for both users:
 4. Retrieve each user's enrollment link from the ~TokenCreated~ event:
 
    #+begin_src sh
-   kubectl -n security describe kanidmpersonaccount franta
-   kubectl -n security describe kanidmpersonaccount cara
+   kubectl -n security describe kanidmpersonaccount <account>
    #+end_src
 
-5. Give each link only to its intended user and enroll a passkey. Completing both
-   enrollments opens the automatic TREK cutover gate.
+5. Give each link only to its intended user and enroll a passkey before reconciling
+   TREK. Provisioning does not wait for individual users to enroll credentials.
 6. Log in as the existing TREK users. Confirm their user IDs, roles, trips, and
    sharing are preserved. Confirm a person outside the access group cannot start
    a new login.
 
 Choose the permanent Kanidm origin before enrolling users. Changing it afterward
 breaks their WebAuthn credentials.
+
+If the previous ~kanidm-identities~ Kustomization has already reconciled in your
+cluster, set its ~spec.deletionPolicy~ to ~Orphan~ before removing it. Otherwise
+deleting the old Kustomization can prune the person and group resources it owns.
 
 * Identity administration
 

@@ -6,7 +6,7 @@ metadata:
   name: trek-oidc
 spec:
   dependsOn:
-    - name: kanidm-identities
+    - name: kanidm-provision
       namespace: security
   healthChecks:
     - apiVersion: kaniop.rs/v1beta1

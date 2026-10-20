@@ -12,4 +12,3 @@ resources:
   - ./provision-secret.sops.yaml
   - ./pushsecret.yaml
   - ./identity-settings.yaml
-  - ./identities-ks.yaml
