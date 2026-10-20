@@ -1,0 +1,98 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app trek
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: *app
+  interval: 30m
+  values:
+    controllers:
+      trek:
+        replicas: 1
+        strategy: Recreate
+        pod:
+          securityContext:
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+            seccompProfile:
+              type: RuntimeDefault
+        containers:
+          app:
+            image:
+              repository: docker.io/mauriceboe/trek
+              tag: 4.3.3@sha256:1ef1ccf41af8ae409e0435518facb5789b6adc99681ef26d1869508355455749
+            env:
+              ALLOWED_ORIGINS: &url https://trek.franta.us
+              APP_URL: *url
+              FORCE_HTTPS: "true"
+              NODE_ENV: production
+              PORT: &port 3000
+              TRUST_PROXY: "1"
+              TZ: America/Detroit
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec: &probeSpec
+                  httpGet:
+                    path: /api/health
+                    port: *port
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 3
+              readiness:
+                <<: *probes
+                spec:
+                  <<: *probeSpec
+                  periodSeconds: 10
+              startup:
+                <<: *probes
+                spec:
+                  <<: *probeSpec
+                  periodSeconds: 5
+                  failureThreshold: 30
+            resources:
+              requests:
+                cpu: 50m
+                memory: 256Mi
+              limits:
+                memory: 512Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              # The entrypoint chowns the volumes, then uses gosu to run as node (1000).
+              capabilities:
+                drop:
+                  - ALL
+                add:
+                  - CHOWN
+                  - SETUID
+                  - SETGID
+    persistence:
+      data:
+        existingClaim: *app
+        globalMounts:
+          - path: /app/data
+            subPath: data
+          - path: /app/uploads
+            subPath: uploads
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
+    route:
+      app:
+        hostnames:
+          - trek.franta.us
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+    service:
+      app:
+        ports:
+          http:
+            port: *port

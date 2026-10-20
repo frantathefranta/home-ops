@@ -1,0 +1,26 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app trek
+spec:
+  components:
+    - ../../../../components/kopiur
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph-external
+  interval: 1h
+  path: "./kubernetes/apps/default/trek/app"
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: default
+  postBuild:
+    substitute:
+      APP: *app
+      KOPIUR_CAPACITY: 10Gi
+      KOPIUR_MOVER_UID: "1000"
+      KOPIUR_MOVER_GID: "1000"
