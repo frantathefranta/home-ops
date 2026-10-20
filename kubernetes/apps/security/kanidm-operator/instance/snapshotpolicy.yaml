@@ -1,0 +1,38 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/kopiur.home-operations.com/snapshotpolicy_v1alpha1.json
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotPolicy
+metadata:
+  name: kanidm
+spec:
+  repository:
+    kind: ClusterRepository
+    name: garage
+  credentialProjection:
+    enabled: true
+  # Kaniop owns the StatefulSet claim template kanidm-data. Do not create a
+  # competing PVC or use the kopiur component, which would also own a PVC.
+  sources:
+    - pvc:
+        name: kanidm-data-sso-default-0
+  retention:
+    keepHourly: 24
+    keepDaily: 7
+  volumeSnapshotClassName: ceph-rbd-snapshot
+  copyMethod: Snapshot
+  mover:
+    cache:
+      capacity: 4Gi
+      mode: Persistent
+      storageClassName: ceph-rbd
+    podSecurityContext:
+      runAsUser: 389
+      runAsGroup: 389
+      fsGroup: 389
+  verification:
+    deep:
+      schedule:
+        cron: H 5 1 * *
+    quick:
+      schedule:
+        cron: H 3 * * *

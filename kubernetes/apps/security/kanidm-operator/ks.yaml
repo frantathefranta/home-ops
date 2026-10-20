@@ -1,0 +1,81 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: kanidm-operator
+spec:
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2
+      kind: HelmRelease
+      name: kaniop
+      namespace: security
+  interval: 1h
+  path: ./kubernetes/apps/security/kanidm-operator/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: security
+  timeout: 15m
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: kanidm-instance
+spec:
+  dependsOn:
+    - name: kanidm-operator
+      namespace: security
+    - name: cert-manager-issuers
+      namespace: cert-manager
+    - name: envoy-gateway-gateway
+      namespace: network
+    - name: external-secrets
+      namespace: external-secrets
+    - name: rook-ceph-cluster
+      namespace: rook-ceph-external
+    - name: kopiur-repository
+      namespace: storage
+  healthChecks:
+    - apiVersion: cert-manager.io/v1
+      kind: Certificate
+      name: sso-franta-us
+      namespace: security
+    - apiVersion: external-secrets.io/v1
+      kind: ExternalSecret
+      name: kanidm-identity-settings
+      namespace: security
+    - apiVersion: kaniop.rs/v1beta1
+      kind: Kanidm
+      name: sso
+      namespace: security
+  healthCheckExprs:
+    - apiVersion: kaniop.rs/v1beta1
+      kind: Kanidm
+      inProgress: >-
+        !has(status) || !has(status.conditions) ||
+        !status.conditions.exists(c, c.type == 'Available' && c.observedGeneration == metadata.generation)
+      failed: >-
+        has(status) && has(status.conditions) &&
+        status.conditions.exists(c, c.type == 'ReplicaFailure' && c.status == 'True' && c.observedGeneration == metadata.generation)
+      current: >-
+        has(status) && has(status.conditions) &&
+        status.conditions.exists(c, c.type == 'Available' && c.status == 'True' && c.observedGeneration == metadata.generation) &&
+        status.conditions.exists(c, c.type == 'Initialized' && c.status == 'True' && c.observedGeneration == metadata.generation) &&
+        status.conditions.exists(c, c.type == 'Progressing' && c.status == 'False' && c.observedGeneration == metadata.generation)
+    - apiVersion: external-secrets.io/v1
+      kind: ExternalSecret
+      current: >-
+        has(status) && has(status.conditions) &&
+        status.conditions.exists(c, c.type == 'Ready' && c.status == 'True')
+  interval: 1h
+  path: ./kubernetes/apps/security/kanidm-operator/instance
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: security

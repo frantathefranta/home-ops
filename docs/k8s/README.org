@@ -64,3 +64,111 @@ spec:
     targetPort: 53
   type: ClusterIP
 #+end_src
+
+** Kanidm and TREK migration
+
+Kanidm runs alongside Authelia and glauth; their manifests and existing OIDC
+registrations remain unchanged. The permanent Kanidm origin is
+~https://sso.franta.us~. Changing it after enrollment breaks WebAuthn credentials.
+
+*** Deployment and cutover gates
+
+- ~security/kanidm-operator~ installs Kaniop 0.19.1 and manages CRD upgrades.
+- ~security/kanidm-instance~ creates Kanidm 1.11.2, its dedicated certificate,
+  validated Envoy backend TLS, persistence, backups, and identity settings.
+- The instance creates the child Flux Kustomization ~security/kanidm-identities~.
+  Keeping this child outside the root ~cluster-apps~ render preserves its private
+  ~postBuild.substituteFrom~ instead of replacing it with the global variables.
+- Person emails come from the existing Akeyless ~/glauth~ fields
+  ~GLAUTH_FRANTA_EMAIL~ and ~GLAUTH_CARA_EMAIL~; no passwords are imported.
+- ~kanidm-identities~ remains unready until both ~franta~ and ~cara~ have enrolled
+  credentials and valid accounts. This deliberately leaves the existing TREK
+  deployment on Authelia while onboarding is incomplete.
+- ~default/trek-oidc~ then creates the restricted ~trek-users~ OAuth client and
+  waits for Kaniop to create ~trek-kanidm-oauth2-credentials~ in ~default~.
+- Only then can ~default/trek~ reconcile the new issuer and generated
+  ~CLIENT_SECRET~. PKCE, ES256, strict redirect validation, and consent remain
+  enabled. Membership of ~trek-users~ grants ~openid~, ~profile~, and ~email~.
+
+The issuer is ~https://sso.franta.us/oauth2/openid/trek~, not the hostname alone.
+The registered callback is ~https://trek.franta.us/api/auth/oidc/callback~.
+Kaniop owns the new client Secret; the old ExternalSecret is removed at cutover.
+The old Akeyless ~/trek~ credentials and Authelia client are retained for rollback.
+
+*** First rollout
+
+1. Reconcile the new security resources. Check certificate issuance, DNS and
+   reachability of ~sso.franta.us~ from both browsers and TREK.
+2. Securely escrow ~security/sso-admin-passwords~ outside the cluster. Its keys are
+   ~ADMIN_USERNAME~, ~ADMIN_PASSWORD~, ~IDM_ADMIN_USERNAME~, and ~IDM_ADMIN_PASSWORD~.
+   Do not publish these values or the enrollment links in logs or Git.
+3. Before completing both enrollments, take a recoverable TREK backup and verify
+   that the two Akeyless email values exactly identify the existing TREK users.
+   No live account inventory is implied by the manifests.
+4. Retrieve each short-lived enrollment link from the ~TokenCreated~ event shown
+   by the following commands. The default lifetime is one hour; Kaniop renews an
+   expired bootstrap token while credentials remain absent.
+
+   #+begin_src sh
+   kubectl -n security describe kanidmpersonaccount franta
+   kubectl -n security describe kanidmpersonaccount cara
+   #+end_src
+
+5. Give each link only to its intended user and enroll a passkey. Completing both
+   accounts opens the automatic cutover gate.
+6. After reconciliation, log in to TREK as the existing users. Confirm user IDs,
+   roles, trips, and sharing are preserved. Confirm a person outside ~trek-users~
+   cannot start a new TREK login.
+
+TREK 4.3.3 first matches ~(oidc_sub, oidc_issuer)~, then case-insensitive email.
+For an already OIDC-bound account it replaces the old binding on the same user
+row. That replacement branch does not require ~email_verified~. Keep primary
+email addresses administratively controlled; do not grant these users
+~idm_people_self_mail_write~ or broad identity-administration rights.
+The custom ~admins~ group does not confer Kanidm administrative roles.
+See [[https://github.com/liketrek/TREK/blob/1c05ee4b3ac9523c41ccdd3baad989ba48a7409a/server/src/nest/oidc/oidc.service.ts#L624-L648][the pinned TREK account-linking implementation]].
+
+*** Backup and recovery
+
+Kaniop owns PVC ~kanidm-data-sso-default-0~ on ~ceph-rbd~. Native logical backups
+run at 02:00 UTC into ~/data/backups~, retaining seven versions. The explicit
+Kopiur policy protects this operator-created PVC with hourly snapshots copied to
+the existing Garage repository; it does not create a competing PVC. Retention
+is 24 hourly and seven daily copies. Preserve the repository credentials and
+encryption/recovery material outside the cluster.
+
+Do not rely on Kaniop's experimental remote backup transport. Before production
+reliance, verify an off-cluster Kopiur restore into an isolated target.
+Git declarations do not reconstruct enrolled credentials or the identity database.
+
+Native manual backup and restore require a stopped server and the same Kanidm
+version that created the backup. For 1.11.2, preserve the compression suffix:
+the default manual backup is gzip, even if the supplied filename ends in ~.json~.
+Example commands for a stopped, isolated instance with its config and volumes mounted:
+
+#+begin_src sh
+kanidmd database backup -c /data/server.toml /backup/kanidm.backup.json.gz
+kanidmd database restore -c /data/server.toml /backup/kanidm.backup.json.gz
+#+end_src
+
+To roll TREK back, restore only its previous ~ks.yaml~ and ~app/~ manifests:
+the ~auth.franta.us~ issuer, Authelia display name, and Akeyless-backed
+~trek-secret~ ExternalSecret. Leave Kanidm and its data intact. TREK rebinds the
+same existing accounts on their next Authelia login by the same email lookup;
+do not delete users or rewrite trip ownership.
+
+*** Local verification and limits
+
+The five affected Flux Kustomizations and both Helm releases rendered
+successfully with flate 0.6.5. Kanidm, person, group, and OAuth client resources
+validated against the released Kaniop 0.19.1 CRD schemas.
+
+The pinned TREK 4.3.3 amd64 image completed a real browser/passkey OIDC flow against
+Kanidm 1.11.2, including PKCE, callback and session exchange. A synthetic existing
+Authelia-bound user retained its ID, admin role and owned trip without duplication.
+Removing access-group membership denied a new login. A native backup restored
+into a separate database retained the passkey and client secret and completed
+another TREK login.
+
+No live deployment, real-user enrollment, cluster DNS/TLS check, or Garage restore
+was performed: the implementation environment had no Kubernetes context.

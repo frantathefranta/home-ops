@@ -1,0 +1,24 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kaniop
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: kaniop
+  interval: 30m
+  timeout: 15m
+  install:
+    crds: CreateReplace
+  upgrade:
+    crds: CreateReplace
+  values:
+    # The released chart's pre-install/pre-upgrade hook applies every CRD and
+    # waits for Established before Helm can report the operator ready.
+    crdApply:
+      enabled: true
+    crdMigration:
+      personAccountPlural:
+        enabled: true
