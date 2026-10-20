@@ -61,6 +61,7 @@ spec:
               oidc-client-tandoor: '{{ .TANDOOR_OAUTH_CLIENT_SECRET_HASHED }}'
               oidc-client-dashbrr: '{{ .DASHBRR_OAUTH_CLIENT_SECRET_HASHED }}'
               oidc-client-forgejo: '{{ .FORGEJO_OAUTH_CLIENT_SECRET_HASHED }}'
+              oidc-client-trek: '{{ .TREK_OAUTH_CLIENT_SECRET_HASHED }}'
         dataFrom:
         - extract:
             key: /authelia
@@ -78,6 +79,8 @@ spec:
             key: /dashbrr
         - extract:
             key: /forgejo
+        - extract:
+            key: /trek
     controllers:
       authelia:
         replicas: 2
