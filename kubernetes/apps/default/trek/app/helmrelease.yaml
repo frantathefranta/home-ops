@@ -12,6 +12,8 @@ spec:
   values:
     controllers:
       trek:
+        annotations:
+          reloader.stakater.com/auto: "true"
         replicas: 1
         strategy: Recreate
         pod:
@@ -30,6 +32,15 @@ spec:
               APP_URL: *url
               FORCE_HTTPS: "true"
               NODE_ENV: production
+              OIDC_CLIENT_ID: trek
+              OIDC_CLIENT_SECRET:
+                valueFrom:
+                  secretKeyRef:
+                    name: trek-secret
+                    key: OIDC_CLIENT_SECRET
+              OIDC_DISPLAY_NAME: Authelia
+              OIDC_ISSUER: https://auth.franta.us
+              OIDC_ONLY: "true"
               PORT: &port 3000
               TRUST_PROXY: "1"
               TZ: America/Detroit
