@@ -32,15 +32,6 @@ spec:
                   "openid_connect": {
                       "APPS": [
                           {
-                              "provider_id": "authelia",
-                              "name": "Authelia",
-                              "client_id": "{{ .PAPERLESS_OAUTH_CLIENT_ID }}",
-                              "secret": "{{ .PAPERLESS_OAUTH_CLIENT_SECRET }}",
-                              "settings": {
-                                  "server_url": "https://auth.franta.us/"
-                              }
-                          },
-                          {
                               "provider_id": "kanidm",
                               "name": "Kanidm",
                               "client_id": "{{ .KANIDM_CLIENT_ID }}",
