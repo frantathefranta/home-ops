@@ -22,22 +22,8 @@ spec:
           template:
             engineVersion: v2
             data:
-              OpenIDConfig__Name: Authelia
-              OpenIDConfig__ClientId: lubelog
-              OpenIDConfig__ClientSecret: '{{ .LUBELOG_OAUTH_CLIENT_SECRET }}'
-              OpenIDConfig__AuthURL: https://auth.franta.us/api/oidc/authorization
-              OpenIDConfig__TokenURL: https://auth.franta.us/api/oidc/token
-              OpenIDConfig__RedirectURL: https://lubelog.franta.us/Login/RemoteAuth
-              OpenIDConfig__Scope: email
-              OpenIDConfig__ValidateState: 'true'
               POSTGRES_CONNECTION: Host={{ index . "pgbouncer-host" }}:{{ .port }};Username={{ .user }};Password={{ .password }};Database={{ .dbname }}
         dataFrom:
-        - extract:
-            key: /lubelog
-          sourceRef:
-            storeRef:
-              kind: ClusterSecretStore
-              name: akeyless-secret-store
         - extract:
             key: lubelog-pguser-lubelog
           sourceRef:
@@ -59,6 +45,28 @@ spec:
               TZ: America/Detroit
               LC_ALL: en_US.UTF-8
               LOGGING__LOGLEVEL__DEFAULT: debug
+              OpenIDConfig__Name: Kanidm
+              OpenIDConfig__ClientId:
+                valueFrom:
+                  secretKeyRef:
+                    name: lubelog-kanidm-oauth2-credentials
+                    key: CLIENT_ID
+              OpenIDConfig__ClientSecret:
+                valueFrom:
+                  secretKeyRef:
+                    name: lubelog-kanidm-oauth2-credentials
+                    key: CLIENT_SECRET
+              OpenIDConfig__AuthURL: https://sso.franta.us/ui/oauth2
+              OpenIDConfig__TokenURL: https://sso.franta.us/oauth2/token
+              OpenIDConfig__RedirectURL: https://lubelog.franta.us/Login/RemoteAuth
+              OpenIDConfig__Scope: openid profile email
+              OpenIDConfig__UserInfoURL: https://sso.franta.us/oauth2/openid/lubelog/userinfo
+              OpenIDConfig__JwksURL: https://sso.franta.us/oauth2/openid/lubelog/public_key.jwk
+              OpenIDConfig__ValidateState: "true"
+              OpenIDConfig__UsePKCE: "true"
+              OpenIDConfig__DisableRegistration: "true"
+              OpenIDConfig__AutoGenerateTokens: "false"
+              OpenIDConfig__DisableRegularLogin: "false"
             envFrom:
               - secretRef:
                   name: lubelog-secret
