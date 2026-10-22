@@ -43,7 +43,16 @@ spec:
               SONARR__APP__INSTANCENAME: Sonarr
               SONARR__APP__THEME: dark
               SONARR__AUTH__METHOD: External
-              SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              SONARR__AUTH__OIDCAUTHORITY: https://sso.franta.us/oauth2/openid/sonarr
+              SONARR__AUTH__OIDCCLIENTID: sonarr
+              SONARR__AUTH__OIDCCLIENTSECRET:
+                valueFrom:
+                  secretKeyRef:
+                    name: sonarr-kanidm-oauth2-credentials
+                    key: CLIENT_SECRET
+              SONARR__AUTH__OIDCUSERIDENTIFIER: fb@franta.us
+              SONARR__SERVER__TRUSTEDNETWORKS: ${CLUSTER_CIDR},${CLUSTER_POD_V6_CIDR}
+              SONARR__AUTH__REQUIRED: Enabled
               SONARR__LOG__DBENABLED: "False"
               SONARR__LOG__LEVEL: debug
               SONARR__POSTGRES__HOST: sonarr-pgbouncer.media.svc
