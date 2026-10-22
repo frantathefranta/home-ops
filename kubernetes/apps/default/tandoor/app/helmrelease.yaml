@@ -23,7 +23,24 @@ spec:
             engineVersion: v2
             data:
               SECRET_KEY: '{{ .TANDOOR_SECRET_KEY }}'
-              SOCIALACCOUNT_PROVIDERS: '{"openid_connect":{"SERVERS":[{"id": "authelia","name": "Authelia","server_url": "https://auth.franta.us/.well-known/openid-configuration","token_auth_method": "client_secret_basic","APP": {"client_id": "tandoor","secret": "{{ .TANDOOR_OAUTH_CLIENT_SECRET }}"}}]}}'
+              SOCIALACCOUNT_PROVIDERS: '{"openid_connect":{"APPS":[{"provider_id": "kanidm","name": "Kanidm","client_id": "{{ .KANIDM_CLIENT_ID }}","secret": "{{ .KANIDM_CLIENT_SECRET }}","settings": {"server_url": "https://sso.franta.us/oauth2/openid/tandoor/.well-known/openid-configuration","token_auth_method": "client_secret_basic","oauth_pkce_enabled": true}}]}}'
+        data:
+          - secretKey: KANIDM_CLIENT_ID
+            remoteRef:
+              key: /kanidm/tandoor
+              property: CLIENT_ID
+            sourceRef:
+              storeRef:
+                kind: ClusterSecretStore
+                name: akeyless-secret-store
+          - secretKey: KANIDM_CLIENT_SECRET
+            remoteRef:
+              key: /kanidm/tandoor
+              property: CLIENT_SECRET
+            sourceRef:
+              storeRef:
+                kind: ClusterSecretStore
+                name: akeyless-secret-store
         dataFrom:
         - extract:
             key: /tandoor
@@ -73,6 +90,11 @@ spec:
               EMAIL_HOST: smtp-relay.default.svc.cluster.local
               EMAIL_PORT: 25
               SOCIAL_PROVIDERS: allauth.socialaccount.providers.openid_connect
+              # Existing users connect Kanidm from their authenticated account settings.
+              # This shows a signup form for unknown identities; it does not forbid signup.
+              SOCIALACCOUNT_AUTO_SIGNUP: 0
+              SOCIALACCOUNT_EMAIL_AUTHENTICATION: 0
+              SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT: 0
             envFrom:
               - secretRef:
                   name: tandoor-secret
