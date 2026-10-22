@@ -96,6 +96,11 @@ spec:
           groupClaimName: groups
           provider: openidConnect
           scopes: profile email groups
+        - name: kanidm
+          autoDiscoverUrl: https://sso.franta.us/oauth2/openid/forgejo/.well-known/openid-configuration
+          existingSecret: forgejo-kanidm-oauth2-credentials
+          provider: openidConnect
+          scopes: openid profile email
     extraContainerVolumeMounts:
       - name: signing-key
         mountPath: /data/signing
