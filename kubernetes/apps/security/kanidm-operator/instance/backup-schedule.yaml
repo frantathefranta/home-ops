@@ -1,0 +1,22 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/kaniop.rs/kanidmbackupschedule_v1alpha1.json
+apiVersion: kaniop.rs/v1alpha1
+kind: KanidmBackupSchedule
+metadata:
+  name: sso
+spec:
+  jitterSeconds: 300
+  kanidmRef:
+    name: sso
+  localVersions: 7
+  repositoryRef:
+    name: garage
+  # References, schedule and retention are immutable; replace the Schedule to change them.
+  retention:
+    keepLast: 8
+    daily: 7
+    weekly: 4
+    monthly: 6
+    minAge: 24h
+  schedule: 30 2 * * *
+  timeZone: America/Detroit

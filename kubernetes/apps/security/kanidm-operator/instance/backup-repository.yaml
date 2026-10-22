@@ -1,0 +1,55 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/external-secrets.io/externalsecret_v1.json
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: kanidm-backup
+spec:
+  refreshInterval: 12h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: akeyless-secret-store
+  target:
+    name: kanidm-backup-secret
+    creationPolicy: Owner
+  data:
+    - secretKey: AWS_ACCESS_KEY_ID
+      remoteRef:
+        key: /kopiur
+        property: AWS_ACCESS_KEY_ID
+    - secretKey: AWS_SECRET_ACCESS_KEY
+      remoteRef:
+        key: /kopiur
+        property: AWS_SECRET_ACCESS_KEY
+    - secretKey: encryption-key
+      remoteRef:
+        key: /kanidm
+        property: encryptionKey
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/kaniop.rs/kanidmbackuprepository_v1alpha1.json
+apiVersion: kaniop.rs/v1alpha1
+kind: KanidmBackupRepository
+metadata:
+  name: garage
+spec:
+  authentication:
+    deleter:
+      secretRef:
+        name: kanidm-backup-secret
+    reader:
+      secretRef:
+        name: kanidm-backup-secret
+    writer:
+      secretRef:
+        name: kanidm-backup-secret
+  encryption:
+    mode: clientSide
+    keyRef:
+      name: kanidm-backup-secret
+  s3:
+    bucket: kopiur
+    endpoint: http://s3.infra.franta.us:3900
+    forcePathStyle: true
+    insecure: true
+    prefix: kanidm/sso
+    region: garage

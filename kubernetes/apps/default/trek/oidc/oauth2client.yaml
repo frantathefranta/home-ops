@@ -1,0 +1,21 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kaniop.rs/kanidmoauth2client_v1beta1.json
+apiVersion: kaniop.rs/v1beta1
+kind: KanidmOAuth2Client
+metadata:
+  name: trek
+spec:
+  kanidmRef:
+    name: sso
+    namespace: security
+  displayname: TREK
+  origin: https://trek.franta.us
+  redirectUrl:
+    - https://trek.franta.us/api/auth/oidc/callback
+  scopeMap:
+    - group: trek-users
+      scopes:
+        - openid
+        - profile
+        - email
+  preferShortUsername: true

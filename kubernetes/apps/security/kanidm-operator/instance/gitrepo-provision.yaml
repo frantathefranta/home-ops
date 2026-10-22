@@ -1,0 +1,50 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/external-secrets.io/externalsecret_v1.json
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: forgejo-kanidm-provision
+spec:
+  refreshInterval: 30m
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: akeyless-secret-store
+  target:
+    name: kanidm-provision-git
+    template:
+      type: Opaque
+      engineVersion: v2
+      data:
+        identity: "{{ .privateKey }}"
+        known_hosts: "git.franta.us ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDI4xjbgmyi2pUOyR5PcEg6v5yqHKrAPfmz98vyAAB4LfIEcxkmQNwce+b/JCdKHPfXdmN5oe9UlzPfxNccdvrl6krzuFu7drl+qhZwNf98hZ+W6I/sdjCBoRmuPJj/Wipp/jx7v0AUZ7xjfeQEVvdTJFgxK1khdytGLDNuDfihjQl4F+TGy7h3NN2AIJLlVPMccOhRqCN6yiIBK4aMNCjqYsC8Jo3Gse0sHDOmi+kh0dYA67lGY3FVYrwmzKWonmpQoCoI47T27v6EAO8VCIbAmZY+1NSzkXdwE16SMsVSuMN+sXuSczycrqZv4MYTxlPHBFQUxwKm+ee+T7muUVeFz2Ouyt1iBeIItkPLm2yaQKrUZ4AqsuDFE69puJjFqp8nrDyp+xajVL4Ga2oTybMPoZpd7cmmv3BH9ynEV2v6UQcs84kDIfg24acQhOYfnkp8LuMZz4dt49uvAz6GRjTHecLPyJcXerZNF2fhuROVkdk/6y0u035gunVH1wvjilP6aNJMXHm//SEcXYWxk+OcDcXb3MZlrV4ugahmz0UBybHkePj9xLSkLNUalYVsxQbvIevr6eQi7f3xTB8/WwK0iGmxAZESkAUuufIxx+IPCia1YpW3GYuxFFjXaRpwzAMxDskMqFPorMA4kDWDKUzV41t3Umy9Fw5by+YPbia8ew=="
+  data:
+    - secretKey: privateKey
+      remoteRef:
+        key: /kanidm
+        property: privateKey
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/source.toolkit.fluxcd.io/gitrepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: kanidm-provision
+  namespace: security
+spec:
+  interval: 1h
+  ref:
+    branch: main
+  secretRef:
+    name: kanidm-provision-git
+  url: ssh://git@git.franta.us/franta/kanidm-provision.git
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: kanidm-provision
+spec:
+  interval: 1h
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: kanidm-provision
