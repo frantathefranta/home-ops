@@ -72,3 +72,39 @@ To roll TREK back, restore only its previous ~ks.yaml~ and ~app/~ manifests from
 before this migration. Leave Kanidm and its data intact. TREK rebinds the existing
 accounts on their next Authelia login through the same email lookup; do not delete
 users or rewrite trip ownership.
+
+* Migrating existing application accounts
+
+Back up the application's database and files before cutover. Privately record
+local user IDs, permissions, ownership, and external-login associations. Matching
+email addresses alone is not a general account-preservation guarantee.
+
+For Paperless, Tandoor, and Forgejo, sign into the existing account first, then
+connect Kanidm: Paperless's My Profile, Tandoor's user settings, or Forgejo's
+Settings -> Security. Test a fresh Kanidm login and verify the same local user ID
+and permissions. Do not create replacement users or disconnect Authelia before
+the new connection works. Tandoor's signup form is not a registration prohibition.
+
+LubeLogger matches existing accounts by exact email, including case. Check its
+root-user email mapping separately. Persisted ~userConfig.json~ and
+~serverConfig.json~ can override environment settings; check them if old OIDC
+configuration persists after rollout. Its registration-disable flag only blocks
+the registration UI: existing valid invitation tokens remain usable.
+
+Grafana's temporary email lookup trusts the admitted identity provider to assert
+an existing account's email. Keep emails unique and administratively controlled;
+disabling signup does not prevent email-based account takeover. Preserve a
+working admin session and capture existing ~user_auth~ bindings before cutover.
+After accounts acquire their Kanidm bindings, remove the temporary email lookup
+and verify fresh logins again. Removing it earlier can lock unmigrated users out.
+
+For rollback, retain application users and their data. Forgejo persists configured
+authentication sources in its database: reverting Helm values does not remove the
+Kanidm source, so disable it in Site Administration -> Authentication Sources.
+Keep independent SSH access to the private identity repository.
+
+Grafana replaces the existing Generic OAuth subject binding. Reverting endpoint
+configuration alone does not restore that binding. Restore the captured bindings
+consistently, or perform a controlled reverse email relink through trusted
+Authelia while preserving existing roles, then remove email lookup and retest.
+A database restore can discard intervening changes.
