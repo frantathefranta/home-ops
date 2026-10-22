@@ -48,3 +48,4 @@ spec:
   sourceRef:
     kind: GitRepository
     name: kanidm-provision
+  targetNamespace: security
