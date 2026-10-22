@@ -64,7 +64,7 @@ spec:
               OpenIDConfig__JwksURL: https://sso.franta.us/oauth2/openid/lubelog/public_key.jwk
               OpenIDConfig__ValidateState: "true"
               OpenIDConfig__UsePKCE: "true"
-              OpenIDConfig__DisableRegistration: "false"
+              OpenIDConfig__DisableRegistration: "true"
               OpenIDConfig__AutoGenerateTokens: "true"
               OpenIDConfig__DisableRegularLogin: "false"
             envFrom:
