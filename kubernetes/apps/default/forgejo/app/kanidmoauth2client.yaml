@@ -13,11 +13,18 @@ spec:
   redirectUrl:
     - https://git.franta.us/user/oauth2/kanidm/callback
   scopeMap:
-    - group: idm_all_persons
+    - group: forgejo_admins@sso.franta.us
       scopes:
         - openid
         - profile
         - email
+        - groups
+    - group: forgejo_users@sso.franta.us
+      scopes:
+        - openid
+        - profile
+        - email
+        - groups
   preferShortUsername: true
   secretKeyAliases:
     clientId:

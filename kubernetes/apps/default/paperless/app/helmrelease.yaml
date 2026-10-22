@@ -16,6 +16,9 @@ spec:
       main:
         forceRename: paperless-secret
         refreshInterval: 15m
+        secretStoreRef:
+          kind: ClusterSecretStore
+          name: akeyless-secret-store
         target:
           name: paperless-secret
           template:
@@ -36,10 +39,29 @@ spec:
                               "settings": {
                                   "server_url": "https://auth.franta.us/"
                               }
+                          },
+                          {
+                              "provider_id": "kanidm",
+                              "name": "Kanidm",
+                              "client_id": "{{ .KANIDM_CLIENT_ID }}",
+                              "secret": "{{ .KANIDM_CLIENT_SECRET }}",
+                              "settings": {
+                                  "server_url": "https://sso.franta.us/oauth2/openid/paperless",
+                                  "oauth_pkce_enabled": true
+                              }
                           }
                       ]
                   }
                 }
+        data:
+          - secretKey: KANIDM_CLIENT_ID
+            remoteRef:
+              key: /kanidm/paperless
+              property: CLIENT_ID
+          - secretKey: KANIDM_CLIENT_SECRET
+            remoteRef:
+              key: /kanidm/paperless
+              property: CLIENT_SECRET
         dataFrom:
         - extract:
             key: /paperless
@@ -67,7 +89,7 @@ spec:
               PAPERLESS_TASK_WORKERS: "2"
               # Configure Remote User auth
               PAPERLESS_ACCOUNT_ALLOW_SIGNUPS: "false"
-              PAPERLESS_SOCIALACCOUNT_ALLOW_SIGNUPS: "true"
+              PAPERLESS_SOCIALACCOUNT_ALLOW_SIGNUPS: "false"
               # Configure folders
               PAPERLESS_CONSUMPTION_DIR: /data/remote/consume
               PAPERLESS_DATA_DIR: /data/local/data
@@ -103,12 +125,37 @@ spec:
                 cpu: 15m
               limits:
                 memory: 2048Mi
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /accounts/login/
+                    port: &port 8000
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 3
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /accounts/login/
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 3
+                  # Up to 30m so DB migrations on upgrade aren't killed mid-run
+                  failureThreshold: 180
     service:
       app:
         controller: *app
         ports:
           http:
-            port: &port 8000
+            port: *port
     route:
       app:
         hostnames:
