@@ -102,6 +102,13 @@ Email-based automatic linking is unnecessary for this procedure. Tandoor's signu
 form is not a registration prohibition. To roll back, restore the previous
 Authelia-only configuration and retain both stored associations and local users.
 
+Forgejo administrator status is synchronized from the configured group claim at
+login. Group values must match exactly, including underscores and the SPN domain;
+an absent or mismatched administrator group can remove administrator status.
+Keep recovery access while changing group policy. Group removals do not terminate
+existing application sessions immediately. Merge the private provisioning change
+and allow its groups to reconcile before testing the new Forgejo authorization.
+
 LubeLogger matches existing accounts by exact email, including case. Check its
 root-user email mapping separately. Persisted ~userConfig.json~ and
 ~serverConfig.json~ can override environment settings; check them if old OIDC
