@@ -6,3 +6,5 @@ resources:
   - ./grafana.yaml
   - ./grafanadatasource.yaml
   - ./httproute.yaml
+  - ./oauth2client.yaml
+  - ./pushsecret.yaml

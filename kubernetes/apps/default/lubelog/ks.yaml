@@ -1,31 +1,4 @@
 ---
-# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: lubelog-oidc
-spec:
-  dependsOn:
-    - name: kanidm-provision
-      namespace: security
-  healthChecks:
-    - apiVersion: kaniop.rs/v1beta1
-      kind: KanidmOAuth2Client
-      name: lubelog
-      namespace: default
-  healthCheckExprs:
-    - apiVersion: kaniop.rs/v1beta1
-      kind: KanidmOAuth2Client
-      current: status.ready
-  interval: 1h
-  path: ./kubernetes/apps/default/lubelog/oidc
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  targetNamespace: default
----
 # yaml-language-server: $schema=https://kube-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -39,13 +12,21 @@ spec:
   dependsOn:
     - name: crunchy-postgres-operator
       namespace: database
-    - name: lubelog-oidc
+    - name: kanidm-provision
+      namespace: security
+  healthChecks:
+    - apiVersion: kaniop.rs/v1beta1
+      kind: KanidmOAuth2Client
+      name: lubelog
       namespace: default
   healthCheckExprs:
     - apiVersion: postgres-operator.crunchydata.com/v1beta1
       kind: PostgresCluster
       failed: status.conditions.filter(e, e.type == 'ProxyAvailable').all(e, e.status == 'False')
       current: status.conditions.filter(e, e.type == 'ProxyAvailable').all(e, e.status == 'True')
+    - apiVersion: kaniop.rs/v1beta1
+      kind: KanidmOAuth2Client
+      current: status.ready
   path: ./kubernetes/apps/default/lubelog/app
   prune: true
   sourceRef:
