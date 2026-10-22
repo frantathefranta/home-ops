@@ -79,11 +79,28 @@ Back up the application's database and files before cutover. Privately record
 local user IDs, permissions, ownership, and external-login associations. Matching
 email addresses alone is not a general account-preservation guarantee.
 
-For Paperless, Tandoor, and Forgejo, sign into the existing account first, then
-connect Kanidm: Paperless's My Profile, Tandoor's user settings, or Forgejo's
-Settings -> Security. Test a fresh Kanidm login and verify the same local user ID
-and permissions. Do not create replacement users or disconnect Authelia before
-the new connection works. Tandoor's signup form is not a registration prohibition.
+For Paperless and Forgejo, sign into the existing account first, then connect
+Kanidm: Paperless's My Profile or Forgejo's Settings -> Security. Test a fresh
+Kanidm login and verify the same local user ID and permissions. Do not create
+replacement users or disconnect Authelia before the new connection works.
+
+Tandoor needs a single-provider cutover, not two configured OIDC providers.
+Before switching, establish and test local-password login on the existing
+accounts. If necessary, set a password interactively on an existing user:
+
+#+begin_src sh
+kubectl -n default exec -it deploy/tandoor -c app -- /opt/recipes/venv/bin/python /opt/recipes/manage.py changepassword <existing-username>
+#+end_src
+
+After switching the configured provider to Kanidm, use local login on the same
+account, then connect Kanidm from user settings. Verify a fresh Kanidm login has
+the original user ID, Space memberships, and recipe access. Retain old Authelia
+associations for rollback; do not delete users or change ownership. Local login
+does not require both OIDC providers to be configured. Retire temporary normal-user
+passwords after successful migration, keeping protected administrator recovery.
+Email-based automatic linking is unnecessary for this procedure. Tandoor's signup
+form is not a registration prohibition. To roll back, restore the previous
+Authelia-only configuration and retain both stored associations and local users.
 
 LubeLogger matches existing accounts by exact email, including case. Check its
 root-user email mapping separately. Persisted ~userConfig.json~ and
