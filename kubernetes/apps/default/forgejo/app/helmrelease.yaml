@@ -89,13 +89,6 @@ spec:
         webhook:
           ALLOWED_HOST_LIST: "*"
       oauth:
-        - name: authelia
-          # adminGroup: forgejo_admins@auth.franta.us
-          autoDiscoverUrl: https://auth.franta.us/.well-known/openid-configuration
-          existingSecret: forgejo-auth-oidc
-          groupClaimName: groups
-          provider: openidConnect
-          scopes: profile email groups
         - name: kanidm
           adminGroup: forgejo_admins@sso.franta.us
           autoDiscoverUrl: https://sso.franta.us/oauth2/openid/forgejo/.well-known/openid-configuration
