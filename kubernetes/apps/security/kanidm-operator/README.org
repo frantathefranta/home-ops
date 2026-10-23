@@ -30,6 +30,33 @@ If the previous ~kanidm-identities~ Kustomization has already reconciled in your
 cluster, set its ~spec.deletionPolicy~ to ~Orphan~ before removing it. Otherwise
 deleting the old Kustomization can prune the person and group resources it owns.
 
+* Moving OAuth resources between Kustomizations
+
+Before deploying the consolidation of the five old OIDC Kustomizations, orphan
+their inventories. Deleting them with the default pruning policy can delete the
+OAuth clients and their generated credentials before the applications adopt them.
+Run these commands against the existing cluster before merging the move:
+
+#+begin_src sh
+for app in trek lubelog paperless tandoor; do
+  kubectl -n default patch kustomization "$app-oidc" --type=merge \
+    -p '{"spec":{"deletionPolicy":"Orphan"}}'
+done
+kubectl -n observability patch kustomization grafana-oidc --type=merge \
+  -p '{"spec":{"deletionPolicy":"Orphan"}}'
+#+end_src
+
+Verify all five old objects report ~spec.deletionPolicy: Orphan~. Record the
+OAuth client and generated Secret UIDs before the move, then verify they remain
+unchanged after adoption and that the application Kustomizations become Ready.
+This is an ownership transfer, not a client recreation or credential rotation.
+
+Rollback is another ownership transfer: do not blindly revert with pruning
+enabled. First annotate the moved OAuth clients and PushSecrets with
+~kustomize.toolkit.fluxcd.io/prune: disabled~, restore the split configuration,
+and wait for the old OIDC Kustomizations to adopt them. Remove the temporary
+annotations only after their ownership labels identify the restored owners.
+
 * Identity administration
 
 Make person and membership changes in the [[https://git.franta.us/franta/kanidm-provision][private provisioning repository]].
