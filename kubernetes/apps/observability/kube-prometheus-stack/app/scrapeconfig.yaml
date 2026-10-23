@@ -98,3 +98,22 @@ spec:
       targetLabel: __param_ups
     - sourceLabels: [ups]
       targetLabel: instance
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/scrapeconfig_v1alpha1.json
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ScrapeConfig
+metadata:
+  name: &name comin
+spec:
+  staticConfigs:
+    - targets:
+        - nix-bastion.infra.franta.us:4243
+        - hydrogen.infra.franta.us:4243
+        # - nixos-firewall.infra.franta.us:4243
+        - qotom.infra.franta.us:4243
+        - ytterbium-40g.infra.franta.us:4243
+  metricsPath: /metrics
+  relabelings:
+    - action: replace
+      targetLabel: job
+      replacement: *name
