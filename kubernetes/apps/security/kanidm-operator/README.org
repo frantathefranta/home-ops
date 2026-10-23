@@ -95,12 +95,33 @@ kanidmd database backup -c /data/server.toml /backup/kanidm.backup.json.gz
 kanidmd database restore -c /data/server.toml /backup/kanidm.backup.json.gz
 #+end_src
 
-To roll TREK back, restore only its previous ~ks.yaml~ and ~app/~ manifests from
-before this migration. Leave Kanidm and its data intact. TREK rebinds the existing
-accounts on their next Authelia login through the same email lookup; do not delete
-users or rewrite trip ownership.
+Authelia and glauth are retired. Restoring an application's old provider settings
+does not restore its former identity provider. Recover the pre-retirement service
+manifests, Authelia database, and original encryption/signing keys before attempting
+an old-provider rollback. Preserve Kanidm and existing application users and data.
 
-* Migrating existing application accounts
+* Retired identity services
+
+Before removing the legacy services, verify a final recoverable Authelia database
+backup and retain its original storage-encryption and signing keys. The removal
+prunes Authelia's PostgresCluster and Dragonfly resources, not just its web pods;
+operator-managed database volumes may be deleted. Do not rely on a Git revert to
+recover that data. Do not delete off-cluster backups or Akeyless recovery secrets.
+
+Confirm no external LDAP or forward-auth clients still depend on these services.
+Unlike the OAuth ownership transfer above, retirement intentionally uses pruning,
+not Orphan, so the old workloads actually leave the cluster.
+
+Disable any persisted Authelia authentication source in Forgejo's Site
+Administration -> Authentication Sources. Removing Helm configuration alone
+does not remove that database record. Retain the working Kanidm source and
+independent SSH access.
+
+Vikunja is disabled in the namespace configuration. Its inactive legacy
+authentication configuration is unchanged and must be replaced before re-enabling
+that application.
+
+* Migrating existing application accounts (historical cutover procedure)
 
 Back up the application's database and files before cutover. Privately record
 local user IDs, permissions, ownership, and external-login associations. Matching
@@ -126,8 +147,8 @@ associations for rollback; do not delete users or change ownership. Local login
 does not require both OIDC providers to be configured. Retire temporary normal-user
 passwords after successful migration, keeping protected administrator recovery.
 Email-based automatic linking is unnecessary for this procedure. Tandoor's signup
-form is not a registration prohibition. To roll back, restore the previous
-Authelia-only configuration and retain both stored associations and local users.
+form is not a registration prohibition. An Authelia rollback now also requires
+recovering the retired identity services; provider settings alone are insufficient.
 
 Forgejo administrator status is synchronized from the configured group claim at
 login. Group values must match exactly, including underscores and the SPN domain;
@@ -142,20 +163,14 @@ root-user email mapping separately. Persisted ~userConfig.json~ and
 configuration persists after rollout. Its registration-disable flag only blocks
 the registration UI: existing valid invitation tokens remain usable.
 
-Grafana's temporary email lookup trusts the admitted identity provider to assert
-an existing account's email. Keep emails unique and administratively controlled;
-disabling signup does not prevent email-based account takeover. Preserve a
-working admin session and capture existing ~user_auth~ bindings before cutover.
-After accounts acquire their Kanidm bindings, remove the temporary email lookup
-and verify fresh logins again. Removing it earlier can lock unmigrated users out.
+Grafana's temporary email lookup was removed after subject bindings migrated.
+Keep primary emails administratively controlled and verify fresh logins resolve
+through the persisted Kanidm subject rather than re-enabling email-based lookup.
 
-For rollback, retain application users and their data. Forgejo persists configured
-authentication sources in its database: reverting Helm values does not remove the
-Kanidm source, so disable it in Site Administration -> Authentication Sources.
-Keep independent SSH access to the private identity repository.
+Preserve local application users, their ownership, and existing identity links.
+Retired identity-service removal is not an application-account deletion.
 
-Grafana replaces the existing Generic OAuth subject binding. Reverting endpoint
-configuration alone does not restore that binding. Restore the captured bindings
-consistently, or perform a controlled reverse email relink through trusted
-Authelia while preserving existing roles, then remove email lookup and retest.
-A database restore can discard intervening changes.
+Grafana's Generic OAuth subject binding now refers to Kanidm. Provider rollback
+requires a working restored identity provider and the corresponding captured
+bindings, not only a change of endpoint URLs. A database restore can discard
+intervening changes.
