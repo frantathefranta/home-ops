@@ -10,6 +10,7 @@ configMapGenerator:
       - ./configmaps/bird-bgp.json
       - ./configmaps/apt-monitoring.json
       - ./configmaps/dn42.json
+      - ./configmaps/comin.json
     options:
       annotations:
         kustomize.toolkit.fluxcd.io/substitute: disabled
