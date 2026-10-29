@@ -18,6 +18,17 @@
       "autoReplaceStringTemplate": "depName=\"{{{depName}}}\"\n{{{indentation}}}gnetId: {{{packageName}}}\n{{{indentation}}}revision: {{{newValue}}}",
       "datasourceTemplate": "custom.grafana-dashboards",
       "versioningTemplate": "regex:^(?<major>\\d+)$"
+    },
+    {
+      "customType": "regex",
+      "description": ["Process GrafanaDashboard CRs with grafana.com URLs"],
+      "fileMatch": ["(^|/)kubernetes/.+grafanadashboard\\.ya?ml$"],
+      "matchStrings": [
+        "url: https://grafana\\.com/api/dashboards/(?<packageName>\\d+)/revisions/(?<currentValue>\\d+)/download"
+      ],
+      "depName": "grafana-dashboards-url",
+      "datasourceTemplate": "custom.grafana-dashboards",
+      "versioningTemplate": "regex:^(?<major>\\d+)$"
     }
   ],
   "packageRules": [
