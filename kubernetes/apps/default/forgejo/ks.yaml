@@ -30,6 +30,7 @@ spec:
     substitute:
       APP: forgejo
       KOPIUR_CAPACITY: 10Gi
+      KOPIUR_CACHE_CAPACITY: 8Gi
       KOPIUR_MOVER_UID: "1000"
       KOPIUR_MOVER_GID: "1000"
       ANUBIS_TARGET: http://forgejo-http.default.svc.cluster.local:3000
