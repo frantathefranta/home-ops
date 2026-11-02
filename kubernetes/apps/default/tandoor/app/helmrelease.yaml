@@ -93,7 +93,7 @@ spec:
               # Connect Kanidm from the existing account using local login after cutover.
               SOCIALACCOUNT_ONLY: 0
               HIDE_LOGIN_FORM: 0
-              SOCIALACCOUNT_AUTO_SIGNUP: 0
+              SOCIALACCOUNT_AUTO_SIGNUP: 1
               SOCIALACCOUNT_EMAIL_AUTHENTICATION: 0
               SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT: 0
             envFrom:
