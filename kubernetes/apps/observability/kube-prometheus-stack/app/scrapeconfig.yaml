@@ -112,6 +112,7 @@ spec:
         # - nixos-firewall.infra.franta.us:4243
         - qotom.infra.franta.us:4243
         - ytterbium-40g.infra.franta.us:4243
+        - neon.infra.franta.us:4243
   metricsPath: /metrics
   relabelings:
     - action: replace
