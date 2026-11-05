@@ -20,7 +20,7 @@ spec:
   copyMethod: ${KOPIUR_COPY_METHOD:=Snapshot}
   mover:
     cache:
-      capacity: ${KOPIUR_CACHE_CAPACITY:=4Gi}
+      capacity: ${KOPIUR_CACHE_CAPACITY:=${KOPIUR_CAPACITY:=4Gi}}
       mode: Persistent
       storageClassName: ${KOPIUR_CACHE_STORAGECLASS:=ceph-rbd}
     podSecurityContext:
