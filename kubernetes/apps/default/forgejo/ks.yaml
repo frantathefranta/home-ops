@@ -32,6 +32,7 @@ spec:
       KOPIUR_CAPACITY: 10Gi
       KOPIUR_MOVER_UID: "1000"
       KOPIUR_MOVER_GID: "1000"
+      KOPIUR_CACHE_CAPACITY: 20Gi
       ANUBIS_TARGET: http://forgejo-http.default.svc.cluster.local:3000
       ANUBIS_MEM_LIMIT: 384Mi
   prune: true
