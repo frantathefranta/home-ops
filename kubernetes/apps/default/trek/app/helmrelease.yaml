@@ -26,7 +26,7 @@ spec:
           app:
             image:
               repository: docker.io/mauriceboe/trek
-              tag: 5.1.0@sha256:23bf3fa6a134dc38a3b4f40ef8f7e8040abc96965105dffdcfcf5f202fb5d0b7
+              tag: 5.1.2@sha256:6ee086badda34c62f692a74f606c4a52f3d8226427c7ec62881a709350f52546
             env:
               ALLOWED_ORIGINS: &url https://trek.franta.us
               APP_URL: *url
