@@ -1,4 +1,6 @@
 ---
+# Keep the completed, inert upgrade tracked: this app has prune: false.
+# Removing this manifest would not delete the resource from the cluster.
 apiVersion: postgres-operator.crunchydata.com/v1beta1
 kind: PGUpgrade
 metadata:

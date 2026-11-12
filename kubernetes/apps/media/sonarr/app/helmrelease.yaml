@@ -29,7 +29,6 @@ spec:
               name: akeyless-secret-store
     controllers:
       sonarr:
-        replicas: 0
         labels:
           nfsMount: "true"
         annotations:

@@ -28,7 +28,6 @@ spec:
               name: akeyless-secret-store
     controllers:
       prowlarr:
-        replicas: 0
         annotations:
           reloader.stakater.com/auto: "true"
         containers:

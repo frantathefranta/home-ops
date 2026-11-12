@@ -28,7 +28,6 @@ spec:
               name: akeyless-secret-store
     controllers:
       radarr:
-        replicas: 0
         labels:
           nfsMount: "true"
         annotations:
