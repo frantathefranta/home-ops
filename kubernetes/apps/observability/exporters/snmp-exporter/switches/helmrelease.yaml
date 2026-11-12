@@ -38,15 +38,15 @@ spec:
       params:
         - name: arista01
           module: ["arista_resources", "arista_sensors", "if_mib", "system"]
-          target: 10.0.0.2
+          target: arista.infra.franta.us
           auth: ["network_v2"]
         - name: brocade-garage
           module: ["if_mib", "system"]
-          target: 10.32.10.205
+          target: brocade-garage.infra.franta.us
           auth: ["network_v2"]
         - name: brocade01
           module: ["if_mib", "system"]
-          target: 10.32.10.202 # TODO: Figure out why this switch doesn't get scraped
+          target: 10.32.10.202 # TODO: Figure out why this switch doesn't get scraped over IPv6
           auth: ["network_v2"]
       path: /snmp
       scrapeTimeout: 15s
