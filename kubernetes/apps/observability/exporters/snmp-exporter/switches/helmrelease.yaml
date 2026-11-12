@@ -37,15 +37,15 @@ spec:
       enabled: true
       params:
         - name: arista01
-          module: ["switch_resources", "switch_sensors", "if_mib", "system"]
+          module: ["arista_resources", "arista_sensors", "if_mib", "system"]
           target: 10.0.0.2
           auth: ["network_v2"]
         - name: brocade-garage
-          module: ["switch_resources", "switch_sensors", "if_mib", "system"]
+          module: ["if_mib", "system"]
           target: 10.32.10.205
           auth: ["network_v2"]
         - name: brocade01
-          module: ["switch_resources", "switch_sensors", "if_mib", "system"]
+          module: ["if_mib", "system"]
           target: 10.32.10.202 # TODO: Figure out why this switch doesn't get scraped
           auth: ["network_v2"]
       path: /snmp
