@@ -10,19 +10,6 @@ spec:
     - ../../../../components/kopiur
     - ../../../../components/postgres
     - ../../../../components/dragonfly
-  patches:
-    - target:
-        group: postgres-operator.crunchydata.com
-        version: v1beta1
-        kind: PostgresCluster
-      patch: |-
-        - op: add
-          path: /metadata/annotations
-          value:
-            postgres-operator.crunchydata.com/allow-upgrade: vikunja-17-to-18
-        - op: add
-          path: /spec/shutdown
-          value: true
   path: ./kubernetes/apps/default/vikunja/app
   prune: true
   sourceRef:
@@ -48,4 +35,5 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      PG_VERSION: "18"
       KOPIUR_CAPACITY: 1Gi
