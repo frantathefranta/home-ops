@@ -28,7 +28,6 @@ spec:
               name: akeyless-secret-store
     controllers:
       bazarr:
-        replicas: 0
         labels:
           nfsMount: "true"
         annotations:
