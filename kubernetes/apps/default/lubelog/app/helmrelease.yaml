@@ -32,7 +32,6 @@ spec:
               name: lubelog-postgres
     controllers:
       lubelog:
-        replicas: 0
         labels:
           postgres: "true"
         annotations:

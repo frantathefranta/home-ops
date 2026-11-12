@@ -50,7 +50,6 @@ spec:
               name: akeyless-secret-store
     controllers:
       tandoor:
-        replicas: 0
         annotations:
           reloader.stakater.com/auto: "true"
         containers:

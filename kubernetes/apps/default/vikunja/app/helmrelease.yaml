@@ -54,7 +54,7 @@ spec:
               name: akeyless-secret-store
     controllers:
       vikunja:
-        replicas: 0
+        replicas: 1
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
