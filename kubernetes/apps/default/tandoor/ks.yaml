@@ -15,6 +15,19 @@ spec:
       namespace: database
     - name: kanidm-provision
       namespace: security
+  patches:
+    - target:
+        group: postgres-operator.crunchydata.com
+        version: v1beta1
+        kind: PostgresCluster
+      patch: |-
+        - op: add
+          path: /metadata/annotations
+          value:
+            postgres-operator.crunchydata.com/allow-upgrade: tandoor-17-to-18
+        - op: add
+          path: /spec/shutdown
+          value: true
   path: ./kubernetes/apps/default/tandoor/app
   healthChecks:
     - apiVersion: kaniop.rs/v1beta1

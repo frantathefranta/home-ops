@@ -62,6 +62,7 @@ spec:
               name: akeyless-secret-store
     controllers:
       paperless:
+        replicas: 0
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
