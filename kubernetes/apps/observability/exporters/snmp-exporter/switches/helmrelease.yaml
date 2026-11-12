@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app snmp-exporter-brocade
+  name: &app snmp-exporter-switches
 spec:
   interval: 30m
   chartRef:
@@ -25,7 +25,7 @@ spec:
     fullnameOverride: *app
     extraArgs: ["--config.file=/config/snmp.yaml"]
     extraConfigmapMounts:
-      - name: &name brocade-snmp-configmap
+      - name: &name switches-snmp-configmap
         mountPath: /config/snmp.yaml
         subPath: snmp.yaml
         configMap: *name
@@ -36,19 +36,19 @@ spec:
     serviceMonitor:
       enabled: true
       params:
+        - name: arista01
+          module: ["switch_resources", "switch_sensors", "if_mib", "system"]
+          target: 10.0.0.2
+          auth: ["network_v2"]
         - name: brocade-garage
-          module: ["brocade"]
+          module: ["switch_resources", "switch_sensors", "if_mib", "system"]
           target: 10.32.10.205
-          auth: ["public_v2"]
-        - name: brocade01-poe
-          module: ["brocade"]
+          auth: ["network_v2"]
+        - name: brocade01
+          module: ["switch_resources", "switch_sensors", "if_mib", "system"]
           target: 10.32.10.202 # TODO: Figure out why this switch doesn't get scraped
-          auth: ["public_v2"]
-        - name: brocade01-poe-if
-          module: ["if_mib"]
-          target: 10.32.10.202
-          auth: ["public_v2"]
+          auth: ["network_v2"]
       path: /snmp
-      scrapeTimeout: 60s
+      scrapeTimeout: 15s
       relabelings:
         - { sourceLabels: ["__param_target"], targetLabel: instance }

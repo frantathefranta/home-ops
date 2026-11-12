@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+# yaml-language-server: $schema=https://k8s-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
@@ -20,38 +20,17 @@ spec:
   retryInterval: 1m
   timeout: 5m
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+# yaml-language-server: $schema=https://k8s-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app snmp-exporter-brocade
+  name: &app snmp-exporter-switches
 spec:
   targetNamespace: observability
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/apps/observability/exporters/snmp-exporter/brocade
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  wait: false
-  interval: 30m
-  retryInterval: 1m
-  timeout: 5m
----
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: &app snmp-exporter-arista
-spec:
-  targetNamespace: observability
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
-  path: ./kubernetes/apps/observability/exporters/snmp-exporter/arista
+  path: ./kubernetes/apps/observability/exporters/snmp-exporter/switches
   prune: true
   sourceRef:
     kind: GitRepository
