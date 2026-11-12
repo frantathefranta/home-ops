@@ -30,7 +30,7 @@ spec:
               name: akeyless-secret-store
     controllers:
       miniflux:
-        replicas: 2
+        replicas: 0
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
