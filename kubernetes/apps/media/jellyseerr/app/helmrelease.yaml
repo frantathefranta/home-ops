@@ -29,6 +29,7 @@ spec:
             key: /jellyseerr
     controllers:
       jellyseerr:
+        replicas: 0
         annotations:
           reloader.stakater.com/auto: "true"
         containers:

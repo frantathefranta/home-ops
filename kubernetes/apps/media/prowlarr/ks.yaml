@@ -17,6 +17,19 @@ spec:
       kind: PostgresCluster
       failed: status.conditions.filter(e, e.type == 'ProxyAvailable').all(e, e.status == 'False')
       current: status.conditions.filter(e, e.type == 'ProxyAvailable').all(e, e.status == 'True')
+  patches:
+    - target:
+        group: postgres-operator.crunchydata.com
+        version: v1beta1
+        kind: PostgresCluster
+      patch: |-
+        - op: add
+          path: /metadata/annotations
+          value:
+            postgres-operator.crunchydata.com/allow-upgrade: prowlarr-17-to-18
+        - op: add
+          path: /spec/shutdown
+          value: true
   path: ./kubernetes/apps/media/prowlarr/app
   prune: true
   sourceRef:
