@@ -1,0 +1,10 @@
+---
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+kind: PGUpgrade
+metadata:
+  name: vikunja-17-to-18
+  namespace: default
+spec:
+  postgresClusterName: vikunja
+  fromPostgresVersion: 17
+  toPostgresVersion: 18
