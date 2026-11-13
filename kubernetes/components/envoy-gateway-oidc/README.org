@@ -1,0 +1,52 @@
+#+title: Envoy Gateway OIDC
+
+Gateway-level OIDC authentication for apps served through the
+`envoy-external` Gateway, using the Envoy Gateway `SecurityPolicy` (requires
+envoy-gateway >= v1.10) and Kanidm as the identity provider.
+
+Instead of each application speaking OIDC on its own, the gateway redirects
+unauthenticated users to Kanidm and holds a per-host session cookie in front
+of the app. The application stays unmodified.
+
+* Requirements
+
+- The app's HTTPRoute must live in the same namespace as this component and
+  be named `${APP}` (set `APP_ROUTE_NAME` to override).
+- The app must be routed through `envoy-external` (parentRef
+  `network/envoy-external`), not the legacy Cilium `external` gateway.
+
+* Usage
+
+Add the component and the substitution variables to the app's Flux
+Kustomization:
+
+#+begin_src yaml
+spec:
+  components:
+    - ../../../../components/envoy-gateway-oidc
+  postBuild:
+    substitute:
+      APP: <app>
+      # Only when the subdomain differs from the app name:
+      APP_SUBDOMAIN: recipes
+  healthChecks:
+    - apiVersion: kaniop.rs/v1beta1
+      kind: KanidmOAuth2Client
+      name: <app>
+  healthCheckExprs:
+    - apiVersion: kaniop.rs/v1beta1
+      kind: KanidmOAuth2Client
+      current: status.ready
+#+end_src
+
+* What it creates (per app)
+
+- `KanidmOAuth2Client` named `${APP}` -- registers an OAuth2 client under the
+  Kanidm `openid` issuer; issuer URL is
+  `https://sso.franta.us/oauth2/openid/${APP}`.
+- `PushSecret` -- pushes the operator-generated
+  `${APP}-kanidm-oauth2-credentials` secret to Akeyless under `/kanidm/${APP}`.
+- `ExternalSecret` -- materialises `${APP}-oidc` with `client-id` /
+  `client-secret` keys, which is what the SecurityPolicy references.
+- `SecurityPolicy` `${APP}-oidc` -- enforces OIDC on the app's HTTPRoute.
+  Callback path is `/oauth2/callback`, logout at `/logout`.

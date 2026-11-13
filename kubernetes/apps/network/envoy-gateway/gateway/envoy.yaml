@@ -12,7 +12,7 @@ spec:
     type: Kubernetes
     kubernetes:
       envoyDeployment:
-        replicas: 1
+        replicas: 2
         container:
           image: mirror.gcr.io/envoyproxy/envoy:v1.40.2
           resources:
@@ -20,6 +20,16 @@ spec:
               cpu: 100m
             limits:
               memory: 2Gi
+        pod:
+          affinity:
+            podAntiAffinity:
+              preferredDuringSchedulingIgnoredDuringExecution:
+                - weight: 100
+                  podAffinityTerm:
+                    topologyKey: kubernetes.io/hostname
+                    labelSelector:
+                      matchLabels:
+                        app.kubernetes.io/name: envoy
       envoyService:
         externalTrafficPolicy: Local
   ipFamily: DualStack
@@ -61,7 +71,7 @@ spec:
     numRetries: 2
     retryOn:
       triggers:
-        - reset
+        - reset-before-request
   targetSelectors:
     - group: gateway.networking.k8s.io
       kind: Gateway

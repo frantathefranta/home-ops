@@ -1,0 +1,25 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/gateway.envoyproxy.io/securitypolicy_v1alpha1.json
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: ${APP}-oidc
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: ${APP_ROUTE_NAME:-${APP}}
+  oidc:
+    provider:
+      issuer: https://sso.franta.us/oauth2/openid/${APP}
+    clientIDRef:
+      name: ${APP}-oidc
+    clientSecret:
+      name: ${APP}-oidc
+    refreshToken: true
+    redirectURL: https://${APP_SUBDOMAIN:-${APP}}.franta.us/oauth2/callback
+    logoutPath: /logout
+    scopes:
+      - openid
+      - profile
+      - email
