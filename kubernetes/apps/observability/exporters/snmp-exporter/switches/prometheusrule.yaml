@@ -1,0 +1,25 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: switches-rules
+  namespace: observability
+spec:
+  groups:
+    - name: switches.rules
+      rules:
+        # EnumAsStateSet: every peer exports one series per FSM state, value 1
+        # only for the current state, so "not established" is established == 0.
+        - alert: AristaBgpPeerNotEstablished
+          annotations:
+            summary: "BGP peer {{ $labels.aristaBgp4V2PeerRemoteAddr }} on {{ $labels.instance }} is not established"
+            description: "BGP session with {{ $labels.aristaBgp4V2PeerRemoteAddr }} (instance {{ $labels.aristaBgp4V2PeerInstance }}) has been outside the established state for more than 5 minutes."
+          expr: |
+            aristaBgp4V2PeerState{
+              aristaBgp4V2PeerState="established",
+              aristaBgp4V2PeerRemoteAddr=~"10\\.33\\.35\\..*|2600:1702:6630:3FEF:.*"
+            } == 0
+          for: 5m
+          labels:
+            severity: warning
