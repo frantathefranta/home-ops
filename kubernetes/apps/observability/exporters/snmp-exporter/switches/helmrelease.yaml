@@ -37,17 +37,21 @@ spec:
       enabled: true
       params:
         - name: arista01
-          module: ["arista_resources", "arista_sensors", "if_mib", "system"]
+          module: ["if_mib", "system", "arista_bgp"]
           target: arista.infra.franta.us
-          auth: ["network_v2"]
+          auth: ["public"]
         - name: brocade-garage
           module: ["if_mib", "system"]
           target: brocade-garage.infra.franta.us
-          auth: ["network_v2"]
+          auth: ["public"]
         - name: brocade01
           module: ["if_mib", "system"]
           target: 10.32.10.202 # TODO: Figure out why this switch doesn't get scraped over IPv6
-          auth: ["network_v2"]
+          auth: ["public"]
+        - name: ruckus
+          module: ["if_mib", "system", "ruckus_unleashed"]
+          target: 10.32.10.206
+          auth: ["public"]
       path: /snmp
       scrapeTimeout: 15s
       relabelings:

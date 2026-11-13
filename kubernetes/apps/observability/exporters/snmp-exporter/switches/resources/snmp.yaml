@@ -1,243 +1,201 @@
 # WARNING: This file was auto-generated using snmp_exporter generator, manual changes will be lost.
 auths:
-  network_v2:
+  public:
     community: public
     security_level: noAuthNoPriv
     auth_protocol: MD5
     priv_protocol: DES
     version: 2
 modules:
-  arista_resources:
+  arista_bgp:
     walk:
-    - 1.3.6.1.2.1.25.2.3.1.2
-    - 1.3.6.1.2.1.25.2.3.1.3
-    - 1.3.6.1.2.1.25.2.3.1.4
-    - 1.3.6.1.2.1.25.2.3.1.5
-    - 1.3.6.1.2.1.25.2.3.1.6
-    - 1.3.6.1.2.1.25.3.2.1.3
-    - 1.3.6.1.2.1.25.3.3.1.2
+    - 1.3.6.1.4.1.30065.4.1.1.2.1.10
+    - 1.3.6.1.4.1.30065.4.1.1.2.1.12
+    - 1.3.6.1.4.1.30065.4.1.1.2.1.13
+    - 1.3.6.1.4.1.30065.4.1.1.4.1.1
+    - 1.3.6.1.4.1.30065.4.1.1.7
+    - 1.3.6.1.4.1.30065.4.1.1.8.1.3
+    - 1.3.6.1.4.1.30065.4.1.1.8.1.4
+    - 1.3.6.1.4.1.30065.4.1.1.8.1.5
     metrics:
-    - name: hrStorageType
-      oid: 1.3.6.1.2.1.25.2.3.1.2
-      type: DisplayString
-      help: The type of storage represented by this entry. - 1.3.6.1.2.1.25.2.3.1.2
-      indexes:
-      - labelname: hrStorageIndex
-        type: gauge
-      lookups:
-      - labels:
-        - hrStorageIndex
-        labelname: hrStorageDescr
-        oid: 1.3.6.1.2.1.25.2.3.1.3
-        type: DisplayString
-    - name: hrStorageAllocationUnits
-      oid: 1.3.6.1.2.1.25.2.3.1.4
+    - name: aristaBgp4V2PeerRemoteAs
+      oid: 1.3.6.1.4.1.30065.4.1.1.2.1.10
       type: gauge
-      help: The size, in bytes, of the data objects allocated from this pool - 1.3.6.1.2.1.25.2.3.1.4
+      help: The remote autonomous system number received in the BGP OPEN message.
+        - 1.3.6.1.4.1.30065.4.1.1.2.1.10
       indexes:
-      - labelname: hrStorageIndex
+      - labelname: aristaBgp4V2PeerInstance
         type: gauge
-      lookups:
-      - labels:
-        - hrStorageIndex
-        labelname: hrStorageDescr
-        oid: 1.3.6.1.2.1.25.2.3.1.3
-        type: DisplayString
-    - name: hrStorageSize
-      oid: 1.3.6.1.2.1.25.2.3.1.5
-      type: gauge
-      help: The size of the storage represented by this entry, in units of hrStorageAllocationUnits
-        - 1.3.6.1.2.1.25.2.3.1.5
-      indexes:
-      - labelname: hrStorageIndex
-        type: gauge
-      lookups:
-      - labels:
-        - hrStorageIndex
-        labelname: hrStorageDescr
-        oid: 1.3.6.1.2.1.25.2.3.1.3
-        type: DisplayString
-    - name: hrStorageUsed
-      oid: 1.3.6.1.2.1.25.2.3.1.6
-      type: gauge
-      help: The amount of the storage represented by this entry that is allocated,
-        in units of hrStorageAllocationUnits. - 1.3.6.1.2.1.25.2.3.1.6
-      indexes:
-      - labelname: hrStorageIndex
-        type: gauge
-      lookups:
-      - labels:
-        - hrStorageIndex
-        labelname: hrStorageDescr
-        oid: 1.3.6.1.2.1.25.2.3.1.3
-        type: DisplayString
-    - name: hrProcessorLoad
-      oid: 1.3.6.1.2.1.25.3.3.1.2
-      type: gauge
-      help: The average, over the last minute, of the percentage of time that this
-        processor was not idle - 1.3.6.1.2.1.25.3.3.1.2
-      indexes:
-      - labelname: hrDeviceIndex
-        type: gauge
-      lookups:
-      - labels:
-        - hrDeviceIndex
-        labelname: hrDeviceDescr
-        oid: 1.3.6.1.2.1.25.3.2.1.3
-        type: DisplayString
-  arista_sensors:
-    walk:
-    - 1.3.6.1.2.1.131.1.1.1.3
-    - 1.3.6.1.2.1.131.1.1.1.5
-    - 1.3.6.1.2.1.47.1.1.1.1.2
-    - 1.3.6.1.2.1.99.1.1.1.1
-    - 1.3.6.1.2.1.99.1.1.1.2
-    - 1.3.6.1.2.1.99.1.1.1.3
-    - 1.3.6.1.2.1.99.1.1.1.4
-    - 1.3.6.1.2.1.99.1.1.1.5
-    metrics:
-    - name: entStateOper
-      oid: 1.3.6.1.2.1.131.1.1.1.3
+      - labelname: aristaBgp4V2PeerRemoteAddr
+        type: InetAddress
+    - name: aristaBgp4V2PeerAdminStatus
+      oid: 1.3.6.1.4.1.30065.4.1.1.2.1.12
       type: EnumAsStateSet
-      help: The operational state for this entity - 1.3.6.1.2.1.131.1.1.1.3
+      help: Whether or not the BGP FSM for this remote peer is halted or running -
+        1.3.6.1.4.1.30065.4.1.1.2.1.12
       indexes:
-      - labelname: entPhysicalIndex
+      - labelname: aristaBgp4V2PeerInstance
         type: gauge
-      lookups:
-      - labels:
-        - entPhysicalIndex
-        labelname: entPhysicalDescr
-        oid: 1.3.6.1.2.1.47.1.1.1.1.2
-        type: DisplayString
+      - labelname: aristaBgp4V2PeerRemoteAddr
+        type: InetAddress
       enum_values:
-        1: unknown
-        2: disabled
-        3: enabled
-        4: testing
-    - name: entStateAlarm
-      oid: 1.3.6.1.2.1.131.1.1.1.5
-      type: Bits
-      help: The alarm status for this entity - 1.3.6.1.2.1.131.1.1.1.5
+        1: halted
+        2: running
+    - name: aristaBgp4V2PeerState
+      oid: 1.3.6.1.4.1.30065.4.1.1.2.1.13
+      type: EnumAsStateSet
+      help: The BGP peer connection state. - 1.3.6.1.4.1.30065.4.1.1.2.1.13
       indexes:
-      - labelname: entPhysicalIndex
+      - labelname: aristaBgp4V2PeerInstance
         type: gauge
-      lookups:
-      - labels:
-        - entPhysicalIndex
-        labelname: entPhysicalDescr
-        oid: 1.3.6.1.2.1.47.1.1.1.1.2
-        type: DisplayString
+      - labelname: aristaBgp4V2PeerRemoteAddr
+        type: InetAddress
       enum_values:
-        0: unknown
-        1: underRepair
-        2: critical
-        3: major
-        4: minor
-        5: warning
-        6: indeterminate
-    - name: entPhySensorType
-      oid: 1.3.6.1.2.1.99.1.1.1.1
+        1: idle
+        2: connect
+        3: active
+        4: opensent
+        5: openconfirm
+        6: established
+    - name: aristaBgp4V2PeerFsmEstablishedTime
+      oid: 1.3.6.1.4.1.30065.4.1.1.4.1.1
       type: gauge
-      help: The type of data returned by the associated entPhySensorValue object -
-        1.3.6.1.2.1.99.1.1.1.1
+      help: This timer indicates how long (in seconds) this peer has been in the established
+        state or how long since this peer was last in the established state - 1.3.6.1.4.1.30065.4.1.1.4.1.1
       indexes:
-      - labelname: entPhysicalIndex
+      - labelname: aristaBgp4V2PeerInstance
         type: gauge
-      lookups:
-      - labels:
-        - entPhysicalIndex
-        labelname: entPhysicalDescr
-        oid: 1.3.6.1.2.1.47.1.1.1.1.2
-        type: DisplayString
-      enum_values:
-        1: other
-        2: unknown
-        3: voltsAC
-        4: voltsDC
-        5: amperes
-        6: watts
-        7: hertz
-        8: celsius
-        9: percentRH
-        10: rpm
-        11: cmm
-        12: truthvalue
-    - name: entPhySensorScale
-      oid: 1.3.6.1.2.1.99.1.1.1.2
+      - labelname: aristaBgp4V2PeerRemoteAddr
+        type: InetAddress
+    - name: aristaBgp4V2PeerInUpdates
+      oid: 1.3.6.1.4.1.30065.4.1.1.7.1.1
+      type: counter
+      help: The number of BGP UPDATE messages received on this connection. - 1.3.6.1.4.1.30065.4.1.1.7.1.1
+      indexes:
+      - labelname: aristaBgp4V2PeerInstance
+        type: gauge
+      - labelname: aristaBgp4V2PeerRemoteAddr
+        type: InetAddress
+    - name: aristaBgp4V2PeerOutUpdates
+      oid: 1.3.6.1.4.1.30065.4.1.1.7.1.2
+      type: counter
+      help: The number of BGP UPDATE messages transmitted on this connection. - 1.3.6.1.4.1.30065.4.1.1.7.1.2
+      indexes:
+      - labelname: aristaBgp4V2PeerInstance
+        type: gauge
+      - labelname: aristaBgp4V2PeerRemoteAddr
+        type: InetAddress
+    - name: aristaBgp4V2PeerInTotalMessages
+      oid: 1.3.6.1.4.1.30065.4.1.1.7.1.3
+      type: counter
+      help: The total number of messages received from the remote peer on this connection.
+        - 1.3.6.1.4.1.30065.4.1.1.7.1.3
+      indexes:
+      - labelname: aristaBgp4V2PeerInstance
+        type: gauge
+      - labelname: aristaBgp4V2PeerRemoteAddr
+        type: InetAddress
+    - name: aristaBgp4V2PeerOutTotalMessages
+      oid: 1.3.6.1.4.1.30065.4.1.1.7.1.4
+      type: counter
+      help: The total number of messages transmitted to the remote peer on this connection.
+        - 1.3.6.1.4.1.30065.4.1.1.7.1.4
+      indexes:
+      - labelname: aristaBgp4V2PeerInstance
+        type: gauge
+      - labelname: aristaBgp4V2PeerRemoteAddr
+        type: InetAddress
+    - name: aristaBgp4V2PeerFsmEstablishedTransitions
+      oid: 1.3.6.1.4.1.30065.4.1.1.7.1.5
+      type: counter
+      help: The total number of times the BGP FSM transitioned into the established
+        state for this peer. - 1.3.6.1.4.1.30065.4.1.1.7.1.5
+      indexes:
+      - labelname: aristaBgp4V2PeerInstance
+        type: gauge
+      - labelname: aristaBgp4V2PeerRemoteAddr
+        type: InetAddress
+    - name: aristaBgp4V2PrefixInPrefixes
+      oid: 1.3.6.1.4.1.30065.4.1.1.8.1.3
       type: gauge
-      help: The exponent to apply to values returned by the associated entPhySensorValue
-        object - 1.3.6.1.2.1.99.1.1.1.2
+      help: The number of prefixes received from a peer and are stored in the Adj-Ribs-In
+        for that peer - 1.3.6.1.4.1.30065.4.1.1.8.1.3
       indexes:
-      - labelname: entPhysicalIndex
+      - labelname: aristaBgp4V2PeerInstance
         type: gauge
-      lookups:
-      - labels:
-        - entPhysicalIndex
-        labelname: entPhysicalDescr
-        oid: 1.3.6.1.2.1.47.1.1.1.1.2
-        type: DisplayString
-      enum_values:
-        1: yocto
-        2: zepto
-        3: atto
-        4: femto
-        5: pico
-        6: nano
-        7: micro
-        8: milli
-        9: units
-        10: kilo
-        11: mega
-        12: giga
-        13: tera
-        14: exa
-        15: peta
-        16: zetta
-        17: yotta
-    - name: entPhySensorPrecision
-      oid: 1.3.6.1.2.1.99.1.1.1.3
+      - labelname: aristaBgp4V2PeerRemoteAddr
+        type: InetAddress
+      - labelname: aristaBgp4V2PrefixGaugesAfi
+        type: EnumAsInfo
+        enum_values:
+          1: ipv4
+          2: ipv6
+          25: l2vpn
+      - labelname: aristaBgp4V2PrefixGaugesSafi
+        type: EnumAsInfo
+        enum_values:
+          1: unicast
+          2: multicast
+          4: mpls
+          70: evpn
+          73: srte
+          128: mplsVpnUnicast
+          133: flowspec
+          134: flowspecVpn
+    - name: aristaBgp4V2PrefixInPrefixesAccepted
+      oid: 1.3.6.1.4.1.30065.4.1.1.8.1.4
       type: gauge
-      help: The number of decimal places of precision in fixed-point sensor values
-        returned by the associated entPhySensorValue object - 1.3.6.1.2.1.99.1.1.1.3
+      help: The number of prefixes for a peer that are installed in the Adj-Ribs-In
+        and are eligible to become active in the Loc-Rib. - 1.3.6.1.4.1.30065.4.1.1.8.1.4
       indexes:
-      - labelname: entPhysicalIndex
+      - labelname: aristaBgp4V2PeerInstance
         type: gauge
-      lookups:
-      - labels:
-        - entPhysicalIndex
-        labelname: entPhysicalDescr
-        oid: 1.3.6.1.2.1.47.1.1.1.1.2
-        type: DisplayString
-    - name: entPhySensorValue
-      oid: 1.3.6.1.2.1.99.1.1.1.4
+      - labelname: aristaBgp4V2PeerRemoteAddr
+        type: InetAddress
+      - labelname: aristaBgp4V2PrefixGaugesAfi
+        type: EnumAsInfo
+        enum_values:
+          1: ipv4
+          2: ipv6
+          25: l2vpn
+      - labelname: aristaBgp4V2PrefixGaugesSafi
+        type: EnumAsInfo
+        enum_values:
+          1: unicast
+          2: multicast
+          4: mpls
+          70: evpn
+          73: srte
+          128: mplsVpnUnicast
+          133: flowspec
+          134: flowspecVpn
+    - name: aristaBgp4V2PrefixOutPrefixes
+      oid: 1.3.6.1.4.1.30065.4.1.1.8.1.5
       type: gauge
-      help: The most recent measurement obtained by the agent for this sensor - 1.3.6.1.2.1.99.1.1.1.4
+      help: The number of prefixes for a peer that are installed in that peer's Adj-Ribs-Out.
+        - 1.3.6.1.4.1.30065.4.1.1.8.1.5
       indexes:
-      - labelname: entPhysicalIndex
+      - labelname: aristaBgp4V2PeerInstance
         type: gauge
-      lookups:
-      - labels:
-        - entPhysicalIndex
-        labelname: entPhysicalDescr
-        oid: 1.3.6.1.2.1.47.1.1.1.1.2
-        type: DisplayString
-    - name: entPhySensorOperStatus
-      oid: 1.3.6.1.2.1.99.1.1.1.5
-      type: gauge
-      help: The operational status of the sensor. - 1.3.6.1.2.1.99.1.1.1.5
-      indexes:
-      - labelname: entPhysicalIndex
-        type: gauge
-      lookups:
-      - labels:
-        - entPhysicalIndex
-        labelname: entPhysicalDescr
-        oid: 1.3.6.1.2.1.47.1.1.1.1.2
-        type: DisplayString
-      enum_values:
-        1: ok
-        2: unavailable
-        3: nonoperational
+      - labelname: aristaBgp4V2PeerRemoteAddr
+        type: InetAddress
+      - labelname: aristaBgp4V2PrefixGaugesAfi
+        type: EnumAsInfo
+        enum_values:
+          1: ipv4
+          2: ipv6
+          25: l2vpn
+      - labelname: aristaBgp4V2PrefixGaugesSafi
+        type: EnumAsInfo
+        enum_values:
+          1: unicast
+          2: multicast
+          4: mpls
+          70: evpn
+          73: srte
+          128: mplsVpnUnicast
+          133: flowspec
+          134: flowspecVpn
   if_mib:
     walk:
     - 1.3.6.1.2.1.2
@@ -263,13 +221,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
     - name: ifType
       oid: 1.3.6.1.2.1.2.2.1.3
@@ -286,13 +244,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
       enum_values:
         1: other
@@ -616,13 +574,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
     - name: ifSpeed
       oid: 1.3.6.1.2.1.2.2.1.5
@@ -640,13 +598,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
     - name: ifPhysAddress
       oid: 1.3.6.1.2.1.2.2.1.6
@@ -663,13 +621,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
     - name: ifAdminStatus
       oid: 1.3.6.1.2.1.2.2.1.7
@@ -686,13 +644,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
       enum_values:
         1: up
@@ -713,13 +671,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
       enum_values:
         1: up
@@ -745,13 +703,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
     - name: ifInOctets
       oid: 1.3.6.1.2.1.2.2.1.10
@@ -769,13 +727,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
     - name: ifInUcastPkts
       oid: 1.3.6.1.2.1.2.2.1.11
@@ -794,13 +752,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
     - name: ifInNUcastPkts
       oid: 1.3.6.1.2.1.2.2.1.12
@@ -819,13 +777,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
     - name: ifInDiscards
       oid: 1.3.6.1.2.1.2.2.1.13
@@ -844,13 +802,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
     - name: ifInErrors
       oid: 1.3.6.1.2.1.2.2.1.14
@@ -869,13 +827,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
     - name: ifInUnknownProtos
       oid: 1.3.6.1.2.1.2.2.1.15
@@ -894,13 +852,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
     - name: ifOutOctets
       oid: 1.3.6.1.2.1.2.2.1.16
@@ -918,13 +876,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
     - name: ifOutUcastPkts
       oid: 1.3.6.1.2.1.2.2.1.17
@@ -943,13 +901,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
     - name: ifOutNUcastPkts
       oid: 1.3.6.1.2.1.2.2.1.18
@@ -968,13 +926,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
     - name: ifOutDiscards
       oid: 1.3.6.1.2.1.2.2.1.19
@@ -992,13 +950,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
     - name: ifOutErrors
       oid: 1.3.6.1.2.1.2.2.1.20
@@ -1016,13 +974,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
     - name: ifOutQLen
       oid: 1.3.6.1.2.1.2.2.1.21
@@ -1039,13 +997,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
     - name: ifSpecific
       oid: 1.3.6.1.2.1.2.2.1.22
@@ -1063,13 +1021,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
     - name: ifInMulticastPkts
       oid: 1.3.6.1.2.1.31.1.1.1.2
@@ -1087,13 +1045,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
     - name: ifInBroadcastPkts
       oid: 1.3.6.1.2.1.31.1.1.1.3
@@ -1111,13 +1069,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
     - name: ifOutMulticastPkts
       oid: 1.3.6.1.2.1.31.1.1.1.4
@@ -1136,13 +1094,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
     - name: ifOutBroadcastPkts
       oid: 1.3.6.1.2.1.31.1.1.1.5
@@ -1161,13 +1119,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
     - name: ifHCInOctets
       oid: 1.3.6.1.2.1.31.1.1.1.6
@@ -1185,13 +1143,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
     - name: ifHCInUcastPkts
       oid: 1.3.6.1.2.1.31.1.1.1.7
@@ -1210,13 +1168,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
     - name: ifHCInMulticastPkts
       oid: 1.3.6.1.2.1.31.1.1.1.8
@@ -1234,13 +1192,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
     - name: ifHCInBroadcastPkts
       oid: 1.3.6.1.2.1.31.1.1.1.9
@@ -1258,13 +1216,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
     - name: ifHCOutOctets
       oid: 1.3.6.1.2.1.31.1.1.1.10
@@ -1282,13 +1240,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
     - name: ifHCOutUcastPkts
       oid: 1.3.6.1.2.1.31.1.1.1.11
@@ -1307,13 +1265,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
     - name: ifHCOutMulticastPkts
       oid: 1.3.6.1.2.1.31.1.1.1.12
@@ -1332,13 +1290,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
     - name: ifHCOutBroadcastPkts
       oid: 1.3.6.1.2.1.31.1.1.1.13
@@ -1357,13 +1315,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
     - name: ifLinkUpDownTrapEnable
       oid: 1.3.6.1.2.1.31.1.1.1.14
@@ -1381,13 +1339,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
       enum_values:
         1: enabled
@@ -1408,13 +1366,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
     - name: ifPromiscuousMode
       oid: 1.3.6.1.2.1.31.1.1.1.16
@@ -1432,13 +1390,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
       enum_values:
         1: "true"
@@ -1459,13 +1417,13 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
         type: DisplayString
       enum_values:
         1: "true"
@@ -1486,22 +1444,209 @@ modules:
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifAlias
-        oid: 1.3.6.1.2.1.31.1.1.1.18
+        labelname: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
         type: DisplayString
       - labels:
         - ifIndex
-        labelname: ifDescr
-        oid: 1.3.6.1.2.1.2.2.1.2
+        labelname: ifAlias
+        oid: 1.3.6.1.2.1.31.1.1.1.18
+        type: DisplayString
+  ruckus_unleashed:
+    walk:
+    - 1.3.6.1.4.1.25053.1.15.1.1.1.15
+    - 1.3.6.1.4.1.25053.1.15.2.1.1.2.8
+    get:
+    - 1.3.6.1.4.1.25053.1.15.1.1.1.1.18.0
+    metrics:
+    - name: ruckusUnleashedSystemVersion
+      oid: 1.3.6.1.4.1.25053.1.15.1.1.1.1.18
+      type: DisplayString
+      help: Software version - 1.3.6.1.4.1.25053.1.15.1.1.1.1.18
+    - name: ruckusUnleashedSystemStatsNumAP
+      oid: 1.3.6.1.4.1.25053.1.15.1.1.1.15.1
+      type: gauge
+      help: Number of AP - 1.3.6.1.4.1.25053.1.15.1.1.1.15.1
+    - name: ruckusUnleashedSystemStatsNumSta
+      oid: 1.3.6.1.4.1.25053.1.15.1.1.1.15.2
+      type: gauge
+      help: Number of authorized client devices - 1.3.6.1.4.1.25053.1.15.1.1.1.15.2
+    - name: ruckusUnleashedSystemStatsWLANTotalRxPkts
+      oid: 1.3.6.1.4.1.25053.1.15.1.1.1.15.5
+      type: counter
+      help: Total received packets of wireless interfaces - 1.3.6.1.4.1.25053.1.15.1.1.1.15.5
+    - name: ruckusUnleashedSystemStatsWLANTotalRxBytes
+      oid: 1.3.6.1.4.1.25053.1.15.1.1.1.15.6
+      type: counter
+      help: Total received bytes of wireless interfaces - 1.3.6.1.4.1.25053.1.15.1.1.1.15.6
+    - name: ruckusUnleashedSystemStatsWLANTotalRxMulticast
+      oid: 1.3.6.1.4.1.25053.1.15.1.1.1.15.7
+      type: counter
+      help: Total received multicast packets of wireless interfaces - 1.3.6.1.4.1.25053.1.15.1.1.1.15.7
+    - name: ruckusUnleashedSystemStatsWLANTotalTxPkts
+      oid: 1.3.6.1.4.1.25053.1.15.1.1.1.15.8
+      type: counter
+      help: Total transmitted packets of wireless interfaces - 1.3.6.1.4.1.25053.1.15.1.1.1.15.8
+    - name: ruckusUnleashedSystemStatsWLANTotalTxBytes
+      oid: 1.3.6.1.4.1.25053.1.15.1.1.1.15.9
+      type: counter
+      help: Total transmitted bytes of wireless interfaces - 1.3.6.1.4.1.25053.1.15.1.1.1.15.9
+    - name: ruckusUnleashedSystemStatsWLANTotalTxMulticast
+      oid: 1.3.6.1.4.1.25053.1.15.1.1.1.15.10
+      type: counter
+      help: Total transmitted multicast packets of wireless interfaces - 1.3.6.1.4.1.25053.1.15.1.1.1.15.10
+    - name: ruckusUnleashedSystemStatsWLANTotalTxFail
+      oid: 1.3.6.1.4.1.25053.1.15.1.1.1.15.11
+      type: counter
+      help: Total transmitted fail packets of wireless interfaces - 1.3.6.1.4.1.25053.1.15.1.1.1.15.11
+    - name: ruckusUnleashedSystemStatsWLANTotalTxRetry
+      oid: 1.3.6.1.4.1.25053.1.15.1.1.1.15.12
+      type: counter
+      help: Total transmitted retry packets of wireless interfaces - 1.3.6.1.4.1.25053.1.15.1.1.1.15.12
+    - name: ruckusUnleashedSystemStatsCPUUtil
+      oid: 1.3.6.1.4.1.25053.1.15.1.1.1.15.13
+      type: gauge
+      help: CPU utilization - 1.3.6.1.4.1.25053.1.15.1.1.1.15.13
+    - name: ruckusUnleashedSystemStatsMemoryUtil
+      oid: 1.3.6.1.4.1.25053.1.15.1.1.1.15.14
+      type: gauge
+      help: Memory utilization - 1.3.6.1.4.1.25053.1.15.1.1.1.15.14
+    - name: ruckusUnleashedSystemStatsNumRegisteredAP
+      oid: 1.3.6.1.4.1.25053.1.15.1.1.1.15.15
+      type: gauge
+      help: Number of registered AP - 1.3.6.1.4.1.25053.1.15.1.1.1.15.15
+    - name: ruckusUnleashedSystemStatsWLANTotalAssocFail
+      oid: 1.3.6.1.4.1.25053.1.15.1.1.1.15.16
+      type: counter
+      help: Total number of failed station associations. - 1.3.6.1.4.1.25053.1.15.1.1.1.15.16
+    - name: ruckusUnleashedSystemStatsWLANTotalRxErrFrm
+      oid: 1.3.6.1.4.1.25053.1.15.1.1.1.15.17
+      type: counter
+      help: Total number of errornous downlink frames. - 1.3.6.1.4.1.25053.1.15.1.1.1.15.17
+    - name: ruckusUnleashedSystemStatsWLANTotalTxDroppedPkt
+      oid: 1.3.6.1.4.1.25053.1.15.1.1.1.15.19
+      type: counter
+      help: Total number of dropped downlink packets. - 1.3.6.1.4.1.25053.1.15.1.1.1.15.19
+    - name: ruckusUnleashedSystemStatsWLANTotalTxErrFrm
+      oid: 1.3.6.1.4.1.25053.1.15.1.1.1.15.20
+      type: counter
+      help: Total number of errornous downlink frames. - 1.3.6.1.4.1.25053.1.15.1.1.1.15.20
+    - name: ruckusUnleashedSystemStatsWLANTotalTxDroppedFrm
+      oid: 1.3.6.1.4.1.25053.1.15.1.1.1.15.21
+      type: counter
+      help: Total number of dropped downlink frames. - 1.3.6.1.4.1.25053.1.15.1.1.1.15.21
+    - name: ruckusUnleashedSystemStatsAllNumSta
+      oid: 1.3.6.1.4.1.25053.1.15.1.1.1.15.30
+      type: gauge
+      help: Number of All client devices - 1.3.6.1.4.1.25053.1.15.1.1.1.15.30
+    - name: ruckusUnleashedWLANAPMacAddress
+      oid: 1.3.6.1.4.1.25053.1.15.2.1.1.2.8.1.1
+      type: PhysAddress48
+      help: The AP's Mac Address. - 1.3.6.1.4.1.25053.1.15.2.1.1.2.8.1.1
+      indexes:
+      - labelname: ruckusUnleashedWLANAPMacAddress
+        type: PhysAddress48
+      - labelname: ruckusUnleashedWLANAPEthPortId
+        type: gauge
+      lookups:
+      - labels:
+        - ruckusUnleashedWLANAPMacAddress
+        - ruckusUnleashedWLANAPEthPortId
+        labelname: ruckusUnleashedWLANAPEthIfname
+        oid: 1.3.6.1.4.1.25053.1.15.2.1.1.2.8.1.5
+        type: DisplayString
+    - name: ruckusUnleashedWLANAPEthPortId
+      oid: 1.3.6.1.4.1.25053.1.15.2.1.1.2.8.1.2
+      type: gauge
+      help: The ap ethernet port id. - 1.3.6.1.4.1.25053.1.15.2.1.1.2.8.1.2
+      indexes:
+      - labelname: ruckusUnleashedWLANAPMacAddress
+        type: PhysAddress48
+      - labelname: ruckusUnleashedWLANAPEthPortId
+        type: gauge
+      lookups:
+      - labels:
+        - ruckusUnleashedWLANAPMacAddress
+        - ruckusUnleashedWLANAPEthPortId
+        labelname: ruckusUnleashedWLANAPEthIfname
+        oid: 1.3.6.1.4.1.25053.1.15.2.1.1.2.8.1.5
+        type: DisplayString
+    - name: ruckusUnleashedWLANAPEthPhyStatus
+      oid: 1.3.6.1.4.1.25053.1.15.2.1.1.2.8.1.8
+      type: EnumAsStateSet
+      help: The ap ethernet port physical status. - 1.3.6.1.4.1.25053.1.15.2.1.1.2.8.1.8
+      indexes:
+      - labelname: ruckusUnleashedWLANAPMacAddress
+        type: PhysAddress48
+      - labelname: ruckusUnleashedWLANAPEthPortId
+        type: gauge
+      lookups:
+      - labels:
+        - ruckusUnleashedWLANAPMacAddress
+        - ruckusUnleashedWLANAPEthPortId
+        labelname: ruckusUnleashedWLANAPEthIfname
+        oid: 1.3.6.1.4.1.25053.1.15.2.1.1.2.8.1.5
+        type: DisplayString
+      enum_values:
+        1: up
+        2: down
+    - name: ruckusUnleashedWLANAPEthPhyIfSpeed
+      oid: 1.3.6.1.4.1.25053.1.15.2.1.1.2.8.1.9
+      type: gauge
+      help: The ap ethernet interface's current bandwidth in Mbits,. - 1.3.6.1.4.1.25053.1.15.2.1.1.2.8.1.9
+      indexes:
+      - labelname: ruckusUnleashedWLANAPMacAddress
+        type: PhysAddress48
+      - labelname: ruckusUnleashedWLANAPEthPortId
+        type: gauge
+      lookups:
+      - labels:
+        - ruckusUnleashedWLANAPMacAddress
+        - ruckusUnleashedWLANAPEthPortId
+        labelname: ruckusUnleashedWLANAPEthIfname
+        oid: 1.3.6.1.4.1.25053.1.15.2.1.1.2.8.1.5
+        type: DisplayString
+    - name: ruckusUnleashedWLANAPEthPhyLinkStatus
+      oid: 1.3.6.1.4.1.25053.1.15.2.1.1.2.8.1.10
+      type: EnumAsStateSet
+      help: The ap ethernet port physical link status. - 1.3.6.1.4.1.25053.1.15.2.1.1.2.8.1.10
+      indexes:
+      - labelname: ruckusUnleashedWLANAPMacAddress
+        type: PhysAddress48
+      - labelname: ruckusUnleashedWLANAPEthPortId
+        type: gauge
+      lookups:
+      - labels:
+        - ruckusUnleashedWLANAPMacAddress
+        - ruckusUnleashedWLANAPEthPortId
+        labelname: ruckusUnleashedWLANAPEthIfname
+        oid: 1.3.6.1.4.1.25053.1.15.2.1.1.2.8.1.5
+        type: DisplayString
+      enum_values:
+        1: full
+        2: half
+    - name: ruckusUnleashedWLANAPEthLabel
+      oid: 1.3.6.1.4.1.25053.1.15.2.1.1.2.8.1.11
+      type: DisplayString
+      help: The ap ethernet port label. - 1.3.6.1.4.1.25053.1.15.2.1.1.2.8.1.11
+      indexes:
+      - labelname: ruckusUnleashedWLANAPMacAddress
+        type: PhysAddress48
+      - labelname: ruckusUnleashedWLANAPEthPortId
+        type: gauge
+      lookups:
+      - labels:
+        - ruckusUnleashedWLANAPMacAddress
+        - ruckusUnleashedWLANAPEthPortId
+        labelname: ruckusUnleashedWLANAPEthIfname
+        oid: 1.3.6.1.4.1.25053.1.15.2.1.1.2.8.1.5
         type: DisplayString
   system:
     get:
     - 1.3.6.1.2.1.1.1.0
     - 1.3.6.1.2.1.1.2.0
     - 1.3.6.1.2.1.1.3.0
-    - 1.3.6.1.2.1.1.4.0
     - 1.3.6.1.2.1.1.5.0
-    - 1.3.6.1.2.1.1.6.0
     metrics:
     - name: sysDescr
       oid: 1.3.6.1.2.1.1.1
@@ -1517,17 +1662,7 @@ modules:
       type: gauge
       help: The time (in hundredths of a second) since the network management portion
         of the system was last re-initialized. - 1.3.6.1.2.1.1.3
-    - name: sysContact
-      oid: 1.3.6.1.2.1.1.4
-      type: DisplayString
-      help: The textual identification of the contact person for this managed node,
-        together with information on how to contact this person - 1.3.6.1.2.1.1.4
     - name: sysName
       oid: 1.3.6.1.2.1.1.5
       type: DisplayString
       help: An administratively-assigned name for this managed node - 1.3.6.1.2.1.1.5
-    - name: sysLocation
-      oid: 1.3.6.1.2.1.1.6
-      type: DisplayString
-      help: The physical location of this node (e.g., 'telephone closet, 3rd floor')
-        - 1.3.6.1.2.1.1.6
