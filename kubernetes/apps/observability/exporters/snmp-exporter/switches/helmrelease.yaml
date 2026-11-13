@@ -48,10 +48,6 @@ spec:
           module: ["if_mib", "system"]
           target: 10.32.10.202 # TODO: Figure out why this switch doesn't get scraped over IPv6
           auth: ["public"]
-        - name: ruckus
-          module: ["if_mib", "system", "ruckus_unleashed"]
-          target: 10.32.10.206
-          auth: ["public"]
       path: /snmp
       scrapeTimeout: 15s
       relabelings:
