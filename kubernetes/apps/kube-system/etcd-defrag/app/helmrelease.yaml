@@ -1,0 +1,70 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app etcd-defrag
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: *app
+  values:
+    defaultPodOptions:
+      hostNetwork: true
+      hostPID: true
+      securityContext:
+        runAsGroup: 0
+        runAsNonRoot: false
+        runAsUser: 0
+      nodeSelector:
+        node-role.kubernetes.io/control-plane: ""
+      tolerations:
+        - key: node-role.kubernetes.io/control-plane
+          operator: Exists
+    controllers:
+      *app:
+        type: cronjob
+        cronjob:
+          schedule: "0 3 * * 0"
+          timeZone: America/Detroit
+          concurrencyPolicy: Forbid
+          backoffLimit: 1
+          failedJobsHistory: 1
+          successfulJobsHistory: 1
+        containers:
+          app:
+            image:
+              repository: ghcr.io/ahrtr/etcd-defrag
+              tag: v0.48.0@sha256:7b579eff06a7e2feeb16360f67a7540dfa1b8365456df417b80df94b3f9b44b5
+            args:
+              - --endpoints=https://127.0.0.1:2379
+              - --cluster
+              - --cacert=/certs/ca.crt
+              - --cert=/certs/server.crt
+              - --key=/certs/server.key
+              - --defrag-rule=dbQuotaUsage > 0.5 || dbSizeFree > 100*1024*1024
+              - --move-leader
+              - --wait-between-defrags=30s
+              - --etcd-storage-quota-bytes=2147483648
+              - --auto-disalarm
+              - --disalarm-threshold=0.8
+            resources:
+              requests:
+                cpu: 25m
+                memory: 128Mi
+              limits:
+                cpu: 100m
+                memory: 128Mi
+            securityContext:
+              privileged: true
+    persistence:
+      certs:
+        type: hostPath
+        hostPath: /system/secrets/etcd
+        globalMounts:
+          - path: /certs
+            readOnly: true
+      tmp:
+        type: emptyDir
+        medium: Memory
