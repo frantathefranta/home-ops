@@ -11,6 +11,7 @@ configMapGenerator:
       - ./configmaps/apt-monitoring.json
       - ./configmaps/dn42.json
       - ./configmaps/comin.json
+      - ./configmaps/switch-congestion.json
     options:
       annotations:
         kustomize.toolkit.fluxcd.io/substitute: disabled
