@@ -7,9 +7,6 @@ resources:
   - ./grafanadashboard.yaml
   - ./prometheusrule.yaml
 configMapGenerator:
-  - name: switches-dashboard
-    files:
-      - switches.json=./resources/dashboard.json
   - name: switches-snmp-configmap
     files:
       - snmp.yaml=./resources/snmp.yaml

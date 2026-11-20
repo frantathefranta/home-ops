@@ -160,3 +160,20 @@ spec:
     matchLabels:
       grafana.internal/instance: grafana
   url: https://grafana.com/api/dashboards/22236/revisions/5/download
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: switch-congestion
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  datasources:
+    - datasourceName: prometheus
+      inputName: DS_PROMETHEUS
+  configMapRef:
+    name: observability-dashboards
+    key: switch-congestion.json
