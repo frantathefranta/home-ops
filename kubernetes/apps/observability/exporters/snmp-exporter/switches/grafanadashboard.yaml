@@ -10,4 +10,6 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  url: https://grafana.com/api/dashboards/11169/revisions/1/download
+  configMapRef:
+    name: switches-dashboard
+    key: switches.json
