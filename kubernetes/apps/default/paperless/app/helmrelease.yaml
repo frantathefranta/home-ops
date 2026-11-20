@@ -124,6 +124,10 @@ spec:
                   httpGet:
                     path: /accounts/login/
                     port: &port 8000
+                    # Django only accepts PAPERLESS_URL's host, plus localhost
+                    httpHeaders: &probeHost
+                      - name: Host
+                        value: localhost
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 3
@@ -136,6 +140,7 @@ spec:
                   httpGet:
                     path: /accounts/login/
                     port: *port
+                    httpHeaders: *probeHost
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 3
