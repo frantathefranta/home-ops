@@ -1,19 +1,5 @@
 #+title: Kanidm
 
-* Replicas
-
-The ~sso~ instance runs two read-write replicas in the existing ~default~
-replica group. ~primaryNode: true~ keeps ~sso-default-0~ as the replication
-primary. Kaniop manages replication configuration and certificates; each replica
-has its own 5Gi Ceph RBD volume.
-
-Preferred pod anti-affinity spreads replicas across hostnames when capacity
-allows, without blocking scheduling when fewer nodes are available.
-
-After rollout, verify both pods are Ready and ~kubectl -n security get kanidm
-sso -o yaml~ reports healthy replication before testing a fresh SSO login.
-Replication is not a replacement for the off-cluster backups described below.
-
 * First rollout
 
 Before switching TREK to Kanidm:
