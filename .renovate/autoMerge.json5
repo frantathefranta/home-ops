@@ -14,8 +14,7 @@
       ],
       "matchPackageNames": [
         "/kube-prometheus-stack/",
-        "/grafana/",
-        "/netbox/"
+        "/grafana/"
       ],
       "ignoreTests": false
     },

@@ -7,9 +7,6 @@
     "github>frantathefranta/home-ops//.renovate/grafanaDashboards.json5",
     "github>frantathefranta/home-ops//.renovate/talosFactory.json5",
   ],
-  ignorePaths: [
-    "**/.archive/**",
-  ],
   flux: {
     managerFilePatterns: ["/^kubernetes/.+\\.ya?ml$/"],
   },
