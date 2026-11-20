@@ -4,17 +4,6 @@
 1.  [Introduction](#org56a5c31)
 2.  [Cloud dependency](#org689b93f)
 
-![Talos](https://kromgo.franta.us/talos_version?format=badge)
-![Kubernetes](https://kromgo.franta.us/kubernetes_version?format=badge)
-![Cluster Age](https://kromgo.franta.us/cluster_age_days?format=badge)
-![Uptime](https://kromgo.franta.us/cluster_uptime_days?format=badge)
-![Nodes](https://kromgo.franta.us/cluster_node_count?format=badge)
-![CPU Usage](https://kromgo.franta.us/cluster_cpu_usage?format=badge)
-![Memory](https://kromgo.franta.us/cluster_memory_usage?format=badge)
-![Pods Running](https://kromgo.franta.us/cluster_pod_count?format=badge)
-<!-- ![Power](https://kromgo.franta.us/cluster_power_usage?format=badge) -->
-
-
 <a id="org56a5c31"></a>
 
 # Introduction

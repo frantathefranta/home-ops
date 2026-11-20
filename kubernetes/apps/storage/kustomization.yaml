@@ -6,6 +6,5 @@ namespace: storage
 resources:
   - ./snapshot-controller/ks.yaml
   - ./kopiur/ks.yaml
-  # - ./democratic-csi/ks.yaml
 components:
   - ../../components/common
