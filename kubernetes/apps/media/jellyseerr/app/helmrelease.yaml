@@ -27,6 +27,11 @@ spec:
         dataFrom:
         - extract:
             key: /jellyseerr
+    defaultPodOptions:
+      tolerations:
+        - key: special
+          operator: Exists
+          effect: NoSchedule
     controllers:
       jellyseerr:
         annotations:
