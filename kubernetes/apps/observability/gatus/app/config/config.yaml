@@ -1,0 +1,49 @@
+---
+web:
+  port: ${WEB_PORT}
+storage:
+  type: sqlite
+  path: /data/gatus.db
+  caching: true
+metrics: true
+ui:
+  title: Talos-Maxi Status
+  header: Talos-Maxi Status
+  logo: https://raw.githubusercontent.com/frantathefranta/hugoblog/master/static/android-chrome-512x512.png
+alerting:
+  pushover:
+    application-token: ${GATUS_PUSHOVER_TOKEN}
+    user-key: ${PUSHOVER_USER_KEY}
+    default-alert:
+      description: health-check failed
+      send-on-resolved: true
+      failure-threshold: 3
+      success-threshold: 3
+endpoints:
+  - &http-check
+    name: status
+    group: external
+    url: https://status.franta.us
+    interval: 1m
+    client:
+      dns-resolver: tcp://1.1.1.1:53
+      timeout: 10s
+    conditions:
+      - "[STATUS] == 200"
+    alerts:
+      - type: pushover
+  - &tcp-check
+    <<: *http-check
+    name: cloudflare-ipv4
+    group: connectivity
+    url: tcp://1.1.1.1:53
+    client:
+      timeout: 5s
+    conditions:
+      - "[CONNECTED] == true"
+  - <<: *tcp-check
+    name: cloudflare-ipv6
+    url: tcp://[2606:4700:4700::1111]:53
+  - <<: *tcp-check
+    name: google-ipv6
+    url: tcp://[2001:4860:4860::8888]:53

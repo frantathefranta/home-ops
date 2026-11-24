@@ -1,0 +1,180 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app gatus
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: gatus
+  values:
+    externalSecrets:
+      main:
+        forceRename: gatus-secret
+        secretStoreRef:
+          kind: ClusterSecretStore
+          name: akeyless-secret-store
+        refreshInterval: 15m
+        target:
+          name: gatus-secret
+          template:
+            engineVersion: v2
+            data:
+              PUSHOVER_USER_KEY: '{{ .PUSHOVER_USER_KEY }}'
+              GATUS_PUSHOVER_TOKEN: '{{ .GATUS_MAXI_PUSHOVER_TOKEN }}'
+        dataFrom:
+          - extract:
+              key: /pushover
+          - extract:
+              key: /gatus
+    controllers:
+      gatus:
+        replicas: 1
+        strategy: Recreate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        serviceAccount:
+          identifier: *app
+        pod:
+          automountServiceAccountToken: true
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 65534
+            runAsGroup: 65534
+            fsGroup: 65534
+            fsGroupChangePolicy: OnRootMismatch
+            seccompProfile:
+              type: RuntimeDefault
+        initContainers:
+          gatus-sidecar:
+            image:
+              repository: ghcr.io/home-operations/gatus-sidecar
+              tag: 0.6.1@sha256:c2b24374a8a4c5551c0122f3a7ae383ff65a0ea0bcd3b541530db84490fea2af
+            args:
+              - --auto-httproute
+              - --gateway-name=envoy-external
+              - --prefix-httproute=http-
+            restartPolicy: Always
+            resources:
+              requests:
+                cpu: 10m
+                memory: 32Mi
+              limits:
+                memory: 128Mi
+            securityContext: &securityContext
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+        containers:
+          app:
+            image:
+              repository: ghcr.io/twin/gatus
+              tag: v5.38.0@sha256:085ed63da963728965d00a3c78aa6167e3bf135218485b893201758e079e8415
+            env:
+              TZ: America/Detroit
+              GATUS_CONFIG_PATH: /config
+              GATUS_DELAY_START_SECONDS: 5
+              WEB_PORT: &port 8080
+            envFrom:
+              - secretRef:
+                  name: gatus-secret
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: *port
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                <<: *probes
+                spec:
+                  httpGet:
+                    path: /health
+                    port: *port
+                  periodSeconds: 5
+                  timeoutSeconds: 5
+                  failureThreshold: 30
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                memory: 256Mi
+            securityContext: *securityContext
+    persistence:
+      config:
+        type: emptyDir
+        advancedMounts:
+          gatus:
+            gatus-sidecar:
+              - path: /config
+            app:
+              - path: /config
+                readOnly: true
+      config-file:
+        type: configMap
+        name: gatus-configmap
+        advancedMounts:
+          gatus:
+            app:
+              - path: /config/config.yaml
+                subPath: config.yaml
+                readOnly: true
+      data:
+        existingClaim: *app
+        advancedMounts:
+          gatus:
+            app:
+              - path: /data
+    rbac:
+      roles:
+        gatus:
+          type: ClusterRole
+          rules:
+            - apiGroups: ["gateway.networking.k8s.io"]
+              resources: ["httproutes", "gateways"]
+              verbs: ["get", "list", "watch"]
+      bindings:
+        gatus:
+          type: ClusterRoleBinding
+          roleRef:
+            identifier: gatus
+          subjects:
+            - identifier: gatus
+    route:
+      app:
+        annotations:
+          gatus.home-operations.com/enabled: "false"
+        hostnames:
+          - status.franta.us
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+            sectionName: https
+    service:
+      app:
+        controller: *app
+        ipFamilyPolicy: PreferDualStack
+        ports:
+          http:
+            port: *port
+    serviceAccount:
+      gatus: {}
+    serviceMonitor:
+      app:
+        serviceName: *app
+        endpoints:
+          - port: http
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 10s

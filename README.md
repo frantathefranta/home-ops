@@ -3,6 +3,7 @@
 
 1.  [Introduction](#org56a5c31)
 2.  [Cloud dependency](#org689b93f)
+3.  [Gatus](#gatus)
 
 <a id="org56a5c31"></a>
 
@@ -72,3 +73,9 @@ It&rsquo;s based on the [cluster-template](https://github.com/onedr0p/cluster-te
 </tbody>
 </table>
 
+<a id="gatus"></a>
+
+# Gatus
+
+[Status dashboard](https://status.franta.us) ·
+[Configuration](kubernetes/apps/observability/gatus)

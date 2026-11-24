@@ -6,6 +6,14 @@ metadata:
   name: envoy-external
   annotations:
     external-dns.kubernetes.io/target: &hostname ingress-external.franta.us
+    gatus.home-operations.com/endpoint: |-
+      group: external
+      interval: 1m
+      client:
+        dns-resolver: tcp://1.1.1.1:53
+        timeout: 10s
+      alerts:
+        - type: pushover
 spec:
   gatewayClassName: envoy
   infrastructure:
