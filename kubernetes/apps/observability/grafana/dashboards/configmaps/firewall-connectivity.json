@@ -1,0 +1,248 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_PROMETHEUS",
+      "label": "Prometheus",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    }
+  ],
+  "uid": "firewall-connectivity",
+  "title": "Firewall · Connectivity and Latency",
+  "description": "Five-second IPv4/IPv6 ICMP monitoring from the blackbox-exporter pod to nixos-firewall.infra.franta.us. Bucket maxima preserve sampled latency outliers when zoomed out; this is not a WiFi-client measurement.",
+  "tags": ["network", "blackbox", "latency"],
+  "schemaVersion": 39,
+  "version": 1,
+  "editable": false,
+  "timezone": "browser",
+  "graphTooltip": 1,
+  "refresh": "5s",
+  "time": {"from": "now-6h", "to": "now"},
+  "timepicker": {"refresh_intervals": ["5s", "10s", "30s", "1m", "5m"]},
+  "templating": {"list": []},
+  "panels": [
+    {
+      "id": 1,
+      "type": "text",
+      "title": "Reading connectivity",
+      "gridPos": {"x": 0, "y": 0, "w": 24, "h": 6},
+      "options": {
+        "mode": "markdown",
+        "content": "**Path: blackbox-exporter pod → nixos-firewall.infra.franta.us**, separately over IPv4 and IPv6, with no cross-family fallback. This does **not** measure WiFi airtime or a wireless client's path unless the exporter traffic crosses that link.\n\nDrag across a suspicious period to zoom in. **Peak RTT preserves every recorded spike** within each display bucket instead of averaging it away; mean RTT shows the baseline. Failed probes are excluded from RTT statistics, not shown as zero latency. The timeline marks a bucket failed if any sample failed.\n\nOne ping per **5 seconds** can miss shorter incidents. Failed-probe percentages are sampled ICMP failures (including DNS/socket failures), not continuous packet-loss measurements. Missing scrapes are not successful pings: check the separate scrape-health rows. Statistics cover the selected time range."
+      }
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "Peak RTT · selected range",
+      "description": "Maximum recorded ICMP RTT over the selected time range, separately per family. Uses raw samples, so a single recorded spike is not lost to query-step downsampling. No successful probes means no RTT value.",
+      "gridPos": {"x": 0, "y": 6, "w": 8, "h": 4},
+      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "interval": "5s",
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "(1000 * max by (job) (max_over_time(probe_icmp_duration_seconds{job=~\"nixos-firewall-ipv[46]\",instance=\"nixos-firewall.infra.franta.us\",phase=\"rtt\"}[$__range]))) and on (job) (max by (job) (max_over_time(probe_success{job=~\"nixos-firewall-ipv[46]\",instance=\"nixos-firewall.infra.franta.us\"}[$__range])) == 1)",
+          "legendFormat": "{{job}}",
+          "instant": true,
+          "range": false,
+          "interval": "5s",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {"unit": "ms", "min": 0, "decimals": 2, "noValue": "No successful samples", "color": {"mode": "palette-classic"}},
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false},
+        "orientation": "auto",
+        "textMode": "value_and_name",
+        "colorMode": "value",
+        "graphMode": "none"
+      }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "P95 successful RTT · selected range",
+      "description": "95th percentile of successful RTTs, resampled at five-second resolution over the selected range. Failed probes are excluded. This is a sampled gauge percentile, not a packet-level histogram; use the peak panel to catch rarer outliers.",
+      "gridPos": {"x": 8, "y": 6, "w": 8, "h": 4},
+      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "interval": "5s",
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "1000 * max by (job) (quantile_over_time(0.95, (probe_icmp_duration_seconds{job=~\"nixos-firewall-ipv[46]\",instance=\"nixos-firewall.infra.franta.us\",phase=\"rtt\"} and ignoring (phase) (probe_success{job=~\"nixos-firewall-ipv[46]\",instance=\"nixos-firewall.infra.franta.us\"} == 1))[$__range:5s]))",
+          "legendFormat": "{{job}}",
+          "instant": true,
+          "range": false,
+          "interval": "5s",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {"unit": "ms", "min": 0, "decimals": 2, "noValue": "No successful samples", "color": {"mode": "palette-classic"}},
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false},
+        "orientation": "auto",
+        "textMode": "value_and_name",
+        "colorMode": "value",
+        "graphMode": "none"
+      }
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "Failed probes · selected range",
+      "description": "Fraction of recorded ICMP probe results that failed over the selected range. Includes DNS/socket failures. Missing or failed scrapes do not count as successful probes; see scrape health below. No samples is not zero failures.",
+      "gridPos": {"x": 16, "y": 6, "w": 8, "h": 4},
+      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "interval": "5s",
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "100 * (1 - min by (job) (avg_over_time(probe_success{job=~\"nixos-firewall-ipv[46]\",instance=\"nixos-firewall.infra.franta.us\"}[$__range])))",
+          "legendFormat": "{{job}}",
+          "instant": true,
+          "range": false,
+          "interval": "5s",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent", "min": 0, "max": 100, "decimals": 2, "noValue": "No probe samples",
+          "color": {"mode": "thresholds"},
+          "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}, {"color": "orange", "value": 0.01}, {"color": "red", "value": 5}]}
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false},
+        "orientation": "auto",
+        "textMode": "value_and_name",
+        "colorMode": "value",
+        "graphMode": "none"
+      }
+    },
+    {
+      "id": 5,
+      "type": "timeseries",
+      "title": "Successful RTT · peak and mean per display bucket",
+      "description": "Each peak is the maximum of every raw RTT sample in its display bucket, even when zoomed out. Means divide summed RTT by successful probe count; failed probes contribute neither latency nor successful samples. All-failed buckets are gaps, not zero latency. Zoom to five-second buckets for individual pings.",
+      "gridPos": {"x": 0, "y": 10, "w": 24, "h": 10},
+      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "interval": "5s",
+      "maxDataPoints": 1500,
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "(1000 * max by (job) (max_over_time(probe_icmp_duration_seconds{job=~\"nixos-firewall-ipv[46]\",instance=\"nixos-firewall.infra.franta.us\",phase=\"rtt\"}[$__interval]))) and on (job) (max by (job) (max_over_time(probe_success{job=~\"nixos-firewall-ipv[46]\",instance=\"nixos-firewall.infra.franta.us\"}[$__interval])) == 1)",
+          "legendFormat": "{{job}} · peak",
+          "instant": false,
+          "range": true,
+          "interval": "5s",
+          "editorMode": "code"
+        },
+        {
+          "refId": "B",
+          "expr": "1000 * max by (job) (sum_over_time(probe_icmp_duration_seconds{job=~\"nixos-firewall-ipv[46]\",instance=\"nixos-firewall.infra.franta.us\",phase=\"rtt\"}[$__interval]) / ignoring (phase) (sum_over_time(probe_success{job=~\"nixos-firewall-ipv[46]\",instance=\"nixos-firewall.infra.franta.us\"}[$__interval]) > 0))",
+          "legendFormat": "{{job}} · mean",
+          "instant": false,
+          "range": true,
+          "interval": "5s",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms", "min": 0, "decimals": 2, "noValue": "No successful samples",
+          "color": {"mode": "palette-classic"},
+          "custom": {"drawStyle": "line", "lineInterpolation": "linear", "lineWidth": 2, "fillOpacity": 0, "showPoints": "auto", "spanNulls": false, "axisPlacement": "auto", "axisLabel": "RTT (ms)", "stacking": {"mode": "none", "group": "A"}}
+        },
+        "overrides": [
+          {"matcher": {"id": "byRegexp", "options": ".* · mean$"}, "properties": [{"id": "custom.lineStyle", "value": {"fill": "dash", "dash": [6, 4]}}]}
+        ]
+      },
+      "options": {
+        "tooltip": {"mode": "multi", "sort": "desc"},
+        "legend": {"displayMode": "table", "placement": "bottom", "showLegend": true, "calcs": ["max", "lastNotNull"]}
+      }
+    },
+    {
+      "id": 6,
+      "type": "state-timeline",
+      "title": "Reachability and scrape health · any failure per bucket",
+      "description": "ICMP rows show probe_success; scrape rows show up (whether Prometheus obtained exporter results). A display bucket is failed if any recorded sample failed. Zoom in to locate individual events; coarse red buckets do not mean the entire bucket was down. Missing samples remain gaps.",
+      "gridPos": {"x": 0, "y": 20, "w": 12, "h": 8},
+      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "interval": "5s",
+      "maxDataPoints": 1500,
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "min by (job) (min_over_time(probe_success{job=~\"nixos-firewall-ipv[46]\",instance=\"nixos-firewall.infra.franta.us\"}[$__interval]))",
+          "legendFormat": "{{job}} · ICMP",
+          "instant": false,
+          "range": true,
+          "interval": "5s",
+          "editorMode": "code"
+        },
+        {
+          "refId": "B",
+          "expr": "min by (job) (min_over_time(up{job=~\"nixos-firewall-ipv[46]\",instance=\"nixos-firewall.infra.franta.us\"}[$__interval]))",
+          "legendFormat": "{{job}} · scrape",
+          "instant": false,
+          "range": true,
+          "interval": "5s",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "noValue": "No samples",
+          "color": {"mode": "thresholds"},
+          "thresholds": {"mode": "absolute", "steps": [{"color": "red", "value": null}, {"color": "green", "value": 1}]},
+          "mappings": [{"type": "value", "options": {"0": {"text": "FAILED", "color": "red"}, "1": {"text": "OK", "color": "green"}}}],
+          "custom": {"lineWidth": 0, "fillOpacity": 80, "spanNulls": false}
+        },
+        "overrides": []
+      },
+      "options": {"mergeValues": true, "showValue": "never", "alignValue": "left", "rowHeight": 0.8, "tooltip": {"mode": "single"}, "legend": {"displayMode": "list", "placement": "bottom", "showLegend": true}}
+    },
+    {
+      "id": 7,
+      "type": "timeseries",
+      "title": "Failed probes · fraction per display bucket",
+      "description": "Percentage of recorded ICMP probe results that failed in each display bucket. At five-second resolution this is usually 0% or 100%; wider buckets show the incident fraction. Scrape failures are separate and excluded from the denominator.",
+      "gridPos": {"x": 12, "y": 20, "w": 12, "h": 8},
+      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "interval": "5s",
+      "maxDataPoints": 1500,
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "100 * (1 - min by (job) (avg_over_time(probe_success{job=~\"nixos-firewall-ipv[46]\",instance=\"nixos-firewall.infra.franta.us\"}[$__interval])))",
+          "legendFormat": "{{job}}",
+          "instant": false,
+          "range": true,
+          "interval": "5s",
+          "editorMode": "code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent", "min": 0, "max": 100, "decimals": 2, "noValue": "No probe samples",
+          "color": {"mode": "palette-classic"},
+          "custom": {"drawStyle": "line", "lineInterpolation": "stepAfter", "lineWidth": 2, "fillOpacity": 10, "showPoints": "auto", "spanNulls": false, "stacking": {"mode": "none", "group": "A"}}
+        },
+        "overrides": []
+      },
+      "options": {"tooltip": {"mode": "multi", "sort": "desc"}, "legend": {"displayMode": "table", "placement": "bottom", "showLegend": true, "calcs": ["max", "lastNotNull"]}}
+    }
+  ]
+}

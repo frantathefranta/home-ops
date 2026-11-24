@@ -12,6 +12,7 @@ configMapGenerator:
       - ./configmaps/dn42.json
       - ./configmaps/comin.json
       - ./configmaps/switch-congestion.json
+      - ./configmaps/firewall-connectivity.json
     options:
       annotations:
         kustomize.toolkit.fluxcd.io/substitute: disabled

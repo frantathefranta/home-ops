@@ -94,3 +94,13 @@ address family. The probes use distinct Prometheus `job` labels.
 
 Graph `probe_icmp_duration_seconds{phase="rtt"}` for ping latency, filtering on
 `probe_success == 1` to exclude failed probes.
+
+The [Firewall · Connectivity and Latency dashboard](https://grafana.franta.us/d/firewall-connectivity)
+shows per-family peak/P95 RTT, bucketed peak/mean latency, failed-probe percentages,
+and separate ICMP/scrape-health timelines. Drag over an incident to zoom in; raw
+sample maxima preserve recorded outliers even at wider time ranges. Five-second
+sampling still misses shorter incidents.
+
+These measurements cover the exporter pod's path to the firewall, not WiFi-client
+connectivity unless that path crosses WiFi. Failed-probe percentages include
+DNS/socket failures and are not continuous packet-loss measurements.
