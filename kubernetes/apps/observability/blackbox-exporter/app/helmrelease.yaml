@@ -27,6 +27,18 @@ spec:
           timeout: 5s
           # icmp:
           #   preferred_ip_protocol: ip4
+        icmp_ipv4:
+          prober: icmp
+          timeout: 5s
+          icmp:
+            preferred_ip_protocol: ip4
+            ip_protocol_fallback: false
+        icmp_ipv6:
+          prober: icmp
+          timeout: 5s
+          icmp:
+            preferred_ip_protocol: ip6
+            ip_protocol_fallback: false
         tcp_connect:
           prober: tcp
           timeout: 5s
