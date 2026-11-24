@@ -109,8 +109,8 @@ spec:
           - "{{ .Release.Name }}.franta.us"
           - requests.franta.us
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

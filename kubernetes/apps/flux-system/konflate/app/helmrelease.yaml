@@ -22,8 +22,8 @@ spec:
       hostnames:
         - "{{ .Release.Name }}.franta.us"
       parentRefs:
-        - name: external
-          namespace: kube-system
+        - name: envoy-external
+          namespace: network
           sectionName: https
     secret:
       existingSecret: konflate-secret

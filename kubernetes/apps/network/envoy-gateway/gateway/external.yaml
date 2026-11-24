@@ -4,6 +4,8 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: envoy-external
+  labels:
+    external-dns.franta.us/public: "true"
   annotations:
     external-dns.kubernetes.io/target: &hostname ingress-external.franta.us
     gatus.home-operations.com/endpoint: |-
@@ -17,6 +19,10 @@ metadata:
 spec:
   gatewayClassName: envoy
   infrastructure:
+    parametersRef:
+      group: gateway.envoyproxy.io
+      kind: EnvoyProxy
+      name: envoy-external
     annotations:
       external-dns.kubernetes.io/hostname: *hostname
       lbipam.cilium.io/ips: ${CLUSTER_LBA_V6_PREFIX}:14
@@ -37,17 +43,6 @@ spec:
         certificateRefs:
           - kind: Secret
             name: envoy-certificate-franta.us
-    - name: ssh
-      protocol: TCP
-      port: 22
-      allowedRoutes:
-        namespaces:
-          from: Selector
-          selector:
-            matchLabels:
-              kubernetes.io/metadata.name: default
-        kinds:
-          - kind: TCPRoute
 ---
 # yaml-language-server: $schema=https://k8s-schemas.home-operations.com/gateway.envoyproxy.io/envoyextensionpolicy_v1alpha1.json
 apiVersion: gateway.envoyproxy.io/v1alpha1
@@ -59,9 +54,25 @@ spec:
     - group: gateway.networking.k8s.io
       kind: Gateway
       name: envoy-external
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy-forgejo
   lua:
     - type: ValueRef
       valueRef:
         name: envoy-external-extensions
         kind: ConfigMap
         group: v1
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/gateway.envoyproxy.io/envoyproxy_v1alpha1.json
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: EnvoyProxy
+metadata:
+  name: envoy-external
+spec:
+  mergeType: StrategicMerge
+  provider:
+    type: Kubernetes
+    kubernetes:
+      envoyService:
+        name: envoy-external

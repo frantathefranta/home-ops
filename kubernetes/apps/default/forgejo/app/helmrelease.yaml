@@ -126,6 +126,6 @@ spec:
     tcpRoute:
       enabled: true
       parentRefs:
-        - name: envoy-external
+        - name: envoy-forgejo
           namespace: network
           sectionName: ssh

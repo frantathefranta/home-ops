@@ -5,6 +5,7 @@ kind: HTTPRoute
 metadata:
   name: forgejo
   annotations:
+    external-dns.kubernetes.io/cloudflare-proxied: "false"
     gatus.home-operations.com/endpoint: |-
       path: /api/healthz
       conditions:
@@ -14,8 +15,9 @@ spec:
   hostnames:
     - git.franta.us
   parentRefs:
-    - name: envoy-external
+    - name: envoy-forgejo
       namespace: network
+      sectionName: https
   rules:
     - backendRefs:
         - name: forgejo-anubis

@@ -136,8 +136,8 @@ spec:
         hostnames:
           - "bar.franta.us"
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

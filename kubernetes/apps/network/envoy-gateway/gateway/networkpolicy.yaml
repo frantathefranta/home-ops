@@ -7,6 +7,70 @@ spec:
   endpointSelector:
     matchLabels:
       app.kubernetes.io/name: envoy
+    matchExpressions:
+      - key: gateway.networking.k8s.io/gateway-name
+        operator: NotIn
+        values: [envoy-forgejo]
   ingress:
-  - fromEntities:
-    - "world"
+    - fromCIDRSet:
+        # Home LAN/lab and VPN space; Cloudflared is allowed by cluster ingress.
+        - cidr: 10.0.0.0/8
+        - cidr: 2600:1702:6630:3fe0::/60
+      toPorts:
+        - ports:
+            - port: "10080"
+              protocol: TCP
+            - port: "10443"
+              protocol: TCP
+            - port: "10443"
+              protocol: UDP
+    - fromEntities:
+        - world
+      icmps:
+        - fields:
+            - family: IPv6
+              type: 1
+            - family: IPv6
+              type: 2
+            - family: IPv6
+              type: 3
+            - family: IPv6
+              type: 4
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: envoy-forgejo-allow-ingress
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: envoy
+      gateway.networking.k8s.io/gateway-name: envoy-forgejo
+  ingress:
+    - fromEntities:
+        - world
+      toPorts:
+        - ports:
+            # Envoy Gateway maps privileged listener ports to port + 10000.
+            - port: "10022"
+              protocol: TCP
+            - port: "10080"
+              protocol: TCP
+            - port: "10443"
+              protocol: TCP
+    - fromEntities:
+        - world
+      icmps:
+        - fields:
+            - family: IPv6
+              type: 1 # Destination Unreachable
+            - family: IPv6
+              type: 2 # Packet Too Big (PMTUD)
+            - family: IPv6
+              type: 3 # Time Exceeded
+            - family: IPv6
+              type: 4 # Parameter Problem
+            - family: IPv6
+              type: 128 # Echo Request
+            - family: IPv6
+              type: 129 # Echo Reply

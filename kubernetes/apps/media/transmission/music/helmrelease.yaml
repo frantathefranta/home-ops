@@ -222,8 +222,8 @@ spec:
           - "{{ .Release.Name }}.franta.us"
           - tm.franta.us
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
@@ -233,8 +233,8 @@ spec:
         hostnames:
           - nemorosa.franta.us
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

@@ -8,8 +8,9 @@ spec:
   hostnames:
     - grafana.franta.us
   parentRefs:
-    - name: internal
-      namespace: kube-system
+    - name: envoy-internal
+      namespace: network
+      sectionName: https
   rules:
     - backendRefs:
         - name: grafana-service

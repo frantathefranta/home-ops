@@ -53,8 +53,8 @@ spec:
           enabled: true
           hostnames: ["alertmanager.franta.us"]
           parentRefs:
-            - name: internal
-              namespace: kube-system
+            - name: envoy-internal
+              namespace: network
               sectionName: https
       alertmanagerSpec:
         externalUrl: "https://alertmanager.franta.us"
@@ -120,8 +120,8 @@ spec:
           enabled: true
           hostnames: ["prometheus.franta.us"]
           parentRefs:
-            - name: internal
-              namespace: kube-system
+            - name: envoy-internal
+              namespace: network
               sectionName: https
       prometheusSpec:
         # Use EndpointSlice for service discovery (Kubernetes v1.33+ deprecation)

@@ -108,8 +108,8 @@ spec:
           - "{{ .Release.Name }}.franta.us"
           - zwave.franta.us
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
