@@ -31,14 +31,22 @@ spec:
               key: /gatus
     controllers:
       gatus:
-        replicas: 1
-        strategy: Recreate
+        replicas: 2
+        strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
         serviceAccount:
           identifier: *app
         pod:
           automountServiceAccountToken: true
+          topologySpreadConstraints:
+            - maxSkew: 1
+              minDomains: 2
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: *app
           securityContext:
             runAsNonRoot: true
             runAsUser: 65534

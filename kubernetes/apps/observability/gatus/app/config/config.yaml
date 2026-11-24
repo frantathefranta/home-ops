@@ -30,7 +30,33 @@ endpoints:
       - "[STATUS] == 200"
     alerts:
       - type: pushover
-connectivity:
-  checker:
-    target: 1.1.1.1:53
+  - name: cloudflare-ipv4
+    group: connectivity
+    url: tcp://1.1.1.1:53
     interval: 1m
+    client:
+      timeout: 5s
+    conditions:
+      - "[CONNECTED] == true"
+    alerts:
+      - type: pushover
+  - name: cloudflare-ipv6
+    group: connectivity
+    url: tcp://[2606:4700:4700::1111]:53
+    interval: 1m
+    client:
+      timeout: 5s
+    conditions:
+      - "[CONNECTED] == true"
+    alerts:
+      - type: pushover
+  - name: google-ipv6
+    group: connectivity
+    url: tcp://[2001:4860:4860::8888]:53
+    interval: 1m
+    client:
+      timeout: 5s
+    conditions:
+      - "[CONNECTED] == true"
+    alerts:
+      - type: pushover
