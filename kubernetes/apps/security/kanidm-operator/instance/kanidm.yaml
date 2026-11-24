@@ -49,5 +49,11 @@ spec:
       validation:
         hostname: sso.franta.us
         wellKnownCaCertificates: System
+    annotations:
+      gatus.home-operations.com/endpoint: |-
+        path: /status
+        conditions:
+          - "[STATUS] == 200"
+          - "[BODY].status == pass"
 
   ipFamily: ipv6
