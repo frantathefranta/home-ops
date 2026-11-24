@@ -4,6 +4,7 @@
 1.  [Introduction](#org56a5c31)
 2.  [Cloud dependency](#org689b93f)
 3.  [Gatus](#gatus)
+4.  [Blackbox exporter](#blackbox-exporter)
 
 <a id="org56a5c31"></a>
 
@@ -79,3 +80,17 @@ It&rsquo;s based on the [cluster-template](https://github.com/onedr0p/cluster-te
 
 [Status dashboard](https://status.franta.us) ·
 [Configuration](kubernetes/apps/observability/gatus)
+
+<a id="blackbox-exporter"></a>
+
+# Blackbox exporter
+
+[Configuration](kubernetes/apps/observability/blackbox-exporter)
+
+Dedicated `nixos-firewall-ipv4` and `nixos-firewall-ipv6` ICMP probes monitor
+`nixos-firewall.infra.franta.us` every 5 seconds from the exporter pod. Cross-family
+fallback is disabled, so each probe requires connectivity in its configured
+address family. The probes use distinct Prometheus `job` labels.
+
+Graph `probe_icmp_duration_seconds{phase="rtt"}` for ping latency, filtering on
+`probe_success == 1` to exclude failed probes.

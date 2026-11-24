@@ -47,3 +47,37 @@ spec:
     staticConfig:
       static:
         - 10.0.50.40
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/monitoring.coreos.com/probe_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: nixos-firewall-ipv4
+spec:
+  jobName: nixos-firewall-ipv4
+  module: icmp_ipv4
+  interval: 5s
+  scrapeTimeout: 5s
+  prober:
+    url: blackbox-exporter.observability.svc.cluster.local:9115
+  targets:
+    staticConfig:
+      static:
+        - nixos-firewall.infra.franta.us
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/monitoring.coreos.com/probe_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: nixos-firewall-ipv6
+spec:
+  jobName: nixos-firewall-ipv6
+  module: icmp_ipv6
+  interval: 5s
+  scrapeTimeout: 5s
+  prober:
+    url: blackbox-exporter.observability.svc.cluster.local:9115
+  targets:
+    staticConfig:
+      static:
+        - nixos-firewall.infra.franta.us
