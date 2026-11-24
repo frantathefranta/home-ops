@@ -1,0 +1,31 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app gatus
+spec:
+  components:
+    - ../../../../components/postgres
+  dependsOn:
+    - name: crunchy-postgres-operator
+      namespace: database
+    - name: prometheus-operator-crds
+      namespace: observability
+  healthCheckExprs:
+    - apiVersion: postgres-operator.crunchydata.com/v1beta1
+      kind: PostgresCluster
+      failed: status.conditions.exists(e, e.type == 'ProxyAvailable' && e.status == 'False')
+      current: status.conditions.exists(e, e.type == 'ProxyAvailable' && e.status == 'True')
+  interval: 1h
+  path: ./kubernetes/apps/observability/gatus/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: observability
+  postBuild:
+    substitute:
+      APP: *app
+      PG_VERSION: "18"
