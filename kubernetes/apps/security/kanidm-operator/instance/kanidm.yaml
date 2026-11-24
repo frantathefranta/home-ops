@@ -9,7 +9,7 @@ spec:
   image: docker.io/kanidm/server:1.12.1@sha256:77198131f28116203e105d2e42214203757d113a694f35de545669e75db5c96f
   replicaGroups:
     - name: default
-      replicas: 2
+      replicas: 1
       primaryNode: true
       affinity:
         podAntiAffinity:

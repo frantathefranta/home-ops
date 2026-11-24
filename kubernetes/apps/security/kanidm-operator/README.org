@@ -1,5 +1,12 @@
 #+title: Kanidm
 
+* Availability
+
+Kanidm runs one replica to keep multi-step authentication on the same server
+without load-balancer session affinity. New logins are unavailable during pod
+restarts, upgrades, or node failure. Before increasing the replica count, configure
+session affinity on the SSO HTTPRoute and verify fresh CLI and browser logins.
+
 * First rollout
 
 Before switching TREK to Kanidm:
