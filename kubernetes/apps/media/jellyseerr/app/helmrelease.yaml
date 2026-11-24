@@ -106,25 +106,13 @@ spec:
     route:
       app:
         annotations:
-          gatus.home-operations.com/endpoint: |-
-            name: jellyseerr
-            group: external
-            url: https://requests.franta.us/api/v1/status
-            interval: 1m
-            client:
-              dns-resolver: tcp://1.1.1.1:53
-              timeout: 10s
-            conditions:
-              - "[STATUS] == 200"
-              - "len([BODY].version) > 0"
-            alerts:
-              - type: pushover
+          gatus.home-operations.com/enabled: "false"
         hostnames:
           - "{{ .Release.Name }}.franta.us"
           - requests.franta.us
         parentRefs:
-          - name: envoy-external
-            namespace: network
+          - name: external
+            namespace: kube-system
             sectionName: https
         rules:
           - backendRefs:

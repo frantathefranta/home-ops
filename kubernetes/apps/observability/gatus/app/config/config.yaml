@@ -20,43 +20,42 @@ alerting:
       failure-threshold: 3
       success-threshold: 3
 endpoints:
-  - name: status
+  - &http-check
+    name: status
     group: external
     url: https://status.franta.us
     interval: 1m
     client:
       dns-resolver: tcp://1.1.1.1:53
+      timeout: 10s
     conditions:
       - "[STATUS] == 200"
     alerts:
       - type: pushover
-  - name: cloudflare-ipv4
+  - <<: *http-check
+    name: forgejo
+    url: https://git.franta.us/api/healthz
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY].status == pass"
+  - <<: *http-check
+    name: jellyseerr
+    url: https://requests.franta.us/api/v1/status
+    conditions:
+      - "[STATUS] == 200"
+      - "len([BODY].version) > 0"
+  - &tcp-check
+    <<: *http-check
+    name: cloudflare-ipv4
     group: connectivity
     url: tcp://1.1.1.1:53
-    interval: 1m
     client:
       timeout: 5s
     conditions:
       - "[CONNECTED] == true"
-    alerts:
-      - type: pushover
-  - name: cloudflare-ipv6
-    group: connectivity
+  - <<: *tcp-check
+    name: cloudflare-ipv6
     url: tcp://[2606:4700:4700::1111]:53
-    interval: 1m
-    client:
-      timeout: 5s
-    conditions:
-      - "[CONNECTED] == true"
-    alerts:
-      - type: pushover
-  - name: google-ipv6
-    group: connectivity
+  - <<: *tcp-check
+    name: google-ipv6
     url: tcp://[2001:4860:4860::8888]:53
-    interval: 1m
-    client:
-      timeout: 5s
-    conditions:
-      - "[CONNECTED] == true"
-    alerts:
-      - type: pushover

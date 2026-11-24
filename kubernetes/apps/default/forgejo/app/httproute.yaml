@@ -5,19 +5,7 @@ kind: HTTPRoute
 metadata:
   name: forgejo
   annotations:
-    gatus.home-operations.com/endpoint: |-
-      name: forgejo
-      group: external
-      url: https://git.franta.us/api/healthz
-      interval: 1m
-      client:
-        dns-resolver: tcp://1.1.1.1:53
-        timeout: 10s
-      conditions:
-        - "[STATUS] == 200"
-        - "[BODY].status == pass"
-      alerts:
-        - type: pushover
+    gatus.home-operations.com/enabled: "false"
 spec:
   hostnames:
     - git.franta.us
