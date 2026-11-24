@@ -20,6 +20,8 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: envoy-forgejo
+  labels:
+    external-dns.franta.us/public: "true"
   annotations:
     gatus.home-operations.com/endpoint: |-
       group: external

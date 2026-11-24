@@ -135,26 +135,17 @@ spec:
           http:
             port: *port
     route:
-      app: &external-route
+      app:
         hostnames:
           - recipes.franta.us
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
               - name: *app
                 port: *port
-      app-staging:
-        <<: *external-route
-        annotations:
-          external-dns.kubernetes.io/controller: none
-          gatus.home-operations.com/enabled: "false"
-        parentRefs:
-          - name: envoy-external
-            namespace: network
-            sectionName: https
 
     persistence:
       data:

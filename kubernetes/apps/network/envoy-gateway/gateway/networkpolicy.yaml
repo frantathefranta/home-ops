@@ -12,8 +12,30 @@ spec:
         operator: NotIn
         values: [envoy-forgejo]
   ingress:
-  - fromEntities:
-    - "world"
+    - fromCIDRSet:
+        # Home LAN/lab and VPN space; Cloudflared is allowed by cluster ingress.
+        - cidr: 10.0.0.0/8
+        - cidr: 2600:1702:6630:3fe0::/60
+      toPorts:
+        - ports:
+            - port: "10080"
+              protocol: TCP
+            - port: "10443"
+              protocol: TCP
+            - port: "10443"
+              protocol: UDP
+    - fromEntities:
+        - world
+      icmps:
+        - fields:
+            - family: IPv6
+              type: 1
+            - family: IPv6
+              type: 2
+            - family: IPv6
+              type: 3
+            - family: IPv6
+              type: 4
 ---
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy

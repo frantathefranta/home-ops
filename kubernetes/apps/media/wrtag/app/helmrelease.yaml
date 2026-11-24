@@ -89,25 +89,16 @@ spec:
             port: &http 80
 
     route:
-      app: &appRoute
+      app:
         hostnames: ["wrtag.franta.us"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
               - identifier: app
                 port: *http
-      app-staging:
-        <<: *appRoute
-        annotations:
-          external-dns.kubernetes.io/controller: none
-          gatus.home-operations.com/enabled: "false"
-        parentRefs:
-          - name: envoy-internal
-            namespace: network
-            sectionName: https
 
     persistence:
       data:

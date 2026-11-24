@@ -1,10 +1,12 @@
 ---
 originRequest:
-  originServerName: "external.franta.us"
+  originServerName: "ingress-external.franta.us"
 
 ingress:
+  - hostname: "git.franta.us"
+    service: http_status:404
   - hostname: "franta.us"
-    service: &svc https://cilium-gateway-external.kube-system.svc.cluster.local
+    service: &svc https://envoy-external.network.svc.cluster.local:443
   - hostname: "*.franta.us"
     service: *svc
   - service: http_status:404

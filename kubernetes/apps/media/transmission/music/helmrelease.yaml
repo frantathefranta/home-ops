@@ -217,47 +217,29 @@ spec:
       #       port: &nemorosaPort 8256
 
     route:
-      app: &appRoute
+      app:
         hostnames:
           - "{{ .Release.Name }}.franta.us"
           - tm.franta.us
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
               - name: transmission-music
                 port: *port
-      app-staging:
-        <<: *appRoute
-        annotations:
-          external-dns.kubernetes.io/controller: none
-          gatus.home-operations.com/enabled: "false"
-        parentRefs:
-          - name: envoy-internal
-            namespace: network
-            sectionName: https
-      nemorosa: &nemorosaRoute
+      nemorosa:
         hostnames:
           - nemorosa.franta.us
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
               - name: transmission-music
                 port: *nemorosaPort
-      nemorosa-staging:
-        <<: *nemorosaRoute
-        annotations:
-          external-dns.kubernetes.io/controller: none
-          gatus.home-operations.com/enabled: "false"
-        parentRefs:
-          - name: envoy-internal
-            namespace: network
-            sectionName: https
     persistence:
       config:
         existingClaim: *app

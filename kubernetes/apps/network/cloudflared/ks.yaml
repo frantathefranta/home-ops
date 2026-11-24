@@ -9,6 +9,8 @@ spec:
   dependsOn:
     - name: external-dns-external
       namespace: network
+    - name: envoy-gateway-gateway
+      namespace: network
   path: ./kubernetes/apps/network/cloudflared/app
   prune: true
   sourceRef:

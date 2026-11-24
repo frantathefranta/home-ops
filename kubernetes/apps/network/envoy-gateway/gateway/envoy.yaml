@@ -32,6 +32,7 @@ spec:
                         app.kubernetes.io/name: envoy
       envoyService:
         externalTrafficPolicy: Local
+  mergeGateways: false
   ipFamily: DualStack
   shutdown:
     drainTimeout: 180s

@@ -22,8 +22,8 @@ spec:
       hostnames:
         - "{{ .Release.Name }}.franta.us"
       parentRefs:
-        - name: external
-          namespace: kube-system
+        - name: envoy-external
+          namespace: network
           sectionName: https
     secret:
       existingSecret: konflate-secret
@@ -35,27 +35,3 @@ spec:
         cpu: 50m
       limits:
         memory: 2Gi
----
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/gateway.networking.k8s.io/httproute_v1.json
-apiVersion: gateway.networking.k8s.io/v1
-kind: HTTPRoute
-metadata:
-  name: konflate-staging
-  annotations:
-    external-dns.kubernetes.io/controller: none
-    gatus.home-operations.com/enabled: "false"
-spec:
-  hostnames:
-    - konflate.franta.us
-  parentRefs:
-    - name: envoy-external
-      namespace: network
-      sectionName: https
-  rules:
-    - backendRefs:
-        - name: konflate
-          port: 8080
-      matches:
-        - path:
-            type: PathPrefix
-            value: /
