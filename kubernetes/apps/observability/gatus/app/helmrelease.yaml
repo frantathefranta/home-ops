@@ -119,7 +119,6 @@ spec:
               - path: /config
             app:
               - path: /config
-                readOnly: true
       config-file:
         type: configMap
         name: gatus-configmap
