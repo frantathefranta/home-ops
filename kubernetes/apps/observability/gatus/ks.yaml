@@ -6,17 +6,14 @@ metadata:
   name: &app gatus
 spec:
   components:
-    - ../../../../components/postgres
+    - ../../../../components/kopiur
   dependsOn:
-    - name: crunchy-postgres-operator
-      namespace: database
+    - name: rook-ceph-cluster
+      namespace: rook-ceph-external
+    - name: kopiur
+      namespace: storage
     - name: prometheus-operator-crds
       namespace: observability
-  healthCheckExprs:
-    - apiVersion: postgres-operator.crunchydata.com/v1beta1
-      kind: PostgresCluster
-      failed: status.conditions.exists(e, e.type == 'ProxyAvailable' && e.status == 'False')
-      current: status.conditions.exists(e, e.type == 'ProxyAvailable' && e.status == 'True')
   interval: 1h
   path: ./kubernetes/apps/observability/gatus/app
   prune: true
@@ -28,4 +25,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      PG_VERSION: "18"
+      KOPIUR_CAPACITY: 1Gi
+      KOPIUR_MOVER_UID: "65534"
+      KOPIUR_MOVER_GID: "65534"

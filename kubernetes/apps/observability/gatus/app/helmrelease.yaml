@@ -79,11 +79,6 @@ spec:
               GATUS_CONFIG_PATH: /config
               GATUS_DELAY_START_SECONDS: 5
               WEB_PORT: &port 8080
-              POSTGRES_URI:
-                valueFrom:
-                  secretKeyRef:
-                    name: gatus-pguser-gatus
-                    key: pgbouncer-uri
             envFrom:
               - secretRef:
                   name: gatus-secret
@@ -134,6 +129,12 @@ spec:
               - path: /config/config.yaml
                 subPath: config.yaml
                 readOnly: true
+      data:
+        existingClaim: *app
+        advancedMounts:
+          gatus:
+            app:
+              - path: /data
     rbac:
       roles:
         gatus:
