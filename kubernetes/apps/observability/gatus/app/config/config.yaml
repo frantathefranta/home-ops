@@ -32,18 +32,6 @@ endpoints:
       - "[STATUS] == 200"
     alerts:
       - type: pushover
-  - <<: *http-check
-    name: forgejo
-    url: https://git.franta.us/api/healthz
-    conditions:
-      - "[STATUS] == 200"
-      - "[BODY].status == pass"
-  - <<: *http-check
-    name: jellyseerr
-    url: https://requests.franta.us/api/v1/status
-    conditions:
-      - "[STATUS] == 200"
-      - "len([BODY].version) > 0"
   - &tcp-check
     <<: *http-check
     name: cloudflare-ipv4

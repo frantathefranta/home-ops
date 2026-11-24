@@ -5,7 +5,11 @@ kind: HTTPRoute
 metadata:
   name: forgejo
   annotations:
-    gatus.home-operations.com/enabled: "false"
+    gatus.home-operations.com/endpoint: |-
+      path: /api/healthz
+      conditions:
+        - "[STATUS] == 200"
+        - "[BODY].status == pass"
 spec:
   hostnames:
     - git.franta.us

@@ -62,9 +62,8 @@ spec:
               tag: 0.6.1@sha256:c2b24374a8a4c5551c0122f3a7ae383ff65a0ea0bcd3b541530db84490fea2af
             args:
               - --auto-httproute
-              - --enable-service
+              - --gateway-name=envoy-external
               - --prefix-httproute=http-
-              - --prefix-service=svc-
             restartPolicy: Always
             resources:
               requests:
@@ -148,9 +147,6 @@ spec:
         gatus:
           type: ClusterRole
           rules:
-            - apiGroups: [""]
-              resources: ["services"]
-              verbs: ["get", "list", "watch"]
             - apiGroups: ["gateway.networking.k8s.io"]
               resources: ["httproutes", "gateways"]
               verbs: ["get", "list", "watch"]
