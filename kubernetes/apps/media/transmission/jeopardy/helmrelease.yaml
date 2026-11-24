@@ -103,7 +103,7 @@ spec:
             port: *peerport
             protocol: TCP
     route:
-      app:
+      app: &appRoute
         hostnames:
           - "{{ .Release.Name }}.franta.us"
           - tj.franta.us
@@ -115,6 +115,15 @@ spec:
           - backendRefs:
               - name: *app
                 port: *port
+      app-staging:
+        <<: *appRoute
+        annotations:
+          external-dns.kubernetes.io/controller: none
+          gatus.home-operations.com/enabled: "false"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
 
     persistence:
       config:

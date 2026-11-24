@@ -105,7 +105,7 @@ spec:
             port: 22000
             protocol: UDP
     route:
-      app:
+      app: &appRoute
         hostnames:
           - "{{ .Release.Name }}.franta.us"
         parentRefs:
@@ -116,6 +116,15 @@ spec:
           - backendRefs:
               - name: syncthing-app
                 port: *port
+      app-staging:
+        <<: *appRoute
+        annotations:
+          external-dns.kubernetes.io/controller: none
+          gatus.home-operations.com/enabled: "false"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
     persistence:
       data:
         existingClaim: *app

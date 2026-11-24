@@ -129,3 +129,6 @@ spec:
         - name: envoy-external
           namespace: network
           sectionName: ssh
+        - name: envoy-forgejo
+          namespace: network
+          sectionName: ssh

@@ -132,7 +132,7 @@ spec:
           http:
             port: *salt-rim-port
     route:
-      app:
+      app: &external-route
         hostnames:
           - "bar.franta.us"
         parentRefs:
@@ -143,6 +143,15 @@ spec:
           - backendRefs:
               - name: bar-assistant-app
                 port: *nginx-port
+      app-staging:
+        <<: *external-route
+        annotations:
+          external-dns.kubernetes.io/controller: none
+          gatus.home-operations.com/enabled: "false"
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+            sectionName: https
 
     persistence:
       app:

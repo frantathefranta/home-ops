@@ -61,7 +61,7 @@ spec:
       config:
         existingClaim: "{{ .Release.Name }}"
     route:
-      app:
+      app: &external-route
         hostnames:
           - "{{ .Release.Name }}.franta.us"
         parentRefs:
@@ -72,6 +72,15 @@ spec:
           - backendRefs:
               - identifier: app
                 port: *port
+      app-staging:
+        <<: *external-route
+        annotations:
+          external-dns.kubernetes.io/controller: none
+          gatus.home-operations.com/enabled: "false"
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+            sectionName: https
     service:
       app:
         ipFamilyPolicy: RequireDualStack

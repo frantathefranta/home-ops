@@ -67,12 +67,21 @@ spec:
               - path: /opt/data
                 subPath: data
     route:
-      app:
+      app: &appRoute
         hostnames:
           - maintainerr.franta.us
         parentRefs:
           - name: internal
             namespace: kube-system
+      app-staging:
+        <<: *appRoute
+        annotations:
+          external-dns.kubernetes.io/controller: none
+          gatus.home-operations.com/enabled: "false"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
     service:
       app:
         ports:

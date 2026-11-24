@@ -90,7 +90,7 @@ spec:
             port: *bittorrentPort
             protocol: TCP
     route:
-      app:
+      app: &appRoute
         hostnames:
           - "{{ .Release.Name }}.franta.us"
           - qb.franta.us
@@ -102,6 +102,15 @@ spec:
           - backendRefs:
               - identifier: app
                 port: *port
+      app-staging:
+        <<: *appRoute
+        annotations:
+          external-dns.kubernetes.io/controller: none
+          gatus.home-operations.com/enabled: "false"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
 
     persistence:
       config:

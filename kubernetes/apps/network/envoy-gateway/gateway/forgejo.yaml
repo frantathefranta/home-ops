@@ -1,0 +1,104 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/gateway.envoyproxy.io/envoyproxy_v1alpha1.json
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: EnvoyProxy
+metadata:
+  name: envoy-forgejo
+spec:
+  # Inherit the shared deployment, image and telemetry without changing its IP family.
+  mergeType: StrategicMerge
+  mergeGateways: false
+  ipFamily: IPv6
+  provider:
+    type: Kubernetes
+    kubernetes:
+      envoyService:
+        name: envoy-forgejo
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/gateway.networking.k8s.io/gateway_v1.json
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: envoy-forgejo
+  annotations:
+    gatus.home-operations.com/endpoint: |-
+      group: external
+      interval: 1m
+      client:
+        dns-resolver: tcp://1.1.1.1:53
+        timeout: 10s
+      alerts:
+        - type: pushover
+spec:
+  gatewayClassName: envoy
+  infrastructure:
+    parametersRef:
+      group: gateway.envoyproxy.io
+      kind: EnvoyProxy
+      name: envoy-forgejo
+    annotations:
+      # Reserved in Git; verify this address is unused in live LB IPAM before merging.
+      lbipam.cilium.io/ips: ${CLUSTER_LBA_V6_PREFIX}:15
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
+      hostname: git.franta.us
+      allowedRoutes:
+        namespaces:
+          from: Same
+        kinds:
+          - kind: HTTPRoute
+    - name: https
+      protocol: HTTPS
+      port: 443
+      hostname: git.franta.us
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              kubernetes.io/metadata.name: default
+        kinds:
+          - kind: HTTPRoute
+      tls:
+        certificateRefs:
+          - kind: Secret
+            name: envoy-certificate-franta.us
+    - name: ssh
+      protocol: TCP
+      port: 22
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              kubernetes.io/metadata.name: default
+        kinds:
+          - kind: TCPRoute
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/gateway.envoyproxy.io/clienttrafficpolicy_v1alpha1.json
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: ClientTrafficPolicy
+metadata:
+  name: envoy-forgejo
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy-forgejo
+  # Direct WAN clients are not trusted proxies: use the socket source address.
+  # In particular, do not enable optional PROXY protocol or trust incoming XFF.
+  http2:
+    onInvalidMessage: TerminateStream
+  path:
+    escapedSlashesAction: KeepUnchanged
+  tcpKeepalive: {}
+  timeout:
+    http:
+      idleTimeout: 60s
+  tls:
+    minVersion: "1.2"
+    alpnProtocols:
+      - h2
+      - http/1.1

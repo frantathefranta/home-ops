@@ -103,7 +103,7 @@ spec:
             interval: 1m
             scrapeTimeout: 10s
     route:
-      app:
+      app: &appRoute
         hostnames:
           - "{{ .Release.Name }}.franta.us"
           - zwave.franta.us
@@ -115,6 +115,15 @@ spec:
           - backendRefs:
               - name: zwave-js-ui-app
                 port: *port
+      app-staging:
+        <<: *appRoute
+        annotations:
+          external-dns.kubernetes.io/controller: none
+          gatus.home-operations.com/enabled: "false"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
 
     persistence:
       data:

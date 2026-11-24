@@ -49,12 +49,25 @@ spec:
             group: cert-manager.io
     alertmanager:
       route:
-        main:
+        main: &alertmanagerRoute
           enabled: true
           hostnames: ["alertmanager.franta.us"]
           parentRefs:
             - name: internal
               namespace: kube-system
+              sectionName: https
+        main-staging:
+          <<: *alertmanagerRoute
+          matches:
+            - path:
+                type: PathPrefix
+                value: /
+          annotations:
+            external-dns.kubernetes.io/controller: none
+            gatus.home-operations.com/enabled: "false"
+          parentRefs:
+            - name: envoy-internal
+              namespace: network
               sectionName: https
       alertmanagerSpec:
         externalUrl: "https://alertmanager.franta.us"
@@ -116,12 +129,25 @@ spec:
       enabled: false
     prometheus:
       route:
-        main:
+        main: &prometheusRoute
           enabled: true
           hostnames: ["prometheus.franta.us"]
           parentRefs:
             - name: internal
               namespace: kube-system
+              sectionName: https
+        main-staging:
+          <<: *prometheusRoute
+          matches:
+            - path:
+                type: PathPrefix
+                value: /
+          annotations:
+            external-dns.kubernetes.io/controller: none
+            gatus.home-operations.com/enabled: "false"
+          parentRefs:
+            - name: envoy-internal
+              namespace: network
               sectionName: https
       prometheusSpec:
         # Use EndpointSlice for service discovery (Kubernetes v1.33+ deprecation)

@@ -48,7 +48,7 @@ spec:
             interval: 1m
             scrapeTimeout: 10s
     route:
-      app:
+      app: &appRoute
         hostnames:
           - "rgw.franta.us"
         parentRefs:
@@ -59,6 +59,15 @@ spec:
           - backendRefs:
               - name: haproxy
                 port: *port
+      app-staging:
+        <<: *appRoute
+        annotations:
+          external-dns.kubernetes.io/controller: none
+          gatus.home-operations.com/enabled: "false"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
     persistence:
       config:
         type: configMap

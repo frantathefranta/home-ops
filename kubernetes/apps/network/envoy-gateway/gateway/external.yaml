@@ -59,6 +59,9 @@ spec:
     - group: gateway.networking.k8s.io
       kind: Gateway
       name: envoy-external
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy-forgejo
   lua:
     - type: ValueRef
       valueRef:
