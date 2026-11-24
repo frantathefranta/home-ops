@@ -9,6 +9,8 @@ metrics: true
 ui:
   title: Talos-Maxi Status
   header: Talos-Maxi Status
+  # Render endpoint groups as sections; saved browser sorting overrides this default.
+  default-sort-by: group
   logo: https://raw.githubusercontent.com/frantathefranta/hugoblog/master/static/android-chrome-512x512.png
 alerting:
   pushover:

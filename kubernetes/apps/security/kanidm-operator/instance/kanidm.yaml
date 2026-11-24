@@ -54,6 +54,6 @@ spec:
         path: /status
         conditions:
           - "[STATUS] == 200"
-          - "[BODY].status == pass"
+          - "[BODY] == true"
 
   ipFamily: ipv6
