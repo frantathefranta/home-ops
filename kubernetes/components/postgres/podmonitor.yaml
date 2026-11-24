@@ -3,38 +3,22 @@
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
-  name: ${APP}-postgres-exporter # Taken from https://github.com/CrunchyData/postgres-operator/issues/1968
+  name: ${APP}-postgres-exporter
 spec:
   selector:
     matchLabels:
       postgres-operator.crunchydata.com/cluster: "${APP}"
-      postgres-operator.crunchydata.com/crunchy-postgres-exporter: "true"
+      postgres-operator.crunchydata.com/crunchy-otel-collector: "true"
   podTargetLabels:
     - deployment
     - role
     - pg_cluster
   podMetricsEndpoints:
-    - port: exporter
+    - port: otel-metrics
       path: /metrics
       honorLabels: true
       interval: 10s
       relabelings:
-        - sourceLabels:
-            - "__meta_kubernetes_pod_container_port_number"
-          action: "drop"
-          regex: "5432"
-        - sourceLabels:
-            - "__meta_kubernetes_pod_container_port_number"
-          action: "drop"
-          regex: "8009"
-        - sourceLabels:
-            - "__meta_kubernetes_pod_container_port_number"
-          action: "drop"
-          regex: "2022"
-        - sourceLabels:
-            - "__meta_kubernetes_pod_container_port_number"
-          action: "drop"
-          regex: "10000"
         - sourceLabels:
             - "__meta_kubernetes_namespace"
           action: "replace"
@@ -74,3 +58,14 @@ spec:
           replacement: "$1"
         - targetLabel: "exp_type"
           replacement: "pg"
+        - sourceLabels:
+            - "__meta_kubernetes_pod_label_postgres_operator_crunchydata_com_role"
+          regex: "pgbouncer"
+          targetLabel: "exp_type"
+          replacement: "pgbouncer"
+        - sourceLabels:
+            - "__meta_kubernetes_namespace"
+            - "__meta_kubernetes_pod_label_postgres_operator_crunchydata_com_cluster"
+          targetLabel: "cluster_name"
+          separator: ":"
+          replacement: "$1$2"

@@ -1,4 +1,15 @@
 #+title: Postgres Component
+* Monitoring
+PostgreSQL 18 and later require [[https://access.crunchydata.com/documentation/postgres-operator/latest/guides/otel/otel-metrics][Crunchy's OpenTelemetry metrics]] instead of the legacy ~monitoring.pgmonitor.exporter~.
+The operator HelmRelease enables ~features.OpenTelemetryMetrics~; this component configures ~spec.instrumentation~ and scrapes the collector's ~otel-metrics~ port (9187, ~/metrics~) on Postgres and pgBouncer pods.
+Only metrics are enabled; ~OpenTelemetryLogs~ remains disabled.
+
+The PodMonitor retains its existing ~${APP}-postgres-exporter~ name to update it in place, including for apps with Flux pruning disabled.
+The ~pg_cluster~ and ~cluster_name~ labels are ~namespace:cluster~; ~exp_type~ is ~pg~ for Postgres and ~pgbouncer~ for pgBouncer.
+
+Roll out the operator feature gate before reconciling app Kustomizations. Adding collectors changes the Postgres and pgBouncer pod templates; plan for rolling replacements and possible connection interruptions.
+After reconciliation, check collector readiness and Prometheus targets on port 9187. Existing exporter warnings remain in Events until they expire; verify that their counts stop increasing.
+
 * Deploying new cluster
 The Kustomization will build the new cluster with ~spec.dataSource~ in the definition, which will try to restore the cluster from backup. If there is no backup, it will keep failing forever. To fix this, add this patch to the app ks:
 #+begin_src yaml
