@@ -8,7 +8,6 @@ resources:
 configMapGenerator:
   - name: qbittorrent-music-bootstrap
     files:
-      - configure.py=./config/configure.py
       - requirements.txt=./config/requirements.txt
 generatorOptions:
   disableNameSuffixHash: true

@@ -54,15 +54,6 @@ spec:
         containers:
           app:
             image: *image
-            command:
-              - /usr/bin/catatonit
-              - --
-              - /bin/sh
-              - -ec
-            args:
-              - |
-                python3 /bootstrap/configure.py
-                exec /entrypoint.sh
             env:
               TZ: America/Detroit
               QBT_WEBUI_PORT: &port 8080
@@ -114,10 +105,6 @@ spec:
             gazelle-origin:
               - path: /bootstrap/requirements.txt
                 subPath: requirements.txt
-                readOnly: true
-            app:
-              - path: /bootstrap/configure.py
-                subPath: configure.py
                 readOnly: true
       config:
         existingClaim: *app
