@@ -5,3 +5,9 @@ kind: Kustomization
 resources:
   - ./ocirepository.yaml
   - ./helmrelease.yaml
+configMapGenerator:
+  - name: rtorrent-gazelle-origin
+    files:
+      - requirements.txt=./config/requirements.txt
+generatorOptions:
+  disableNameSuffixHash: true

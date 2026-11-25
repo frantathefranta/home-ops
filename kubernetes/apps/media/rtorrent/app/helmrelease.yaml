@@ -13,6 +13,8 @@ spec:
     controllers:
       rtorrent:
         type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
         pod:
           # The upstream s6 init configures nginx/PHP and drops services to PUID/PGID.
           securityContext:
@@ -24,11 +26,38 @@ spec:
             seccompProfile:
               type: RuntimeDefault
           terminationGracePeriodSeconds: 120
-        containers:
-          app:
-            image:
+        # Build per pod with the app's Python/musl; startup needs GitHub/PyPI access.
+        initContainers:
+          gazelle-origin:
+            image: &rtorrentImage
               repository: ghcr.io/crazy-max/rtorrent-rutorrent
               tag: 5.3.25-0.16.28@sha256:66f0bcc17bc3d6b41d4db6fdc1ca7243a74f63326bf3073764cf17637b771c74
+            command:
+              - /bin/sh
+              - -ec
+            args:
+              - |
+                python3 -m venv --without-pip /opt/gazelle-origin
+                python3 -m pip --python /opt/gazelle-origin install \
+                  --disable-pip-version-check --no-cache-dir \
+                  --requirement /config/requirements.txt
+            resources:
+              requests:
+                cpu: 100m
+              limits:
+                memory: 512Mi
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 1000
+              runAsGroup: 1003
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+        containers:
+          app:
+            image: *rtorrentImage
             env:
               TZ: America/Detroit
               PUID: "1000"
@@ -82,21 +111,53 @@ spec:
     persistence:
       data:
         existingClaim: *app
-        globalMounts:
-          - path: /data
-            subPath: data
-          - path: /passwd
-            subPath: passwd
+        advancedMounts:
+          rtorrent:
+            app:
+              - path: /data
+                subPath: data
+              - path: /passwd
+                subPath: passwd
+      gazelle-origin:
+        type: emptyDir
+        advancedMounts:
+          rtorrent:
+            gazelle-origin:
+              - path: /opt/gazelle-origin
+            app:
+              - path: /opt/gazelle-origin
+                readOnly: true
+              # Expose only the CLI, without shadowing ruTorrent's system Python.
+              - path: /usr/local/bin/gazelle-origin
+                subPath: bin/gazelle-origin
+                readOnly: true
+      gazelle-origin-config:
+        type: configMap
+        name: rtorrent-gazelle-origin
+        advancedMounts:
+          rtorrent:
+            gazelle-origin:
+              - path: /config/requirements.txt
+                subPath: requirements.txt
+                readOnly: true
       media:
         type: nfs
         server: ${NAS_IP}
         path: /emc1/music
-        globalMounts:
-          - path: /music
-          # Default downloads land in temp/ and complete/ under the existing share.
-          # The watch directory stays on /data, separate from Transmission's watch.
-          - path: /downloads
-            subPath: downloads
+        advancedMounts:
+          rtorrent:
+            app:
+              - path: /music
+              # Default downloads land in temp/ and complete/ under the existing share.
+              # The watch directory stays on /data, separate from Transmission's watch.
+              - path: /downloads
+                subPath: downloads
+      tmp:
+        type: emptyDir
+        advancedMounts:
+          rtorrent:
+            gazelle-origin:
+              - path: /tmp
     route:
       app:
         hostnames:
