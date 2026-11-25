@@ -5,9 +5,13 @@ kind: Kustomization
 resources:
   - ./ocirepository.yaml
   - ./helmrelease.yaml
+  - ./pvc.yaml
 configMapGenerator:
   - name: qbittorrent-music-bootstrap
     files:
       - requirements.txt=./config/requirements.txt
+  - name: qbittorrent-music-scripts
+    files:
+      - qbittorrent-complete.sh=./config/qbittorrent-complete.sh
 generatorOptions:
   disableNameSuffixHash: true
