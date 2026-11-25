@@ -65,7 +65,6 @@ spec:
               RUTORRENT_PORT: &port 8080
               XMLRPC_PORT: &rpcPort 8000
               RT_INC_PORT: &peerPort 50000
-              RT_DHT_PORT: &dhtPort 6881
               RT_SESSION_SAVE_SECONDS: "300"
             probes:
               liveness: &probes
@@ -106,8 +105,6 @@ spec:
               - ports:
                   - port: "50000"
                     protocol: TCP
-                  - port: "6881"
-                    protocol: UDP
     persistence:
       data:
         existingClaim: *app
@@ -190,6 +187,3 @@ spec:
           bittorrent:
             port: *peerPort
             protocol: TCP
-          dht:
-            port: *dhtPort
-            protocol: UDP
