@@ -1,0 +1,9 @@
+# gazelle-origin 3.0.1 from spinfast319's fork; keep the source immutable.
+gazelle-origin @ https://github.com/spinfast319/gazelle-origin/archive/688155bc250cfa250dc4d26b96088f59fcf4c0ab.tar.gz
+PyYAML==6.0.4
+requests==2.34.2
+python-dotenv==1.2.4
+certifi==2026.11.20
+charset-normalizer==3.5.3
+idna==3.20
+urllib3==2.8.0
