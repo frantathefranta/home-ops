@@ -1,0 +1,172 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app qbittorrent-music
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: *app
+  values:
+    controllers:
+      qbittorrent-music:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        pod:
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1003
+            fsGroup: 1003
+            fsGroupChangePolicy: OnRootMismatch
+            supplementalGroups: [10000]
+            seccompProfile:
+              type: RuntimeDefault
+        initContainers:
+          gazelle-origin:
+            image: &image
+              repository: ghcr.io/home-operations/qbittorrent
+              tag: 5.3.0@sha256:5a858e61f94cf2712391db32ed03556576c700858f3e62c4c6fcde262443ebd8
+            command:
+              - /bin/sh
+              - -ec
+            args:
+              - |
+                # Reuse the app's Python/musl; new pods need GitHub/PyPI access.
+                python3 -m venv --without-pip /opt/gazelle-origin
+                python3 -m pip --python /opt/gazelle-origin install \
+                  --disable-pip-version-check --no-cache-dir \
+                  --requirement /bootstrap/requirements.txt
+            resources:
+              requests:
+                cpu: 100m
+              limits:
+                memory: 512Mi
+            securityContext: &securityContext
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+        containers:
+          app:
+            image: *image
+            env:
+              TZ: America/Detroit
+              QBT_WEBUI_PORT: &port 8080
+              QBT_TORRENTING_PORT: &peerPort 18904
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/v2/app/version
+                    port: *port
+                  periodSeconds: 30
+                  timeoutSeconds: 10
+                  failureThreshold: 6
+              readiness: *probes
+              startup:
+                <<: *probes
+                spec:
+                  httpGet:
+                    path: /api/v2/app/version
+                    port: *port
+                  periodSeconds: 5
+                  timeoutSeconds: 5
+                  failureThreshold: 30
+            resources:
+              requests:
+                cpu: 100m
+              limits:
+                memory: 2Gi
+            securityContext: *securityContext
+    networkpolicies:
+      allow-ingress:
+        type: cilium
+        controller: *app
+        ingress:
+          - fromEntities:
+              - world
+            toPorts:
+              - ports:
+                  - port: "18904"
+                    protocol: TCP
+    persistence:
+      bootstrap:
+        type: configMap
+        name: qbittorrent-music-bootstrap
+        advancedMounts:
+          qbittorrent-music:
+            gazelle-origin:
+              - path: /bootstrap/requirements.txt
+                subPath: requirements.txt
+                readOnly: true
+      config:
+        existingClaim: *app
+        advancedMounts:
+          qbittorrent-music:
+            app:
+              - path: /config
+      gazelle-origin:
+        type: emptyDir
+        advancedMounts:
+          qbittorrent-music:
+            gazelle-origin:
+              - path: /opt/gazelle-origin
+            app:
+              - path: /opt/gazelle-origin
+                readOnly: true
+              # Add the CLI without shadowing the app's system Python.
+              - path: /usr/local/bin/gazelle-origin
+                subPath: bin/gazelle-origin
+                readOnly: true
+      music:
+        type: nfs
+        server: ${NAS_IP}
+        path: /emc1/music
+        advancedMounts:
+          qbittorrent-music:
+            app:
+              - path: /music
+      tmp:
+        type: emptyDir
+        advancedMounts:
+          qbittorrent-music:
+            gazelle-origin:
+              - path: /tmp
+            app:
+              - path: /tmp
+    route:
+      app:
+        hostnames:
+          - qbittorrent-music.franta.us
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: *port
+    service:
+      app:
+        forceRename: "{{ .Release.Name }}"
+        primary: true
+        ports:
+          http:
+            port: *port
+      bittorrent:
+        type: LoadBalancer
+        ipFamilyPolicy: RequireDualStack
+        externalTrafficPolicy: Local
+        annotations:
+          lbipam.cilium.io/ips: 10.33.40.67,${CLUSTER_LBA_V6_PREFIX}:67
+        ports:
+          bittorrent:
+            port: *peerPort
+            protocol: TCP
