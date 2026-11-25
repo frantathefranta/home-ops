@@ -12,7 +12,8 @@ spec:
   values:
     controllers:
       qbittorrent-music:
-        type: statefulset
+        type: deployment
+        strategy: Recreate
         annotations:
           reloader.stakater.com/auto: "true"
         pod:
