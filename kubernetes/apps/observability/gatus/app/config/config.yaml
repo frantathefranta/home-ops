@@ -34,6 +34,11 @@ endpoints:
       - "[STATUS] == 200"
     alerts:
       - type: pushover
+  - <<: *http-check
+    name: plex
+    # Sort ahead of connectivity and external in the default grouped view.
+    group: 00 - Media
+    url: https://plex.franta.us/identity
   - &tcp-check
     <<: *http-check
     name: cloudflare-ipv4
