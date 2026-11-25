@@ -41,6 +41,8 @@ spec:
       clusterLabels:
         app.kubernetes.io/name: pgo
     monitoring: true
+    features:
+      OpenTelemetryMetrics: true
     replicas: 2
     topologySpreadConstraints:
       - maxSkew: 1
