@@ -58,6 +58,20 @@ spec:
         containers:
           app:
             image: *rtorrentImage
+            command:
+              - /bin/sh
+              - -ec
+            args:
+              - |
+                # Enforce disabled DHT on fresh and existing state volumes.
+                config=/data/rtorrent/.rtorrent.rc
+                mkdir -p /data/rtorrent
+                if [ ! -f "$config" ]; then
+                  cp /tpls/.rtorrent.rc "$config"
+                fi
+                sed -i '/^[[:space:]]*dht\.mode\.set[[:space:]]*=/d' "$config"
+                printf '%s\n' 'dht.mode.set = disable' >> "$config"
+                exec /init
             env:
               TZ: America/Detroit
               PUID: "1000"
