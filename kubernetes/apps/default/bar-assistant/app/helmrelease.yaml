@@ -133,6 +133,9 @@ spec:
             port: *salt-rim-port
     route:
       app:
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            name: Bar Assistant
         hostnames:
           - "bar.franta.us"
         parentRefs:

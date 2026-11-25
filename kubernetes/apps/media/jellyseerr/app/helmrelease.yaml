@@ -105,6 +105,9 @@ spec:
             port: *port
     route:
       app:
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            name: Jellyseerr
         hostnames:
           - "{{ .Release.Name }}.franta.us"
           - requests.franta.us

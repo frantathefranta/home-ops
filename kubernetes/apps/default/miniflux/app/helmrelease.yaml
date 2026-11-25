@@ -104,6 +104,9 @@ spec:
             scrapeTimeout: 10s
     route:
       app:
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            name: Miniflux
         hostnames:
           - "{{ .Release.Name }}.franta.us"
         parentRefs:

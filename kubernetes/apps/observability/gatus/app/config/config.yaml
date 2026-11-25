@@ -24,8 +24,8 @@ alerting:
       success-threshold: 3
 endpoints:
   - &http-check
-    name: status
-    group: external
+    name: Status
+    group: External
     url: https://status.franta.us
     interval: 1m
     client:
@@ -41,16 +41,16 @@ endpoints:
     url: https://plex.franta.us/identity
   - &tcp-check
     <<: *http-check
-    name: cloudflare-ipv4
-    group: connectivity
+    name: Cloudflare IPv4
+    group: Connectivity
     url: tcp://1.1.1.1:53
     client:
       timeout: 5s
     conditions:
       - "[CONNECTED] == true"
   - <<: *tcp-check
-    name: cloudflare-ipv6
+    name: Cloudflare IPv6
     url: tcp://[2606:4700:4700::1111]:53
   - <<: *tcp-check
-    name: google-ipv6
+    name: Google IPv6
     url: tcp://[2001:4860:4860::8888]:53

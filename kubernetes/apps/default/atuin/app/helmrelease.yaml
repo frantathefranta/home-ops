@@ -62,6 +62,9 @@ spec:
         existingClaim: "{{ .Release.Name }}"
     route:
       app:
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            name: Atuin
         hostnames:
           - "{{ .Release.Name }}.franta.us"
         parentRefs:

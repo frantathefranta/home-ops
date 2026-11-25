@@ -24,7 +24,7 @@ metadata:
     external-dns.franta.us/public: "true"
   annotations:
     gatus.home-operations.com/endpoint: |-
-      group: external
+      group: External
       interval: 1m
       client:
         dns-resolver: tcp://1.1.1.1:53

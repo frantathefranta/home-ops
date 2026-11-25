@@ -51,6 +51,7 @@ spec:
         wellKnownCaCertificates: System
     annotations:
       gatus.home-operations.com/endpoint: |-
+        name: SSO
         path: /status
         conditions:
           - "[STATUS] == 200"
