@@ -7,9 +7,10 @@ storage:
   caching: true
 metrics: true
 ui:
-  title: Talos-Maxi Status
-  header: Talos-Maxi Status
-  # Render endpoint groups as sections; saved browser sorting overrides this default.
+  title: Services
+  header: Services
+  # Groups sort alphabetically; saved browser sorting overrides this default.
+  # Expand a group once to keep it open on refresh in that browser.
   default-sort-by: group
   logo: https://raw.githubusercontent.com/frantathefranta/hugoblog/master/static/android-chrome-512x512.png
 alerting:
@@ -35,9 +36,8 @@ endpoints:
     alerts:
       - type: pushover
   - <<: *http-check
-    name: plex
-    # Sort ahead of connectivity and external in the default grouped view.
-    group: 00 - Media
+    name: Plex
+    group: Plex
     url: https://plex.franta.us/identity
   - &tcp-check
     <<: *http-check
