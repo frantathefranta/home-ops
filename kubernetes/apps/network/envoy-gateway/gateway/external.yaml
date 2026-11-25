@@ -9,7 +9,7 @@ metadata:
   annotations:
     external-dns.kubernetes.io/target: &hostname ingress-external.franta.us
     gatus.home-operations.com/endpoint: |-
-      group: external
+      group: External
       interval: 1m
       client:
         dns-resolver: tcp://1.1.1.1:53

@@ -7,6 +7,7 @@ metadata:
   annotations:
     external-dns.kubernetes.io/cloudflare-proxied: "false"
     gatus.home-operations.com/endpoint: |-
+      name: Forgejo
       path: /api/healthz
       conditions:
         - "[STATUS] == 200"

@@ -19,6 +19,9 @@ spec:
       verifyImages: true
     httpRoute:
       enabled: true
+      annotations:
+        gatus.home-operations.com/endpoint: |-
+          name: Konflate
       hostnames:
         - "{{ .Release.Name }}.franta.us"
       parentRefs:

@@ -6,6 +6,7 @@ metadata:
   name: github-webhook
   annotations:
     gatus.home-operations.com/endpoint: |-
+      name: GitHub Webhook
       conditions: ["[STATUS] == 404"]
 spec:
   hostnames: ["flux-webhook.franta.us"]

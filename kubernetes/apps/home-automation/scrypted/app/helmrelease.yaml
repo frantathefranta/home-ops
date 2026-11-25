@@ -91,6 +91,9 @@ spec:
 
     route:
       app:
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            name: Scrypted
         hostnames:
           - "{{ .Release.Name }}.franta.us"
         parentRefs:
