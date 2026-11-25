@@ -150,7 +150,6 @@ spec:
           - backendRefs:
               - name: *app
                 port: *port
-
     persistence:
       data:
         existingClaim: *app
