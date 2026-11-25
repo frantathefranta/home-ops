@@ -12,8 +12,6 @@ spec:
   values:
     controllers:
       qbittorrent-music:
-        type: deployment
-        strategy: Recreate
         annotations:
           reloader.stakater.com/auto: "true"
         pod:
@@ -113,9 +111,7 @@ spec:
           kind: ClusterSecretStore
         refreshInterval: 15m
         target:
-          name: qbittorrent-music-secret
           template:
-            engineVersion: v2
             data:
               RED_API_KEY: '{{ .RED_API_KEY }}'
               OPS_API_KEY: '{{ .OPS_API_KEY }}'
@@ -132,37 +128,27 @@ spec:
         secretStoreRef: *secretStoreRef
         refreshInterval: 15m
         target:
-          name: qbittorrent-music-nemorosa
           template:
-            engineVersion: v2
             data:
               config.yml: |
                 global:
                   loglevel: debug
-                  exclude_mp3: true
                   check_trackers:
                     - "flacsfor.me"
                     - "home.opsfet.ch"
-                  check_music_only: true
-                  auto_start_torrents: true
 
                 linking:
                   enable_linking: true
                   link_dirs:
                     - "/music/downloads/nemorosa-qbittorrent"
-                  link_type: "hardlink"
 
                 server:
                   host: "127.0.0.1"
-                  port: 8256
                   api_key: "{{ .NEMOROSA_API_KEY }}"
-                  search_cadence: "1 day"
-                  cleanup_cadence: "1 day"
 
                 downloader:
                   - type: "qbittorrent"
                     url: "http://127.0.0.1:8080"
-                    label: "nemorosa"
 
                 target_site:
                   - server: "https://redacted.sh"
@@ -177,7 +163,6 @@ spec:
     networkpolicies:
       allow-ingress:
         type: cilium
-        controller: *app
         ingress:
           - fromEntities:
               - world
@@ -266,11 +251,9 @@ spec:
         rules:
           - backendRefs:
               - identifier: app
-                port: *port
     service:
       app:
         forceRename: "{{ .Release.Name }}"
-        primary: true
         ports:
           http:
             port: *port
@@ -283,4 +266,3 @@ spec:
         ports:
           bittorrent:
             port: *peerPort
-            protocol: TCP
