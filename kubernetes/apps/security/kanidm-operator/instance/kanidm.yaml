@@ -6,7 +6,7 @@ metadata:
 spec:
   domain: sso.franta.us
   origin: https://sso.franta.us
-  image: docker.io/kanidm/server:1.12.1@sha256:77198131f28116203e105d2e42214203757d113a694f35de545669e75db5c96f
+  image: docker.io/kanidm/server:1.12.2@sha256:555618fc71aa5cbbacf0041136f8a5430615ee215d677386594726abcc18dbf0
   replicaGroups:
     - name: default
       replicas: 1
